@@ -8,6 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import abrar from "../assets/abrar-rahman.jpg";
+import andy from "../assets/andy-young.jpeg";
 
 interface TeamProps {
   imageUrl: string;
@@ -24,7 +26,7 @@ interface SociaNetworkslProps {
 
 const teamList: TeamProps[] = [
   {
-    imageUrl: "./src/assets/abrar-rahman.jpg",
+    imageUrl: abrar,
     name: "Abrar Rahman",
     position: "CEO",
     socialNetworks: [
@@ -37,7 +39,7 @@ const teamList: TeamProps[] = [
     bio: "Prev. at Epic Systems, Amazon, Tesla, Berkeley Lab (LBNL)"
   },
   {
-    imageUrl: "./src/assets/andy-young.jpeg",
+    imageUrl: andy,
     name: "Andy Young",
     position: "COO",
     socialNetworks: [
