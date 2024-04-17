@@ -1,7 +1,9 @@
+import dorsal_logo from "../assets/dorsal-logo.png"
+
 export const LogoIcon = () => {
   return (
     <img
-      src="./src/assets/dorsal-logo.png"
+      src={dorsal_logo}
       alt="Logo: A Shark Fin"
       className="lucide lucide-panels-top-left mr-2 w-50 h-10 dark:filter dark:invert"
       style={{ borderRadius: '4px' }}
