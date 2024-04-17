@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import image from "../assets/growth.png";
-import image3 from "../assets/reflecting.png";
-import image4 from "../assets/looking-ahead.png";
+import image from "../assets/academic_culture.jpeg";
+import image3 from "../assets/democratizing_nyc.jpeg";
+import image4 from "../assets/looking-ahead.jpeg";
 
 interface FeatureProps {
   title: string;
@@ -18,35 +18,32 @@ interface FeatureProps {
 
 const features: FeatureProps[] = [
   {
-    title: "Responsive Design",
+    title: "Future Focused",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "We're keeping up with the latest advancements in LLMs to build agents that get the job done.",
     image: image4,
   },
   {
-    title: "Intuitive user interface",
+    title: "Democratizing Healthcare",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Payers and providers know what their services cost. Why don't we? We think it's time to change that.",
     image: image3,
   },
   {
-    title: "AI-Powered insights",
+    title: "Academic Culture",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "The founding team brings years of peer-reviewed NLP research expertise. We solve tough problems at scale.",
     image: image,
   },
 ];
 
 const featureList: string[] = [
-  "Dark/Light theme",
-  "Reviews",
-  "Features",
-  "Pricing",
-  "Contact form",
-  "Our team",
-  "Responsive design",
-  "Newsletter",
-  "Minimalist",
+  "Crowdsourced Data",
+  "Price Transparency",
+  "Fine-Tuned LLMs",
+  "VOIP Agents",
+  "Payment Management",
+  "HSA Savings Plan"
 ];
 
 export const Features = () => {
@@ -56,10 +53,11 @@ export const Features = () => {
       className="container py-24 sm:py-32 space-y-8"
     >
       <h2 className="text-3xl lg:text-4xl font-bold md:text-center">
-        Many{" "}
+        What Makes{" "}
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Great Features
+          Dorsal{" "}
         </span>
+        Special
       </h2>
 
       <div className="flex flex-wrap md:justify-center gap-4">

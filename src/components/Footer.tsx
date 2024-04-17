@@ -10,9 +10,9 @@ export const Footer = () => {
           <a
             href="/"
             className="font-bold text-xl flex"
+            style={{ fontFamily: 'the-seasons, sans-serif' }}
           >
             <LogoIcon />
-            dorsal.fyi
           </a>
         </div>
 
@@ -59,19 +59,10 @@ export const Footer = () => {
 
           <div>
             <a
-              href="#"
+              href="#pricing"
               className="opacity-60 hover:opacity-100"
             >
               Pricing
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              FAQ
             </a>
           </div>
         </div>

@@ -10,21 +10,21 @@ export const Hero = () => {
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
             <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-              Shadcn
+              Negotiate
             </span>{" "}
-            landing page
+            your medical bills
           </h1>{" "}
-          for{" "}
+          with{" "}
           <h2 className="inline">
             <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              React
+              crowdsourced
             </span>{" "}
-            developers
+            data at scale
           </h2>
         </main>
 
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-          We're building towards market transparency so you get a fair price for your procedures and medications.
+          We're working towards market transparency so you get a fair price for your procedures and medications.
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">

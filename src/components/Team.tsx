@@ -70,18 +70,18 @@ export const Team = () => {
       id="team"
       className="container py-24 sm:py-32"
     >
-      <h2 className="text-3xl md:text-4xl font-bold">
+      <h2 className="text-center text-3xl md:text-4xl font-bold justify-center">
         Our {" "}
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           Team
         </span>
       </h2>
 
-      <p className="mt-4 mb-10 text-xl text-muted-foreground">
+      <p className="text-center mt-4 mb-10 text-xl text-muted-foreground">
         Just two friends from Berkeley working to save Americans billions.
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-10">
+      <div className="grid md:grid-cols-4 lg:grid-cols-2 gap-8 gap-y-10">
         {teamList.map(
           ({ imageUrl, name, position, socialNetworks, bio }: TeamProps) => (
             <Card

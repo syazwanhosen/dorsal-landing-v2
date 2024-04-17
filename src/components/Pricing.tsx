@@ -18,7 +18,7 @@ enum PopularPlanType {
 interface PricingProps {
   title: string;
   popular: PopularPlanType;
-  price: number;
+  price: number | string;
   description: string;
   buttonText: string;
   benefitList: string[];
@@ -30,29 +30,25 @@ const pricingList: PricingProps[] = [
     popular: 0,
     price: 0,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
+      "Join the movement.",
     buttonText: "Get Started",
     benefitList: [
-      "1 Team member",
-      "2 GB Storage",
-      "Upto 4 pages",
-      "Community support",
-      "lorem ipsum dolor",
+      "Upload unlimited bills",
+      "Access anonymized billing data",
+      "Risk-free audit requests"
     ],
   },
   {
     title: "Premium",
     popular: 1,
-    price: 5,
+    price: 10,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
+      "Manage payments for the whole family.",
     buttonText: "Start Free Trial",
     benefitList: [
-      "4 Team member",
-      "4 GB Storage",
-      "Upto 6 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "Pre-emptively audit for billing errors",
+      "Uncover 501(r) discounts",
+      "Track and invest your savings"
     ],
   },
   {
@@ -60,14 +56,12 @@ const pricingList: PricingProps[] = [
     popular: 0,
     price: 40,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Contact US",
+      "Built for healthcare analysts.",
+    buttonText: "Contact Us",
     benefitList: [
-      "10 Team member",
-      "8 GB Storage",
-      "Upto 10 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "Most granular access to data",
+      "Ad-free user experience",
+      "Built-in visualization tooling"
     ],
   },
 ];
@@ -79,16 +73,14 @@ export const Pricing = () => {
       className="container py-24 sm:py-32"
     >
       <h2 className="text-3xl md:text-4xl font-bold text-center">
-        Get
+        Dorsal Works for
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           {" "}
-          Unlimited{" "}
+          Everyone{" "}
         </span>
-        Access
       </h2>
       <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-        reiciendis.
+        We bet we can save you money on your medical bills. Explore our membership tiers.
       </h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pricingList.map((pricing: PricingProps) => (

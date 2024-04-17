@@ -10,27 +10,27 @@ interface FeatureProps {
 const features: FeatureProps[] = [
   {
     icon: <MedalIcon />,
-    title: "Accesibility",
+    title: "Cash Back",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Our LLM agents use VOIP & email clients to negotiate savings of up to 90%.",
   },
   {
     icon: <MapIcon />,
     title: "Community",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "It's free to create an account and start comparing and sharing your anonymized medical bills.",
   },
   {
     icon: <PlaneIcon />,
-    title: "Scalability",
+    title: "Negotiations",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Our LLM agents handle the heavy lifting. Try us for free and only pay 10% of what you save.",
   },
   {
     icon: <GiftIcon />,
-    title: "Gamification",
+    title: "Alerting",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Subscribe for real-time bill auditing and lower rates for the whole family.",
   },
 ];
 
@@ -41,15 +41,14 @@ export const HowItWorks = () => {
       className="container text-center py-24 sm:py-32"
     >
       <h2 className="text-3xl md:text-4xl font-bold ">
-        How It{" "}
+        How we{" "}
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Works{" "}
+          Transform{" "}
         </span>
-        Step-by-Step Guide
+        Healthcare Finance
       </h2>
       <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-        dolor pariatur sit!
+        Reeling from sticker shock? Our system flags billing errors and unlocks hidden discounts.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

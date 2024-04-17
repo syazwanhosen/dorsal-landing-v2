@@ -29,16 +29,16 @@ const routeList: RouteProps[] = [
     label: "Features",
   },
   {
-    href: "#testimonials",
-    label: "Testimonials",
+    href: "#team",
+    label: "Team",
   },
   {
     href: "#pricing",
     label: "Pricing",
   },
   {
-    href: "#faq",
-    label: "FAQ",
+    href: "#waitlist",
+    label: "Waitlist",
   },
 ];
 
@@ -51,10 +51,10 @@ export const Navbar = () => {
           <NavigationMenuItem className="font-bold flex">
             <a
               href="/"
-              className="ml-2 font-bold text-xl flex the-seasons"
+              className="ml-2 font-bold text-xl flex"
+              style={{ fontFamily: 'the-seasons, sans-serif' }}
             >
               <LogoIcon />
-              dorsal.fyi 
             </a>
           </NavigationMenuItem>
 
@@ -93,7 +93,7 @@ export const Navbar = () => {
                     </a>
                   ))}
                   <a
-                    href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                    href="https://github.com/abrarfrahman/dorsal-fyi-landing"
                     target="_blank"
                     className={`w-[110px] border ${buttonVariants({
                       variant: "secondary",
@@ -124,7 +124,7 @@ export const Navbar = () => {
 
           <div className="hidden md:flex gap-2">
             <a
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+              href="https://github.com/abrarfrahman/dorsal-fyi-landing"
               target="_blank"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
