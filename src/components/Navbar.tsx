@@ -29,16 +29,16 @@ const routeList: RouteProps[] = [
     label: "Features",
   },
   {
-    href: "#team",
-    label: "Team",
-  },
-  {
     href: "#pricing",
     label: "Pricing",
   },
   {
     href: "#waitlist",
     label: "Waitlist",
+  },
+  {
+    href: "#team",
+    label: "Team",
   },
 ];
 
@@ -78,7 +78,7 @@ export const Navbar = () => {
               <SheetContent side={"left"}>
                 <SheetHeader>
                   <SheetTitle className="font-bold text-xl">
-                    Shadcn/React
+                    dorsal.fyi
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">

@@ -20,8 +20,9 @@ export const Footer = () => {
           <h3 className="font-bold text-lg">Follow Us</h3>
           <div>
             <a
-              href="#"
+              href="https://github.com/abrarfrahman/dorsal-fyi-landing"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
               Github
             </a>
@@ -31,8 +32,9 @@ export const Footer = () => {
             <a
               href="#"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
-              Twitter
+              Twitter - Coming Soon
             </a>
           </div>
 
@@ -40,8 +42,9 @@ export const Footer = () => {
             <a
               href="#"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
-              Substack
+              Substack - Coming Soon
             </a>
           </div>
         </div>
@@ -50,7 +53,7 @@ export const Footer = () => {
           <h3 className="font-bold text-lg">About</h3>
           <div>
             <a
-              href="#"
+              href="#features"
               className="opacity-60 hover:opacity-100"
             >
               Features
@@ -65,16 +68,36 @@ export const Footer = () => {
               Pricing
             </a>
           </div>
+
+          <div>
+            <a
+              href="#team"
+              className="opacity-60 hover:opacity-100"
+            >
+              Team
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Coming Soon: Community</h3>
+          <h3 className="font-bold text-lg">Community</h3>
           <div>
             <a
               href="#"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
-              Discord
+              Discord - Coming Soon
+            </a>
+          </div>
+
+          <div>
+            <a
+              href="https://www.linkedin.com/company/dorsal-fyi/"
+              className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
+            >
+              LinkedIn
             </a>
           </div>
 
@@ -82,8 +105,9 @@ export const Footer = () => {
             <a
               href="#"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
-              YouTube 
+              YouTube - Coming Soon
             </a>
           </div>
 
@@ -91,8 +115,9 @@ export const Footer = () => {
             <a
               href="#"
               className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
             >
-              Facebook
+              Facebook - Coming Soon
             </a>
           </div>
 

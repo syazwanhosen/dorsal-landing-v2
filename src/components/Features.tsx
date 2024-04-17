@@ -32,7 +32,7 @@ const features: FeatureProps[] = [
   {
     title: "Academic Culture",
     description:
-      "The founding team brings years of peer-reviewed NLP research expertise. We solve tough problems at scale.",
+      "The founding team brings years of peer-reviewed NLP research expertise.",
     image: image,
   },
 ];
