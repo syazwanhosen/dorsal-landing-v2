@@ -2,6 +2,7 @@ import { Button } from "./ui/button";
 import { buttonVariants } from "./ui/button";
 import { HeroCards } from "./HeroCards";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { Link } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -28,7 +29,14 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Button className="w-full md:w-1/3">Get Started</Button>
+          <a
+            href="#waitlist"
+            className={`w-full md:w-1/3 ${buttonVariants({
+              variant: "default",
+            })}`}
+          >
+            Get Started
+          </a>
 
           <a
             href="https://www.linkedin.com/company/dorsal-fyi"

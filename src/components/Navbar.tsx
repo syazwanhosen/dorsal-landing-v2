@@ -25,7 +25,7 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "#features",
+    href: "#howItWorks",
     label: "Features",
   },
   {
@@ -39,7 +39,7 @@ const routeList: RouteProps[] = [
   {
     href: "#team",
     label: "Team",
-  },
+  }
 ];
 
 export const Navbar = () => {

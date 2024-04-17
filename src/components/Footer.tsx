@@ -30,7 +30,6 @@ export const Footer = () => {
 
           <div>
             <a
-              href="#"
               className="opacity-60 hover:opacity-100"
               target="_blank" rel="noopener noreferrer"
             >
@@ -40,7 +39,6 @@ export const Footer = () => {
 
           <div>
             <a
-              href="#"
               className="opacity-60 hover:opacity-100"
               target="_blank" rel="noopener noreferrer"
             >
@@ -53,7 +51,7 @@ export const Footer = () => {
           <h3 className="font-bold text-lg">About</h3>
           <div>
             <a
-              href="#features"
+              href="#howItWorks"
               className="opacity-60 hover:opacity-100"
             >
               Features
@@ -71,6 +69,15 @@ export const Footer = () => {
 
           <div>
             <a
+              href="#waitlist"
+              className="opacity-60 hover:opacity-100"
+            >
+              Waitlist
+            </a>
+          </div>
+
+          <div>
+            <a
               href="#team"
               className="opacity-60 hover:opacity-100"
             >
@@ -83,7 +90,6 @@ export const Footer = () => {
           <h3 className="font-bold text-lg">Community</h3>
           <div>
             <a
-              href="#"
               className="opacity-60 hover:opacity-100"
               target="_blank" rel="noopener noreferrer"
             >
@@ -103,25 +109,21 @@ export const Footer = () => {
 
           <div>
             <a
-              href="#"
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              YouTube - Coming Soon
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="#"
               className="opacity-60 hover:opacity-100"
               target="_blank" rel="noopener noreferrer"
             >
               Facebook - Coming Soon
             </a>
           </div>
-
           
+          <div>
+            <a
+              className="opacity-60 hover:opacity-100"
+              target="_blank" rel="noopener noreferrer"
+            >
+              YouTube - Coming Soon
+            </a>
+          </div>
         </div>
       </section>
 

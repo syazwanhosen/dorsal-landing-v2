@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,6 +22,7 @@ interface PricingProps {
   description: string;
   buttonText: string;
   benefitList: string[];
+  href: string;
 }
 
 const pricingList: PricingProps[] = [
@@ -37,6 +38,7 @@ const pricingList: PricingProps[] = [
       "Access anonymized billing data",
       "Risk-free audit requests"
     ],
+    href: "#waitlist"
   },
   {
     title: "Premium",
@@ -50,6 +52,7 @@ const pricingList: PricingProps[] = [
       "Uncover 501(r) discounts",
       "Track and invest your savings"
     ],
+    href: "#waitlist"
   },
   {
     title: "Enterprise",
@@ -63,6 +66,7 @@ const pricingList: PricingProps[] = [
       "Ad-free user experience",
       "Built-in visualization tooling"
     ],
+    href: "#waitlist"
   },
 ];
 
@@ -100,7 +104,7 @@ export const Pricing = () => {
                     variant="secondary"
                     className="text-sm text-primary"
                   >
-                    Most popular
+                    Most Popular
                   </Badge>
                 ) : null}
               </CardTitle>
@@ -113,7 +117,14 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              <a
+                href="#waitlist"
+                className={`w-full ${buttonVariants({
+                  variant: "default",
+                })}`}
+              >
+                {pricing.buttonText}
+              </a>
             </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />
