@@ -1,8 +1,6 @@
-import { Button } from "./ui/button";
 import { buttonVariants } from "./ui/button";
 import { HeroCards } from "./HeroCards";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { Link } from "lucide-react";
 
 export const Hero = () => {
   return (
