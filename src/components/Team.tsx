@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, BookA } from "lucide-react";
 import abrar from "../assets/abrar-rahman.jpg";
 import andy from "../assets/andy-young.jpeg";
 
@@ -31,6 +31,7 @@ const teamList: TeamProps[] = [
     position: "CEO",
     socialNetworks: [
       { name: "Linkedin", url: "https://www.linkedin.com/in/abrarfrahman/" },
+      { name: "Portfolio", url: "https://abrarrahman.com/" },
       {
         name: "Instagram",
         url: "https://www.instagram.com/abrarramen/",
@@ -64,6 +65,9 @@ export const Team = () => {
 
       case "Instagram":
         return <Instagram size="20" />;
+
+      case "Portfolio":
+        return <BookA size="20" />;
     }
   };
 
