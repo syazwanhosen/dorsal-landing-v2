@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
-enum PopularPlanType {
+enum PlanType {
   NO = 0,
   YES = 1,
 }
 
 interface PricingProps {
   title: string;
-  popular: PopularPlanType;
+  planType: PlanType;
   price: number | string;
   description: string;
   buttonText: string;
@@ -28,43 +28,46 @@ interface PricingProps {
 const pricingList: PricingProps[] = [
   {
     title: "Free",
-    popular: 0,
+    planType: 0,
     price: 0,
     description:
-      "Join the movement.",
+      "Embrace the movement.",
     buttonText: "Get Started",
     benefitList: [
-      "Upload unlimited bills",
       "Access anonymized billing data",
-      "Risk-free audit requests"
+      "Contribute to our community",
+      "Conduct an audit with our AI agents for free",
+      "Only pay 15% of what you save per claim"
     ],
     href: "#waitlist"
   },
   {
     title: "Premium",
-    popular: 1,
+    planType: 0,
     price: 10,
     description:
       "Manage payments for the whole family.",
     buttonText: "Start Free Trial",
     benefitList: [
-      "Pre-emptively audit for billing errors",
+      "Preemptively audit for billing errors",
       "Uncover 501(r) discounts",
-      "Track and invest your savings"
+      "Track and invest your savings",
+      "Always break even: 10% savings or get a refund"
     ],
     href: "#waitlist"
   },
   {
     title: "Enterprise",
-    popular: 0,
+    planType: 1,
     price: 40,
     description:
       "Built for healthcare analysts.",
     buttonText: "Contact Us",
     benefitList: [
-      "Most granular access to data",
-      "Ad-free user experience",
-      "Built-in visualization tooling"
+      "Custom datasets on request",
+      "Commercial or press licensing",
+      "Built-in visualization tooling",
+      "API-level access for B2B use cases"
     ],
     href: "#waitlist"
   },
@@ -91,7 +94,7 @@ export const Pricing = () => {
           <Card
             key={pricing.title}
             className={
-              pricing.popular === PopularPlanType.YES
+              pricing.planType === PlanType.YES
                 ? "drop-shadow-xl shadow-black/10 dark:shadow-white/10"
                 : ""
             }
@@ -99,12 +102,12 @@ export const Pricing = () => {
             <CardHeader>
               <CardTitle className="flex item-center justify-between">
                 {pricing.title}
-                {pricing.popular === PopularPlanType.YES ? (
+                {pricing.planType === PlanType.YES ? (
                   <Badge
                     variant="secondary"
                     className="text-sm text-primary"
                   >
-                    Most Popular
+                    Analytics Suite
                   </Badge>
                 ) : null}
               </CardTitle>
