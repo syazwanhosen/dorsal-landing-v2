@@ -4,13 +4,15 @@ import { Input } from "./ui/input";
 
 export const Newsletter = () => {
   const [buttonText, setButtonText] = useState('Submit');
-  const [buttonVariant, setButtonVariant] = useState('outline');
+  const [buttonVariant, setButtonVariant] = useState<"default" | "secondary" | "destructive" | "outline" | "link" | "ghost" | null | undefined>('outline');
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     
     setButtonText('Thanks!');
     setButtonVariant('default');
+    setFormSubmitted(true);
 
     const emailInput = e.currentTarget[0] as HTMLInputElement;
     const email = emailInput.value;
@@ -56,10 +58,11 @@ export const Newsletter = () => {
         >
           <Input
             placeholder="andy@dorsal.fyi"
-            className="bg-muted/50 dark:bg-muted/80 "
+            className="bg-muted/50 dark:bg-muted/80"
             aria-label="email"
+            disabled={formSubmitted}
           />
-          <Button variant={buttonVariant}>{buttonText}</Button>
+          <Button variant={buttonVariant} disabled={formSubmitted}>{buttonText}</Button>
         </form>
       </div>
 
