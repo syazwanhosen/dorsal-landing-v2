@@ -2,9 +2,30 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 export const Newsletter = () => {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Subscribed!");
+    
+    const emailInput = e.currentTarget[0] as HTMLInputElement;
+    const email = emailInput.value;
+
+    const formData = new FormData();
+    formData.append('entry.2108239172', email);
+    console.log(formData);
+
+    try {
+      const response = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/formResponse', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log('Data submitted successfully!');
+      } else {
+        console.error('Failed to submit data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
