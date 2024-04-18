@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 export const Newsletter = () => {
+  const [buttonText, setButtonText] = useState('Submit');
+  const [buttonVariant, setButtonVariant] = useState('outline');
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     
+    setButtonText('Thanks!');
+    setButtonVariant('default');
+
     const emailInput = e.currentTarget[0] as HTMLInputElement;
     const email = emailInput.value;
 
@@ -52,7 +59,7 @@ export const Newsletter = () => {
             className="bg-muted/50 dark:bg-muted/80 "
             aria-label="email"
           />
-          <Button>Subscribe</Button>
+          <Button variant={buttonVariant}>{buttonText}</Button>
         </form>
       </div>
 
