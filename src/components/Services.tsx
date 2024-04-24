@@ -67,7 +67,7 @@ export const Services = () => {
 
         <img
           src={cubeLeg}
-          className="w-[100px] md:w-[167px] lg:w-[200px] object-contain"
+          className="w-full md:w-[167px] lg:w-[200px] object-contain"
           alt="mockup _ "
         />
       </div>
