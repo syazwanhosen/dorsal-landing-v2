@@ -1,6 +1,6 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { MagnifierIcon, WalletIcon, ChartIcon } from "./Icons";
-import cubeLeg from "../assets/cube-leg.png";
+import cubeLeg from "../assets/Shot.png";
 
 interface ServiceProps {
   title: string;
@@ -10,21 +10,21 @@ interface ServiceProps {
 
 const serviceList: ServiceProps[] = [
   {
-    title: "Code Collaboration",
+    title: "Show us your itemized bill",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Our AI technology ensures accuracy by obtaining itemized bills directly from your hospital, revealing hidden errors and inflated charges typically overlooked.",
     icon: <ChartIcon />,
   },
   {
-    title: "Project Management",
+    title: "Getting a second opinion",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Without the need for human agents, we meticulously compare your records against your bill, identifying and flagging any suspicious charges for further review.",
     icon: <WalletIcon />,
   },
   {
-    title: "Task Automation",
+    title: "We have your back",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Our automated LLM agents get to work for you. You'll receive regular updates throughout the negotiation process.",
     icon: <MagnifierIcon />,
   },
 ];
@@ -35,15 +35,15 @@ export const Services = () => {
       <div className="grid lg:grid-cols-[1fr,1fr] gap-8 place-items-center">
         <div>
           <h2 className="text-3xl md:text-4xl font-bold">
+            It's {" "}
             <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-              Client-Centric{" "}
+              Painless{" "}
             </span>
-            Services
+            to Get Started
           </h2>
 
           <p className="text-muted-foreground text-xl mt-4 mb-8 ">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-            dolor.
+            Our AI innovation simplifies hospital bill negotiation, saving you time and stress while maximizing savings.
           </p>
 
           <div className="flex flex-col gap-8">
@@ -67,8 +67,8 @@ export const Services = () => {
 
         <img
           src={cubeLeg}
-          className="w-[300px] md:w-[500px] lg:w-[600px] object-contain"
-          alt="About services"
+          className="w-[100px] md:w-[167px] lg:w-[200px] object-contain"
+          alt="mockup _ "
         />
       </div>
     </section>

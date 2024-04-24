@@ -8,6 +8,7 @@ import { Pricing } from "./components/Pricing";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Team } from "./components/Team";
 import "./App.css";
+import { Services } from "./components/Services";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       {/*<About />*/}
       <HowItWorks />
       <Features />
-      {/*<Services />*/}
+      {<Services />}
       {/*<Cta />*/}
       {/*<Testimonials />*/}
       <Pricing />
