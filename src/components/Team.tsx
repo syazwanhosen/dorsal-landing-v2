@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Facebook, Instagram, Linkedin, BookA } from "lucide-react";
+import { Facebook, Linkedin, BookA } from "lucide-react";
 import abrar from "../assets/abrar-rahman.jpg";
 import andy from "../assets/andy-young.jpeg";
 
@@ -32,10 +32,6 @@ const teamList: TeamProps[] = [
     socialNetworks: [
       { name: "Linkedin", url: "https://www.linkedin.com/in/abrarfrahman/" },
       { name: "Portfolio", url: "https://abrarrahman.com/" },
-      {
-        name: "Instagram",
-        url: "https://www.instagram.com/abrarramen/",
-      },
     ],
     bio: "Prev. at Epic Systems, Amazon, Tesla, Berkeley Lab (LBNL)"
   },
@@ -45,10 +41,6 @@ const teamList: TeamProps[] = [
     position: "COO",
     socialNetworks: [
       { name: "Linkedin", url: "https://www.linkedin.com/in/andyyru/" },
-      {
-        name: "Instagram",
-        url: "https://www.instagram.com/andyyru/",
-      },
     ],
     bio: "Prev. 4x Investment Banking Analyst, 1x Private Equity Analyst"
   }
@@ -62,9 +54,6 @@ export const Team = () => {
 
       case "Facebook":
         return <Facebook size="20" />;
-
-      case "Instagram":
-        return <Instagram size="20" />;
 
       case "Portfolio":
         return <BookA size="20" />;
