@@ -44,7 +44,7 @@ const pricingList: PricingProps[] = [
   {
     title: "Premium",
     planType: 0,
-    price: 10,
+    price: 99,
     description:
       "Manage payments for the whole family.",
     buttonText: "Start Free Trial",
@@ -59,7 +59,7 @@ const pricingList: PricingProps[] = [
   {
     title: "Enterprise",
     planType: 1,
-    price: 40,
+    price: 499,
     description:
       "Built for healthcare analysts.",
     buttonText: "Contact Us",
