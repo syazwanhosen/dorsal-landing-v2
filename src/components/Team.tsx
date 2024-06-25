@@ -73,7 +73,7 @@ export const Team = () => {
       </h2>
 
       <p className="text-center mt-4 mb-10 text-xl text-muted-foreground">
-        Just two friends from Berkeley working to save Americans billions.
+        Deep technical DNA informs our rigorous approach to patient empowerment.
       </p>
 
       <div className="grid md:grid-cols-4 lg:grid-cols-2 gap-8 gap-y-10">
