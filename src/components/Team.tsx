@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Facebook, Linkedin, BookA } from "lucide-react";
 import abrar from "../assets/abrar-rahman.jpg";
-import andy from "../assets/andy-young.jpeg";
+import rabby from "../assets/rabby.png";
 
 interface TeamProps {
   imageUrl: string;
@@ -36,13 +36,13 @@ const teamList: TeamProps[] = [
     bio: "Prev. at Epic Systems, Amazon, Tesla, Berkeley Lab (LBNL)"
   },
   {
-    imageUrl: andy,
-    name: "Andy Young",
-    position: "COO",
+    imageUrl: rabby,
+    name: "Shahariar Rabby",
+    position: "Technical Lead",
     socialNetworks: [
-      { name: "Linkedin", url: "https://www.linkedin.com/in/andyyru/" },
+      { name: "Linkedin", url: "https://www.linkedin.com/in/shahariarrabby/" },
     ],
-    bio: "Prev. 4x Investment Banking Analyst, 1x Private Equity Analyst"
+    bio: "PhD ML engineer with five years of industry expertise"
   }
 ];
 
