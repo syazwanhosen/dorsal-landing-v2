@@ -30,7 +30,7 @@ const routeList: RouteProps[] = [
   },
   {
     href: "#pricing",
-    label: "Pricing",
+    label: "Proposed Pricing",
   },
   {
     href: "#waitlist",
