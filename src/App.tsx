@@ -8,6 +8,7 @@ import { Newsletter } from "./components/Newsletter";
 import { Pricing } from "./components/Pricing";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Team } from "./components/Team";
+
 import { Services } from "./components/Services";
 import { Sponsors } from "./components/Sponsors";
 
@@ -19,8 +20,8 @@ function App() {
       <Sponsors />
       {/*<About />*/}
       <HowItWorks />
-      <Features />
-      {<Services />}
+      {/*<Features />*/}
+      <Services />
       {/*<Cta />*/}
       {/*<Testimonials />*/}
       <Pricing />
