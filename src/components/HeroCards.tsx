@@ -1,4 +1,4 @@
-import { LockIcon } from "lucide-react";
+import { LockIcon, ShieldIcon } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 export const HeroCards = () => {
@@ -35,6 +35,20 @@ export const HeroCards = () => {
         </CardHeader>
       </Card>
       */}
+
+      <Card className="absolute top-[300px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[350px] drop-shadow-xl shadow-black/10 dark:shadow-white/10 mt-5">
+        <CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
+            <div className="mt-1 bg-primary/20 p-1 rounded-2xl">
+                <ShieldIcon />
+            </div>
+            <div>
+                <CardTitle>Security-First Approach</CardTitle>
+                <CardDescription className="text-md mt-2">
+                  Industry-standard data protection, committed to ensuring full compliance as we scale.
+                </CardDescription>
+            </div>
+        </CardHeader>
+      </Card>
     </div>
   );
 };
