@@ -1,6 +1,7 @@
 import nvidia from "../assets/nvidia.avif";
 import amazon from "../assets/amazon.avif";
 import microsoft from "../assets/ms_forstartups.png";
+import google from "../assets/google.png";
 
 interface SponsorProps {
   icon: JSX.Element;
@@ -26,9 +27,9 @@ const sponsors: SponsorProps[] = [
   },
   {
     icon: <img
-      src={'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_2/o1cjblcnkovw0wxcg7a3'}
+      src={google}
       alt={"Google"}
-      width={60}
+      width={150}
     />,
     name: "Google",
   },
@@ -37,6 +38,7 @@ const sponsors: SponsorProps[] = [
       src={microsoft}
       alt={"Microsoft"}
       width={150}
+      
     />,
     name: "Microsoft",
   }
@@ -46,7 +48,7 @@ export const Sponsors = () => {
   return (
     <section
       id="sponsors"
-      className="container pt-42 sm:py-0"
+      className="container pt-42 sm:py-0 dark:bg-slate-500 p-2 rounded"
     >
       <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
         BACKED BY
