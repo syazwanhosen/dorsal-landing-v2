@@ -123,16 +123,13 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <a
-              href="https://github.com/abrarfrahman/dorsal-fyi-landing"
-              target="_blank"
-              className={`border ${buttonVariants({ variant: "secondary" })}`}
-            >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
-              Github
-            </a>
-
             <ModeToggle />
+            <a
+              href="#waitlist"
+              className={`${buttonVariants({ variant: "default" })}`}
+            >
+              Follow Us →
+            </a>
           </div>
         </NavigationMenuList>
       </NavigationMenu>
