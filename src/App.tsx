@@ -1,3 +1,4 @@
+import "./App.css";
 import { Features } from "./components/Features";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
@@ -7,15 +8,15 @@ import { Newsletter } from "./components/Newsletter";
 import { Pricing } from "./components/Pricing";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Team } from "./components/Team";
-import "./App.css";
 import { Services } from "./components/Services";
+import { Sponsors } from "./components/Sponsors";
 
 function App() {
   return (
     <>
       <Navbar />
       <Hero />
-      {/*<Sponsors />*/}
+      <Sponsors />
       {/*<About />*/}
       <HowItWorks />
       <Features />

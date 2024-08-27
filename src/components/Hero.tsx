@@ -4,7 +4,7 @@ import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
 export const Hero = () => {
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
+    <section className="container grid lg:grid-cols-2 place-items-center py-4 md:py- gap-10">
       <div className="text-center lg:text-start space-y-6">
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
@@ -13,12 +13,12 @@ export const Hero = () => {
             </span>{" "}
             your medical bills
           </h1>{" "}
-          with{" "}
+          with the power of{" "}
           <h2 className="inline">
             <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text animate-gradient">
-              crowdsourced
+              crowdsourced 
             </span>{" "}
-            data at scale
+            data
           </h2>
         </main>
 

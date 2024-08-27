@@ -1,4 +1,6 @@
-import { Radar } from "lucide-react";
+import nvidia from "../assets/nvidia.avif";
+import amazon from "../assets/amazon.avif";
+import microsoft from "../assets/ms_forstartups.png";
 
 interface SponsorProps {
   icon: JSX.Element;
@@ -7,39 +9,47 @@ interface SponsorProps {
 
 const sponsors: SponsorProps[] = [
   {
-    icon: <Radar size={34} />,
-    name: "Sponsor 1",
+    icon: <img
+      src={nvidia}
+      alt={"NVidia"}
+      width={100}
+    />,
+    name: "NVidia",
   },
   {
-    icon: <Radar size={34} />,
-    name: "Sponsor 2",
+    icon: <img
+      src={amazon}
+      alt={"Amazon"}
+      width={150}
+    />,
+    name: "Amazon",
   },
   {
-    icon: <Radar size={34} />,
-    name: "Sponsor 3",
+    icon: <img
+      src={'https://images.crunchbase.com/image/upload/c_pad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_2/o1cjblcnkovw0wxcg7a3'}
+      alt={"Google"}
+      width={60}
+    />,
+    name: "Google",
   },
   {
-    icon: <Radar size={34} />,
-    name: "Sponsor 4",
-  },
-  {
-    icon: <Radar size={34} />,
-    name: "Sponsor 5",
-  },
-  {
-    icon: <Radar size={34} />,
-    name: "Sponsor 6",
-  },
+    icon: <img
+      src={microsoft}
+      alt={"Microsoft"}
+      width={150}
+    />,
+    name: "Microsoft",
+  }
 ];
 
 export const Sponsors = () => {
   return (
     <section
       id="sponsors"
-      className="container pt-24 sm:py-32"
+      className="container pt-42 sm:py-0"
     >
       <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
-        Investors and founders
+        BACKED BY
       </h2>
 
       <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
@@ -49,7 +59,7 @@ export const Sponsors = () => {
             className="flex items-center gap-1 text-muted-foreground/60"
           >
             <span>{icon}</span>
-            <h3 className="text-xl  font-bold">{name}</h3>
+            {/* <h3 className="text-xl  font-bold">{name}</h3> */}
           </div>
         ))}
       </div>
