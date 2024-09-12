@@ -1,6 +1,7 @@
 import nvidia from "../assets/nvidia.avif";
-import amazon from "../assets/amazon.avif";
+import deepgram from "../assets/deepgram.svg";
 import microsoft from "../assets/ms_forstartups.png";
+import amazon from "../assets/amazon.avif";
 import google from "../assets/google.png";
 
 interface SponsorProps {
@@ -16,6 +17,15 @@ const sponsors: SponsorProps[] = [
       width={100}
     />,
     name: "NVidia",
+  },
+  {
+    icon: <img
+      src={deepgram}
+      alt={"Deepgram"}
+      width={125}
+      
+    />,
+    name: "Deepgram",
   },
   {
     icon: <img
@@ -41,7 +51,7 @@ const sponsors: SponsorProps[] = [
       
     />,
     name: "Microsoft",
-  }
+  },
 ];
 
 export const Sponsors = () => {
