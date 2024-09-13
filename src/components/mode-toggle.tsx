@@ -7,18 +7,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/theme-provider";
 import { Moon, Sun } from "lucide-react";
-import { useEffect } from "react";
 
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   // default light theme
+  /**
   useEffect(() => {
     if (!theme) {
       setTheme("light");
     }
   }, [theme, setTheme]);
-
+  */
 
   return (
     <DropdownMenu>

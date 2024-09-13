@@ -58,7 +58,7 @@ export const Sponsors = () => {
   return (
     <section
       id="sponsors"
-      className="container pt-42 sm:py-0 dark:bg-slate-500 p-2 rounded"
+      className="container pt-42 sm:py-0 dark:bg-slate-700 p-2 rounded"
     >
       <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
         BACKED BY
