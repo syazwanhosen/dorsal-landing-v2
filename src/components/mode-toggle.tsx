@@ -13,7 +13,7 @@ export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    if (!theme) {
+    if (theme !== "light" && theme !== "dark") {
       setTheme("light");
     }
   }, [theme, setTheme]);
