@@ -39,7 +39,7 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "How do insurance companies save money with this?",
-    answer: "Insurers waste billions processing confused claims and billing disputes. We've helped partners cut processing times by 65% and reduce appeals by 60%. One major insurer now handles 1.2 million claims faster while saving millions in administrative costs.",
+    answer: "Insurers waste billions managing confused claims and billing disputes. Our solution aims to significantly cut processing times and reduce appeals, enabling partners to handle high volumes of claims faster and save millions in administrative costs.",
     value: "payors",
   },
   {
