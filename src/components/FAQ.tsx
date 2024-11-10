@@ -44,7 +44,7 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "How are you ensuring this data is accurate and trustworthy?",
-    answer: "We're building the most comprehensive healthcare pricing database ever created:\n\n- Real-time updates from over 8,000 healthcare facilities\n- Machine learning algorithms that detect pricing anomalies\n- Verification against millions of actual medical bills\n- Integration with major insurance databases\n- Continuous cross-referencing with Medicare data\n\nOur accuracy rate exceeds 99.7%, verified by independent auditors. This isn't just a database - it's the new standard for healthcare pricing transparency.",
+    answer: "We track real prices from over 8,000 healthcare facilities, verified against millions of actual bills. Our system catches pricing errors with 99.7% accuracy. If you spot a price that seems wrong, it probably is - and we'll help you fix it.",
     value: "accuracy",
   },
   {
