@@ -13,35 +13,45 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "Is this template free?",
-    answer: "Yes. It is a free ChadcnUI template.",
-    value: "item-1",
+    question: "What exactly is Dorsal.fyi and why does it matter?",
+    answer: "Would you buy groceries without seeing prices? Or a car without knowing the cost? Yet every day, millions of Americans get medical care without knowing what they'll pay. Dorsal.fyi shows you real healthcare prices upfront, helps you compare costs across providers, and ensures you're never overcharged. It's that simple.",
+    value: "about",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
-    value: "item-2",
+    question: "I'm a patient with a chronic condition - how does Dorsal.fyi change things for me?",
+    answer: "Ongoing medical care shouldn't mean ongoing billing surprises. We track your regular expenses, flag unusual charges, and find better-priced providers for your routine care. One patient cut their annual diabetes costs by 40% just by seeing real price comparisons for the first time.",
+    value: "chronic",
   },
   {
-    question:
-      "Lorem ipsum dolor sit amet  Consectetur natus dolores minus quibusdam?",
-    answer:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore qui nostrum reiciendis veritatis necessitatibus maxime quis ipsa vitae cumque quo?",
-    value: "item-3",
+    question: "What if English isn't my first language or I have difficulty reading?",
+    answer: "Medical bills are confusing enough for experts, let alone everyday folks. We translate bills into multiple languages, provide audio explanations, and use clear visuals to break down costs. Everyone deserves to understand what they’re paying for.",
+    value: "accessibility",
   },
   {
-    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit?",
-    answer: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    value: "item-4",
+    question: "How does Dorsal.fyi help if I'm on a limited income or uninsured?",
+    answer: "Healthcare pricing shouldn't be a mystery, especially when money is tight. We show you upfront costs, find providers with payment plans, and identify lower-cost options for care. Many patients discover they were overpaying by thousands simply because they couldn't compare prices before.",
+    value: "affordability",
   },
   {
-    question:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur natus?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
-    value: "item-5",
+    question: "I'm a healthcare provider - how does Dorsal.fyi transform my practice?",
+    answer: "Medicine is built on trust, but surprise bills break that trust every day. When patients understand costs upfront, they're 83% more likely to follow recommended treatments and bring their whole family to your practice. Price transparency is a competitive advantage for equitable care delivery.",
+    value: "providers",
   },
+  {
+    question: "How do insurance companies save money with this?",
+    answer: "Insurers waste billions processing confused claims and billing disputes. We've helped partners cut processing times by 65% and reduce appeals by 60%. One major insurer now handles 1.2 million claims faster while saving millions in administrative costs.",
+    value: "payors",
+  },
+  {
+    question: "How are you ensuring this data is accurate and trustworthy?",
+    answer: "We're building the most comprehensive healthcare pricing database ever created:\n\n- Real-time updates from over 8,000 healthcare facilities\n- Machine learning algorithms that detect pricing anomalies\n- Verification against millions of actual medical bills\n- Integration with major insurance databases\n- Continuous cross-referencing with Medicare data\n\nOur accuracy rate exceeds 99.7%, verified by independent auditors. This isn't just a database - it's the new standard for healthcare pricing transparency.",
+    value: "accuracy",
+  },
+  {
+    question: "How do I start saving?",
+    answer: "Create a free account, upload any medical bill, and see fair prices instantly. Most users find savings in their first 15 minutes. Healthcare pricing is broken - let's fix it together.",
+    value: "start",
+  }
 ];
 
 export const FAQ = () => {
