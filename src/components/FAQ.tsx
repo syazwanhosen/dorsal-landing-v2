@@ -13,18 +13,18 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "What exactly is Dorsal.fyi and why does it matter?",
+    question: "What's the big deal?",
     answer: "Would you buy groceries without seeing prices? Or a car without knowing the cost? Yet every day, millions of Americans get medical care without knowing what they'll pay. Dorsal.fyi shows you real healthcare prices upfront, helps you compare costs across providers, and ensures you're never overcharged. It's that simple.",
     value: "about",
   },
   {
-    question: "I'm a patient with a chronic condition - how does Dorsal.fyi change things for me?",
+    question: "I'm a patient with a chronic condition - does Dorsal.fyi change things for me?",
     answer: "Ongoing medical care shouldn't mean ongoing billing surprises. We track your regular expenses, flag unusual charges, and find better-priced providers for your routine care. One patient cut their annual diabetes costs by 40% just by seeing real price comparisons for the first time.",
     value: "chronic",
   },
   {
     question: "What if English isn't my first language or I have difficulty reading?",
-    answer: "Medical bills are confusing enough for experts, let alone everyday folks. We translate bills into multiple languages, provide audio explanations, and use clear visuals to break down costs. Everyone deserves to understand what they’re paying for.",
+    answer: "Medical bills are confusing enough for experts, let alone everyday folks. We translate bills into multiple languages, provide audio explanations, and use clear visuals to break down costs. Everyone deserves to understand what they're paying for.",
     value: "accessibility",
   },
   {
@@ -34,12 +34,12 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "I'm a healthcare provider - how does Dorsal.fyi transform my practice?",
-    answer: "Medicine is built on trust, but surprise bills break that trust every day. When patients understand costs upfront, they're 83% more likely to follow recommended treatments and bring their whole family to your practice. Price transparency is a competitive advantage for equitable care delivery.",
+    answer: "Medicine is built on trust, but surprise bills break that trust every day. When patients understand costs upfront, they're more likely to follow recommended treatments and bring their whole family to your practice. Price transparency is increasingly a competitive advantage for equitable care delivery.",
     value: "providers",
   },
   {
     question: "How do insurance companies save money with this?",
-    answer: "Insurers waste billions managing confused claims and billing disputes. Our solution aims to significantly cut processing times and reduce appeals, enabling partners to handle high volumes of claims faster and save millions in administrative costs.",
+    answer: "Our solution aims to significantly cut processing times and reduce appeals, enabling partners to handle high volumes of claims faster and save millions in administrative costs.",
     value: "payors",
   },
   {
