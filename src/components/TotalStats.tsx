@@ -27,7 +27,7 @@ export const TotalStats = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex items-center sm:space-x-4 w-full sm:w-auto lg:pb-0 md:pb-4 sm:pb-4" // Added md:pb-6 for medium screens
+            className="flex items-center sm:space-x-4 w-full sm:w-auto lg:pb-0 md:pb-4 sm:pb-4" 
           >
             <div className={`p-4 rounded-lg mr-4 ${stat.bgColor}`}>
               {stat.icon}
