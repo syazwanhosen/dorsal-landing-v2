@@ -14,7 +14,7 @@ export const HospitalPrices = () => {
           <div className="flex flex-col">
             <div className="flex items-center justify-between p-4">
               <h3 className="text-lg font-bold">Fixed vs Negotiated Price Hospitals</h3>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-8">
                 <div className="flex items-center space-x-2">
                   <span className="w-3 h-3 rounded-full bg-green-legend"></span>
                   <span className="text-sm text-gray-700">Fixed</span>
