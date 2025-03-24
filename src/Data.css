@@ -33,3 +33,11 @@
 .text-yellow{
     color: #F3CC5C;
 }
+
+.bg-green-legend {
+    background-color: #6CA724;
+}
+
+.bg-red-legend {
+    background-color: #CE3C29;
+}
