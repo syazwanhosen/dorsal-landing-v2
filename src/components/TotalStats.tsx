@@ -27,7 +27,7 @@ export const TotalStats = () => {
     { icon: <MapPinned size={28} className="text-purple" />, label: "Total States", value: apiStats.total_states, bgColor: "bg-light-purple" },
     { icon: <Hospital size={28} className="text-green" />, label: "Total Hospitals", value: apiStats.total_hospitals, bgColor: "bg-light-green" },
     { icon: <Package size={28} className="text-red" />, label: "Total Services", value: apiStats.total_services, bgColor: "bg-light-red" },
-    { icon: <Boxes size={28} className="text-yellow" />, label: "Total Service Groups", value: apiStats.total_categories, bgColor: "bg-light-yellow" },
+    { icon: <Boxes size={28} className="text-yellow" />, label: "Service Categories", value: apiStats.total_categories, bgColor: "bg-light-yellow" },
   ];
 
   return (
