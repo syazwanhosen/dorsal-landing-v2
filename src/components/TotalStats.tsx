@@ -1,6 +1,6 @@
-import  { useEffect, useState } from "react";
-import { MapPinned, Hospital, Package, Boxes } from "lucide-react"; // Lucide icons for icons
-import { fetchStatistics } from "../api/api"; // Import the API utility
+import { useEffect, useState } from "react";
+import { MapPinned, Hospital, Package, Boxes } from "lucide-react";
+import { fetchStatistics } from "../api/api";
 
 export const TotalStats = () => {
   const [apiStats, setApiStats] = useState({
@@ -13,7 +13,7 @@ export const TotalStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchStatistics(); // Use the utility function
+        const data = await fetchStatistics();
         setApiStats(data);
       } catch (error) {
         console.error("Error fetching statistics:", error);
@@ -21,7 +21,6 @@ export const TotalStats = () => {
     };
     fetchData();
   }, []);
-
 
   const stats = [
     { icon: <MapPinned size={28} className="text-purple" />, label: "Total States", value: apiStats.total_states, bgColor: "bg-light-purple" },
@@ -34,32 +33,31 @@ export const TotalStats = () => {
     <section id="TotalStats" className="container py-8">
       <h2 className="text-2xl font-bold pb-4 text-center sm:text-left">Overview</h2>
 
-      <div className="border rounded-lg p-6 flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row items-stretch justify-between gap-y-6 sm:gap-y-0 relative">
+      <div className="border rounded-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex relative items-center sm:space-x-4 w-full sm:w-auto lg:pb-0 md:pb-4 sm:pb-4"
+            className="relative flex items-center p-4 rounded-lg bg-white"
           >
-              {/* Divider - only show between items */}
-              {index > 0 && (
+            {/* Dashed line divider - only show if index > 0 */}
+            {index > 0 && (
   <div 
-    className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 h-16"
-    style={{
-      borderLeft: '1.5px dashed #E7E7F4',
-      left: '-15px'
-    }}
+    className="absolute left-0 top-1/2 -translate-y-1/2 h-16 border-l border-dashed border-gray-300"
+    style={{ left: '-15px' }} // Correct camelCase style key
   ></div>
-            )}
-            <div className={`p-4 rounded-lg ${index === 0 ? 'mr-2' : 'mr-4'} ${stat.bgColor}`}>
+)}
+
+
+            
+            <div className={`rounded p-3 ${stat.bgColor}`}>
               {stat.icon}
             </div>
-            <div className="mr-4">
-              <p className="text-gray-600 text-center sm:text-left text-sm">{stat.label}</p>
-              <p className="text-2xl sm:text-3xl font-bold text-left">{stat.value}</p>
+            <div className="ml-4">
+              <p className="text-gray-600 text-sm">{stat.label}</p>
+              <p className="text-2xl font-bold">{stat.value}</p>
             </div>
           </div>
         ))}
-        
       </div>
     </section>
   );
