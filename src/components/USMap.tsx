@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import { stateNames } from "../utils/stateUtils"; 
+import { stateNames } from "../utils/stateUtils";
+import { getColor } from "../utils/colorUtils";
 
 interface USMapProps {
   onStateHover: (stateName: string, price: string) => void;
@@ -43,22 +44,18 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
         .append("path")
         .attr("d", path as any)
         .attr("class", "stroke-white")
+        .attr("stroke", "#fff") 
+        .attr("stroke-width", 0.5)
         .attr("fill", (d: any) => {
           const fips = d.id;
           const abbr = stateNames[fips]?.abbr;
           const price = abbr ? pricingData[abbr] : undefined;
 
-          const baseColor = "#4361ee";
-
           if (price !== undefined && !isNaN(price)) {
-            const opacity =
-              maxPrice !== minPrice
-                ? 0.2 + 0.8 * ((price - minPrice) / (maxPrice - minPrice))
-                : 0.8;
-            return d3.color(baseColor)?.copy({ opacity })?.formatRgb() ?? "#ccc";
+            return getColor(price, minPrice, maxPrice);
           }
-
-          return "#eee"; // default color for missing data
+        
+          return "#eee"; // fallback for undefined or missing price
         })
         .on("mouseover", function (event: any, d: any) {
           const fips = d.id;
@@ -66,16 +63,42 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
           const abbr = info?.abbr;
           const price = abbr ? pricingData[abbr] : undefined;
 
-          d3.select(this).style("stroke", "#000").style("stroke-width", "2px");
-
           if (info && price !== undefined) {
             onStateHover(info.name, price.toString());
           } else if (info) {
             onStateHover(info.name, "N/A");
           }
+
+          d3.select(this)
+            .attr("filter", null) // remove any shadows if applied
+            .attr("fill", (d: any) => {
+              const fips = d.id;
+              const abbr = stateNames[fips]?.abbr;
+              const price = abbr ? pricingData[abbr] : undefined;
+      
+              if (price !== undefined && !isNaN(price)) {
+                // Make hover fill darker (e.g. reduce lightness by 10%)
+                const hoverColor = getColor(price, minPrice, maxPrice, true); // pass `hover = true`
+                return hoverColor;
+              }
+      
+              return "#ccc";
+          });
+
         })
         .on("mouseout", function () {
-          d3.select(this).style("stroke", "#fff").style("stroke-width", "1px");
+          d3.select(this)
+            .attr("fill", (d: any) => {
+              const fips = d.id;
+              const abbr = stateNames[fips]?.abbr;
+              const price = abbr ? pricingData[abbr] : undefined;
+      
+              if (price !== undefined && !isNaN(price)) {
+                return getColor(price, minPrice, maxPrice); // regular fill
+              }
+      
+              return "#eee";
+            });
         });
     });
   }, [pricingData, minPrice, maxPrice]);
