@@ -2,19 +2,23 @@ import { Map } from "./Map";
 
 export const HospitalPrices = () => {
   return (
-    <section id="HospitalPrices" className="container py-4">
+    <section id="HospitalPrices" className="container px-4 py-6 mx-auto">
       <div className="grid gap-4">
-        <h2 className="text-2xl font-bold">
+         <h2 className="text-2xl md:text-3xl font-bold">
           <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
             Hospitals{" "}
           </span>
           Prices
         </h2>
+
         <div className="rounded-lg border shadow-sm bg-white">
           <div className="flex flex-col">
-            <div className="flex items-center justify-between p-4">
-              <h3 className="text-lg font-bold">Fixed vs Negotiated Price Hospitals</h3>
-              <div className="flex items-center space-x-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4">
+              <h3 className="text-lg font-bold text-center sm:text-left">
+                Fixed vs Negotiated Price Hospitals
+              </h3>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:space-x-8 gap-2 sm:gap-0">
                 <div className="flex items-center space-x-2">
                   <span className="w-3 h-3 rounded-full bg-green-legend"></span>
                   <span className="text-sm text-gray-700">Fixed</span>
