@@ -7,6 +7,7 @@ import { stateNames } from "../utils/stateUtils";
 export const StatewisePricing = () => {
   const [stateName, setStateName] = useState("");
   const [pricingData, setPricingData] = useState<Record<string, number>>({});
+  const [distributedPrices, setDistributedPrices] = useState<Record<string, number>>({});
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -20,6 +21,7 @@ export const StatewisePricing = () => {
   useEffect(() => {
     setStateName("");
     setPricingData({});
+    setDistributedPrices({});
   }, [selectedCategory]);
 
   const handleReset = () => {
@@ -32,12 +34,35 @@ export const StatewisePricing = () => {
     if (!selectedCategory) return alert("Please select a category first");
 
     fetch(`http://123.200.16.106:3939/statewise_pricing/get_pricing/${selectedCategory}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then(errorData => {
+            throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorData.error || 'Unknown error'}`);
+          }).catch(err => {
+            if (err.message.includes('JSON')) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            throw err;
+          });
+        }
+        return res.json();
+      })
       .then((data) => {
-        const processed: Record<string, number> = {};
+        if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
+          alert("No pricing data available for this category.");
+          return;
+        }
 
-        for (const state in data) {
-          let value = data[state]?.avg ?? data[state];
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        const pricingData: Record<string, number> = {};
+        const rawPrices = data.prices;
+        const distributed = data.distributed_prices || {};
+
+        for (const state in rawPrices) {
+          let value = rawPrices[state]?.avg ?? rawPrices[state];
           if (value !== null && value !== undefined) {
             let abbr = state.length === 2 ? state.toUpperCase() : "";
             if (!abbr) {
@@ -48,15 +73,16 @@ export const StatewisePricing = () => {
                 }
               }
             }
-            if (abbr) processed[abbr] = parseFloat(value);
+            if (abbr) pricingData[abbr] = parseFloat(value);
           }
         }
 
-        setPricingData(processed);
+        setPricingData(pricingData);
+        setDistributedPrices(distributed);
       })
       .catch((err) => {
         console.error("Error fetching pricing data:", err);
-        alert("Failed to load pricing data. Try again.");
+        alert(`Failed to load pricing data: ${err.message || "Unknown error"}. Please try again.`);
       });
   };
 
@@ -74,31 +100,15 @@ export const StatewisePricing = () => {
   const selectedPrice = pricingData[selectedAbbr] ?? 0;
   const selectedColor = getColor(selectedPrice);
 
-  const generateLegendSteps = () => {
-    const steps = 5;
-    const increment = (maxPrice - minPrice) / (steps - 1);
+  const distributedPriceItems: PriceItem[] = Object.entries(distributedPrices).map(([abbr, value]) => {
+    const state = Object.values(stateNames).find((s) => s.abbr === abbr)?.name || abbr;
+    return {
+      state,
+      value: value !== null && value !== undefined ? parseFloat(value.toFixed(2)) : null,
+      color: getColor(value),
+    };
+  });
   
-    return Array.from({ length: steps }, (_, i) => {
-      const value = parseFloat((minPrice + i * increment).toFixed(2));
-      const opacity = 0.2 + 0.8 * (i / (steps - 1));
-  
-      let matchedState = "N/A";
-      for (const [abbr, val] of Object.entries(pricingData)) {
-        if (parseFloat(val.toFixed(2)) === value) {
-          matchedState = Object.values(stateNames).find((s) => s.abbr === abbr)?.name || abbr;
-          break;
-        }
-      }
-  
-      return {
-        state: matchedState,
-        value,
-        color: `rgba(67, 97, 238, ${opacity})`,
-      };
-    });
-  };
-  
-  const legendSteps = generateLegendSteps();
   
   return (
     <section id="StatewisePricing" className="container px-4 md:px-6 py-6">
@@ -141,8 +151,8 @@ export const StatewisePricing = () => {
 
         {selectedCategory && (
           <>
-            {legendSteps.some((item) => item.state && !isNaN(item.value)) && (
-              <DataDisplay label="Price Distribution" items={legendSteps} />
+            {distributedPriceItems.length > 0 && (
+              <DataDisplay label="Distributed Prices" items={distributedPriceItems} />
             )}
 
             {stateName && (
