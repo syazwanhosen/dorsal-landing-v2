@@ -3,6 +3,15 @@ import USMap from "./USMap";
 import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
 import { stateNames } from "../utils/stateUtils";
+import { fetchCategories, fetchPricingData } from "../api/api";
+
+
+
+interface PriceItem {
+  state: string;
+  value: number | null;
+  color: string;
+}
 
 export const StatewisePricing = () => {
   const [stateName, setStateName] = useState("");
@@ -11,9 +20,8 @@ export const StatewisePricing = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
-  useEffect(() => {
-    fetch("http://123.200.16.106:3939/statewise_pricing/get_categories")
-      .then((res) => res.json())
+   useEffect(() => {
+    fetchCategories()
       .then((data) => setCategories(data.categories))
       .catch((err) => console.error("Error fetching categories:", err));
   }, []);
@@ -32,37 +40,28 @@ export const StatewisePricing = () => {
 
   const loadPricingData = () => {
     if (!selectedCategory) return alert("Please select a category first");
-
-    fetch(`http://123.200.16.106:3939/statewise_pricing/get_pricing/${selectedCategory}`)
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then(errorData => {
-            throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorData.error || 'Unknown error'}`);
-          }).catch(err => {
-            if (err.message.includes('JSON')) {
-              throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            throw err;
-          });
-        }
-        return res.json();
-      })
+  
+    fetchPricingData(selectedCategory)
       .then((data) => {
         if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
           alert("No pricing data available for this category.");
           return;
         }
-
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        const pricingData: Record<string, number> = {};
+  
+        const processedData: Record<string, number> = {};
         const rawPrices = data.prices;
         const distributed = data.distributed_prices || {};
-
+  
         for (const state in rawPrices) {
-          let value = rawPrices[state]?.avg ?? rawPrices[state];
+          const priceValue = rawPrices[state];
+          let value: number | null | undefined;
+          
+          if (typeof priceValue === 'number') {
+            value = priceValue;
+          } else if (priceValue && 'avg' in priceValue) {
+            value = priceValue.avg;
+          }
+  
           if (value !== null && value !== undefined) {
             let abbr = state.length === 2 ? state.toUpperCase() : "";
             if (!abbr) {
@@ -73,11 +72,11 @@ export const StatewisePricing = () => {
                 }
               }
             }
-            if (abbr) pricingData[abbr] = parseFloat(value);
+            if (abbr) processedData[abbr] = parseFloat(value.toString());
           }
         }
-
-        setPricingData(pricingData);
+  
+        setPricingData(processedData);
         setDistributedPrices(distributed);
       })
       .catch((err) => {
