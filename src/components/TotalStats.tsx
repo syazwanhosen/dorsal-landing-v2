@@ -38,9 +38,19 @@ export const TotalStats = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex items-center sm:space-x-4 w-full sm:w-auto lg:pb-0 md:pb-4 sm:pb-4"
+            className="flex relative items-center sm:space-x-4 w-full sm:w-auto lg:pb-0 md:pb-4 sm:pb-4"
           >
-            <div className={`p-4 rounded-lg mr-4 ${stat.bgColor}`}>
+              {/* Divider - only show between items */}
+              {index > 0 && (
+  <div 
+    className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 h-16"
+    style={{
+      borderLeft: '1.5px dashed #E7E7F4',
+      left: '-15px'
+    }}
+  ></div>
+            )}
+            <div className={`p-4 rounded-lg ${index === 0 ? 'mr-2' : 'mr-4'} ${stat.bgColor}`}>
               {stat.icon}
             </div>
             <div className="mr-4">
@@ -49,22 +59,7 @@ export const TotalStats = () => {
             </div>
           </div>
         ))}
-        {/* Add dividers using inline styles */}
-        {stats.slice(0, -1).map((_, index) => (
-          <div
-            key={index}
-            style={{
-              position: "absolute",
-              top: "50%",
-              transform: "translateY(-50%)",
-              height: "70px",
-              width: "1px",
-              backgroundColor: "#9ca3af30",
-              left: `${index === 0 ? 20 : 20 + index * 26.666}%`,
-            }}
-            className="hidden lg:block"
-          />
-        ))}
+        
       </div>
     </section>
   );

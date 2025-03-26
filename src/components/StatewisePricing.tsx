@@ -3,6 +3,8 @@ import USMap from "./USMap";
 import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
 import { stateNames } from "../utils/stateUtils";
+import { fetchCategories, fetchPricingData } from "../api/api";
+
 
 export const StatewisePricing = () => {
   const [stateName, setStateName] = useState("");
@@ -11,11 +13,11 @@ export const StatewisePricing = () => {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch("http://123.200.16.106:3939/statewise_pricing/get_categories")
-      .then((res) => res.json())
+    fetchCategories()
       .then((data) => setCategories(data.categories))
       .catch((err) => console.error("Error fetching categories:", err));
   }, []);
+
 
   useEffect(() => {
     setStateName("");
@@ -31,11 +33,9 @@ export const StatewisePricing = () => {
   const loadPricingData = () => {
     if (!selectedCategory) return alert("Please select a category first");
 
-    fetch(`http://123.200.16.106:3939/statewise_pricing/get_pricing/${selectedCategory}`)
-      .then((res) => res.json())
+    fetchPricingData(selectedCategory)
       .then((data) => {
         const processed: Record<string, number> = {};
-
         for (const state in data) {
           let value = data[state]?.avg ?? data[state];
           if (value !== null && value !== undefined) {
