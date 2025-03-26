@@ -4,8 +4,7 @@ import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
 import { stateNames } from "../utils/stateUtils";
 import { fetchCategories, fetchPricingData } from "../api/api";
-
-
+import { getColor } from "../utils/colorUtils";
 
 interface PriceItem {
   state: string;
@@ -89,33 +88,28 @@ export const StatewisePricing = () => {
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
-  const getColor = (price: number) => {
-    const opacity = isNaN(price) || maxPrice === minPrice ? 0.2 : 0.2 + 0.8 * ((price - minPrice) / (maxPrice - minPrice));
-    return `rgba(67, 97, 238, ${opacity})`;
-  };
-
   const getAbbr = (name: string) => Object.values(stateNames).find(s => s.name === name)?.abbr || "";
   const selectedAbbr = getAbbr(stateName);
   const selectedPrice = pricingData[selectedAbbr] ?? 0;
-  const selectedColor = getColor(selectedPrice);
+  const selectedColor = getColor(selectedPrice, minPrice, maxPrice);
 
   const distributedPriceItems: PriceItem[] = Object.entries(distributedPrices).map(([abbr, value]) => {
     const state = Object.values(stateNames).find((s) => s.abbr === abbr)?.name || abbr;
     return {
       state,
       value: value !== null && value !== undefined ? parseFloat(value.toFixed(2)) : null,
-      color: getColor(value),
+      color: getColor(value, minPrice, maxPrice)
     };
   });
   
   
   return (
-    <section id="StatewisePricing" className="container px-4 md:px-6 py-6">
+    <section id="StatewisePricing" className="container px-4 md:px-6 py-4">
   <div className="grid gap-6">
-    <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
+    <h2 className="text-xl font-bold text-left">
       Compare{" "}
       <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
-        Healthcare{" "}
+        Healthcare{" "}Pricing{" "}
       </span>
       Across The State
     </h2>
@@ -123,8 +117,8 @@ export const StatewisePricing = () => {
     <div className="flex flex-col lg:flex-row gap-6">
       {/* US Map Card */}
       <div className="border rounded-lg p-4 shadow-sm w-full lg:w-2/3">
-        <h2 className="text-lg font-semibold text-center lg:text-left mb-2">
-          {selectedCategory || "Select a Service Category to Begin"}
+        <h2 className="text-lg font-bold text-center lg:text-left mb-2">
+          {selectedCategory || ""}
         </h2>
         <div className="w-full h-96 sm:h-[28rem] md:h-[32rem] flex items-center justify-center rounded">
           <div id="us-map" className="w-full max-w-[900px] mx-auto">

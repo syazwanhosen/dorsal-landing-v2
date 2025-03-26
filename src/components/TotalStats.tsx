@@ -30,8 +30,8 @@ export const TotalStats = () => {
   ];
 
   return (
-    <section id="TotalStats" className="container py-8">
-      <h2 className="text-2xl font-bold pb-4 text-center sm:text-left">Overview</h2>
+    <section id="TotalStats" className="container py-6">
+      <h2 className="text-xl font-bold pb-4 text-left">Overview</h2>
 
       <div className="border rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
