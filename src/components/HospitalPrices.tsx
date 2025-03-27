@@ -15,7 +15,7 @@ export const HospitalPrices = () => {
           <div className="flex flex-col">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4">
               <h3 className="text-lg font-bold text-center sm:text-left">
-                Fixed vs Negotiated Price Hospitals
+                Fixed-Price vs. Negotiated-Price Hospitals
               </h3>
 
               <div className="flex flex-col sm:flex-row items-center justify-center sm:space-x-8 gap-2 sm:gap-0">
