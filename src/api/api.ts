@@ -21,7 +21,7 @@ export interface PricingData {
 
 export const fetchStatistics = async (): Promise<Statistics> => {
   try {
-    const response = await fetch("http://123.200.16.106:3939/get_statistics");
+    const response = await fetch("https://dorsaldata1.apurbatech.io/get_statistics");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -34,7 +34,7 @@ export const fetchStatistics = async (): Promise<Statistics> => {
 
 export const fetchCategories = async (): Promise<{ categories: string[] }> => {
   try {
-    const response = await fetch("http://123.200.16.106:3939/statewise_pricing/get_categories");
+    const response = await fetch("https://dorsaldata1.apurbatech.io/statewise_pricing/get_categories");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -47,7 +47,7 @@ export const fetchCategories = async (): Promise<{ categories: string[] }> => {
 
 export const fetchPricingData = async (category: string): Promise<PricingData> => {
   try {
-    const response = await fetch(`http://123.200.16.106:3939/statewise_pricing/get_pricing/${category}`);
+    const response = await fetch(`https://dorsaldata1.apurbatech.io/statewise_pricing/get_pricing/${category}`);
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
