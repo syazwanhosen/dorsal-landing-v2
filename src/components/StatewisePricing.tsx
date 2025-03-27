@@ -3,8 +3,8 @@ import USMap from "./USMap";
 import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
 import { stateNames } from "../utils/stateUtils";
-import { fetchCategories, fetchPricingData } from "../api/api";
 import { getColor } from "../utils/colorUtils";
+import { fetchCategories, fetchPricingData } from "../api/api";
 
 interface PriceItem {
   state: string;
@@ -19,7 +19,7 @@ export const StatewisePricing = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     fetchCategories()
       .then((data) => setCategories(data.categories))
       .catch((err) => console.error("Error fetching categories:", err));
