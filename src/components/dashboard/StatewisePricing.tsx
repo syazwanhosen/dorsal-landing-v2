@@ -19,7 +19,7 @@ export const StatewisePricing = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     fetchCategories()
       .then((data) => setCategories(data.categories))
       .catch((err) => console.error("Error fetching categories:", err));
@@ -107,11 +107,11 @@ export const StatewisePricing = () => {
     <section id="StatewisePricing" className="container px-4 md:px-6 py-4">
   <div className="grid gap-6">
     <h2 className="text-xl font-bold text-left">
-      Compare{" "}
+      Statewide{" "}
       <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
-        Healthcare{" "}Pricing{" "}
+      Healthcare{" "}Price{" "}
       </span>
-      Across The State
+      Comparison
     </h2>
 
     <div className="flex flex-col lg:flex-row gap-6">
