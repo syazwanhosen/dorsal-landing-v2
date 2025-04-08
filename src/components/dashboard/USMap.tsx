@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import { stateNames } from "../utils/stateUtils";
-import { getColor } from "../utils/colorUtils";
+import { stateNames } from "../../utils/stateUtils";
+import { getColor } from "../../utils/colorUtils";
 
 interface USMapProps {
   onStateHover: (stateName: string, price: string) => void;

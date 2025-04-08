@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MapPinned, Hospital, Package, Boxes } from "lucide-react";
-import { fetchStatistics } from "../api/api";
+import { fetchStatistics } from "../../api/api";
 
 export const TotalStats = () => {
   const [apiStats, setApiStats] = useState({
