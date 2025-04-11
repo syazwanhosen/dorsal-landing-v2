@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import USMap from "./USMap";
 import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
-import { stateNames } from "../utils/stateUtils";
-import { getColor } from "../utils/colorUtils";
-import { fetchCategories, fetchPricingData } from "../api/api";
+import { stateNames } from "../../utils/stateUtils";
+import { fetchCategories, fetchPricingData } from "../../api/api";
+import { getColor } from "../../utils/colorUtils";
 
 interface PriceItem {
   state: string;
