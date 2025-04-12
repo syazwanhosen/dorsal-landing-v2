@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+
 /* *=========== Default theme =========== */
 /* @layer base {
   :root {
