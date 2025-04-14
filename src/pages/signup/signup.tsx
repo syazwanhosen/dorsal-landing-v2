@@ -1,11 +1,11 @@
 import React from "react";
-import Login from "../../components/login/login"; 
 import { ScrollToTop } from "@/components/ScrollToTop";
+import Signup from "@/components/signup/signup";
 
 const LoginPage: React.FC = () => {
   return (
     <>
-      <Login />
+    <Signup />
     <ScrollToTop />
    </>
   );

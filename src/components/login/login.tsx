@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from '../../assets/login/login-logo.png';
-import image from '../../assets/login/image.png';
+import image from '../../assets/login/login-image.png';
 import google from '../../assets/login/Googlee.svg';
 import facebook from '../../assets/login/Facebook.svg';
 import './login.css'; 
@@ -13,13 +13,13 @@ const Login: React.FC = () => {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
-    // Add authentication logic here (e.g., API call)
+ 
   };
 
   return (
     <div className="body-bg ">
     <div className="flex items-center justify-center lg:h-screen bg-gray-100">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-2xl max-w-5xl lg:w-[100%]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-2xl max-w-5xl lg:w-[100%] h-[100vh] lg:h-auto">
         {/* Left Column: Login Form */}
         <div className="flex-1 flex flex-col justify-center items-center lg:items-start px-16">
           <div className="w-full max-w-sm">
@@ -63,9 +63,8 @@ const Login: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded login-btn"
-              >
-                Sign In
+                className="w-full   text-white font-medium py-2 rounded login-btn">
+                Login
               </button>
             </form>
             <div className="space-y-4 mt-6">
@@ -89,7 +88,7 @@ const Login: React.FC = () => {
               </button>
               <div className="text-center mt-4">
                 <span className="text-sm text-gray-700">Don’t have an account?</span>
-                <a href="#" className="text-sm primary-color hover:underline ml-1">
+                <a href="/signup" className="text-sm primary-color hover:underline ml-1">
                   Sign up
                 </a>
               </div>
@@ -97,14 +96,14 @@ const Login: React.FC = () => {
           </div>
         </div>
   
-        {/* Right Column: Image */}
-        <div className="flex-1 flex justify-end items-end primary-bg rounded">
-          <img
-            src={image}
-            alt="Login Illustration"
-            className="rounded-lg w-full max-w-md"
-          />
-        </div>
+        <div className="hidden lg:flex flex-1 justify-end items-end primary-bg rounded">
+  <img
+    src={image}
+    alt="Login Illustration"
+    className="rounded-lg w-full max-w-md"
+  />
+</div>
+
       </div>
     </div>
   </div>
