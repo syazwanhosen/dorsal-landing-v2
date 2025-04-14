@@ -87,13 +87,11 @@ const Signup: React.FC = () => {
                   Get Started
                 </button>
               </form>
-              <div className="space-y-4 mt-6">
-                <div className="text-center mt-4">
+              <div className="space-y-4 mt-4">
                   <span className="text-sm text-gray-700">Already a member</span>
                   <a href="/login" className="text-sm primary-color hover:underline ml-1">
                     Login
                   </a>
-                </div>
               </div>
             </div>
           </div>
