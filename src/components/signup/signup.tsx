@@ -21,11 +21,10 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="body-bg ">
-      <div className="flex items-center justify-center lg:h-screen bg-gray-100">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-2xl max-w-5xl lg:w-[100%] h-[100vh] lg:h-auto">
-          {/* Left Column: Login Form */}
-          <div className="flex-1 flex flex-col justify-center items-center lg:items-start px-16">
+    <div className="lg:body-bg ">
+      <div className="flex items-center justify-center lg:h-screen lg:bg-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-2xl max-w-5xl w-full lg:w-[100%] h-[100vh] lg:h-auto">        
+          <div className="flex-1 flex flex-col justify-center items-center lg:items-start lg:px-16">
             <div className="w-full max-w-sm">
               <div className="flex justify-center items-center mb-6">
                 <img src={logo} loading="lazy" width={100} height={60} alt="Login Logo" />
