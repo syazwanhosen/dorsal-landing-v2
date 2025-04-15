@@ -60,9 +60,9 @@ export const Sidebar = () => {
                                 open={openSections[item.label]}
                                 onOpenChange={() => toggleSection(item.label)}
                             >
-                                <Collapsible.Trigger className={clsx(`flex items-center justify-between w-full py-2 px-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700`, openSections[item.label]
-                                    ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC] mt-2'
-                                    : 'text-gray-800 hover:bg-gray-100')}>
+                                <Collapsible.Trigger className={clsx(`flex items-center justify-between w-full py-2 px-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700 mt-2`, openSections[item.label]
+                                    ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC]'
+                                    : 'text-gray-800 hover:bg-gray-100 pl-3')}>
                                     <div className={clsx('flex items-center gap-2', openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')}>
                                         {item.icon}
                                         {item.label}
