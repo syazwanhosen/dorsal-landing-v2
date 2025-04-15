@@ -53,7 +53,7 @@ export const Sidebar = () => {
                     </div>
 
                     {/* Menu */}
-                    <div className="space-y-2 px-4">
+                    <div className="px-4">
                         {MENU.map((item, index) => (
                             <Collapsible.Root
                                 key={index}
@@ -61,8 +61,8 @@ export const Sidebar = () => {
                                 onOpenChange={() => toggleSection(item.label)}
                             >
                                 <Collapsible.Trigger className={clsx(`flex items-center justify-between w-full py-2 px-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700`, openSections[item.label]
-                                    ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC]'
-                                    : 'text-gray-800 hover:bg-gray-100 pl-[calc(0.75rem+4px)]')}>
+                                    ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC] mt-2'
+                                    : 'text-gray-800 hover:bg-gray-100')}>
                                     <div className={clsx('flex items-center gap-2', openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')}>
                                         {item.icon}
                                         {item.label}
@@ -73,15 +73,12 @@ export const Sidebar = () => {
                                         <ChevronDown className={clsx("h-4 w-4", openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')} />
                                     )}
                                 </Collapsible.Trigger>
-                                <Collapsible.Content>
-                                    <ul className="pl-9 py-1">
+                                <Collapsible.Content className="pl-8 mt-2">
+                                    <ul>
                                         {item.submenus.map((submenu, subIndex) => (
                                             <li
                                                 key={subIndex}
-                                                className={clsx(
-                                                    'text-sm cursor-pointer hover:text-[#8770BC]',
-                                                    'mt-4'
-                                                )}
+                                                className='text-sm cursor-pointer hover:text-[#8770BC] py-2'
                                             >
                                                 {submenu}
                                             </li>
@@ -93,7 +90,7 @@ export const Sidebar = () => {
                     </div>
                 </div>
                 {/* User Profile will be dynamic based on Logged In user*/}
-                <div className="px-4 py-6">
+                <div className="px-4 py-2">
                     <div className="bg-[#8770BC] text-white flex items-center gap-3 rounded-xl px-4 py-3 mt-auto">
                         <Avatar.Root className="w-8 h-8 rounded-full overflow-hidden bg-white">
                             <Avatar.Image
