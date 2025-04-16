@@ -61,10 +61,13 @@ const Login: React.FC = () => {
                 </a>
               </div>
               <button
-                type="submit"
-                className="w-full   text-white font-medium py-2 rounded login-btn">
-                Login
-              </button>
+    type="submit"
+    className="w-full text-white font-medium py-2 rounded login-btn"
+    onClick={() => window.location.href = "/account"}
+>
+    Login
+</button>
+
             </form>
             <div className="space-y-4 mt-6">
               {/* Google Sign-In Button */}
