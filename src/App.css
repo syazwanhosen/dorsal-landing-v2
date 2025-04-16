@@ -6,6 +6,16 @@ html, body {
   overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
+select {
+  color: #495057;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23495057" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  transition: var(--transition);
+  appearance: none;
+}
+
 
 /* *=========== Default theme =========== */
 /* @layer base {
