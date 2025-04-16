@@ -15,11 +15,9 @@ const Signup: React.FC = () => {
     console.log("Password:", password);
     // Add authentication logic here (e.g., API call)
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   return (
     <div className="lg:body-bg ">
       <div className="flex items-center justify-center lg:h-screen lg:bg-gray-100">

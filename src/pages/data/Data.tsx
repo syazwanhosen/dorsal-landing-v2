@@ -6,6 +6,7 @@ import { Header } from "../../components/Header";
 import { TotalStats } from "../../components/dashboard/TotalStats";
 import { StatewisePricing } from "../../components/dashboard/StatewisePricing";
 import { HospitalPrices } from "../../components/dashboard/HospitalPrices";
+import { CostCompare } from "@/components/dashboard/CostCompare";
 
 export default function Data() {
   return (
@@ -15,6 +16,7 @@ export default function Data() {
       <TotalStats />
       <StatewisePricing />
       <HospitalPrices />
+      <CostCompare />
       <Footer />
       <ScrollToTop />
     </>
