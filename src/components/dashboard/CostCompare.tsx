@@ -197,6 +197,7 @@ export const CostCompare = () => {
                     </div>
 
                     <CostMap /> 
+                    
                 </div>
             </div>
         </section>
