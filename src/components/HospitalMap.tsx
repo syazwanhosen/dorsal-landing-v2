@@ -191,7 +191,12 @@ const HospitalMap = () => {
                             onClick={() => setSelectedLocation(hospital.location)}
                             className="mb-4 border-b pb-4 cursor-pointer hover:bg-purple-50 p-2 rounded transition"
                         >
-                            <h3 className="text-lg font-semibold">{hospital.name}</h3>
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-lg font-semibold">{hospital.name}</h3>
+                                <span className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full">
+                                    Compare
+                                </span>
+                            </div>
                             <div className="flex items-center text-sm text-gray-600">
                                 <span>⭐ {hospital.rating}</span>
                                 <span className="mx-2">📍 {hospital.distance}</span>
@@ -199,12 +204,12 @@ const HospitalMap = () => {
                             <p className="text-sm text-gray-500">{hospital.address}</p>
                             <div className="flex justify-between items-center mt-1">
                                 <span
-                                    className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${hospital.priceType === "Fixed" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                                    className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${hospital.priceType === "Fixed" ? "bg-[#6CA724] text-white" : "bg-[#CE3C29] text-white"
                                         }`}
                                 >
                                     {hospital.priceType} Price
                                 </span>
-                                <span className="text-purple-700 font-bold text-lg">${hospital.price}</span>
+                                <span className="text-[#8770BC] text-lg">${hospital.price}</span>
                             </div>
                         </div>
                     ))}
