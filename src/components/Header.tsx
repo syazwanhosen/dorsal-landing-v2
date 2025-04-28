@@ -1,8 +1,12 @@
-export const Header = () => {
+interface HeaderProps {
+  title: string;
+}
+
+export const Header = ({ title }: HeaderProps) => {
   return (
     <div className="bg-purple w-full relative flex items-center justify-center mx-auto">
        <div className="text-white py-4 items-center space-x-1 container w-screen flex justify-between">
-         <h1 className="text-2xl font-bold">Dashboard</h1>
+         <h1 className="text-2xl font-bold">{title}</h1>
   
       {/*<div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
         <a href="#" className="font-semibold hover:underline">Find Hospitals</a>
