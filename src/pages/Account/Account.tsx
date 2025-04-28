@@ -1,4 +1,5 @@
 // Components
+import HospitalMap from "@/components/HospitalMap";
 import { Sidebar } from "@/components/Sidebar";
 
 export default function Account() {
@@ -7,7 +8,8 @@ export default function Account() {
             <Sidebar />
             <div className="flex-1 p-8 space-y-6">
                 {/* Header */}
-                <h1 className="text-lg font-medium text-[#8770BC]">John Doe</h1>
+                <h1 className="text-lg font-medium text-[#8770BC]">Abrar Rahman</h1>
+                <HospitalMap />
             </div>
         </div>
     );
