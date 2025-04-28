@@ -33,40 +33,77 @@ const hospitals: Hospital[] = [
     {
         name: "Monroe Regional Hospital",
         rating: 4.2,
-        distance: "1.6 mi",
+        distance: "5.6 mi",
         price: 2457,
         priceType: "Fixed",
         location: [40.8106, -73.955],
         address: "400 S Chestnut St, Aberdeen, MS 39730, USA"
     },
     {
-        name: "Sharp Memorial",
+        name: "Sharp Memorial Hospital",
         rating: 3.9,
-        distance: "2.5 mi",
+        distance: "12.3 mi",
         price: 1976,
         priceType: "Fixed",
-        location: [40.813, -73.97],
-        address: "400 S Chestnut St, Aberdeen, MS 39730, USA"
+        location: [40.740, -73.980],
+        address: "7901 Frost St, San Diego, CA 92123, USA"
     },
     {
         name: "Riverview Medical Center",
         rating: 4.1,
-        distance: "2.3 mi",
+        distance: "18.5 mi",
         price: 3291,
         priceType: "Negotiated",
-        location: [40.817, -73.98],
-        address: "400 S Chestnut St, Aberdeen, MS 39730, USA"
+        location: [40.680, -74.020],
+        address: "1 Riverview Plaza, Red Bank, NJ 07701, USA"
     },
     {
         name: "Bayshore Community Hospital",
         rating: 4.0,
-        distance: "1.8 mi",
+        distance: "25.2 mi",
         price: 1374,
         priceType: "Fixed",
-        location: [40.819, -73.99],
-        address: "400 S Chestnut St, Aberdeen, MS 39730, USA"
+        location: [40.720, -74.070],
+        address: "727 N Beers St, Holmdel, NJ 07733, USA"
+    },
+    {
+        name: "Mount Sinai Hospital",
+        rating: 4.5,
+        distance: "32.8 mi",
+        price: 4150,
+        priceType: "Negotiated",
+        location: [40.790, -73.950],
+        address: "1468 Madison Ave, New York, NY 10029, USA"
+    },
+    {
+        name: "NewYork-Presbyterian Hospital",
+        rating: 4.6,
+        distance: "40.2 mi",
+        price: 5100,
+        priceType: "Fixed",
+        location: [40.840, -73.940],
+        address: "630 W 168th St, New York, NY 10032, USA"
+    },
+    {
+        name: "Lenox Hill Hospital",
+        rating: 4.4,
+        distance: "48.7 mi",
+        price: 3890,
+        priceType: "Negotiated",
+        location: [40.773, -73.962],
+        address: "100 E 77th St, New York, NY 10075, USA"
+    },
+    {
+        name: "Harlem Hospital Center",
+        rating: 3.8,
+        distance: "52.1 mi",
+        price: 2800,
+        priceType: "Fixed",
+        location: [40.813, -73.940],
+        address: "506 Lenox Ave, New York, NY 10037, USA"
     }
 ];
+
 
 const accessToken = "zt7wt1ZXSBmlye8q8IQ6HuOv6p4idsbIbLl3Qi2ns2X4ZcbQbarIZpGE6YAkfi6L";
 
@@ -177,8 +214,8 @@ const HospitalMap = () => {
             {/* Map */}
             <div className={`${sidebarOpen ? "w-[70%]" : "w-full"} transition-all duration-500 ease-in-out h-full`}>
                 <MapContainer
-                    center={[40.81, -73.96]}
-                    zoom={13}
+                    center={[40.8106, -73.955]}
+                    zoom={12}
                     zoomControl={false}
                     className="h-full w-full z-0"
                 >
