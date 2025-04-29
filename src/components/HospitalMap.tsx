@@ -1,7 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from 'leaflet';
+
+// Images
 import hospital from '../assets/hospital.png';
+import location from '../assets/location-pin.svg';
+
 import "leaflet/dist/leaflet.css";
 
 type Hospital = {
@@ -189,17 +193,27 @@ const HospitalMap = () => {
                         <div
                             key={idx}
                             onClick={() => setSelectedLocation(hospital.location)}
-                            className="mb-4 border-b pb-4 cursor-pointer hover:bg-purple-50 p-2 rounded transition"
+                            className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition"
                         >
                             <div className="flex items-center justify-between">
                                 <h3 className="text-lg font-semibold">{hospital.name}</h3>
-                                <span className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        alert(`Compare clicked for ${hospital.name}`);
+                                    }}
+                                    className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full hover:bg-[#e0d9f0] transition"
+                                >
                                     Compare
-                                </span>
+                                </button>
+
                             </div>
                             <div className="flex items-center text-sm text-gray-600">
                                 <span>⭐ {hospital.rating}</span>
-                                <span className="mx-2">📍 {hospital.distance}</span>
+                                <span className="flex items-center mx-2">
+                                    <img src={location} alt="Location Icon" className="w-4 h-4" />
+                                    {hospital.distance}
+                                </span>
                             </div>
                             <p className="text-sm text-gray-500">{hospital.address}</p>
                             <div className="flex justify-between items-center mt-1">
@@ -209,7 +223,7 @@ const HospitalMap = () => {
                                 >
                                     {hospital.priceType} Price
                                 </span>
-                                <span className="text-[#8770BC] text-lg">${hospital.price}</span>
+                                <span className="text-[#8770BC] text-xl font-bold">${hospital.price}</span>
                             </div>
                         </div>
                     ))}
