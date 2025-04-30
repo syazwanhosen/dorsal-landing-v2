@@ -63,7 +63,7 @@ export const fetchPricingData = async (category: string): Promise<PricingData> =
 // Cost Comparison
 
 export async function fetchStates() {
-  const response = await fetch('https://dorsaldata1.apurbatech.io/cost_comparison/get_states');
+  const response = await fetch('https://dorsaldata1.apurbatech.io/common/get_states');
   return response.json();
 }
 
