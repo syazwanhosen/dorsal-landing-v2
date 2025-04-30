@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  overflow-x: hidden; /* Disable horizontal scrolling */
+html,
+body {
+  overflow-x: hidden;
+  /* Disable horizontal scrolling */
 }
 
 select {
@@ -135,6 +137,7 @@ select {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -150,9 +153,11 @@ select {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -160,4 +165,8 @@ select {
 
 .animate-gradient {
   animation: gradientAnimation 3s ease infinite;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
 }
