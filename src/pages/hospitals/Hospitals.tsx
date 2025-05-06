@@ -27,7 +27,7 @@ export default function Data() {
       <Header title="Hospitals" />
       <SearchHospital searchResults={searchResults} setSearchResults={setSearchResults} />
       <ProcedureCard />
-      <MapResult searchResults={searchResults} />
+      {searchResults && <MapResult searchResults={searchResults} />}
       <HospitalComparison />
       <Footer />
       <ScrollToTop />

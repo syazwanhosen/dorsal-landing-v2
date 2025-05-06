@@ -219,7 +219,6 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
           sidebarOpen ? "w-[70%]" : "w-full"
         } transition-all duration-500 ease-in-out h-full`}
       >
-        {sortedHospitals.length ? (
           <MapContainer
             center={mapCenter}
             zoom={12}
@@ -242,11 +241,6 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
               </Marker>
             ))}
           </MapContainer>
-        ) : (
-          <div className="h-full w-full flex items-center justify-center text-gray-500">
-            No hospital results to display.
-          </div>
-        )}
       </div>
     </div>
   );
