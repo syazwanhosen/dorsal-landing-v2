@@ -1,13 +1,31 @@
 import { useState, useEffect } from "react";
 import { ProcedureCard } from "./ProcedureCard";
 
-export const SearchHospital = () => {
+interface SearchHospitalProps {
+  searchResults: {
+    hospital_names: string[];
+    prices: number[];
+    hospital_count: number;
+    generic_service_name?: string;
+    service_description?: string;
+  } | null;
+  setSearchResults: React.Dispatch<React.SetStateAction<{
+    hospital_names: string[];
+    prices: number[];
+    hospital_count: number;
+    generic_service_name?: string;
+    service_description?: string;
+  } | null>>;
+}
+
+
+export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, setSearchResults }) => {
   const [filters, setFilters] = useState({
     state: "",
     category: "",
     subcategory: "",
     cpt: "",
-    service: "", 
+    service: "",
   });
 
   const [dropdownVisible, setDropdownVisible] = useState({
@@ -43,7 +61,7 @@ export const SearchHospital = () => {
       });
   }, []);
 
-  
+
   useEffect(() => {
     const state = filters.state;
     const url = state
@@ -76,133 +94,128 @@ export const SearchHospital = () => {
         console.error("Error loading categories:", error);
         alert("Error loading categories. Please try again.");
       });
-  }, [filters.state]); 
-
-useEffect(() => {
-  const selectedCategory = filters.category;
-  const state = filters.state;
-
-  setFilters((prev) => ({
-    ...prev,
-    subcategory: "",
-    cpt: "",
-    service: "",
-  }));
-
-  setOptions((prev) => ({
-    ...prev,
-    subcategory: [],
-    cpt: [],
-    service: [],
-  }));
-
-  if (!selectedCategory) return;
-
-  const url = new URL("https://dorsaldata1.apurbatech.io/hospital_finder/get_sub_categories");
-  url.searchParams.append("service_category", selectedCategory);
-  if (state) url.searchParams.append("state", state);
-
-  fetch(url.toString())
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to fetch sub-categories");
-      return response.json();
-    })
-    .then((data) => {
-      if (!Array.isArray(data.sub_categories)) throw new Error("Invalid data format");
-      setOptions((prev) => ({
-        ...prev,
-        subcategory: data.sub_categories,
-      }));
-    })
-    .catch((error) => {
-      console.error("Error updating sub-categories:", error);
-      alert("Error updating sub-categories. Please try again.");
-    });
-}, [filters.category, filters.state]);
+  }, [filters.state]);
 
 
-useEffect(() => {
-  const selectedSubCategory = filters.subcategory;
-  const state = filters.state;
+  // Fetch sub-categories when category changes
+  useEffect(() => {
+    const selectedCategory = filters.category;
+    const state = filters.state;
 
-  
-  setFilters((prev) => ({
-    ...prev,
-    cpt: "",
-    service: "",
-  }));
+    // Reset subcategory, cpt and service when category changes
+    setFilters((prev) => ({
+      ...prev,
+      subcategory: "",
+      cpt: "",
+      service: "",
+    }));
 
-  setOptions((prev) => ({
-    ...prev,
-    cpt: [],
-    service: [],
-  }));
+    setOptions((prev) => ({
+      ...prev,
+      subcategory: [],
+      cpt: [],
+      service: [],
+    }));
 
-  if (!selectedSubCategory) return;
+    if (!selectedCategory) return;
 
-  const url = new URL("https://dorsaldata1.apurbatech.io/hospital_finder/update_dropdowns");
-  url.searchParams.append("sub_category", selectedSubCategory);
-  if (state) url.searchParams.append("state", state);
+    const url = new URL("https://dorsaldata1.apurbatech.io/hospital_finder/get_sub_categories");
+    url.searchParams.append("service_category", selectedCategory);
+    if (state) url.searchParams.append("state", state);
 
-  fetch(url.toString())
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to fetch CPT and Service data");
-      return response.json();
-    })
-    .then((data) => {
-      if (!Array.isArray(data.selected_cpt_codes) || !Array.isArray(data.selected_service_names)) {
-        throw new Error("Invalid data format from /update_dropdowns");
-      }
+    fetch(url.toString())
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch sub-categories");
+        return response.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data.sub_categories)) throw new Error("Invalid data format");
+        setOptions((prev) => ({
+          ...prev,
+          subcategory: data.sub_categories,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error updating sub-categories:", error);
+        alert("Error updating sub-categories. Please try again.");
+      });
+  }, [filters.category, filters.state]);
 
-      setOptions((prev) => ({
-        ...prev,
-        cpt: data.selected_cpt_codes,
-        service: data.selected_service_names,
-      }));
-    })
-    .catch((error) => {
-      console.error("Error updating CPT and Service:", error);
-      alert("Error updating CPT/Service dropdowns. Please try again.");
-    });
-}, [filters.subcategory, filters.state]);
+  // Fetch CPT codes and service names when subcategory changes
+  useEffect(() => {
+    const selectedSubCategory = filters.subcategory;
+    const state = filters.state;
+
+    // Reset CPT and Service fields
+    setFilters((prev) => ({
+      ...prev,
+      cpt: "",
+      service: "",
+    }));
+
+    setOptions((prev) => ({
+      ...prev,
+      cpt: [],
+      service: [],
+    }));
+
+    if (!selectedSubCategory) return;
+
+    const url = new URL("https://dorsaldata1.apurbatech.io/hospital_finder/update_dropdowns");
+    url.searchParams.append("sub_category", selectedSubCategory);
+    if (state) url.searchParams.append("state", state);
+
+    fetch(url.toString())
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch CPT and Service data");
+        return response.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data.selected_cpt_codes) || !Array.isArray(data.selected_service_names)) {
+          throw new Error("Invalid data format from /update_dropdowns");
+        }
+
+        setOptions((prev) => ({
+          ...prev,
+          cpt: data.selected_cpt_codes,
+          service: data.selected_service_names,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error updating CPT and Service:", error);
+        alert("Error updating CPT/Service dropdowns. Please try again.");
+      });
+  }, [filters.subcategory, filters.state]);
 
   const handleSelect = (field: string, value: string) => {
     setFilters((prev) => ({ ...prev, [field]: value }));
     setDropdownVisible((prev) => ({ ...prev, [field]: false }));
   };
 
-  const [searchResults, setSearchResults] = useState<{
-    hospital_names: string[];
-    prices: number[];
-    hospital_count: number;
-    generic_service_name?: string;
-    service_description?: string;
-  } | null>(null);
-  
   const [loading, setLoading] = useState(false);
 
 
   const handleSearch = () => {
     const { state, category, subcategory, cpt, service } = filters;
-  
+
     if (!category) {
       alert("Please select a service category");
       return;
     }
-  
+
     if (!subcategory && !cpt && !service) {
       alert("Please select either a sub-category, a CPT code, or a service name");
       return;
     }
-  
+
     const params = new URLSearchParams({ service_category: category });
     if (state) params.append("state", state);
     if (subcategory) params.append("sub_category", subcategory);
     if (cpt) params.append("cpt_code", cpt);
     else if (service) params.append("service_name", service);
-  
+
     setLoading(true);
-  
+
     fetch(`https://dorsaldata1.apurbatech.io/hospital_finder/search?${params.toString()}`)
       .then((response) => {
         if (!response.ok) throw new Error("Search failed");
@@ -313,39 +326,39 @@ useEffect(() => {
             prices={searchResults.prices}
             hospitalNames={searchResults.hospital_names}
           />
-     
-          <div className="mt-6">
-          <h3 className="font-semibold text-sm mb-2">
-            Found {searchResults.hospital_count} hospitals
-          </h3>
 
-          {searchResults.hospital_count > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-sm border border-collapse">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="text-left px-4 py-2 border">Hospital Name</th>
-                    <th className="text-left px-4 py-2 border">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {searchResults.hospital_names.map((name, idx) => (
-                    <tr key={idx}>
-                      <td className="px-4 py-2 border">{name}</td>
-                      <td className="px-4 py-2 border">
-                        {searchResults.prices[idx]
-                          ? `$${searchResults.prices[idx].toFixed(2)}`
-                          : "N/A"}
-                      </td>
+          <div className="mt-6">
+            <h3 className="font-semibold text-sm mb-2">
+              Found {searchResults.hospital_count} hospitals
+            </h3>
+
+            {searchResults.hospital_count > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-sm border border-collapse">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="text-left px-4 py-2 border">Hospital Name</th>
+                      <th className="text-left px-4 py-2 border">Price</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-red-500 mt-4">No hospitals found for the selected filters.</div>
-          )}
-        </div>
+                  </thead>
+                  <tbody>
+                    {searchResults.hospital_names.map((name, idx) => (
+                      <tr key={idx}>
+                        <td className="px-4 py-2 border">{name}</td>
+                        <td className="px-4 py-2 border">
+                          {searchResults.prices[idx]
+                            ? `$${searchResults.prices[idx].toFixed(2)}`
+                            : "N/A"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-red-500 mt-4">No hospitals found for the selected filters.</div>
+            )}
+          </div>
         </>
       )}
 

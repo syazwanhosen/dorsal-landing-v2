@@ -1,10 +1,13 @@
-import React from "react";
+// Components
 import HospitalMap from "../HospitalMap";
 
-export const MapResult = () => {
+// Types
+import { HospitalMapProps } from "../../types";
+
+export const MapResult = ({ searchResults }: HospitalMapProps) => {
   return (
     <section id="MapResult" className="container pb-6">
-      <HospitalMap />
+      <HospitalMap searchResults={searchResults} />
     </section>
   );
 };
