@@ -44,7 +44,7 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
 
         {/* Right Box (Chart) */}
         {hasSearchResult && (
-          <div className="w-full lg:w-[40%] rounded-lg ">
+          <div className="w-full lg:w-[40%] rounded-lg border">
             {/* Passing hospitalNames correctly */}
           
             <PriceChart prices={prices} hospitalNames={hospitalNames} />

@@ -119,14 +119,16 @@ const PriceChart: React.FC<ProcedureChartProps> = ({
 
   return (
     <div className="w-full h-[300px] flex flex-col">
-      <div className="flex justify-between mb-2 px-2">
+      <div className="flex justify-between mb-2 px-2 mt-2">
         <h3 className="font-bold text-black pb-4">Distributed Prices</h3>
         <a href="#" className="text-purple text-sm font-semibold hover:underline">
           Prices
         </a>
       </div>
-      <div className="flex-1">
-        <Line ref={chartRef} data={chartData} options={chartOptions} />
+      <div className="flex-1 pb-4">
+     
+        <Line ref={chartRef} data={chartData} options={chartOptions} style={{paddingRight: '1rem', paddingLeft: '0.5rem'}}/>
+      
       </div>
     </div>
   );
