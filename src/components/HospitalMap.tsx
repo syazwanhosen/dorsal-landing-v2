@@ -6,7 +6,7 @@ import {
   Popup,
   useMap,
 } from "react-leaflet";
-import { Icon } from "leaflet";
+import { Icon, LatLngBoundsExpression } from "leaflet";
 
 // Images
 import hospital from "../assets/hospital.png";
@@ -57,12 +57,18 @@ const FlyToLocation = ({ location }: FlyToLocationProps) => {
   return null;
 };
 
-const UpdateMapCenter = ({ center }: { center: [number, number] }) => {
+const FitBounds = ({ hospitals }: { hospitals: Hospital[] }) => {
   const map = useMap();
 
   useEffect(() => {
-    map.setView(center);
-  }, [center, map]);
+    if (hospitals.length === 0) return;
+
+    const bounds: LatLngBoundsExpression = hospitals.map((h) => [
+      h.latitude,
+      h.longitude,
+    ]);
+    map.fitBounds(bounds, { padding: [50, 50] }); // Optional padding
+  }, [hospitals, map]);
 
   return null;
 };
@@ -233,7 +239,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
         >
           <ResizeHandler sidebarOpen={sidebarOpen} />
           <FlyToLocation location={selectedLocation} />
-          <UpdateMapCenter center={mapCenter} />
+          <FitBounds hospitals={sortedHospitals} />
           <TileLayer
             url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${accessToken}`}
             attribution='<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
