@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -30,35 +30,40 @@ interface ProcedureChartProps {
 }
 
 const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames = [] }) => {
-  const priceRanges = [1000, 3000, 5000, 10000, 15000, 20000]; 
+  const chartRef = useRef<any>(null);
+  const [gradient, setGradient] = useState<CanvasGradient | string>("rgba(93, 64, 255, 1)");
 
-  const minRange = 1000;
-  const maxRange = 25000;
+  useEffect(() => {
+    const chart = chartRef.current;
+    if (!chart) return;
 
-  
-  const calculateYPosition = (price: number) => {
-    const clampedPrice = Math.max(minRange, Math.min(maxRange, price)); 
-    const bucketIndex = priceRanges.findIndex((range) => clampedPrice <= range);
-    return bucketIndex !== -1 ? bucketIndex : priceRanges.length - 1; 
-  };
+    const ctx = chart.ctx;
+    const gradient = ctx.createLinearGradient(0, 0, chart.width, 0);
+    gradient.addColorStop(0, "rgba(93, 64, 255, 1)"); // Blue
+    gradient.addColorStop(1, "rgba(255, 64, 129, 1)"); // Pink
+    setGradient(gradient);
+  }, []);
 
   const chartData = {
-    labels: hospitalNames.length > 0 ? hospitalNames : prices.map((_, i) => `Hospital ${i+1}`),
+    labels: hospitalNames.length > 0 ? hospitalNames : prices.map((_, i) => `Hospital ${i + 1}`),
     datasets: [
       {
         label: "Price ($)",
-        data: prices.map(calculateYPosition), 
-        borderColor: "rgba(93, 64, 255, 1)",
-        backgroundColor: "rgba(93, 64, 255, 0)", 
+        data: prices,
+        borderColor: gradient,
+        backgroundColor: gradient,
         borderWidth: 3,
         pointRadius: 5,
-        tension: 0.3,
-        fill: false, 
+        pointBackgroundColor: gradient, // Gradient fill for dots
+        pointBorderColor: "#ffffff",    // Optional white border
+        pointBorderWidth: 0,
+        tension: 0.4,
+        fill: false,
       },
     ],
   };
 
-  const chartOptions: ChartOptions<'line'> = {
+  const chartOptions: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -68,39 +73,28 @@ const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames 
           label: (context) => {
             const price = prices[context.dataIndex];
             const name = hospitalNames[context.dataIndex] || `Hospital ${context.dataIndex + 1}`;
-            return `${name}: $${price?.toFixed(2) ?? 'N/A'}`;
+            return `${name}: $${price?.toFixed(2) ?? "N/A"}`;
           },
         },
       },
     },
     scales: {
       x: {
-        display: false, 
+        display: false,
         grid: { display: false },
-        ticks: { display: false }, 
+        ticks: { display: false },
       },
       y: {
-        type: "linear",
-        min: 0,
-        max: priceRanges.length - 1,
-        ticks: {
-          stepSize: 1,
-          callback: (value) => {
-            if (typeof value === 'number' && value >= 0 && value < priceRanges.length) {
-              return priceRanges[value].toString(); 
-            }
-            return '';
-          },
-        },
-        grid: { color: "rgba(200, 200, 200, 0.3)" },
+        display: true,
+        grid: { color: "rgba(200, 200, 200, 0.2)" },
         title: {
           display: true,
-          text: "Prices ($)", // Set the Y-axis label
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-          color: "#333", // Adjust text color if needed
+          text: "Price ($)",
+          font: { size: 14, weight: "bold" },
+          color: "#333",
+        },
+        ticks: {
+          callback: (value: string | number) => `$${value}`,
         },
       },
     },
@@ -108,19 +102,14 @@ const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames 
 
   return (
     <div className="w-full h-[300px] flex flex-col">
-    {/* Title Section */}
-    <div className="flex justify-between mb-2 px-2">
-      <h3 className="font-bold text-black pb-4">Distributed Prices</h3>
-      <a href="#" className="text-purple text-sm font-semibold hover:underline">Prices</a>
+      <div className="flex justify-between mb-2 px-2">
+        <h3 className="font-bold text-black pb-4">Distributed Prices</h3>
+        <a href="#" className="text-purple text-sm font-semibold hover:underline">Prices</a>
+      </div>
+      <div className="flex-1">
+        <Line ref={chartRef} data={chartData} options={chartOptions} />
+      </div>
     </div>
-
-    {/* Chart Section - Ensuring Fixed Height */}
-    <div className="flex-1">
-      <Line data={chartData} options={chartOptions} />
-    </div>
-  </div>
-
-    
   );
 };
 
