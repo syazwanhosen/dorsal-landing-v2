@@ -139,9 +139,9 @@ export const Footer = () => {
         </a>
         
         <h3>
-          &copy; Dorsal.fyi 2024. Made with ♡ in CA. {" "}
+  &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
+</h3>
 
-        </h3>
       </section>
     </footer>
   );

@@ -1,10 +1,14 @@
 import React from "react";
+import PriceChart from "./PriceChart";
 
 interface ProcedureCardProps {
   serviceName: string;
   serviceDescription: string;
   cptCode: string;
   hasSearchResult: boolean;
+  prices: number[];
+  labels: string[];
+  hospitalNames: string[]; // Added hospitalNames
 }
 
 export const ProcedureCard: React.FC<ProcedureCardProps> = ({
@@ -12,6 +16,8 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
   serviceDescription,
   cptCode,
   hasSearchResult,
+  prices,
+  hospitalNames, // Include hospitalNames
 }) => {
   return (
     <section id="ProcedureCard" className="mt-6">
@@ -36,10 +42,12 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
           )}
         </div>
 
-        {/* Right Box (Chart Placeholder) */}
+        {/* Right Box (Chart) */}
         {hasSearchResult && (
-          <div className="w-full lg:w-[40%] h-[160px] border border-purple-300 rounded-lg shadow-sm flex items-center justify-center">
-            <span className="text-sm text-purple-400">Chart</span>
+          <div className="w-full lg:w-[40%] rounded-lg border">
+            {/* Passing hospitalNames correctly */}
+          
+            <PriceChart prices={prices} hospitalNames={hospitalNames} />
           </div>
         )}
       </div>

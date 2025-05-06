@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProcedureCard } from "./ProcedureCard";
 
 export const SearchHospital = () => {
@@ -43,7 +43,7 @@ export const SearchHospital = () => {
       });
   }, []);
 
-  // Fetch categories when state changes
+  
   useEffect(() => {
     const state = filters.state;
     const url = state
@@ -67,7 +67,6 @@ export const SearchHospital = () => {
         } else {
           throw new Error("Unexpected data structure from /get_categories");
         }
-
         setOptions((prev) => ({
           ...prev,
           category: categories,
@@ -77,15 +76,12 @@ export const SearchHospital = () => {
         console.error("Error loading categories:", error);
         alert("Error loading categories. Please try again.");
       });
-  }, [filters.state]); // runs every time state changes
+  }, [filters.state]); 
 
-
-// Fetch sub-categories when category changes
 useEffect(() => {
   const selectedCategory = filters.category;
   const state = filters.state;
 
-  // Reset subcategory, cpt and service when category changes
   setFilters((prev) => ({
     ...prev,
     subcategory: "",
@@ -124,12 +120,12 @@ useEffect(() => {
     });
 }, [filters.category, filters.state]);
 
-// Fetch CPT codes and service names when subcategory changes
+
 useEffect(() => {
   const selectedSubCategory = filters.subcategory;
   const state = filters.state;
 
-  // Reset CPT and Service fields
+  
   setFilters((prev) => ({
     ...prev,
     cpt: "",
@@ -314,9 +310,10 @@ useEffect(() => {
             serviceDescription={searchResults.service_description}
             cptCode={filters.cpt || ""}
             hasSearchResult={searchResults.hospital_count > 0}
+            prices={searchResults.prices}
+            hospitalNames={searchResults.hospital_names}
           />
-
-          {/* ... rest of hospital table result rendering ... */}
+     
           <div className="mt-6">
           <h3 className="font-semibold text-sm mb-2">
             Found {searchResults.hospital_count} hospitals
