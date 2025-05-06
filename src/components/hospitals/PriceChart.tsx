@@ -29,9 +29,14 @@ interface ProcedureChartProps {
   hospitalNames?: string[];
 }
 
-const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames = [] }) => {
+const PriceChart: React.FC<ProcedureChartProps> = ({
+  prices = [],
+  hospitalNames = [],
+}) => {
   const chartRef = useRef<any>(null);
-  const [gradient, setGradient] = useState<CanvasGradient | string>("rgba(93, 64, 255, 1)");
+  const [gradient, setGradient] = useState<CanvasGradient | string>(
+    "rgba(93, 64, 255, 1)"
+  );
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -44,18 +49,28 @@ const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames 
     setGradient(gradient);
   }, []);
 
+  const sortedData = prices
+    .map((price, index) => ({
+      price,
+      name: hospitalNames[index] || `Hospital ${index + 1}`,
+    }))
+    .sort((a, b) => a.price - b.price);
+
+  const sortedPrices = sortedData.map((item) => item.price);
+  const sortedHospitalNames = sortedData.map((item) => item.name);
+
   const chartData = {
-    labels: hospitalNames.length > 0 ? hospitalNames : prices.map((_, i) => `Hospital ${i + 1}`),
+    labels: sortedHospitalNames,
     datasets: [
       {
         label: "Price ($)",
-        data: prices,
+        data: sortedPrices,
         borderColor: gradient,
         backgroundColor: gradient,
         borderWidth: 3,
         pointRadius: 5,
         pointBackgroundColor: gradient, // Gradient fill for dots
-        pointBorderColor: "#ffffff",    // Optional white border
+        pointBorderColor: "#ffffff", // Optional white border
         pointBorderWidth: 0,
         tension: 0.4,
         fill: false,
@@ -71,8 +86,10 @@ const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames 
       tooltip: {
         callbacks: {
           label: (context) => {
-            const price = prices[context.dataIndex];
-            const name = hospitalNames[context.dataIndex] || `Hospital ${context.dataIndex + 1}`;
+            const price = sortedPrices[context.dataIndex];
+            const name =
+              sortedHospitalNames[context.dataIndex] ||
+              `Hospital ${context.dataIndex + 1}`;
             return `${name}: $${price?.toFixed(2) ?? "N/A"}`;
           },
         },
@@ -104,7 +121,9 @@ const PriceChart: React.FC<ProcedureChartProps> = ({ prices = [], hospitalNames 
     <div className="w-full h-[300px] flex flex-col">
       <div className="flex justify-between mb-2 px-2">
         <h3 className="font-bold text-black pb-4">Distributed Prices</h3>
-        <a href="#" className="text-purple text-sm font-semibold hover:underline">Prices</a>
+        <a href="#" className="text-purple text-sm font-semibold hover:underline">
+          Prices
+        </a>
       </div>
       <div className="flex-1">
         <Line ref={chartRef} data={chartData} options={chartOptions} />
