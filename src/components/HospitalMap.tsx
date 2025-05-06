@@ -57,6 +57,17 @@ const FlyToLocation = ({ location }: FlyToLocationProps) => {
   return null;
 };
 
+const UpdateMapCenter = ({ center }: { center: [number, number] }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView(center);
+  }, [center, map]);
+
+  return null;
+};
+
+
 const HospitalMap = ({ searchResults }: HospitalMapProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [sortOption, setSortOption] = useState<
@@ -126,14 +137,12 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
       {/* Sidebar Toggle Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${
-          sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
-        } rounded-tr-lg rounded-br-lg`}
+        className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
+          } rounded-tr-lg rounded-br-lg`}
       >
         <svg
-          className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
-            !sidebarOpen ? "rotate-180" : ""
-          }`}
+          className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${!sidebarOpen ? "rotate-180" : ""
+            }`}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -145,9 +154,8 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
 
       {/* Sidebar */}
       <div
-        className={`${
-          sidebarOpen ? "w-[30%]" : "w-0"
-        } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
+        className={`${sidebarOpen ? "w-[30%]" : "w-0"
+          } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
       >
         <div className="p-4 overflow-y-auto h-full">
           <div className="flex justify-between items-center mb-4">
@@ -196,11 +204,10 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
               <p className="text-sm text-gray-500">{hospital.address}</p>
               <div className="flex justify-between items-center mt-1">
                 <span
-                  className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                    hospital.negotiation_status === "Fixed"
-                      ? "bg-[#6CA724] text-white"
-                      : "bg-[#CE3C29] text-white"
-                  }`}
+                  className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${hospital.negotiation_status === "Fixed"
+                    ? "bg-[#6CA724] text-white"
+                    : "bg-[#CE3C29] text-white"
+                    }`}
                 >
                   {hospital.negotiation_status} Price
                 </span>
@@ -215,32 +222,33 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
 
       {/* Map */}
       <div
-        className={`${
-          sidebarOpen ? "w-[70%]" : "w-full"
-        } transition-all duration-500 ease-in-out h-full`}
+        className={`${sidebarOpen ? "w-[70%]" : "w-full"
+          } transition-all duration-500 ease-in-out h-full`}
       >
-          <MapContainer
-            center={mapCenter}
-            zoom={12}
-            zoomControl={false}
-            className="h-full w-full z-0"
-          >
-            <ResizeHandler sidebarOpen={sidebarOpen} />
-            <FlyToLocation location={selectedLocation} />
-            <TileLayer
-              url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${accessToken}`}
-              attribution='<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            {sortedHospitals.map((h, i) => (
-              <Marker
-                key={i}
-                position={[h.latitude, h.longitude]}
-                icon={hospitalIcon}
-              >
-                <Popup>{h.name}</Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+        <MapContainer
+          center={mapCenter}
+          zoom={12}
+          zoomControl={false}
+          className="h-full w-full z-0"
+        >
+          <ResizeHandler sidebarOpen={sidebarOpen} />
+          <FlyToLocation location={selectedLocation} />
+          <UpdateMapCenter center={mapCenter} />
+          <TileLayer
+            url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${accessToken}`}
+            attribution='<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {sortedHospitals.map((h, i) => (
+            <Marker
+              key={i}
+              position={[h.latitude, h.longitude]}
+              icon={hospitalIcon}
+            >
+              <Popup>{h.name}</Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+
       </div>
     </div>
   );
