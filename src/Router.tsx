@@ -5,7 +5,7 @@ import Login from "./pages/login/login";
 import Signup from "./components/signup/signup";
 import Account from "./pages/Account/Account";
 import Hospitals from "./pages/hospitals/Hospitals";
-
+import HospitalDetails from "./pages/hospital_details/HospitalDetails";
 
 export default function AppRouter() {
   return (
@@ -17,6 +17,7 @@ export default function AppRouter() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/account" element={<Account />} />
         <Route path="/hospitals" element={<Hospitals />} />
+        <Route path="/hospital_details" element={<HospitalDetails />} />
       </Routes>
     </Router>
   );
