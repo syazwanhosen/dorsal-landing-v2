@@ -152,6 +152,14 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
       return prev;
     });
   };
+
+
+const handleRemoveHospital = (hospitalName: string) => {
+  setSelectedHospitals((prev) => prev.filter(hospital => hospital.name !== hospitalName));
+};
+
+
+
   
 
   useEffect(() => {
@@ -275,7 +283,9 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
       </div>
     </div>
     {/* Show comparison table only when hospitals are selected */}
-    {selectedHospitals.length > 0 && <HospitalComparison selectedHospitals={selectedHospitals} />}
+    {selectedHospitals.length > 0 && (
+  <HospitalComparison selectedHospitals={selectedHospitals} onRemoveHospital={handleRemoveHospital} />
+)}
     </>
   );
 };

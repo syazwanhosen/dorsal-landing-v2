@@ -8,7 +8,7 @@ interface ProcedureCardProps {
   hasSearchResult: boolean;
   prices: number[];
   labels: string[];
-  hospitalNames: string[]; // Added hospitalNames
+  hospitalNames: string[]; 
 }
 
 export const ProcedureCard: React.FC<ProcedureCardProps> = ({
@@ -17,7 +17,7 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
   cptCode,
   hasSearchResult,
   prices,
-  hospitalNames, // Include hospitalNames
+  hospitalNames, 
 }) => {
   return (
     <section id="ProcedureCard" className="mt-6 container">
