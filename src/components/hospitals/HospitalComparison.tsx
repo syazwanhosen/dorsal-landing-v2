@@ -9,7 +9,7 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({ selected
 
   return (
     <section id="HospitalComparison" className="pt-5 pb-5">
-      <h2 className="text-xl font-bold text-left pb-4">
+      <h2 className="text-xl font-bold text-left pb-4 lg:pt-6">
         Compare{" "}
         <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
           Between Hospitals
@@ -17,11 +17,12 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({ selected
       </h2>
 
       <div className="border border-purple-300 rounded-lg overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 text-left text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 text-left text-sm lg:px-20">
           {/* Header Row */}
-          <div className="bg-gray-50 p-4 font-semibold text-lg">Hospital</div>
+          <div className="p-4 font-semibold text-lg flex items-center">Hospital</div>
+
           {selectedHospitals.map((hospital) => (
-            <div key={hospital.name} className="bg-gray-50 p-4 font-semibold text-center text-base">
+            <div key={hospital.name} className="p-4 font-semibold text-center text-base">
               {hospital.name}
               <div className="text-sm font-normal">
                 {hospital.address} <br />
@@ -30,41 +31,41 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({ selected
             </div>
           ))}
           {selectedHospitals.length === 1 && (
-            <div className="bg-gray-50 p-4 text-center italic text-gray-400">
+            <div className="lg:p-8 p-4 text-center italic text-gray-400">
               Select another hospital to compare
             </div>
           )}
 
           {/* Distance Row (Static Value) */}
-          <div className="border-t border-gray-200 p-4 font-medium text-gray-700">Distance</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Distance</div>
           {selectedHospitals.map(() => (
-            <div className="border-t border-gray-200 p-4 text-center">10 miles</div>
+            <div className="border-t border-gray-200 lg:p-8 p-4 text-center">10 miles</div>
           ))}
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-4 text-center"></div>}
+          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Rating Row (Static Value) */}
-          <div className="border-t border-gray-200 p-4 font-medium text-gray-700">Rating</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Rating</div>
           {selectedHospitals.map(() => (
-            <div className="border-t border-gray-200 p-4 flex justify-center items-center space-x-2">
+            <div className="border-t border-gray-200 lg:p-8 p-4 flex justify-center items-center space-x-2">
               <div className="text-yellow-500">⭐⭐⭐⭐</div>
               <span className="text-gray-700 text-sm">4.0</span>
             </div>
           ))}
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-4 text-center"></div>}
+          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Price Row */}
-          <div className="border-t border-gray-200 p-4 font-medium text-gray-700">Price</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Price</div>
           {selectedHospitals.map((hospital) => (
-            <div key={hospital.name} className="border-t border-gray-200 p-4 text-center text-purple font-semibold text-base">
+            <div key={hospital.name} className="border-t border-gray-200 lg:p-8 p-4 text-center text-purple font-semibold text-base">
               ${hospital.price}
             </div>
           ))}
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-4 text-center"></div>}
+          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Price Type Row */}
-          <div className="border-t border-gray-200 p-4 font-medium text-gray-700">Price Type</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Price Type</div>
           {selectedHospitals.map((hospital) => (
-            <div key={hospital.name} className="border-t border-gray-200 p-4 text-center">
+            <div key={hospital.name} className="border-t border-gray-200 lg:p-8 p-4 text-center">
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
                 hospital.negotiation_status === "Fixed"
                   ? "bg-green-500 text-white"
@@ -74,7 +75,7 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({ selected
               </span>
             </div>
           ))}
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-4 text-center"></div>}
+          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-8 text-center"></div>}
         </div>
       </div>
     </section>

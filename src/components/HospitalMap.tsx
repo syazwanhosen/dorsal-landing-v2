@@ -161,7 +161,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
 
   return (
     <>
-    <div className="relative flex rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto mt-10">
+    <div className="relative flex rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
       {/* Sidebar Toggle Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -216,7 +216,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
               e.stopPropagation();
               handleCompare(hospital);
             }}
-            className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full hover:bg-[#e0d9f0] transition"
+            className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded hover:bg-[#e0d9f0] transition"
           >
             Compare
           </button>
@@ -231,7 +231,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
               <p className="text-sm text-gray-500">{hospital.address}</p>
               <div className="flex justify-between items-center mt-1">
                 <span
-                  className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${hospital.negotiation_status === "Fixed"
+                  className={`inline-block px-2 py-1 text-xs font-medium rounded ${hospital.negotiation_status === "Fixed"
                     ? "bg-[#6CA724] text-white"
                     : "bg-[#CE3C29] text-white"
                     }`}>
