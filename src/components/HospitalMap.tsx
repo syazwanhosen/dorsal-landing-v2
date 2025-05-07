@@ -218,7 +218,16 @@ const handleRemoveHospital = (hospitalName: string) => {
               }
               className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">{hospital.name}</h3>
+                <h3 className="text-lg font-semibold">
+                <a
+                  href="/hospital_details"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-700 hover:underline"
+                >
+                  {hospital.name}
+                </a>
+                </h3>
                 <button
             onClick={(e) => {
               e.stopPropagation();
