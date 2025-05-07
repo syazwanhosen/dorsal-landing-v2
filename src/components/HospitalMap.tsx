@@ -143,13 +143,21 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
 
   const [selectedHospitals, setSelectedHospitals] = useState<Hospital[]>([]);
 
-    const handleCompare = (hospital: Hospital) => { // Change parameter type
-    if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
-      setSelectedHospitals([...selectedHospitals, hospital]); // Add new hospital
-    } else {
-      alert("You can only compare up to 2 hospitals at a time.");
-    }
+  const handleCompare = (hospital: Hospital) => {
+    setSelectedHospitals((prev) => {
+      if (prev.length < 2 && !prev.includes(hospital)) {
+        return [...prev, hospital]; // 
+      }
+      alert("You can only compare up to 2 hospitals at a time."); 
+      return prev;
+    });
   };
+  
+
+  useEffect(() => {
+    setSelectedHospitals([]); // \
+  }, [searchResults]);
+  
 
   return (
     <>
@@ -267,9 +275,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
       </div>
     </div>
     {/* Show comparison table only when hospitals are selected */}
-    {selectedHospitals.length > 0 && (
-        <HospitalComparison selectedHospitals={selectedHospitals} />
-      )}
+    {selectedHospitals.length > 0 && <HospitalComparison selectedHospitals={selectedHospitals} />}
     </>
   );
 };
