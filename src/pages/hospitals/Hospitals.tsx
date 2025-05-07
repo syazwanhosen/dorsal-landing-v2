@@ -8,7 +8,6 @@ import { Header } from "../../components/Header";
 import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
-import { HospitalComparison } from "../../components/hospitals/HospitalComparison";
 
 import "./Hospitals.css";
 
@@ -26,9 +25,9 @@ export default function Data() {
       <NavbarSecondary />
       <Header title="Hospitals" />
       <SearchHospital searchResults={searchResults} setSearchResults={setSearchResults} />
-      <ProcedureCard />
+      <ProcedureCard serviceName={""} serviceDescription={""} cptCode={""} hasSearchResult={false} prices={[]} labels={[]} hospitalNames={[]} />
       {searchResults && <MapResult searchResults={searchResults} />}
-      <HospitalComparison />
+    
       <Footer />
       <ScrollToTop />
     </>

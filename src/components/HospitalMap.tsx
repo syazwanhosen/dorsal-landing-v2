@@ -21,6 +21,7 @@ import {
 } from "../types";
 
 import "leaflet/dist/leaflet.css";
+import { HospitalComparison } from "./hospitals/HospitalComparison";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -31,6 +32,7 @@ const hospitalIcon = new Icon({
   iconAnchor: [15, 30],
   popupAnchor: [0, -30],
 });
+
 
 const ResizeHandler = ({ sidebarOpen }: ResizeHandlerProps) => {
   const map = useMap();
@@ -138,7 +140,19 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
     }
   }, [searchResults]);
 
+
+  const [selectedHospitals, setSelectedHospitals] = useState<Hospital[]>([]);
+
+    const handleCompare = (hospital: Hospital) => { // Change parameter type
+    if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
+      setSelectedHospitals([...selectedHospitals, hospital]); // Add new hospital
+    } else {
+      alert("You can only compare up to 2 hospitals at a time.");
+    }
+  };
+
   return (
+    <>
     <div className="relative flex rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto mt-10">
       {/* Sidebar Toggle Button */}
       <button
@@ -186,19 +200,18 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
               onClick={() =>
                 setSelectedLocation([hospital.latitude, hospital.longitude])
               }
-              className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition"
-            >
+              className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold">{hospital.name}</h3>
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    alert(`Compare clicked for ${hospital.name}`);
-                  }}
-                  className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full hover:bg-[#e0d9f0] transition"
-                >
-                  Compare
-                </button>
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCompare(hospital);
+            }}
+            className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded-full hover:bg-[#e0d9f0] transition"
+          >
+            Compare
+          </button>
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <span>⭐ {hospital.rating || 0}</span>
@@ -213,8 +226,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
                   className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${hospital.negotiation_status === "Fixed"
                     ? "bg-[#6CA724] text-white"
                     : "bg-[#CE3C29] text-white"
-                    }`}
-                >
+                    }`}>
                   {hospital.negotiation_status} Price
                 </span>
                 <span className="text-[#8770BC] text-xl font-bold">
@@ -229,14 +241,12 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
       {/* Map */}
       <div
         className={`${sidebarOpen ? "w-[70%]" : "w-full"
-          } transition-all duration-500 ease-in-out h-full`}
-      >
+          } transition-all duration-500 ease-in-out h-full`}>
         <MapContainer
           center={mapCenter}
           zoom={12}
           zoomControl={false}
-          className="h-full w-full z-0"
-        >
+          className="h-full w-full z-0">
           <ResizeHandler sidebarOpen={sidebarOpen} />
           <FlyToLocation location={selectedLocation} />
           <FitBounds hospitals={sortedHospitals} />
@@ -248,8 +258,7 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
             <Marker
               key={i}
               position={[h.latitude, h.longitude]}
-              icon={hospitalIcon}
-            >
+              icon={hospitalIcon}>
               <Popup>{h.name}</Popup>
             </Marker>
           ))}
@@ -257,6 +266,11 @@ const HospitalMap = ({ searchResults }: HospitalMapProps) => {
 
       </div>
     </div>
+    {/* Show comparison table only when hospitals are selected */}
+    {selectedHospitals.length > 0 && (
+        <HospitalComparison selectedHospitals={selectedHospitals} />
+      )}
+    </>
   );
 };
 
