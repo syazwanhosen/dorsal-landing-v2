@@ -20,7 +20,7 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
   hospitalNames, // Include hospitalNames
 }) => {
   return (
-    <section id="ProcedureCard" className="mt-6">
+    <section id="ProcedureCard" className="mt-6 container">
       <div className="flex flex-col lg:flex-row items-start justify-between space-y-4 lg:space-y-0 lg:space-x-6">
         {/* Left Content */}
         <div className="w-full lg:w-[60%]">
@@ -35,11 +35,12 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
 
           <p className="text-sm text-gray-700 mt-2">{serviceDescription}</p>
 
-          {hasSearchResult && (
-            <button className="mt-3 text-sm font-semibold text-black hover:underline">
-              See More
-            </button>
-          )}
+        {/* {hasSearchResult && (
+    <button className="mt-3 text-sm font-semibold text-black hover:underline">
+      See More
+    </button>
+)} */}
+
         </div>
 
         {/* Right Box (Chart) */}

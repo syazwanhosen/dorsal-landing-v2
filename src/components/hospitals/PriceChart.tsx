@@ -121,9 +121,9 @@ const PriceChart: React.FC<ProcedureChartProps> = ({
     <div className="w-full h-[300px] flex flex-col">
       <div className="flex justify-between mb-2 px-2 mt-2">
         <h3 className="font-bold text-black pb-4">Distributed Prices</h3>
-        <a href="#" className="text-purple text-sm font-semibold hover:underline">
+       {/*  <a href="#" className="text-purple text-sm font-semibold hover:underline">
           Prices
-        </a>
+        </a> */}
       </div>
       <div className="flex-1 pb-4">
      
