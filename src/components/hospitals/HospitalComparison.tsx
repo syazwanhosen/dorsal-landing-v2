@@ -68,8 +68,8 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({ selected
             <div key={hospital.name} className="border-t border-gray-200 lg:p-8 p-4 text-center">
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
                 hospital.negotiation_status === "Fixed"
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
+                  ? "bg-[#6CA724] text-white"
+                  : "bg-[#CE3C29] text-white"
               }`}>
                 {hospital.negotiation_status}
               </span>
