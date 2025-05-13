@@ -22,18 +22,20 @@ export default function Data() {
   } | null>(null);
 
   return (
-    <>
-      <NavbarSecondary />
-      <Header title="Hospitals" />
-      <SearchHospital searchResults={searchResults} setSearchResults={setSearchResults} />
-      {searchResults ? (
-        <>
-          <ProcedureCard serviceName={""} serviceDescription={""} cptCode={""} hasSearchResult={false} prices={[]} labels={[]} hospitalNames={[]} />
-          <MapResult searchResults={searchResults} />
-        </>
-      ) : <SearchSection />}
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-grow">
+        <NavbarSecondary />
+        <Header title="Hospitals" />
+        <SearchHospital searchResults={searchResults} setSearchResults={setSearchResults} />
+        {searchResults ? (
+          <>
+            <ProcedureCard serviceName={""} serviceDescription={""} cptCode={""} hasSearchResult={false} prices={[]} labels={[]} hospitalNames={[]} />
+            <MapResult searchResults={searchResults} />
+          </>
+        ) : <SearchSection />}
+      </div>
       <Footer />
       <ScrollToTop />
-    </>
+    </div>
   );
 }
