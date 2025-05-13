@@ -1,21 +1,15 @@
 import { useMemo, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon, LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { HospitalComparison } from "./hospitals/HospitalComparison";
 import "leaflet/dist/leaflet.css";
-import { 
+import {
   setHospitals,
   setSelectedHospitals,
   setSortOption,
   setSidebarOpen,
-  setSelectedLocation
+  setSelectedLocation,
 } from "@/features/hospitalMapSlice";
 import hospital from "../assets/hospital.png";
 import location from "../assets/location-pin.svg";
@@ -31,8 +25,6 @@ const hospitalIcon = new Icon({
   iconAnchor: [15, 30],
   popupAnchor: [0, -30],
 });
-
-
 
 // Helper Components
 const ResizeHandler = ({ sidebarOpen }: { sidebarOpen: boolean }) => {
@@ -85,10 +77,10 @@ export const HospitalMap = () => {
     selectedHospitals,
     sortOption,
     sidebarOpen,
-    selectedLocation
+    selectedLocation,
   } = useAppSelector((state) => ({
     searchResults: state.hospital.searchResults,
-    ...state.hospitalMap
+    ...state.hospitalMap,
   }));
 
   const sortedHospitals = useMemo(() => {
@@ -114,26 +106,28 @@ export const HospitalMap = () => {
   useEffect(() => {
     const fetchHospitalData = async () => {
       if (!searchResults) return;
-      
+
       try {
         const responses = await Promise.all(
-          searchResults.hospital_names.map(async (name: string, index: number) => {
-            const encodedName = encodeURIComponent(name);
-            const res = await fetch(
-              `${baseUrl}/common/hospital_metadata/${encodedName}`
-            );
-            if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
-            const data = await res.json();
+          searchResults.hospital_names.map(
+            async (name: string, index: number) => {
+              const encodedName = encodeURIComponent(name);
+              const res = await fetch(
+                `${baseUrl}/common/hospital_metadata/${encodedName}`
+              );
+              if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
+              const data = await res.json();
 
-            return {
-              ...data.hospital_metadata,
-              name: searchResults.hospital_names[index],
-              price: searchResults.prices[index],
-              title: searchResults.generic_service_name,
-              description: searchResults.service_description,
-              zipcode: searchResults.cpt_hcpcs_code        
-            };
-          })
+              return {
+                ...data.hospital_metadata,
+                name: searchResults.hospital_names[index],
+                price: searchResults.prices[index],
+                title: searchResults.generic_service_name,
+                description: searchResults.service_description,
+                zipcode: searchResults.cpt_hcpcs_code,
+              };
+            }
+          )
         );
 
         dispatch(setHospitals(responses));
@@ -156,9 +150,11 @@ export const HospitalMap = () => {
   };
 
   const handleRemoveHospital = (hospitalName: string) => {
-    dispatch(setSelectedHospitals(
-      selectedHospitals.filter(h => h.name !== hospitalName)
-    ));
+    dispatch(
+      setSelectedHospitals(
+        selectedHospitals.filter((h) => h.name !== hospitalName)
+      )
+    );
   };
 
   useEffect(() => {
@@ -167,25 +163,26 @@ export const HospitalMap = () => {
 
   if (!searchResults) return null;
 
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
-
-const handleSelectHospital = (hospital: any) => {
-  dispatch(setSelectedHospital(hospital)); 
-  navigate("/hospital_details"); 
-};
+  const handleSelectHospital = (hospital: any) => {
+    dispatch(setSelectedHospital(hospital));
+    navigate("/hospital_details");
+  };
 
   return (
     <>
       <div className="relative lg:mt-12 mt-8 flex rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
         <button
           onClick={() => dispatch(setSidebarOpen(!sidebarOpen))}
-          className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
-            } rounded-tr-lg rounded-br-lg`}
+          className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${
+            sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
+          } rounded-tr-lg rounded-br-lg`}
         >
           <svg
-            className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${!sidebarOpen ? "rotate-180" : ""
-              }`}
+            className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
+              !sidebarOpen ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -196,44 +193,62 @@ const handleSelectHospital = (hospital: any) => {
         </button>
 
         <div
-          className={`${sidebarOpen ? "w-[30%]" : "w-0"
-            } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
+          className={`${
+            sidebarOpen ? "w-[30%]" : "w-0"
+          } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
         >
           <div className="p-4 overflow-y-auto h-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">{hospitals.length} Results</h2>
+              <h2 className="text-xl font-semibold">
+                {hospitals.length} Results
+              </h2>
               <select
                 value={sortOption}
-                onChange={(e) => dispatch(setSortOption(
-                  e.target.value as "lowestPrice" | "shortestDistance"
-                ))}
-                className="border border-gray-300 px-3 py-1 rounded-md text-sm">
+                onChange={(e) =>
+                  dispatch(
+                    setSortOption(
+                      e.target.value as "lowestPrice" | "shortestDistance"
+                    )
+                  )
+                }
+                className="border border-gray-300 px-3 py-1 rounded-md text-sm"
+              >
                 <option value="lowestPrice">Lowest Price</option>
                 <option value="shortestDistance">Shortest Distance</option>
               </select>
             </div>
-            {sortedHospitals.map((hospital, idx) => (         
+            {sortedHospitals.map((hospital, idx) => (
               <div
                 key={idx}
-                onClick={() => dispatch(setSelectedLocation([
-                  hospital.latitude, 
-                  hospital.longitude
-                ]))}
-                className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition">
+                onClick={() =>
+                  dispatch(
+                    setSelectedLocation([hospital.latitude, hospital.longitude])
+                  )
+                }
+                className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">
-               {/*    <a
+                    {/*    <a
   href={`/hospital_details/${encodeURIComponent(hospital.name)}?price=${hospital.price}&title=${encodeURIComponent(hospital.title)}&description=${encodeURIComponent(hospital.description)}&zipcode=${encodeURIComponent(hospital.zip_code)}`}
   target="_blank"
   rel="noopener noreferrer"
   className="text-purple-700 hover:underline"
 >
 {hospital.name} 
-</a> */}
-<button onClick={() => handleSelectHospital(hospital)} className="text-purple-700 hover:underline text-left"> {hospital.name} </button>
+</a> 
+{hospital.phone}
+<br></br>
+{hospital.zip_code}
+*/}
 
-
-
+                    <button
+                      onClick={() => handleSelectHospital(hospital)}
+                      className="text-purple-700 hover:underline text-left"
+                    >
+                      {" "}
+                      {hospital.name}{" "}
+                    </button>
                   </h3>
                   <button
                     onClick={(e) => {
@@ -248,17 +263,22 @@ const handleSelectHospital = (hospital: any) => {
                 <div className="flex items-center text-sm text-gray-600">
                   <span>⭐ {hospital.rating || 0}</span>
                   <span className="flex items-center mx-2">
-                    <img src={location} alt="Location Icon" className="w-4 h-4" />
+                    <img
+                      src={location}
+                      alt="Location Icon"
+                      className="w-4 h-4"
+                    />
                     {hospital.distance || "10 mi"}
                   </span>
                 </div>
                 <p className="text-sm text-gray-500">{hospital.address}</p>
                 <div className="flex justify-between items-center mt-1">
                   <span
-                    className={`inline-block px-2 py-1 text-xs font-medium rounded ${hospital.negotiation_status === "Fixed"
-                      ? "bg-[#6CA724] text-white"
-                      : "bg-[#CE3C29] text-white"
-                      }`}
+                    className={`inline-block px-2 py-1 text-xs font-medium rounded ${
+                      hospital.negotiation_status === "Fixed"
+                        ? "bg-[#6CA724] text-white"
+                        : "bg-[#CE3C29] text-white"
+                    }`}
                   >
                     {hospital.negotiation_status} Price
                   </span>
@@ -272,8 +292,9 @@ const handleSelectHospital = (hospital: any) => {
         </div>
 
         <div
-          className={`${sidebarOpen ? "w-[70%]" : "w-full"
-            } transition-all duration-500 ease-in-out h-full`}
+          className={`${
+            sidebarOpen ? "w-[70%]" : "w-full"
+          } transition-all duration-500 ease-in-out h-full`}
         >
           <MapContainer
             center={mapCenter}
@@ -302,9 +323,9 @@ const handleSelectHospital = (hospital: any) => {
       </div>
 
       {selectedHospitals.length > 0 && (
-        <HospitalComparison 
-          selectedHospitals={selectedHospitals} 
-          onRemoveHospital={handleRemoveHospital} 
+        <HospitalComparison
+          selectedHospitals={selectedHospitals}
+          onRemoveHospital={handleRemoveHospital}
         />
       )}
     </>
