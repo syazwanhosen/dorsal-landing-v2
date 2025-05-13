@@ -10,6 +10,7 @@ import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
 
 import "./Hospitals.css";
+import { SearchSection } from "@/components/hospitals/SearchSection";
 
 export default function Data() {
   const [searchResults, setSearchResults] = useState<{
@@ -25,9 +26,12 @@ export default function Data() {
       <NavbarSecondary />
       <Header title="Hospitals" />
       <SearchHospital searchResults={searchResults} setSearchResults={setSearchResults} />
-      <ProcedureCard serviceName={""} serviceDescription={""} cptCode={""} hasSearchResult={false} prices={[]} labels={[]} hospitalNames={[]} />
-      {searchResults && <MapResult searchResults={searchResults} />}
-    
+      {searchResults ? (
+        <>
+          <ProcedureCard serviceName={""} serviceDescription={""} cptCode={""} hasSearchResult={false} prices={[]} labels={[]} hospitalNames={[]} />
+          <MapResult searchResults={searchResults} />
+        </>
+      ) : <SearchSection />}
       <Footer />
       <ScrollToTop />
     </>
