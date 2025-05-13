@@ -13,7 +13,6 @@ import {
 } from "@/features/hospitalMapSlice";
 import hospital from "../assets/hospital.png";
 import location from "../assets/location-pin.svg";
-import { useNavigate } from "react-router-dom";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
@@ -163,12 +162,14 @@ export const HospitalMap = () => {
 
   if (!searchResults) return null;
 
-  const navigate = useNavigate();
+
 
   const handleSelectHospital = (hospital: any) => {
-    dispatch(setSelectedHospital(hospital));
-    navigate("/hospital_details");
+    console.log("Selected Hospital:", hospital); // Debugging step
+    dispatch(setSelectedHospital(hospital)); // ✅ Save hospital in Redux Persist
+    window.open("/hospital_details", "_blank"); // ✅ Open in a new tab
   };
+  
 
   return (
     <>

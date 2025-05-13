@@ -3,7 +3,6 @@ import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Navbar } from "./components/Navbar";
 import { Newsletter } from "./components/Newsletter";
-import { Pricing } from "./components/Pricing";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { FAQ } from "./components/FAQ";
 
