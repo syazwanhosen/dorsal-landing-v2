@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface HospitalMapState {
   hospitals: any[];
   selectedHospitals: any[];
-  selectedHospital: any | null; // NEW STATE
+  selectedHospital: any | null; 
   sortOption: "lowestPrice" | "shortestDistance";
   sidebarOpen: boolean;
   selectedLocation: [number, number] | null;
@@ -12,7 +12,7 @@ interface HospitalMapState {
 const initialState: HospitalMapState = {
   hospitals: [],
   selectedHospitals: [],
-  selectedHospital: null, // Ensure initial state includes this
+  selectedHospital: null, 
   sortOption: "lowestPrice",
   sidebarOpen: true,
   selectedLocation: null

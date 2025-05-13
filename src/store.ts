@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // Use localStorage
-
+import storage from "redux-persist/lib/storage"; 
 import hospitalSlice from "./features/hospitalSlice";
 import hospitalMapReducer from "./features/hospitalMapSlice"; // Hospital map reducer
 
-// ✅ Redux Persist configuration for `hospitalMapSlice`
+
 const persistConfig = {
   key: "hospitalMap",
-  storage, // Store state in localStorage
+  storage, 
+  blacklist: ["someNonSerializableState"], 
 };
 
 const persistedHospitalMapReducer = persistReducer(persistConfig, hospitalMapReducer);
@@ -16,11 +16,14 @@ const persistedHospitalMapReducer = persistReducer(persistConfig, hospitalMapRed
 export const store = configureStore({
   reducer: {
     hospital: hospitalSlice,
-    hospitalMap: persistedHospitalMapReducer, // Wrap with Redux Persist
+    hospitalMap: persistedHospitalMapReducer, 
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, 
+    }),
 });
 
-// ✅ Create persistor to manage persisted state
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;

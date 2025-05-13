@@ -103,7 +103,7 @@ export const DetailsCard = () => {
               ? "bg-[#6CA724] text-white"
               : "bg-[#CE3C29] text-white"
           }`}>
-            {selectedHospital.negotiation_status || "Fixed Price"}
+            {selectedHospital.negotiation_status || "Fixed Price"} Price
           </span>
           <span className="text-sm text-gray-500">Estimated Cost</span>
           <span className="text-2xl font-bold text-purple">${selectedHospital.price}</span>
