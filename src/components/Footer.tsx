@@ -2,7 +2,7 @@ import { LogoIcon } from "./Icons";
 
 export const Footer = () => {
   return (
-    <footer id="footer">
+    <footer id="footer" className="w-full py-4 mt-14">
       {/*
       <hr className="w-11/12 mx-auto" />
       
@@ -128,20 +128,18 @@ export const Footer = () => {
         </div>
       </section>
       */}
-
-      <section className="container pb-14 text-center">
+      <section className="container mx-auto flex items-center justify-between relative">
         <a
           href="/"
-          className="font-bold text-xl flex"
+          className="font-bold text-xl absolute bottom-6"
           style={{ fontFamily: 'the-seasons, sans-serif' }}
         >
-          <LogoIcon /> 
+          <LogoIcon />
         </a>
-        
-        <h3>
-  &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
-</h3>
 
+        <h3 className="absolute left-1/2 bottom-1 transform -translate-x-1/2 text-center text-sm">
+          &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
+        </h3>
       </section>
     </footer>
   );

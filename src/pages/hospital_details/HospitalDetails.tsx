@@ -11,15 +11,16 @@ import { OtherServices } from "../../components/hospital_details/OtherServices";
 import "./HospitalDetails.css";
 
 export default function Data() {
- 
+
   return (
     <>
       <NavbarSecondary />
       <Header title="Hospital Details" />
-      <DetailsCard  />
+      <DetailsCard />
       <OtherServices />
       <Footer />
       <ScrollToTop />
     </>
+
   );
 }

@@ -36,6 +36,7 @@ export type FlyToLocationProps = {
 };
 
 
+
 // types/HospitalMap.ts
 export interface HospitalDetails {
     zip_code: any;
@@ -53,3 +54,12 @@ export interface HospitalDetails {
     cptCode?: string;
     distance?: string;
   }
+
+export type PopularSearchTabType = 'Procedures' | 'Condition' | 'Specialty';
+
+export type TopSearchHospital = {
+    name: string;
+    address: string;
+    priceType: 'Fixed Price' | 'Negotiated Price';
+};
+
