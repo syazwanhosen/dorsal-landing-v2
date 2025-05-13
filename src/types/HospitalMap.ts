@@ -29,3 +29,11 @@ export type ResizeHandlerProps = {
 export type FlyToLocationProps = {
     location: [number, number] | null;
 };
+
+export type PopularSearchTabType = 'Procedures' | 'Condition' | 'Specialty';
+
+export type TopSearchHospital = {
+    name: string;
+    address: string;
+    priceType: 'Fixed Price' | 'Negotiated Price';
+};
