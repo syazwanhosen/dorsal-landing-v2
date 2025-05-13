@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 // Components
 import { NavbarSecondary } from "../../components/NavbarSecondary";
@@ -16,7 +16,7 @@ export default function Data() {
     <>
       <NavbarSecondary />
       <Header title="Hospital Details" />
-      <DetailsCard />
+      <DetailsCard  />
       <OtherServices />
       <Footer />
       <ScrollToTop />

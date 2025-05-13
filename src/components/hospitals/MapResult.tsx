@@ -1,13 +1,10 @@
-// Components
-import HospitalMap from "../HospitalMap";
+// MapResult.tsx
+import { HospitalMap } from "@/components/HospitalMap";
 
-// Types
-import { HospitalMapProps } from "../../types";
-
-export const MapResult = ({ searchResults }: HospitalMapProps) => {
+export const MapResult = () => {
   return (
-    <section id="MapResult" className="container pb-6">
-      <HospitalMap searchResults={searchResults} />
+       <section id="MapResult" className="container pb-6">
+      <HospitalMap />
     </section>
   );
 };
