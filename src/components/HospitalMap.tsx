@@ -244,7 +244,7 @@ export const HospitalMap = () => {
 
                     <button
                       onClick={() => handleSelectHospital(hospital)}
-                      className="text-purple-700 hover:underline text-left"
+                      className="text-black hover:underline hover:text-purple-700 text-left"
                     >
                       {" "}
                       {hospital.name}{" "}
