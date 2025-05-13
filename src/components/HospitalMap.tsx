@@ -165,9 +165,9 @@ export const HospitalMap = () => {
 
 
   const handleSelectHospital = (hospital: any) => {
-    console.log("Selected Hospital:", hospital); // Debugging step
-    dispatch(setSelectedHospital(hospital)); // ✅ Save hospital in Redux Persist
-    window.open("/hospital_details", "_blank"); // ✅ Open in a new tab
+    console.log("Selected Hospital:", hospital);
+    dispatch(setSelectedHospital(hospital)); 
+    window.open("/hospital_details", "_blank"); 
   };
   
 

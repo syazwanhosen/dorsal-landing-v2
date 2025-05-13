@@ -2,9 +2,13 @@ import { useAppSelector} from "@/store";
 import { useEffect } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 export const DetailsCard = () => {
+  const navigate = useNavigate();
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
 
   useEffect(() => {
@@ -17,11 +21,10 @@ export const DetailsCard = () => {
 <section className="container mx-auto p-4">
   {/* Back Button */}
   <button
-    onClick={() => window.history.back()}
-    className="mb-4 text-sm text-gray-600 hover:underline"
-  >
-    &larr; Back to result
-  </button>
+  onClick={() => navigate("/hospitals")} 
+  className="mb-4 text-sm text-gray-600 hover:underline">
+  &larr; Back to Hospitals
+</button>
 
   {/* Hospital Name & Rating */}
   <h2 className="text-2xl font-semibold mb-4">
@@ -84,9 +87,9 @@ export const DetailsCard = () => {
       <div className="w-full">
         <h3 className="text-lg font-semibold mb-1 flex flex-wrap items-center gap-4">
           {selectedHospital.title}
-          {selectedHospital.zip_code && (
+          {selectedHospital.zipcode && (
             <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
-              CPT Code {selectedHospital.zip_code}
+              CPT Code {selectedHospital.zipcode}
             </span>
           )}
         </h3>
