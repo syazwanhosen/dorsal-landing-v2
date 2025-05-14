@@ -51,7 +51,6 @@ const FlyToLocation = ({ location }: { location: [number, number] | null }) => {
   return null;
 };
 
-
 const FitBounds = ({ hospitals }: { hospitals: any[] }) => {
   const map = useMap();
 
@@ -106,37 +105,42 @@ export const HospitalMap = () => {
   useEffect(() => {
     const fetchHospitalData = async () => {
       if (!searchResults || !searchResults.hospital_names?.length) return;
-  
+
       try {
         const responses = await Promise.all(
-          searchResults.hospital_names.map(async (name: string, index: number) => {
-            const encodedName = encodeURIComponent(name);
-            const res = await fetch(`${baseUrl}/common/hospital_metadata/${encodedName}`);
-            
-            if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
-  
-            const data = await res.json();
-  
-            return {
-              ...data, // ✅ Fix: Spread operator applies metadata correctly
-              name: searchResults.hospital_names[index],
-              price: searchResults.prices?.[index] || 0, // ✅ Prevent undefined price errors
-              title: searchResults.generic_service_name || "Unknown Service",
-              description: searchResults.service_description || "No description available",
-              zipcode: searchResults.cpt_hcpcs_code || "N/A",
-            };
-          })
+          searchResults.hospital_names.map(
+            async (name: string, index: number) => {
+              const encodedName = encodeURIComponent(name);
+              const res = await fetch(
+                `${baseUrl}/common/hospital_metadata/${encodedName}`
+              );
+
+              if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
+
+              const data = await res.json();
+
+              return {
+                ...data, // ✅ Fix: Spread operator applies metadata correctly
+                name: searchResults.hospital_names[index],
+                price: searchResults.prices?.[index] || 0, // ✅ Prevent undefined price errors
+                title: searchResults.generic_service_name || "Unknown Service",
+                description:
+                  searchResults.service_description ||
+                  "No description available",
+                zipcode: searchResults.cpt_hcpcs_code || "N/A",
+              };
+            }
+          )
         );
-  
+
         dispatch(setHospitals(responses));
       } catch (error) {
         console.error("Error fetching hospital metadata:", error);
       }
     };
-  
+
     fetchHospitalData();
   }, [searchResults, dispatch]);
-  
 
   const handleCompare = (hospital: any) => {
     if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
@@ -160,16 +164,13 @@ export const HospitalMap = () => {
 
   if (!searchResults) return null;
 
-
   const handleSelectHospital = (hospital: any) => {
     dispatch(setSelectedHospital(hospital)); // ✅ Update Redux state first
     // ✅ Delay opening the new tab to ensure state update is processed
     setTimeout(() => {
       window.open("/hospital_details", "_blank");
-    }, 100); 
+    }, 100);
   };
-  
-  
 
   return (
     <>
@@ -221,39 +222,33 @@ export const HospitalMap = () => {
             {sortedHospitals.map((hospital, idx) => (
               <div
                 key={idx}
-                onClick={() =>
-                  dispatch(
-                    setSelectedLocation([hospital.latitude, hospital.longitude])
-                  )
-                }
+                onClick={() => {
+                  if (hospital.latitude && hospital.longitude) {
+                    dispatch(
+                      setSelectedLocation([
+                        hospital.latitude,
+                        hospital.longitude,
+                      ])
+                    );
+                  }
+                }}
                 className="mb-4 border-b border-gray-300 pb-4 cursor-pointer hover:bg-purple-50 p-2 transition"
               >
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">
-                    {/*    <a
-  href={`/hospital_details/${encodeURIComponent(hospital.name)}?price=${hospital.price}&title=${encodeURIComponent(hospital.title)}&description=${encodeURIComponent(hospital.description)}&zipcode=${encodeURIComponent(hospital.zip_code)}`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="text-purple-700 hover:underline"
->
-{hospital.name} 
-</a> 
-{hospital.phone}
-<br></br>
-{hospital.zip_code}
-*/}
-
                     <button
-                      onClick={() => handleSelectHospital(hospital)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering parent click
+                        handleSelectHospital(hospital);
+                      }}
                       className="text-black hover:underline hover:text-purple-700 text-left"
                     >
-                      {" "}
-                      {hospital.name}{" "}
+                      {hospital.name}
                     </button>
                   </h3>
                   <button
                     onClick={(e) => {
-                      e.stopPropagation();
+                      e.stopPropagation(); // Prevent clicking affecting map center
                       handleCompare(hospital);
                     }}
                     className="ml-2 px-3 py-1 text-xs font-medium text-[#8770BC] bg-[#EEEBF4] rounded hover:bg-[#e0d9f0] transition"
