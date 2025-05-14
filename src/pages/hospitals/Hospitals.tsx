@@ -18,29 +18,29 @@ export default function Hospitals() {
   return (
 
     <>
-     <div className="min-h-screen flex flex-col">
-     <div className="flex-grow">
-      <NavbarSecondary />
-      <Header title="Hospitals" />
-      <SearchHospital />
-      {searchResults ? (
-        <>
-          <ProcedureCard
-            serviceName={searchResults.generic_service_name || ""}
-            serviceDescription={searchResults.service_description || ""}
-            cptCode={searchResults.cpt_hcpcs_code} 
-            hasSearchResult={searchResults.hospital_count > 0}
-            prices={searchResults.prices}
-            hospitalNames={searchResults.hospital_names}
-            labels={[]}
-          />
-          <MapResult />
-        </>
-      ) : <SearchSection />}
-      </div>
-      
-      <Footer />
-      <ScrollToTop />
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-grow">
+          <NavbarSecondary />
+          <Header title="Hospitals" />
+          <SearchHospital />
+          {searchResults ? (
+            <>
+              <ProcedureCard
+                serviceName={searchResults.generic_service_name || ""}
+                serviceDescription={searchResults.service_description || ""}
+                cptCode={searchResults.cpt_hcpcs_code}
+                hasSearchResult={searchResults.hospital_count > 0}
+                prices={searchResults.prices}
+                hospitalNames={searchResults.hospital_names}
+                labels={[]}
+              />
+              <MapResult />
+            </>
+          ) : <SearchSection />}
+        </div>
+
+        <Footer />
+        <ScrollToTop />
       </div>
     </>
   );

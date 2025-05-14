@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { PopularSearchTabType } from '@/types';
-import { ButtonGroup } from '../Buttons/ButtonGroup';
+import { ButtonGroup } from '../ui/buttons/button-group';
 
 const tabs: PopularSearchTabType[] = ['Procedures', 'Condition', 'Specialty'];
 const searchTerms = [

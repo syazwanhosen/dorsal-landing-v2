@@ -185,14 +185,12 @@ export const HospitalMap = () => {
       <div className="relative lg:mt-12 mt-8 flex rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
         <button
           onClick={() => dispatch(setSidebarOpen(!sidebarOpen))}
-          className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${
-            sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
-          } rounded-tr-lg rounded-br-lg`}
+          className={`absolute z-20 top-4 h-12 w-10 flex items-center justify-center bg-white shadow-sm transition-all duration-300 ${sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
+            } rounded-tr-lg rounded-br-lg`}
         >
           <svg
-            className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
-              !sidebarOpen ? "rotate-180" : ""
-            }`}
+            className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${!sidebarOpen ? "rotate-180" : ""
+              }`}
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -203,9 +201,8 @@ export const HospitalMap = () => {
         </button>
 
         <div
-          className={`${
-            sidebarOpen ? "w-[30%]" : "w-0"
-          } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
+          className={`${sidebarOpen ? "w-[30%]" : "w-0"
+            } transition-all duration-500 ease-in-out overflow-hidden bg-white`}
         >
           <div className="p-4 overflow-y-auto h-full">
             <div className="flex justify-between items-center mb-4">
@@ -278,11 +275,10 @@ export const HospitalMap = () => {
                 <p className="text-sm text-gray-500">{hospital.address}</p>
                 <div className="flex justify-between items-center mt-1">
                   <span
-                    className={`inline-block px-2 py-1 text-xs font-medium rounded ${
-                      hospital.negotiation_status === "Fixed"
-                        ? "bg-[#6CA724] text-white"
-                        : "bg-[#CE3C29] text-white"
-                    }`}
+                    className={`inline-block px-2 py-1 text-xs font-medium rounded ${hospital.negotiation_status === "Fixed"
+                      ? "bg-[#6CA724] text-white"
+                      : "bg-[#CE3C29] text-white"
+                      }`}
                   >
                     {hospital.negotiation_status} Price
                   </span>
@@ -296,9 +292,8 @@ export const HospitalMap = () => {
         </div>
 
         <div
-          className={`${
-            sidebarOpen ? "w-[70%]" : "w-full"
-          } transition-all duration-500 ease-in-out h-full`}
+          className={`${sidebarOpen ? "w-[70%]" : "w-full"
+            } transition-all duration-500 ease-in-out h-full`}
         >
           <MapContainer
             center={mapCenter}

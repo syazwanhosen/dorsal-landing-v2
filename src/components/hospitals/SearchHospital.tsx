@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { 
-  setFilters, 
-  setOptions, 
+import {
+  setFilters,
+  setOptions,
   setLoading,
-  setSearchResults} from "../../features/hospitalSlice";
+  setSearchResults
+} from "../../features/hospitalSlice";
 
 export const SearchHospital = () => {
   const dispatch = useAppDispatch();
@@ -25,13 +26,13 @@ export const SearchHospital = () => {
   const { searchResults } = useAppSelector((state) => state.hospital);
 
 
- // ✅ Fetch list of states on mount
- useEffect(() => {
-  fetch("https://dorsaldata1.apurbatech.io/common/get_states")
-    .then((response) => response.json())
-    .then((data) => dispatch(setOptions({ field: "state", values: data })))
-    .catch((error) => console.error("Error loading states:", error));
-}, [dispatch]);
+  // ✅ Fetch list of states on mount
+  useEffect(() => {
+    fetch("https://dorsaldata1.apurbatech.io/common/get_states")
+      .then((response) => response.json())
+      .then((data) => dispatch(setOptions({ field: "state", values: data })))
+      .catch((error) => console.error("Error loading states:", error));
+  }, [dispatch]);
 
   useEffect(() => {
     const state = filters.state;
@@ -70,7 +71,7 @@ export const SearchHospital = () => {
     const state = filters.state;
 
     // Reset subcategory, cpt and service when category changes
-    dispatch(setFilters({ 
+    dispatch(setFilters({
       subcategory: "",
       cpt: "",
       service: ""
@@ -107,7 +108,7 @@ export const SearchHospital = () => {
     const state = filters.state;
 
     // Reset CPT and Service fields
-    dispatch(setFilters({ 
+    dispatch(setFilters({
       cpt: "",
       service: ""
     }));
@@ -131,13 +132,13 @@ export const SearchHospital = () => {
           throw new Error("Invalid data format from /update_dropdowns");
         }
 
-        dispatch(setOptions({ 
-          field: 'cpt', 
-          values: data.selected_cpt_codes 
+        dispatch(setOptions({
+          field: 'cpt',
+          values: data.selected_cpt_codes
         }));
-        dispatch(setOptions({ 
-          field: 'service', 
-          values: data.selected_service_names 
+        dispatch(setOptions({
+          field: 'service',
+          values: data.selected_service_names
         }));
       })
       .catch((error) => {
@@ -153,13 +154,13 @@ export const SearchHospital = () => {
 
   const handleSearch = () => {
     const { state, category, subcategory, cpt, service } = filters;
-  
+
     if (!category) {
       alert("Please select a service category");
       return;
     }
 
-    if (!cpt ) {
+    if (!cpt) {
       alert("Please select  a CPT code");
       return;
     }
@@ -167,15 +168,15 @@ export const SearchHospital = () => {
       alert("Please select either a sub-category, a CPT code, or a service name");
       return;
     }
-  
+
     const params = new URLSearchParams({ service_category: category });
     if (state) params.append("state", state);
     if (subcategory) params.append("sub_category", subcategory);
     if (cpt) params.append("cpt_code", cpt);
     else if (service) params.append("service_name", service);
-  
+
     dispatch(setLoading(true));
-  
+
     fetch(`https://dorsaldata1.apurbatech.io/hospital_finder/search?${params.toString()}`)
       .then((response) => response.json())
       .then((data) => {
@@ -196,7 +197,7 @@ export const SearchHospital = () => {
       })
       .finally(() => dispatch(setLoading(false)));
   };
-  
+
 
   return (
     <>
@@ -247,54 +248,54 @@ export const SearchHospital = () => {
             </div>
           ))}
 
-        {/* Search Button */}
-        <button
-          onClick={handleSearch}
-          className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
-        >
-          {loading ? "Searching..." : "SEARCH"}
-        </button>
-      </div>
+          {/* Search Button */}
+          <button
+            onClick={handleSearch}
+            className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
+          >
+            {loading ? "Searching..." : "SEARCH"}
+          </button>
+        </div>
 
-      {/* Filter dropdowns */}
+        {/* Filter dropdowns */}
 
-      {searchResults && (
-  <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
-    <span className="font-semibold">Filter by:</span>
+        {searchResults && (
+          <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
+            <span className="font-semibold">Filter by:</span>
 
-    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="15 miles">
-      <option disabled>Select Distance</option>
-      <option value="15 miles">Within 15 miles</option>
-      <option value="30 miles">Within 30 miles</option>
-      <option value="50 miles">Within 50 miles</option>
-    </select>
+            <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="15 miles">
+              <option disabled>Select Distance</option>
+              <option value="15 miles">Within 15 miles</option>
+              <option value="30 miles">Within 30 miles</option>
+              <option value="50 miles">Within 50 miles</option>
+            </select>
 
-    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Rating">
-      <option disabled>Select Rating</option>
-      <option value="5 stars">5 Stars</option>
-      <option value="2+ stars">2+ Stars</option>
-    </select>
+            <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Rating">
+              <option disabled>Select Rating</option>
+              <option value="5 stars">5 Stars</option>
+              <option value="2+ stars">2+ Stars</option>
+            </select>
 
-    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Insurance">
-      <option disabled>Select Insurance</option>
-      <option value="Plan A">Plan A</option>
-      <option value="Plan B">Plan B</option>
-    </select>
+            <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Insurance">
+              <option disabled>Select Insurance</option>
+              <option value="Plan A">Plan A</option>
+              <option value="Plan B">Plan B</option>
+            </select>
 
-    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Fixed Price">
-      <option disabled>Select Price Type</option>
-      <option value="Fixed">Fixed Price</option>
-      <option value="Negotiated">Negotiated Price</option>
-    </select>
-  </div>
-)}
+            <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Fixed Price">
+              <option disabled>Select Price Type</option>
+              <option value="Fixed">Fixed Price</option>
+              <option value="Negotiated">Negotiated Price</option>
+            </select>
+          </div>
+        )}
 
 
-    </section>
+      </section>
 
-  
 
-{/*   <div className="mt-6">
+
+      {/*   <div className="mt-6">
   <h3 className="font-semibold text-sm mb-2">
     Found {searchResults.hospital_count} hospitals
   </h3>
@@ -327,7 +328,7 @@ export const SearchHospital = () => {
   )}
 </div> */}
 
-      
+
     </>
   );
 };
