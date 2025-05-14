@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "./ui/buttons/button";
 import { Input } from "./ui/input";
 
 export const Newsletter = () => {
@@ -9,7 +9,7 @@ export const Newsletter = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    
+
     setButtonText('Thanks!');
     setButtonVariant('default');
     setFormSubmitted(true);

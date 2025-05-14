@@ -1,5 +1,5 @@
 // Types
-import { ButtonGroupProps } from '../../types'
+import { ButtonGroupProps } from '../../../types'
 
 export const ButtonGroup = <T extends string>({
     options,

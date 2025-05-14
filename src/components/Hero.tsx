@@ -1,4 +1,4 @@
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "./ui/buttons/button";
 import { HeroCards } from "./HeroCards";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
@@ -23,7 +23,7 @@ export const Hero = () => {
         </main>
 
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-        Cut through hidden fees, secure fair rates, and take control of your healthcare costs.
+          Cut through hidden fees, secure fair rates, and take control of your healthcare costs.
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
