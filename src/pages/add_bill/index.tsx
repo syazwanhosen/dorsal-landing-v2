@@ -21,10 +21,10 @@ export default function AddBill() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <h1 className="text-lg font-medium text-[#8770BC]">Add Bill</h1>
                 <div className="space-x-4">
-                    <Button className="bg-[#8770BC] hover:bg-[#e0d9f0] text-white">
+                    <Button className="bg-[#8770BC] hover:bg-primary text-white">
                         Upload Document
                     </Button>
-                    <Button className="bg-[#8770BC] text-white hover:bg-[#e0d9f0]">
+                    <Button className="bg-[#8770BC] text-white hover:bg-primary">
                         Enter Manual Data
                     </Button>
                 </div>
@@ -49,7 +49,7 @@ export default function AddBill() {
                                                 Billing #{bill.id}:{bill.date}
                                             </span>
                                         </div>
-                                        <Button className="bg-[#8770BC] text-white hover:bg-[#e0d9f0] text-sm px-4 py-1 h-auto">
+                                        <Button className="bg-[#8770BC] text-white hover:bg-primary text-sm px-4 py-1 h-auto">
                                             View
                                         </Button>
                                     </li>
