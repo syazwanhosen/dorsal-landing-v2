@@ -29,13 +29,13 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
 
           {selectedHospitals.map((hospital, idx) => (
             <div
-              key={`${hospital.name}-${idx}`} // Ensuring unique key
+              key={`hospital-${idx}`} // ✅ Ensuring unique key
               className="p-4 font-semibold text-center text-base flex flex-col items-center"
             >
               {hospital.name}
               <div className="text-sm font-normal">
-                {hospital.address} <br />
-                {hospital.phone}
+                {hospital.address || "Address not available"} <br />
+                {hospital.phone || "No phone available"}
               </div>
 
               {/* Fixed Remove Button at Bottom */}
@@ -47,48 +47,59 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
               </button>
             </div>
           ))}
+
           {selectedHospitals.length === 1 && (
             <div className="lg:p-8 p-4 text-center italic text-gray-400">
               Select another hospital to compare
             </div>
           )}
 
-          {/* Distance Row (Static Value) */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Distance</div>
-          {selectedHospitals.map(() => (
-            <div className="border-t border-gray-200 lg:p-8 p-4 text-center">
-              10 miles
+          {/* Distance Row */}
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+            Distance
+          </div>
+          {selectedHospitals.map((hospital, idx) => (
+            <div key={`distance-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center">
+              {hospital.distance || "Unknown"} miles
             </div>
           ))}
           {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
-          {/* Rating Row (Static Value) */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Rating</div>
-          {selectedHospitals.map(() => (
-            <div  className="border-t border-gray-200 lg:p-8 p-4 flex justify-center items-center space-x-2">
+          {/* Rating Row */}
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+            Rating
+          </div>
+          {selectedHospitals.map((hospital, idx) => (
+            <div key={`rating-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 flex justify-center items-center space-x-2">
               <div className="text-yellow-500">⭐⭐⭐⭐</div>
-              <span className="text-gray-700 text-sm">4.0</span>
+              <span className="text-gray-700 text-sm">{hospital.rating || "N/A"}</span>
             </div>
           ))}
           {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Price Row */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Price</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+            Price
+          </div>
           {selectedHospitals.map((hospital, idx) => (
             <div key={`price-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center text-purple font-semibold text-base">
-              ${hospital.price}
+              ${hospital.price || "Unknown"}
             </div>
           ))}
           {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Price Type Row */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">Price Type</div>
+          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+            Price Type
+          </div>
           {selectedHospitals.map((hospital, idx) => (
             <div key={`priceType-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center">
-              <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                hospital.negotiation_status === "Fixed" ? "bg-[#6CA724] text-white" : "bg-[#CE3C29] text-white"
-              }`}>
-                {hospital.negotiation_status}
+              <span
+                className={`px-2 py-1 text-xs font-semibold rounded ${
+                  hospital.negotiation_status === "Fixed" ? "bg-[#6CA724] text-white" : "bg-[#CE3C29] text-white"
+                }`}
+              >
+                {hospital.negotiation_status || "N/A"}
               </span>
             </div>
           ))}

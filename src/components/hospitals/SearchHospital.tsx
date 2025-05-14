@@ -1,32 +1,18 @@
 import { useState, useEffect } from "react";
-import { ProcedureCard } from "./ProcedureCard";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { 
+  setFilters, 
+  setOptions, 
+  setLoading,
+  setSearchResults} from "../../features/hospitalSlice";
 
-interface SearchHospitalProps {
-  searchResults: {
-    hospital_names: string[];
-    prices: number[];
-    hospital_count: number;
-    generic_service_name?: string;
-    service_description?: string;
-  } | null;
-  setSearchResults: React.Dispatch<React.SetStateAction<{
-    hospital_names: string[];
-    prices: number[];
-    hospital_count: number;
-    generic_service_name?: string;
-    service_description?: string;
-  } | null>>;
-}
-
-
-export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, setSearchResults }) => {
-  const [filters, setFilters] = useState({
-    state: "",
-    category: "",
-    subcategory: "",
-    cpt: "",
-    service: "",
-  });
+export const SearchHospital = () => {
+  const dispatch = useAppDispatch();
+  const {
+    filters,
+    options,
+    loading
+  } = useAppSelector((state: { hospital: any; }) => state.hospital);
 
   const [dropdownVisible, setDropdownVisible] = useState({
     state: false,
@@ -36,31 +22,13 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
     service: false,
   });
 
-  const [options, setOptions] = useState({
-    state: [] as string[],
-    category: [] as string[],
-    subcategory: [] as string[],
-    cpt: [] as string[],
-    service: [] as string[],
-  });
-
-  // Fetch list of states on mount
-  useEffect(() => {
-    fetch("https://dorsaldata1.apurbatech.io/common/get_states")
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch states");
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched states:", data);
-        setOptions((prev) => ({ ...prev, state: data }));
-      })
-      .catch((error) => {
-        console.error("Error loading states:", error);
-        alert("Error loading states. Please try again.");
-      });
-  }, []);
-
+ // ✅ Fetch list of states on mount
+ useEffect(() => {
+  fetch("https://dorsaldata1.apurbatech.io/common/get_states")
+    .then((response) => response.json())
+    .then((data) => dispatch(setOptions({ field: "state", values: data })))
+    .catch((error) => console.error("Error loading states:", error));
+}, [dispatch]);
 
   useEffect(() => {
     const state = filters.state;
@@ -85,17 +53,13 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
         } else {
           throw new Error("Unexpected data structure from /get_categories");
         }
-        setOptions((prev) => ({
-          ...prev,
-          category: categories,
-        }));
+        dispatch(setOptions({ field: 'category', values: categories }));
       })
       .catch((error) => {
         console.error("Error loading categories:", error);
         alert("Error loading categories. Please try again.");
       });
-  }, [filters.state]);
-
+  }, [filters.state, dispatch]);
 
   // Fetch sub-categories when category changes
   useEffect(() => {
@@ -103,19 +67,15 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
     const state = filters.state;
 
     // Reset subcategory, cpt and service when category changes
-    setFilters((prev) => ({
-      ...prev,
+    dispatch(setFilters({ 
       subcategory: "",
       cpt: "",
-      service: "",
+      service: ""
     }));
 
-    setOptions((prev) => ({
-      ...prev,
-      subcategory: [],
-      cpt: [],
-      service: [],
-    }));
+    dispatch(setOptions({ field: 'subcategory', values: [] }));
+    dispatch(setOptions({ field: 'cpt', values: [] }));
+    dispatch(setOptions({ field: 'service', values: [] }));
 
     if (!selectedCategory) return;
 
@@ -130,16 +90,13 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
       })
       .then((data) => {
         if (!Array.isArray(data.sub_categories)) throw new Error("Invalid data format");
-        setOptions((prev) => ({
-          ...prev,
-          subcategory: data.sub_categories,
-        }));
+        dispatch(setOptions({ field: 'subcategory', values: data.sub_categories }));
       })
       .catch((error) => {
         console.error("Error updating sub-categories:", error);
         alert("Error updating sub-categories. Please try again.");
       });
-  }, [filters.category, filters.state]);
+  }, [filters.category, filters.state, dispatch]);
 
   // Fetch CPT codes and service names when subcategory changes
   useEffect(() => {
@@ -147,17 +104,13 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
     const state = filters.state;
 
     // Reset CPT and Service fields
-    setFilters((prev) => ({
-      ...prev,
+    dispatch(setFilters({ 
       cpt: "",
-      service: "",
+      service: ""
     }));
 
-    setOptions((prev) => ({
-      ...prev,
-      cpt: [],
-      service: [],
-    }));
+    dispatch(setOptions({ field: 'cpt', values: [] }));
+    dispatch(setOptions({ field: 'service', values: [] }));
 
     if (!selectedSubCategory) return;
 
@@ -175,66 +128,64 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
           throw new Error("Invalid data format from /update_dropdowns");
         }
 
-        setOptions((prev) => ({
-          ...prev,
-          cpt: data.selected_cpt_codes,
-          service: data.selected_service_names,
+        dispatch(setOptions({ 
+          field: 'cpt', 
+          values: data.selected_cpt_codes 
+        }));
+        dispatch(setOptions({ 
+          field: 'service', 
+          values: data.selected_service_names 
         }));
       })
       .catch((error) => {
         console.error("Error updating CPT and Service:", error);
         alert("Error updating CPT/Service dropdowns. Please try again.");
       });
-  }, [filters.subcategory, filters.state]);
+  }, [filters.subcategory, filters.state, dispatch]);
 
   const handleSelect = (field: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [field]: value }));
+    dispatch(setFilters({ [field]: value }));
     setDropdownVisible((prev) => ({ ...prev, [field]: false }));
   };
 
-  const [loading, setLoading] = useState(false);
-
-
   const handleSearch = () => {
     const { state, category, subcategory, cpt, service } = filters;
-
+  
     if (!category) {
       alert("Please select a service category");
       return;
     }
 
-    if (!cpt) {
+    if (!cpt ) {
       alert("Please select  a CPT code");
       return;
     }
-
     if (!subcategory && !service) {
       alert("Please select either a sub-category, a CPT code, or a service name");
       return;
     }
-
+  
     const params = new URLSearchParams({ service_category: category });
     if (state) params.append("state", state);
     if (subcategory) params.append("sub_category", subcategory);
     if (cpt) params.append("cpt_code", cpt);
     else if (service) params.append("service_name", service);
-
-    setLoading(true);
-
+  
+    dispatch(setLoading(true));
+  
     fetch(`https://dorsaldata1.apurbatech.io/hospital_finder/search?${params.toString()}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Search failed");
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        setSearchResults(data);
+        console.log("✅ Search Results API Response:", data);
+        dispatch(setSearchResults(data)); // Store results in Redux
+        console.log("✅ Dispatched setSearchResults to Redux:", data);
       })
       .catch((error) => {
-        console.error("Error performing search:", error);
-        alert("An error occurred while searching. Please try again.");
+        console.error("❌ Error performing search:", error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => dispatch(setLoading(false)));
   };
+  
 
   return (
     <>
@@ -284,59 +235,48 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
             </div>
           ))}
 
-          {/* Search Button */}
-          <button
-            onClick={handleSearch}
-            className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
-          >
-            {loading ? "Searching..." : "SEARCH"}
-          </button>
-        </div>
+        {/* Search Button */}
+        <button
+          onClick={handleSearch}
+          className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
+        >
+          {loading ? "Searching..." : "SEARCH"}
+        </button>
+      </div>
 
-        {/* Filter dropdowns */}
-        {searchResults && !loading && (
-          <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
-            <span className="font-semibold">Filter by:</span>
+      {/* Filter dropdowns */}
+      <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
+        <span className="font-semibold">Filter by:</span>
 
-            <select className="pl-3 pr-8 py-1 rounded border bg-white">
-              <option>Within 15 miles</option>
-              <option>Within 30 miles</option>
-              <option>Within 50 miles</option>
-            </select>
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Within 15 miles</option>
+          <option>Within 30 miles</option>
+          <option>Within 50 miles</option>
+        </select>
 
-            <select className="pl-3 pr-8 py-1 rounded border bg-white">
-              <option>Rating</option>
-              <option>5 Stars</option>
-              <option>2+ Stars</option>
-            </select>
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Rating</option>
+          <option>5 Stars</option>
+          <option>2+ Stars</option>
+        </select>
 
-            <select className="pl-3 pr-8 py-1 rounded border bg-white">
-              <option>Insurance</option>
-              <option>Plan A</option>
-              <option>Plan B</option>
-            </select>
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Insurance</option>
+          <option>Plan A</option>
+          <option>Plan B</option>
+        </select>
 
-            <select className="pl-3 pr-8 py-1 rounded border bg-white">
-              <option>Fixed Price</option>
-              <option>Negotiated Price</option>
-            </select>
-          </div>
-        )}
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Fixed Price</option>
+          <option>Negotiated Price</option>
+        </select>
+      </div>
 
-      </section>
+    </section>
 
-      {searchResults && !loading && (
-        <>
-          <ProcedureCard
-            serviceName={searchResults.generic_service_name}
-            serviceDescription={searchResults.service_description}
-            cptCode={filters.cpt || ""}
-            hasSearchResult={searchResults.hospital_count > 0}
-            prices={searchResults.prices}
-            hospitalNames={searchResults.hospital_names}
-          />
+  
 
-          {/*   <div className="mt-6">
+{/*   <div className="mt-6">
   <h3 className="font-semibold text-sm mb-2">
     Found {searchResults.hospital_count} hospitals
   </h3>
@@ -369,8 +309,7 @@ export const SearchHospital: React.FC<SearchHospitalProps> = ({ searchResults, s
   )}
 </div> */}
 
-        </>
-      )}
+      
     </>
   );
 };

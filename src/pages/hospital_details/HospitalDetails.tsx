@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 // Components
 import { NavbarSecondary } from "../../components/NavbarSecondary";
@@ -13,16 +13,14 @@ import "./HospitalDetails.css";
 export default function Data() {
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-grow">
-        <NavbarSecondary />
-        <Header title="Hospital Details" />
-        <DetailsCard />
-        <OtherServices />
-      </div>
+    <>
+      <NavbarSecondary />
+      <Header title="Hospital Details" />
+      <DetailsCard />
+      <OtherServices />
       <Footer />
       <ScrollToTop />
-    </div>
+    </>
 
   );
 }

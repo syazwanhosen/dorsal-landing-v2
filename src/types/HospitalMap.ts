@@ -1,4 +1,9 @@
-type SearchResults = {
+export type SearchResults = {
+    cpt_hcpcs_code: string;
+    cpt_code: string;
+    hospital_count: number;
+    service_description: string;
+    generic_service_name: string;
     hospital_names: string[];
     prices: number[];
 };
@@ -30,6 +35,26 @@ export type FlyToLocationProps = {
     location: [number, number] | null;
 };
 
+
+
+// types/HospitalMap.ts
+export interface HospitalDetails {
+    zip_code: any;
+    id: string;
+    name: string;
+    address: string;
+    phone: string;
+    latitude: number;
+    longitude: number;
+    rating: number;
+    price: number;
+    negotiation_status: "Fixed" | "Negotiated";
+    procedureName: string;
+    procedureDescription: string;
+    cptCode?: string;
+    distance?: string;
+  }
+
 export type PopularSearchTabType = 'Procedures' | 'Condition' | 'Specialty';
 
 export type TopSearchHospital = {
@@ -37,3 +62,4 @@ export type TopSearchHospital = {
     address: string;
     priceType: 'Fixed Price' | 'Negotiated Price';
 };
+
