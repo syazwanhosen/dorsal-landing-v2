@@ -18,6 +18,8 @@ export default function Hospitals() {
   return (
 
     <>
+     <div className="min-h-screen flex flex-col">
+     <div className="flex-grow">
       <NavbarSecondary />
       <Header title="Hospitals" />
       <SearchHospital />
@@ -35,8 +37,11 @@ export default function Hospitals() {
           <MapResult />
         </>
       ) : <SearchSection />}
+      </div>
+      
       <Footer />
       <ScrollToTop />
+      </div>
     </>
   );
 }
