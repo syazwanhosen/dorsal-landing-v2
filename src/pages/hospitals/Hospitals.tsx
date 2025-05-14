@@ -7,14 +7,15 @@ import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
 import "./Hospitals.css";
-import { useMemo } from "react";
+
+
 
 export default function Hospitals() {
 
   const { searchResults } = useAppSelector((state) => state.hospital);
-  const memoizedResults = useMemo(() => searchResults, [searchResults]); 
 
   return (
+
     <>
       <NavbarSecondary />
       <Header title="Hospitals" />
@@ -33,7 +34,6 @@ export default function Hospitals() {
           <MapResult />
         </>
       )}
-      
       <Footer />
       <ScrollToTop />
     </>

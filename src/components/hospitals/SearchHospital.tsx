@@ -155,8 +155,9 @@ export const SearchHospital = () => {
       alert("Please select a service category");
       return;
     }
-    if (!cpt) {
-      alert("Please select a CPT code");
+
+    if (!cpt ) {
+      alert("Please select  a CPT code");
       return;
     }
     if (!subcategory && !service) {
@@ -234,37 +235,81 @@ export const SearchHospital = () => {
             </div>
           ))}
 
-          <button
-            onClick={handleSearch}
-            className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
-          >
-            {loading ? "Searching..." : "SEARCH"}
-          </button>
-        </div>
+        {/* Search Button */}
+        <button
+          onClick={handleSearch}
+          className="bg-purple hover:bg-primary text-white px-10 text-sm font-semibold border last:border-r-0"
+        >
+          {loading ? "Searching..." : "SEARCH"}
+        </button>
+      </div>
 
-        <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
-          <span className="font-semibold">Filter by:</span>
-          <select className="pl-3 pr-8 py-1 rounded border bg-white">
-            <option>Within 15 miles</option>
-            <option>Within 30 miles</option>
-            <option>Within 50 miles</option>
-          </select>
-          <select className="pl-3 pr-8 py-1 rounded border bg-white">
-            <option>Rating</option>
-            <option>5 Stars</option>
-            <option>2+ Stars</option>
-          </select>
-          <select className="pl-3 pr-8 py-1 rounded border bg-white">
-            <option>Insurance</option>
-            <option>Plan A</option>
-            <option>Plan B</option>
-          </select>
-          <select className="pl-3 pr-8 py-1 rounded border bg-white">
-            <option>Fixed Price</option>
-            <option>Negotiated Price</option>
-          </select>
-        </div>
-      </section>
+      {/* Filter dropdowns */}
+      <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
+        <span className="font-semibold">Filter by:</span>
+
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Within 15 miles</option>
+          <option>Within 30 miles</option>
+          <option>Within 50 miles</option>
+        </select>
+
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Rating</option>
+          <option>5 Stars</option>
+          <option>2+ Stars</option>
+        </select>
+
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Insurance</option>
+          <option>Plan A</option>
+          <option>Plan B</option>
+        </select>
+
+        <select className="pl-3 pr-8 py-1 rounded border bg-white">
+          <option>Fixed Price</option>
+          <option>Negotiated Price</option>
+        </select>
+      </div>
+
+    </section>
+
+  
+
+{/*   <div className="mt-6">
+  <h3 className="font-semibold text-sm mb-2">
+    Found {searchResults.hospital_count} hospitals
+  </h3>
+
+  {searchResults.hospital_count > 0 ? (
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-sm border border-collapse">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="text-left px-4 py-2 border">Hospital Name</th>
+            <th className="text-left px-4 py-2 border">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {searchResults.hospital_names.map((name, idx) => (
+            <tr key={idx}>
+              <td className="px-4 py-2 border">{name}</td>
+              <td className="px-4 py-2 border">
+                {searchResults.prices[idx]
+                  ? `$${searchResults.prices[idx].toFixed(2)}`
+                  : "N/A"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <div className="text-red-500 mt-4">No hospitals found for the selected filters.</div>
+  )}
+</div> */}
+
+      
     </>
   );
 };

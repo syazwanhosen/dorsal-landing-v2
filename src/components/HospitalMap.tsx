@@ -161,12 +161,14 @@ export const HospitalMap = () => {
   if (!searchResults) return null;
 
 
-
   const handleSelectHospital = (hospital: any) => {
-    console.log("Selected Hospital:", hospital);
-    dispatch(setSelectedHospital(hospital)); 
-    window.open("/hospital_details", "_blank"); 
+    dispatch(setSelectedHospital(hospital)); // ✅ Update Redux state first
+    // ✅ Delay opening the new tab to ensure state update is processed
+    setTimeout(() => {
+      window.open("/hospital_details", "_blank");
+    }, 100); 
   };
+  
   
 
   return (
