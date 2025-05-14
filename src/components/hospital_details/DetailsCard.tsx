@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 export const DetailsCard = () => {
   const navigate = useNavigate();
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
+
+
 
   useEffect(() => {
     console.log("Persisted Hospital:", selectedHospital); 
@@ -18,6 +21,7 @@ export const DetailsCard = () => {
   if (!selectedHospital) return <div>Hospital not found</div>;
 
   return (
+    <>
 <section className="container mx-auto p-4">
   {/* Back Button */}
   <button
@@ -29,25 +33,20 @@ export const DetailsCard = () => {
   {/* Hospital Name & Rating */}
   <h2 className="text-2xl font-semibold mb-4">
     {selectedHospital.name}
-    {selectedHospital.rating && (
-      <>
-        <span className="text-yellow-500 text-lg ml-2">★</span>
-        <span className="text-black text-lg ml-1">{selectedHospital.rating}</span>
-      </>
-    )}
+
   </h2>
 
   <div className="flex flex-col sm:flex-row gap-6">
     {/* Map & Contact Info */}
     <div className="w-full sm:w-[60%] border rounded-lg p-4 shadow-sm">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
         {/* Map Section */}
-        <div className="bg-gray-200 rounded flex items-center justify-center h-full">
+        <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full">
           {selectedHospital.latitude && selectedHospital.longitude ? (
             <MapContainer
               center={[selectedHospital.latitude, selectedHospital.longitude]}
               zoom={15}
-              className="h-full w-full"
+              className="h-[300px] w-full sm:h-full"
             >
               <TileLayer
                 url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${import.meta.env.VITE_MAP_ACCESS_TOKEN}`}
@@ -120,6 +119,9 @@ export const DetailsCard = () => {
     </div>
   </div>
 </section>
+
+
+</>
 
 
 

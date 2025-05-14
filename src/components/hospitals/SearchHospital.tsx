@@ -180,7 +180,15 @@ export const SearchHospital = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("✅ Search Results API Response:", data);
-        dispatch(setSearchResults(data)); // Store results in Redux
+        dispatch(setSearchResults({
+          ...data, 
+          selectedState: state,           
+          selectedServiceCategory: category,
+          selectedSubcategory: subcategory,  
+          selectedCptCode: cpt,          
+          selectedServiceName: service     
+        }));
+        
         console.log("✅ Dispatched setSearchResults to Redux:", data);
       })
       .catch((error) => {
@@ -193,6 +201,7 @@ export const SearchHospital = () => {
   return (
     <>
       <section id="SearchHospital" className="container py-6">
+      
         <div className="flex items-stretch border border-purple-400 rounded overflow-hidden bg-white text-sm">
           {[
             { key: "state", label: "State", placeholder: "Select State" },
