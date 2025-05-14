@@ -9,7 +9,7 @@ const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
 const Login = lazy(() => import("./pages/login/login"));
 const Signup = lazy(() => import("./components/signup/signup"));
-const Account = lazy(() => import("./pages/account/Account"));
+const Account = lazy(() => import("./pages/Account/Account"));
 const AddBill = lazy(() => import("./pages/add_bill"));
 const UploadDocument = lazy(() => import("./pages/add_bill/UploadDocument"));
 const EnterManualData = lazy(() => import("./pages/add_bill/EnterManualData"));
