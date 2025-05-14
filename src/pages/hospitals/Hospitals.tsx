@@ -7,6 +7,7 @@ import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
 import "./Hospitals.css";
+import { SearchSection } from "@/components/hospitals/SearchSection";
 
 
 
@@ -20,7 +21,7 @@ export default function Hospitals() {
       <NavbarSecondary />
       <Header title="Hospitals" />
       <SearchHospital />
-      {searchResults && (
+      {searchResults ? (
         <>
           <ProcedureCard
             serviceName={searchResults.generic_service_name || ""}
@@ -33,7 +34,7 @@ export default function Hospitals() {
           />
           <MapResult />
         </>
-      )}
+      ) : <SearchSection />}
       <Footer />
       <ScrollToTop />
     </>
