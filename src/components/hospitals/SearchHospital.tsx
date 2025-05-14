@@ -22,6 +22,9 @@ export const SearchHospital = () => {
     service: false,
   });
 
+  const { searchResults } = useAppSelector((state) => state.hospital);
+
+
  // ✅ Fetch list of states on mount
  useEffect(() => {
   fetch("https://dorsaldata1.apurbatech.io/common/get_states")
@@ -245,32 +248,38 @@ export const SearchHospital = () => {
       </div>
 
       {/* Filter dropdowns */}
-      <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
-        <span className="font-semibold">Filter by:</span>
 
-        <select className="pl-3 pr-8 py-1 rounded border bg-white">
-          <option>Within 15 miles</option>
-          <option>Within 30 miles</option>
-          <option>Within 50 miles</option>
-        </select>
+      {searchResults && (
+  <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap items-center gap-4 text-xs">
+    <span className="font-semibold">Filter by:</span>
 
-        <select className="pl-3 pr-8 py-1 rounded border bg-white">
-          <option>Rating</option>
-          <option>5 Stars</option>
-          <option>2+ Stars</option>
-        </select>
+    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="15 miles">
+      <option disabled>Select Distance</option>
+      <option value="15 miles">Within 15 miles</option>
+      <option value="30 miles">Within 30 miles</option>
+      <option value="50 miles">Within 50 miles</option>
+    </select>
 
-        <select className="pl-3 pr-8 py-1 rounded border bg-white">
-          <option>Insurance</option>
-          <option>Plan A</option>
-          <option>Plan B</option>
-        </select>
+    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Rating">
+      <option disabled>Select Rating</option>
+      <option value="5 stars">5 Stars</option>
+      <option value="2+ stars">2+ Stars</option>
+    </select>
 
-        <select className="pl-3 pr-8 py-1 rounded border bg-white">
-          <option>Fixed Price</option>
-          <option>Negotiated Price</option>
-        </select>
-      </div>
+    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Insurance">
+      <option disabled>Select Insurance</option>
+      <option value="Plan A">Plan A</option>
+      <option value="Plan B">Plan B</option>
+    </select>
+
+    <select className="pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Fixed Price">
+      <option disabled>Select Price Type</option>
+      <option value="Fixed">Fixed Price</option>
+      <option value="Negotiated">Negotiated Price</option>
+    </select>
+  </div>
+)}
+
 
     </section>
 
