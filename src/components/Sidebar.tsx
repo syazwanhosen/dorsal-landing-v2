@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import clsx from 'clsx';
 import * as Collapsible from "@radix-ui/react-collapsible";
 import * as Avatar from '@radix-ui/react-avatar';
@@ -18,21 +19,39 @@ const MENU = [
     {
         label: "Authorized Account",
         icon: <FileText className="h-4 w-4" />,
-        submenus: ["John Doe", "Jane Doe", "Jack Doe"],
+        defaultPath: "/authorized-account",
+        submenus: [
+            { name: "John Doe", path: "/authorized-account/john" },
+            { name: "Jane Doe", path: "/authorized-account/jane" },
+            { name: "Jack Doe", path: "/authorized-account/jack" },
+        ],
     },
     {
         label: "Add Bill",
         icon: <Dock className="h-4 w-4" />,
-        submenus: ["Upload Document", "Enter Manual Data"],
+        defaultPath: "/account/add-bill",
+        submenus: [
+            { name: "Upload Document", path: "/account/add-bill/upload-document" },
+            { name: "Enter Manual Data", path: "/account/add-bill/manual-entry" },
+        ],
     },
     {
         label: "Run Audit",
         icon: <ScanSearch className="h-4 w-4" />,
-        submenus: ["Quick Audit", "Detailed Report"],
+        defaultPath: "/audit",
+        submenus: [
+            { name: "Quick Audit", path: "/audit/quick" },
+            { name: "Detailed Report", path: "/audit/detailed" },
+        ],
     },
 ];
 
+
+
 export const Sidebar = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
 
     const toggleSection = (label: string) => {
@@ -60,31 +79,50 @@ export const Sidebar = () => {
                                 open={openSections[item.label]}
                                 onOpenChange={() => toggleSection(item.label)}
                             >
-                                <Collapsible.Trigger className={clsx(`flex items-center justify-between w-full py-2 px-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700 mt-2`, openSections[item.label]
-                                    ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC]'
-                                    : 'text-gray-800 hover:bg-gray-100 pl-3')}>
+                                <Collapsible.Trigger
+                                    onClick={() => {
+                                        // toggleSection(item.label);
+                                        navigate(item.defaultPath);
+                                    }}
+                                    className={clsx(
+                                        `flex items-center justify-between w-full py-2 px-2 rounded hover:bg-gray-100 text-sm font-medium mt-2`,
+                                        openSections[item.label]
+                                            ? 'bg-[#EFEAFB] text-[#8770BC] border-l-4 border-[#8770BC]'
+                                            : 'text-gray-800 hover:bg-gray-100 pl-3'
+                                    )}
+                                >
                                     <div className={clsx('flex items-center gap-2', openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')}>
                                         {item.icon}
                                         {item.label}
                                     </div>
                                     {openSections[item.label] ? (
-                                        <ChevronUp className={clsx("h-4 w-4", openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')} />
+                                        <ChevronUp className="h-4 w-4 text-[#8770BC]" />
                                     ) : (
-                                        <ChevronDown className={clsx("h-4 w-4", openSections[item.label] ? 'text-[#8770BC]' : 'text-gray-800')} />
+                                        <ChevronDown className="h-4 w-4 text-gray-800" />
                                     )}
                                 </Collapsible.Trigger>
                                 <Collapsible.Content className="pl-8 mt-2">
                                     <ul>
-                                        {item.submenus.map((submenu, subIndex) => (
-                                            <li
-                                                key={subIndex}
-                                                className='text-sm cursor-pointer hover:text-[#8770BC] py-2'
-                                            >
-                                                {submenu}
-                                            </li>
-                                        ))}
+                                        {item.submenus.map((submenu, subIndex) => {
+                                            const isActive = location.pathname === submenu.path;
+
+                                            return (
+                                                <li key={subIndex}>
+                                                    <Link
+                                                        to={submenu.path}
+                                                        className={clsx(
+                                                            "block text-sm cursor-pointer hover:text-[#8770BC] py-2",
+                                                            isActive ? "text-[#8770BC]" : "text-gray-800 hover:text-[#8770BC]"
+                                                        )}
+                                                    >
+                                                        {submenu.name}
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })}
                                     </ul>
                                 </Collapsible.Content>
+
                             </Collapsible.Root>
                         ))}
                     </div>
