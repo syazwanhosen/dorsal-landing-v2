@@ -43,13 +43,14 @@ const FlyToLocation = ({ location }: { location: [number, number] | null }) => {
   const map = useMap();
 
   useEffect(() => {
-    if (location) {
+    if (location && location[0] !== null && location[1] !== null) {
       map.flyTo(location, 15, { duration: 1.5 });
     }
   }, [location, map]);
 
   return null;
 };
+
 
 const FitBounds = ({ hospitals }: { hospitals: any[] }) => {
   const map = useMap();
@@ -104,41 +105,38 @@ export const HospitalMap = () => {
 
   useEffect(() => {
     const fetchHospitalData = async () => {
-      if (!searchResults) return;
-
+      if (!searchResults || !searchResults.hospital_names?.length) return;
+  
       try {
         const responses = await Promise.all(
-          searchResults.hospital_names.map(
-            async (name: string, index: number) => {
-              const encodedName = encodeURIComponent(name);
-              const res = await fetch(
-                `${baseUrl}/common/hospital_metadata/${encodedName}`
-              );
-              if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
-              const data = await res.json();
-
-              return {
-                ...data.hospital_metadata,
-                name: searchResults.hospital_names[index],
-                price: searchResults.prices[index],
-                title: searchResults.generic_service_name,
-                description: searchResults.service_description,
-                zipcode: searchResults.cpt_hcpcs_code,
-              };
-            }
-          )
+          searchResults.hospital_names.map(async (name: string, index: number) => {
+            const encodedName = encodeURIComponent(name);
+            const res = await fetch(`${baseUrl}/common/hospital_metadata/${encodedName}`);
+            
+            if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
+  
+            const data = await res.json();
+  
+            return {
+              ...data, // ✅ Fix: Spread operator applies metadata correctly
+              name: searchResults.hospital_names[index],
+              price: searchResults.prices?.[index] || 0, // ✅ Prevent undefined price errors
+              title: searchResults.generic_service_name || "Unknown Service",
+              description: searchResults.service_description || "No description available",
+              zipcode: searchResults.cpt_hcpcs_code || "N/A",
+            };
+          })
         );
-
+  
         dispatch(setHospitals(responses));
       } catch (error) {
         console.error("Error fetching hospital metadata:", error);
       }
     };
-
-    if (searchResults?.hospital_names?.length) {
-      fetchHospitalData();
-    }
+  
+    fetchHospitalData();
   }, [searchResults, dispatch]);
+  
 
   const handleCompare = (hospital: any) => {
     if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
