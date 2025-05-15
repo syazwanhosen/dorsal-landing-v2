@@ -2,11 +2,9 @@ import { useAppSelector} from "@/store";
 import { useEffect } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { useNavigate } from "react-router-dom";
 
 
 export const DetailsCard = () => {
-  const navigate = useNavigate();
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
 
 
@@ -19,12 +17,13 @@ export const DetailsCard = () => {
   return (
     <>
 <section className="container mx-auto p-4">
-  {/* Back Button */}
+  {/* Back Button 
   <button
   onClick={() => navigate("/hospitals")} 
   className="mb-4 text-sm text-gray-600 hover:underline">
   &larr; Back to Hospitals
 </button>
+*/}
 
   {/* Hospital Name & Rating */}
   <h2 className="text-2xl font-semibold mb-4">
