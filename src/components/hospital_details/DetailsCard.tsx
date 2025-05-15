@@ -39,7 +39,7 @@ export const DetailsCard = () => {
   <div className="flex flex-col sm:flex-row gap-6">
     {/* Map & Contact Info */}
     <div className="w-full sm:w-[60%] border rounded-lg p-4 shadow-sm">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
         {/* Map Section */}
         <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full">
           {selectedHospital.latitude && selectedHospital.longitude ? (
@@ -95,22 +95,28 @@ export const DetailsCard = () => {
       </div>
 
       {/* Details & Pricing */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-        <div className="w-full sm:w-[70%]">
-          <p className="text-sm text-black pt-2">{selectedHospital.description}</p>
-        </div>
-        <div className="w-full sm:w-[30%] flex flex-col items-end mt-4">
-          <span className={`px-2 py-1 rounded text-sm font-medium mb-1 ${
-            selectedHospital.negotiation_status === "Fixed"
-              ? "bg-[#6CA724] text-white"
-              : "bg-[#CE3C29] text-white"
-          }`}>
-            {selectedHospital.negotiation_status || "Fixed Price"} Price
-          </span>
-          <span className="text-sm text-gray-500">Estimated Cost</span>
-          <span className="text-2xl font-bold text-purple">${selectedHospital.price}</span>
-        </div>
-      </div>
+      <div className="grid grid-cols-10 gap-4 h-full">
+  <div className="col-span-12 lg:col-span-7">
+    <p className="text-sm text-black pt-2">{selectedHospital.description}</p>
+  </div>
+  <div className="col-span-12 lg:col-span-3 flex flex-col items-start lg:items-end">
+    <span
+      className={`px-2 py-1 rounded text-sm font-medium mb-1 ${
+        selectedHospital.negotiation_status === "Fixed"
+          ? "bg-[#6CA724] text-white"
+          : "bg-[#CE3C29] text-white"
+      }`}
+    >
+      {selectedHospital.negotiation_status || "Fixed Price"} Price
+    </span>
+    <span className="text-sm text-gray-500">Estimated Cost</span>
+    <span className="text-2xl font-bold text-purple">
+      ${selectedHospital.price}
+    </span>
+  </div>
+</div>
+
+
 
       {/* Contact Button */}
       <button className="mt-4 bg-purple text-white py-2 px-10 rounded hover:bg-purple-700 transition self-start">
