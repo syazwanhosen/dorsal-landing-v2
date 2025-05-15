@@ -70,7 +70,7 @@ export const OtherServices = () => {
     }
   };
 
-  // ✅ Reset Table When "Reset" Button is Clicked
+  // Reset Table When "Reset" Button is Clicked
   const resetSelection = () => {
     setSelectedServiceCategory("");
     setSelectedSubcategory("");
@@ -96,7 +96,7 @@ export const OtherServices = () => {
       </div>
       */}
 
-        {/* ✅ Category Dropdown */}
+        {/* Category Dropdown */}
         <select
           className="w-full border rounded px-3 py-2 text-sm mb-4"
           value={selectedServiceCategory}
@@ -108,7 +108,7 @@ export const OtherServices = () => {
           ))}
         </select>
 
-        {/* ✅ Subcategory Dropdown (Disabled Until Category is Selected) */}
+        {/* Subcategory Dropdown (Disabled Until Category is Selected) */}
         <select
           className="w-full border rounded px-3 py-2 text-sm mb-4"
           value={selectedSubcategory}
@@ -124,7 +124,7 @@ export const OtherServices = () => {
         <button
           onClick={fetchServices}
           className="w-full bg-purple text-white py-2 px-4 rounded hover:bg-purple-700 transition mb-2"
-          disabled={!selectedServiceCategory || !selectedSubcategory} // 🚀 Button disabled until both category & subcategory are selected
+          disabled={!selectedServiceCategory || !selectedSubcategory} // Button disabled until both category & subcategory are selected
         >
           Show Services
         </button>
