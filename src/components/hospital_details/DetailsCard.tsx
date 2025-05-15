@@ -99,9 +99,10 @@ export const DetailsCard = () => {
   <div className="col-span-12 lg:col-span-7">
     <p className="text-sm text-black pt-2">{selectedHospital.description}</p>
   </div>
-  <div className="col-span-12 lg:col-span-3 flex flex-col items-start lg:items-end">
+  <div className="col-span-12 lg:col-span-3 flex flex-col lg:items-end lg:justify-center">
+
     <span
-      className={`px-2 py-1 rounded text-sm font-medium mb-1 ${
+      className={`px-2 w-fit py-1 rounded text-sm font-medium mb-1 ${
         selectedHospital.negotiation_status === "Fixed"
           ? "bg-[#6CA724] text-white"
           : "bg-[#CE3C29] text-white"
