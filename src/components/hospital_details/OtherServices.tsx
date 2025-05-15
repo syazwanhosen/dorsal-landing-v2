@@ -78,6 +78,22 @@ export const OtherServices = () => {
     setShowServices(false);
   };
 
+
+  // ✅ Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const servicesPerPage = 8; // Show 8 services per page
+
+  // ✅ Calculate Services to Display Per Page
+  const indexOfLastService = currentPage * servicesPerPage;
+  const indexOfFirstService = indexOfLastService - servicesPerPage;
+  const currentServices = services.slice(indexOfFirstService, indexOfLastService);
+
+  // ✅ Change Page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+
+  
+
   return (
     <section className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
       {/* Filter Card */}
@@ -100,7 +116,12 @@ export const OtherServices = () => {
         <select
           className="w-full border rounded px-3 py-2 text-sm mb-4"
           value={selectedServiceCategory}
-          onChange={(e) => setSelectedServiceCategory(e.target.value)}
+          onChange={(e) => {
+            setSelectedServiceCategory(e.target.value);
+            setSelectedSubcategory(""); 
+            setCurrentPage(1);
+            setServices([]);  
+          }}
         >
           <option value="">Select Service Category</option>
           {categories.map((category) => (
@@ -112,7 +133,11 @@ export const OtherServices = () => {
         <select
           className="w-full border rounded px-3 py-2 text-sm mb-4"
           value={selectedSubcategory}
-          onChange={(e) => setSelectedSubcategory(e.target.value)}
+          onChange={(e) => {
+            setSelectedSubcategory(e.target.value);
+            setCurrentPage(1); 
+            setServices([]);  
+          }}
           disabled={!selectedServiceCategory} // 🚀 Subcategory is disabled until category is selected
         >
           <option value="">Select Subcategory</option>
@@ -144,22 +169,42 @@ export const OtherServices = () => {
         ) : !showServices ? (
           <p className="text-sm text-gray-500">Please select a category and subcategory to view services.</p>
         ) : services.length > 0 ? (
-          <table className="w-full text-left border-collapse text-sm ">
-            <thead>
-              <tr className="border-b border-gray-300">
-                <th className="py-4 px-2 text-[#3A3541]">CPT Code</th>
-                <th className="py-2 px-2  text-[#3A3541]">Service Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services.map((item, index) => (
-                <tr key={index} className="border-b border-gray-300">
-                  <td className="py-4 px-2 text-[#89868D]">{item.cpt_code}</td>
-                  <td className="py-4 px-2 text-[#89868D]">{item.service_name}</td>
+          <>
+            <table className="w-full text-left border-collapse text-sm ">
+              <thead>
+                <tr className="border-b border-gray-300">
+                  <th className="py-4 px-2 text-[#3A3541]">CPT Code</th>
+                  <th className="py-2 px-2 text-[#3A3541]">Service Name</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {currentServices.map((item, index) => (
+                  <tr key={index} className="border-b border-gray-300">
+                    <td className="py-4 px-2 text-[#89868D]">{item.cpt_code}</td>
+                    <td className="py-4 px-2 text-[#89868D]">{item.service_name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* ✅ Pagination Controls: Show only if services exist AND > 8 */}
+{services.length > servicesPerPage && services.length > 0 && (
+  <div className="flex justify-center gap-2 mt-4">
+    {[...Array(Math.ceil(services.length / servicesPerPage)).keys()].map((page) => (
+      <button
+        key={page + 1}
+        onClick={() => paginate(page + 1)}
+        className={`px-3 py-1 rounded ${
+          currentPage === page + 1 ? "bg-purple text-white" : "bg-gray-200 text-black"
+        }`}
+      >
+        {page + 1}
+      </button>
+    ))}
+  </div>
+)}
+
+          </>
         ) : (
           <p className="text-sm text-gray-500">No services available for this category.</p>
         )}

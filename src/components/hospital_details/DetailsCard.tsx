@@ -5,13 +5,9 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 
 
-
-
-
 export const DetailsCard = () => {
   const navigate = useNavigate();
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
-
 
 
   useEffect(() => {
