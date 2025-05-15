@@ -6,6 +6,11 @@ export type SearchResults = {
     generic_service_name: string;
     hospital_names: string[];
     prices: number[];
+    selectedState?: string;           
+  selectedServiceCategory?: string;  
+  selectedSubcategory?: string;     
+  selectedCptCode?: string;         
+  selectedServiceName?: string;     
 };
 
 export type HospitalMapProps = {

@@ -165,12 +165,20 @@ export const HospitalMap = () => {
   if (!searchResults) return null;
 
   const handleSelectHospital = (hospital: any) => {
-    dispatch(setSelectedHospital(hospital)); // ✅ Update Redux state first
-    // ✅ Delay opening the new tab to ensure state update is processed
+    dispatch(setSelectedHospital({
+      ...hospital, 
+      selectedState: searchResults.selectedState,
+      selectedServiceCategory: searchResults.selectedServiceCategory,
+      selectedSubcategory: searchResults.selectedSubcategory,
+      selectedCptCode: searchResults.selectedCptCode,
+      selectedServiceName: searchResults.selectedServiceName
+    }));
+  
     setTimeout(() => {
-      window.open("/hospital_details", "_blank");
+      window.open("/hospital_details", "_blank"); // ✅ Ensure Redux state persists
     }, 100);
   };
+  
 
   return (
     <>
