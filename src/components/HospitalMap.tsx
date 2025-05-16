@@ -227,7 +227,6 @@ export const HospitalMap = () => {
         </svg>
       </button>
 
-      {/* Sidebar - Updated for better scrolling */}
       <div
         className={`${
           sidebarOpen 

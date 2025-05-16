@@ -128,18 +128,24 @@ export const Footer = () => {
         </div>
       </section>
       */}
-      <section className="container mx-auto flex items-center justify-between relative">
-        <a
-          href="/"
-          className="font-bold text-xl absolute bottom-6"
-          style={{ fontFamily: 'the-seasons, sans-serif' }}
-        >
-          <LogoIcon />
-        </a>
+      <section className="container mx-auto flex flex-col lg:flex-col items-center lg:items-start lg:space-y-4 relative">
+        {/* First row: Left-aligned Logo */}
+        <div className="w-full flex lg:justify-start justify-center">
+          <a
+            href="/"
+            className="font-bold text-xl"
+            style={{ fontFamily: "the-seasons, sans-serif" }}
+          >
+            <LogoIcon />
+          </a>
+        </div>
 
-        <h3 className="absolute left-1/2 bottom-1 transform -translate-x-1/2 text-center text-sm">
-          &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
-        </h3>
+        {/* Second row: Center-aligned text */}
+        <div className="w-full flex justify-center">
+          <h3 className="text-center text-sm">
+            &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
+          </h3>
+        </div>
       </section>
     </footer>
   );

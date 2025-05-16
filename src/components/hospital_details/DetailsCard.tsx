@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/store";
 import { useEffect } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 export const DetailsCard = () => {
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
@@ -14,24 +14,23 @@ export const DetailsCard = () => {
 
   return (
     <>
-      <section className="container mx-auto p-4">
-        {/* Back Button 
-  <button
-  onClick={() => navigate("/hospitals")} 
-  className="mb-4 text-sm text-gray-600 hover:underline">
-  &larr; Back to Hospitals
-</button>
-*/}
+      <section className="container mx-auto p-4 relative">
+        {/* Back Button */}
+        {/* <button
+          onClick={() => navigate("/hospitals")} 
+          className="mb-4 text-sm text-gray-600 hover:underline">
+          &larr; Back to Hospitals
+        </button> */}
 
         {/* Hospital Name & Rating */}
         <h2 className="text-2xl font-semibold mb-4">{selectedHospital.name}</h2>
 
         <div className="flex flex-col sm:flex-row gap-6">
           {/* Map & Contact Info */}
-          <div className="w-full sm:w-[60%] border rounded-lg p-4 shadow-sm">
+          <div className="w-full sm:w-[60%] border rounded-lg p-4 shadow-sm relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
               {/* Map Section */}
-              <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full">
+              <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full relative z-0">
                 {selectedHospital.latitude && selectedHospital.longitude ? (
                   <MapContainer
                     center={[
@@ -39,7 +38,7 @@ export const DetailsCard = () => {
                       selectedHospital.longitude,
                     ]}
                     zoom={15}
-                    className="h-[300px] w-full sm:h-full"
+                    className="h-[300px] w-full sm:h-full relative z-0"
                   >
                     <TileLayer
                       url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${
@@ -54,6 +53,8 @@ export const DetailsCard = () => {
                     >
                       <Popup>{selectedHospital.name}</Popup>
                     </Marker>
+                    {/* Fix: Force map to resize properly */}
+                    <ResizeMap />
                   </MapContainer>
                 ) : (
                   <p className="text-gray-500">Map not available</p>
@@ -62,9 +63,7 @@ export const DetailsCard = () => {
 
               {/* Contact Information */}
               <div>
-                <h4 className="text-lg font-semibold mb-5">
-                  Contact Information
-                </h4>
+                <h4 className="text-lg font-semibold mb-5">Contact Information</h4>
                 <div className="space-y-2">
                   <div className="flex items-start gap-6 mb-6">
                     <div className="bg-[#6CA724] p-3 rounded-full">
@@ -99,9 +98,7 @@ export const DetailsCard = () => {
             {/* Details & Pricing */}
             <div className="grid grid-cols-10 gap-4 h-full">
               <div className="col-span-12 lg:col-span-7">
-                <p className="text-sm text-black pt-2">
-                  {selectedHospital.description}
-                </p>
+                <p className="text-sm text-black pt-2">{selectedHospital.description}</p>
               </div>
               <div className="col-span-12 lg:col-span-3 flex flex-col lg:items-end lg:justify-center">
                 <span
@@ -129,4 +126,15 @@ export const DetailsCard = () => {
       </section>
     </>
   );
+};
+
+// Utility to Fix Map Resizing Issues
+const ResizeMap = () => {
+  const map = useMap();
+  useEffect(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 500);
+  }, [map]);
+  return null;
 };

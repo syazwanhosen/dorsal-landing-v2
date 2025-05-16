@@ -1,9 +1,12 @@
 import { Hospital } from "@/types";
+import './style.css'
 
 interface HospitalComparisonProps {
   selectedHospitals: Hospital[];
   onRemoveHospital: (hospitalName: string) => void; // Added prop for removal function
 }
+
+
 
 export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
   selectedHospitals,
@@ -21,7 +24,9 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
       </h2>
 
       <div className="border border-purple-300 rounded-lg overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 text-left text-sm lg:px-20">
+      <div className="overflow-x-auto w-full">
+      <div  className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 text-left text-sm lg:px-20 lg:w-full md:w-full w-full" >
+
           {/* Header Row */}
           <div className="p-4 font-semibold text-lg flex items-center">
             Hospital
@@ -104,6 +109,7 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
             </div>
           ))}
           {selectedHospitals.length === 1 && <div className="border-t border-gray-200 p-8 text-center"></div>}
+        </div>
         </div>
       </div>
     </section>
