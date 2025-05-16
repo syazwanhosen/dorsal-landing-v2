@@ -8,7 +8,7 @@ interface ProcedureCardProps {
   hasSearchResult: boolean;
   prices: number[];
   labels: string[];
-  hospitalNames: string[]; 
+  hospitalNames: string[];
 }
 
 export const ProcedureCard: React.FC<ProcedureCardProps> = ({
@@ -17,37 +17,37 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
   cptCode,
   hasSearchResult,
   prices,
-  hospitalNames, 
+  hospitalNames,
 }) => {
   return (
-    <section id="ProcedureCard" className="mt-6 container">
+    <section id="ProcedureCard" className="mt-2 container">
       <div className="flex flex-col lg:flex-row items-start justify-between space-y-4 lg:space-y-0 lg:space-x-6">
         {/* Left Content */}
         <div className="w-full lg:w-[60%]">
-          <div className="flex items-center space-x-3">
-            <h2 className="text-xl font-bold text-gray-800">{serviceName}</h2>
-            {cptCode && (
-  <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
-    CPT Code: {cptCode}
-  </span>
-)}
-          </div>
+  <div className="flex flex-wrap items-center gap-2">
+    <h2 className="text-xl font-bold text-gray-800">{serviceName}</h2>
+    {cptCode && (
+      <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded w-fit sm:w-auto">
+        CPT Code: {cptCode}
+      </span>
+    )}
+  </div>
 
-          <p className="text-sm text-gray-700 mt-2">{serviceDescription}</p>
+  <p className="text-sm text-gray-700 mt-2">{serviceDescription}</p>
+</div>
 
-      </div>
 
         {/* Right Box (Chart) */}
         {hasSearchResult && (
           <div className="w-full lg:w-[40%] rounded-lg border">
-            {/* Passing hospitalNames correctly */}     
+            {/* Passing hospitalNames correctly */}
             <PriceChart prices={prices} hospitalNames={hospitalNames} />
           </div>
         )}
       </div>
-      
-    {/* Table displaying hospital names and prices */}
-  {/*
+
+      {/* Table displaying hospital names and prices */}
+      {/*
        {hasSearchResult && hospitalNames.length > 0 && prices.length > 0 && (
         <div className="mt-6">
           <h3 className="text-lg font-bold text-gray-800">Price Comparison</h3>
@@ -70,7 +70,6 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
         </div>
       )}
 */}
-
     </section>
   );
 };
