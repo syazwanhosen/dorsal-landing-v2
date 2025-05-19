@@ -20,6 +20,7 @@ export default function AddBill() {
     const navigate = useNavigate();
 
     const handleUploadClick = () => navigate('/account/add-bill/upload-document');
+    const handleEnterDataClick = () => navigate('/account/add-bill/manual-entry');
 
     return (
         <div className="p-4">
@@ -29,7 +30,7 @@ export default function AddBill() {
                     <Button className="bg-[#8770BC] hover:bg-primary text-white" onClick={handleUploadClick}>
                         Upload Document
                     </Button>
-                    <Button className="bg-[#8770BC] text-white hover:bg-primary">
+                    <Button className="bg-[#8770BC] text-white hover:bg-primary" onClick={handleEnterDataClick}>
                         Enter Manual Data
                     </Button>
                 </div>

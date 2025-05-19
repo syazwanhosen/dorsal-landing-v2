@@ -9,10 +9,10 @@ const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
 const Login = lazy(() => import("./pages/login/login"));
 const Signup = lazy(() => import("./components/signup/signup"));
-const Account = lazy(() => import("./pages/Account/Account"));
+const Account = lazy(() => import("./pages/account/Account"));
 const AddBill = lazy(() => import("./pages/add_bill"));
 const UploadDocumentPage = lazy(() => import("./pages/add_bill/upload_document"));
-const EnterManualData = lazy(() => import("./pages/add_bill/EnterManualData"));
+const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
 
