@@ -18,7 +18,7 @@ export default function Hospitals() {
   return (
 
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">
           <NavbarSecondary />
           <Header title="Hospitals" />

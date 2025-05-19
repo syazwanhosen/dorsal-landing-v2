@@ -16,16 +16,22 @@ export const PopularSearches: React.FC = () => {
 
     return (
         <div className="border rounded-md p-4 w-full">
-            <h2 className="font-bold text-lg mb-2">Popular Searches</h2>
-            <ButtonGroup options={tabs} selected={activeTab} onSelect={setActiveTab} />
-
-            <ul className="text-[#8770BC] space-y-1 mt-4">
-                {searchTerms.map((term) => (
-                    <li key={term} className="hover:underline cursor-pointer">
-                        {term}
-                    </li>
-                ))}
-            </ul>
+        <h2 className="font-bold text-lg mb-2">Popular Searches</h2>
+      
+        {/* Ensure buttons wrap on smaller screens */}
+        <div className="flex flex-wrap gap-2 justify-center sm:flex-row flex-col">
+          <ButtonGroup options={tabs} selected={activeTab} onSelect={setActiveTab} />
         </div>
+      
+        <ul className="text-[#8770BC] space-y-1 mt-4">
+          {searchTerms.map((term) => (
+            <li key={term} className="hover:underline cursor-pointer">
+              {term}
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      
     );
 };
