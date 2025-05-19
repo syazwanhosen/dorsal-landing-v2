@@ -212,7 +212,7 @@ export const HospitalMap = () => {
         onClick={() => dispatch(setSidebarOpen(!sidebarOpen))}
         className={`absolute z-20 top-4 h-12 w-10 items-center justify-center bg-white shadow-sm transition-all duration-300 hidden lg:flex ${
           sidebarOpen ? "left-[calc(31%-16px)]" : "left-0"
-        } rounded-tr-lg rounded-br-lg`}
+        } rounded-tr-lg rounded-br-lg hidden lg:block`}
       >
         <svg
           className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
@@ -228,12 +228,13 @@ export const HospitalMap = () => {
       </button>
 
       <div
-        className={`${
-          sidebarOpen 
-            ? `lg:w-[30%] ${hospitals.length <= 1 ? 'h-auto' : 'h-[40vh]'} lg:h-full`
-            : "h-0 lg:h-full lg:w-0"
-        } transition-all duration-500 ease-in-out overflow-hidden bg-white w-full lg:w-auto flex flex-col`}
-      >
+  className={`${sidebarOpen 
+    ? `lg:w-[30%] ${hospitals.length <= 1 ? 'h-auto' : 'h-[40vh]'} lg:h-full`
+    : "h-0 lg:h-full lg:w-0"} 
+    transition-all duration-500 ease-in-out overflow-auto bg-white`}
+>
+
+
         <div className="p-4">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">
