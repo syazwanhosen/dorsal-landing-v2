@@ -1,7 +1,10 @@
+import {
+  getCategoriesByHospital,
+  getServices,
+  getSubCategoriesByHospital,
+} from "@/api/api";
 import { useAppSelector } from "@/store";
 import { useEffect, useState } from "react";
-
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Service {
   cpt_code: number;
@@ -24,29 +27,17 @@ export const OtherServices = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch Categories Based on Hospital
   useEffect(() => {
     if (selectedHospitalName) {
-      fetch(
-        `${BASE_URL}/service_viewer/get_categories/${encodeURIComponent(
-          selectedHospitalName
-        )}`
-      )
-        .then((response) => response.json())
+      getCategoriesByHospital(selectedHospitalName)
         .then((data) => setCategories(data.categories))
         .catch((error) => console.error("Error fetching categories:", error));
     }
   }, [selectedHospitalName]);
 
-  // Fetch Subcategories Based on Selected Category & Hospital
   useEffect(() => {
     if (selectedHospitalName && selectedServiceCategory) {
-      fetch(
-        `${BASE_URL}/service_viewer/get_sub_categories/${encodeURIComponent(
-          selectedHospitalName
-        )}/${encodeURIComponent(selectedServiceCategory)}`
-      )
-        .then((response) => response.json())
+      getSubCategoriesByHospital(selectedHospitalName, selectedServiceCategory)
         .then((data) => setSubcategories(data.sub_categories))
         .catch((error) =>
           console.error("Error fetching subcategories:", error)
@@ -63,14 +54,12 @@ export const OtherServices = () => {
     ) {
       setLoading(true);
       setError("");
-      fetch(
-        `${BASE_URL}/service_viewer/get_services/${encodeURIComponent(
-          selectedHospitalName
-        )}/${encodeURIComponent(selectedServiceCategory)}/${encodeURIComponent(
-          selectedSubcategory
-        )}`
+
+      getServices(
+        selectedHospitalName,
+        selectedServiceCategory,
+        selectedSubcategory
       )
-        .then((response) => response.json())
         .then((data) => {
           if (data.codes && data.services) {
             setServices(
@@ -100,11 +89,11 @@ export const OtherServices = () => {
     setShowServices(false);
   };
 
-  // ✅ Pagination State
+  // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const servicesPerPage = 8; // Show 8 services per page
 
-  // ✅ Calculate Services to Display Per Page
+  // Calculate Services to Display Per Page
   const indexOfLastService = currentPage * servicesPerPage;
   const indexOfFirstService = indexOfLastService - servicesPerPage;
   const currentServices = services.slice(
@@ -112,7 +101,7 @@ export const OtherServices = () => {
     indexOfLastService
   );
 
-  // ✅ Change Page
+  // Change Page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (

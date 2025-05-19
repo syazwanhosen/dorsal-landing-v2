@@ -14,9 +14,9 @@ import {
 import hospital from "../assets/hospital.png";
 import location from "../assets/location-pin.svg";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
+import { fetchHospitalMetadata } from "@/api/api";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const hospitalIcon = new Icon({
   iconUrl: hospital,
@@ -103,43 +103,22 @@ export const HospitalMap = () => {
   }, [sortedHospitals]);
 
   useEffect(() => {
-    const fetchHospitalData = async () => {
-      if (!searchResults || !searchResults.hospital_names?.length) return;
-
-      try {
-        const responses = await Promise.all(
-          searchResults.hospital_names.map(
-            async (name: string, index: number) => {
-              const encodedName = encodeURIComponent(name);
-              const res = await fetch(
-                `${baseUrl}/common/hospital_metadata/${encodedName}`
-              );
-
-              if (!res.ok) throw new Error(`Failed to fetch data for ${name}`);
-
-              const data = await res.json();
-
-              return {
-                ...data,
-                name: searchResults.hospital_names[index],
-                price: searchResults.prices?.[index] || 0,
-                title: searchResults.generic_service_name || "Unknown Service",
-                description:
-                  searchResults.service_description ||
-                  "No description available",
-                zipcode: searchResults.cpt_hcpcs_code || "N/A",
-              };
-            }
-          )
-        );
-
-        dispatch(setHospitals(responses));
-      } catch (error) {
-        console.error("Error fetching hospital metadata:", error);
-      }
-    };
-
-    fetchHospitalData();
+    if (!searchResults || !searchResults.hospital_names?.length) return;
+  
+    fetchHospitalMetadata(searchResults.hospital_names)
+      .then((responses) => {
+        const formattedData = responses.map((data, index) => ({
+          ...data,
+          name: searchResults.hospital_names[index],
+          price: searchResults.prices?.[index] || 0,
+          title: searchResults.generic_service_name || "Unknown Service",
+          description: searchResults.service_description || "No description available",
+          zipcode: searchResults.cpt_hcpcs_code || "N/A",
+        }));
+  
+        dispatch(setHospitals(formattedData));
+      })
+      .catch((error) => console.error("Error fetching hospital metadata:", error));
   }, [searchResults, dispatch]);
 
   const handleCompare = (hospital: any) => {
