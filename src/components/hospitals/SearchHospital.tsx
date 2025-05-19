@@ -6,9 +6,7 @@ import {
   setLoading,
   setSearchResults,
 } from "../../features/hospitalSlice";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
+import { getStates, getCategories, getSubCategories, updateDropdowns, searchHospitals } from "@/api/api";
 
 export const SearchHospital = () => {
   const dispatch = useAppDispatch();
@@ -31,85 +29,37 @@ export const SearchHospital = () => {
 
   const { searchResults } = useAppSelector((state) => state.hospital);
 
-  // Fetch list of states on mount
+  // States 
   useEffect(() => {
-    fetch(`${baseUrl}/common/get_states`)
-      .then((response) => response.json())
-      .then((data) => dispatch(setOptions({ field: "state", values: data })))
-      .catch((error) => console.error("Error loading states:", error));
+    getStates()
+      .then((data: any) => dispatch(setOptions({ field: "state", values: data })))
+      .catch((error: any) => console.error("Error loading states:", error));
   }, [dispatch]);
 
+  // Categories 
   useEffect(() => {
-    const state = filters.state;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
-    const url = state
-      ? `${baseUrl}/hospital_finder/get_categories?state=${encodeURIComponent(state)}`
-      : `${baseUrl}/hospital_finder/get_categories`;
-
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch categories");
-        return response.json();
-      })
+    getCategories(filters.state)
       .then((data) => {
-        let categories: string[] = [];
-
-        if (Array.isArray(data)) {
-          categories = data;
-        } else if (data.categories) {
-          categories = data.categories;
-        } else if (data.service_categories) {
-          categories = data.service_categories;
-        } else {
-          throw new Error("Unexpected data structure from /get_categories");
-        }
+        let categories = Array.isArray(data)
+          ? data
+          : data.categories ?? data.service_categories ?? [];
         dispatch(setOptions({ field: "category", values: categories }));
       })
       .catch((error) => {
         console.error("Error loading categories:", error);
         alert("Error loading categories. Please try again.");
       });
-}, [filters.state, dispatch]);
+  }, [filters.state, dispatch]);
 
 
   // Fetch sub-categories when category changes
   useEffect(() => {
-    const selectedCategory = filters.category;
-    const state = filters.state;
-
-    // Reset subcategory, cpt and service when category changes
-    dispatch(
-      setFilters({
-        subcategory: "",
-        cpt: "",
-        service: "",
-      })
-    );
-
-    // Reset disabled fields when category changes
-    setDisabledFields({ cpt: false, service: false });
-
-    dispatch(setOptions({ field: "subcategory", values: [] }));
-    dispatch(setOptions({ field: "cpt", values: [] }));
-    dispatch(setOptions({ field: "service", values: [] }));
-
-    if (!selectedCategory) return;
-
-    const url = new URL(`${baseUrl}/hospital_finder/get_sub_categories`);
-    url.searchParams.append("service_category", selectedCategory);
-    if (state) url.searchParams.append("state", state);
-
-    fetch(url.toString())
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch sub-categories");
-        return response.json();
-      })
+    if (!filters.category) return;
+  
+    getSubCategories(filters.category, filters.state)
       .then((data) => {
-        if (!Array.isArray(data.sub_categories))
-          throw new Error("Invalid data format");
-        dispatch(
-          setOptions({ field: "subcategory", values: data.sub_categories })
-        );
+        if (!Array.isArray(data.sub_categories)) throw new Error("Invalid data format");
+        dispatch(setOptions({ field: "subcategory", values: data.sub_categories }));
       })
       .catch((error) => {
         console.error("Error updating sub-categories:", error);
@@ -119,61 +69,23 @@ export const SearchHospital = () => {
 
   // Fetch CPT codes and service names when subcategory changes
   useEffect(() => {
-    const selectedSubCategory = filters.subcategory;
-    const state = filters.state;
-
-    // Reset CPT and Service fields
-    dispatch(
-      setFilters({
-        cpt: "",
-        service: "",
-      })
-    );
-
-    // Reset disabled fields when subcategory changes
-    setDisabledFields({ cpt: false, service: false });
-
-    dispatch(setOptions({ field: "cpt", values: [] }));
-    dispatch(setOptions({ field: "service", values: [] }));
-
-    if (!selectedSubCategory) return;
-
-    const url = new URL(`${baseUrl}/hospital_finder/update_dropdowns`);
-    url.searchParams.append("sub_category", selectedSubCategory);
-    if (state) url.searchParams.append("state", state);
-
-    fetch(url.toString())
-      .then((response) => {
-        if (!response.ok)
-          throw new Error("Failed to fetch CPT and Service data");
-        return response.json();
-      })
+    if (!filters.subcategory) return;
+  
+    updateDropdowns(filters.subcategory, filters.state)
       .then((data) => {
-        if (
-          !Array.isArray(data.selected_cpt_codes) ||
-          !Array.isArray(data.selected_service_names)
-        ) {
+        if (!Array.isArray(data.selected_cpt_codes) || !Array.isArray(data.selected_service_names)) {
           throw new Error("Invalid data format from /update_dropdowns");
         }
-
-        dispatch(
-          setOptions({
-            field: "cpt",
-            values: data.selected_cpt_codes,
-          })
-        );
-        dispatch(
-          setOptions({
-            field: "service",
-            values: data.selected_service_names,
-          })
-        );
+  
+        dispatch(setOptions({ field: "cpt", values: data.selected_cpt_codes }));
+        dispatch(setOptions({ field: "service", values: data.selected_service_names }));
       })
       .catch((error) => {
         console.error("Error updating CPT and Service:", error);
         alert("Error updating CPT/Service dropdowns. Please try again.");
       });
   }, [filters.subcategory, filters.state, dispatch]);
+
 
   const handleSelect = (field: string, value: string) => {
     dispatch(setFilters({ [field]: value }));
@@ -197,49 +109,48 @@ export const SearchHospital = () => {
     }
   };
 
-  const handleSearch = () => {
-    const { state, category, subcategory, cpt, service } = filters;
 
-    if (!category) {
-      alert("Please select a service category");
-      return;
-    }
+const handleSearch = () => {
+  const { state, category, subcategory, cpt, service } = filters;
 
-    if (!cpt && !service) {
-      alert("Please select either a CPT code or a Service name");
-      return;
-    }
+  if (!category) {
+    alert("Please select a service category");
+    return;
+  }
 
-    const params = new URLSearchParams({ service_category: category });
-    if (state) params.append("state", state);
-    if (subcategory) params.append("sub_category", subcategory);
-    if (cpt) params.append("cpt_code", cpt);
-    else if (service) params.append("service_name", service);
+  if (!cpt && !service) {
+    alert("Please select either a CPT code or a Service name");
+    return;
+  }
 
-    dispatch(setLoading(true));
+  const params = new URLSearchParams({ service_category: category });
+  if (state) params.append("state", state);
+  if (subcategory) params.append("sub_category", subcategory);
+  if (cpt) params.append("cpt_code", cpt);
+  else if (service) params.append("service_name", service);
 
-    fetch(`${baseUrl}/hospital_finder/search?${params.toString()}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("✅ Search Results API Response:", data);
-        dispatch(
-          setSearchResults({
-            ...data,
-            selectedState: state,
-            selectedServiceCategory: category,
-            selectedSubcategory: subcategory,
-            selectedCptCode: cpt,
-            selectedServiceName: service,
-          })
-        );
+  dispatch(setLoading(true));
 
-        console.log("✅ Dispatched setSearchResults to Redux:", data);
-      })
-      .catch((error) => {
-        console.error("❌ Error performing search:", error);
-      })
-      .finally(() => dispatch(setLoading(false)));
-  };
+  searchHospitals(params)
+    .then((data) => {
+      console.log("✅ Search Results API Response:", data);
+      dispatch(
+        setSearchResults({
+          ...data,
+          selectedState: state,
+          selectedServiceCategory: category,
+          selectedSubcategory: subcategory,
+          selectedCptCode: cpt,
+          selectedServiceName: service,
+        })
+      );
+    })
+    .catch((error) => {
+      console.error("❌ Error performing search:", error);
+    })
+    .finally(() => dispatch(setLoading(false)));
+};
+
 
   return (
     <>
