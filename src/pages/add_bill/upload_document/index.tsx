@@ -28,7 +28,12 @@ export default function UploadDocumentPage() {
             {sections.map(({ title, component }, index) => (
                 <Card key={index} className="max-w-xl mx-auto mt-10 border-gray-300">
                     <CardContent className="upload-file-card-content">
-                        <Accordion type="single" collapsible className="w-full">
+                        <Accordion
+                            type="single"
+                            collapsible
+                            defaultValue="section-0"
+                            className="w-full"
+                        >
                             <AccordionItem value={`section-${index}`} className="upload-file-accordion-item">
                                 <AccordionTrigger>{title}</AccordionTrigger>
                                 <AccordionContent>{component}</AccordionContent>
