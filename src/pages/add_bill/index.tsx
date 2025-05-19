@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { FileText } from "lucide-react";
 
 // Components
@@ -16,15 +17,20 @@ const bills: Bill[] = [
 ];
 
 export default function AddBill() {
+    const navigate = useNavigate();
+
+    const handleUploadClick = () => navigate('/account/add-bill/upload-document');
+    const handleEnterDataClick = () => navigate('/account/add-bill/manual-entry');
+
     return (
         <div className="p-4">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                <h1 className="text-lg font-medium text-[#8770BC]">Add Bill</h1>
+                <h2 className="text-lg font-medium text-[#8770BC]">Add Bill</h2>
                 <div className="space-x-4">
-                    <Button className="bg-[#8770BC] hover:bg-primary text-white">
+                    <Button className="bg-[#8770BC] hover:bg-primary text-white" onClick={handleUploadClick}>
                         Upload Document
                     </Button>
-                    <Button className="bg-[#8770BC] text-white hover:bg-primary">
+                    <Button className="bg-[#8770BC] text-white hover:bg-primary" onClick={handleEnterDataClick}>
                         Enter Manual Data
                     </Button>
                 </div>

@@ -5,6 +5,7 @@ import { store, persistor } from "./store"; // ✅ Import Redux Persist
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sooner";
 import AppRouter from "./AppRouter";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <BrowserRouter>
             <AppRouter />
           </BrowserRouter>
+          <Toaster />
         </ThemeProvider>
       </PersistGate>
     </Provider>
