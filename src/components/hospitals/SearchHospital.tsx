@@ -345,6 +345,38 @@ export const SearchHospital = () => {
           </div>
         )}
       </section>
+            {/*   <div className="mt-6">
+  <h3 className="font-semibold text-sm mb-2">
+    Found {searchResults.hospital_count} hospitals
+  </h3>
+
+  {searchResults.hospital_count > 0 ? (
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-sm border border-collapse">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="text-left px-4 py-2 border">Hospital Name</th>
+            <th className="text-left px-4 py-2 border">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {searchResults.hospital_names.map((name, idx) => (
+            <tr key={idx}>
+              <td className="px-4 py-2 border">{name}</td>
+              <td className="px-4 py-2 border">
+                {searchResults.prices[idx]
+                  ? `$${searchResults.prices[idx].toFixed(2)}`
+                  : "N/A"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <div className="text-red-500 mt-4">No hospitals found for the selected filters.</div>
+  )}
+</div> */}
     </>
   );
 };
