@@ -341,7 +341,7 @@ const ProfileSetup = () => {
                 {/* Input Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-sm text-gray-600 pb-3">
+                    <Label className="text-sm text-gray-600 pb-2 block">
                       Street Name
                     </Label>
                     <Input
@@ -351,7 +351,7 @@ const ProfileSetup = () => {
                     />
                   </div>
                   <div>
-                    <Label className="text-sm text-gray-600 pb-3">
+                    <Label className="text-sm text-gray-600 pb-2 block">
                       Street No
                     </Label>
                     <Input
@@ -364,7 +364,7 @@ const ProfileSetup = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-sm text-gray-600 pb-3">City</Label>
+                    <Label className="text-sm text-gray-600 pb-2 block">City</Label>
                     <Input
                       type="text"
                       placeholder="Enter city"
@@ -372,7 +372,7 @@ const ProfileSetup = () => {
                     />
                   </div>
                   <div>
-                    <Label className="text-sm text-gray-600 pb-3">
+                    <Label className="text-sm text-gray-600 pb-2 block">
                       Country
                     </Label>
                     <select className="flex h-10 w-full rounded-md border px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-[#F4F5F9] lg:pb-3 py-2">
