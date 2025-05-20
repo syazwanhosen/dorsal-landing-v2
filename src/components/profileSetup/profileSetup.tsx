@@ -150,7 +150,7 @@ const ProfileSetup = () => {
                 </div>
 
                 {/* Profile Description Text (Moves Below on Mobile) */}
-                <div className="text-gray-600 text-sm lg:text-base">
+                <div className="text-gray-600 text-sm lg:text-base pt-2">
                   <p className="font-semibold text-sm text-[#3A3541]">
                     Profile Photo
                   </p>
