@@ -41,10 +41,10 @@ const ProfileSetup = () => {
         <div className="grid grid-cols-3 w-full items-center relative">
         {/* Step 1 */}
         <div className="flex flex-col lg:flex-row items-center gap-2 justify-start w-full">
-          <div className="absolute top-5 left-[18%] h-[1px] w-[20%] bg-[#E7E7F4] hidden lg:block"></div>
+          <div className="absolute top-3 left-[18%] h-[1px] w-[20%] bg-[#E7E7F4] hidden lg:block"></div>
 
           <div
-            className={`w-10 h-10 flex items-center justify-center rounded-full font-semibold ${
+            className={`w-6 h-6 flex items-center justify-center rounded-full font-semibold ${
               completedSteps.includes(1) ? "bg-[#6E39CB] text-white" : "bg-purple-300 text-white"
             }`}
           >
@@ -61,10 +61,10 @@ const ProfileSetup = () => {
 
         {/* Step 2 */}
         <div className="flex flex-col lg:flex-row items-center gap-2 justify-center relative w-full">
-          <div className="absolute top-5 left-[85%] h-[1px] w-[60%] bg-[#E7E7F4] hidden lg:block"></div>
+          <div className="absolute top-3 left-[85%] h-[1px] w-[60%] bg-[#E7E7F4] hidden lg:block"></div>
 
           <div
-            className={`w-10 h-10 flex items-center justify-center rounded-full font-semibold ${
+            className={`w-6 h-6 flex items-center justify-center rounded-full font-semibold ${
               completedSteps.includes(2) ? "bg-[#6E39CB] text-white" : "bg-purple-300 text-white"
             }`}
           >
@@ -82,7 +82,7 @@ const ProfileSetup = () => {
         {/* Step 3 */}
         <div className="flex flex-col lg:flex-row items-center gap-2 justify-end w-full">
           <div
-            className={`w-10 h-10 flex items-center justify-center rounded-full font-semibold ${
+            className={`w-6 h-6 flex items-center justify-center rounded-full font-semibold ${
               completedSteps.includes(3) ? "bg-[#6E39CB] text-white" : "bg-purple-300 text-white"
             }`}
           >
