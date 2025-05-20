@@ -25,7 +25,7 @@ export default function AddBill() {
     return (
         <div className="p-4">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                <h2 className="text-lg font-medium text-[#8770BC]">Add Bill</h2>
+                <h2 className="text-lg font-medium text-[#8770BC] ml-5">Add Bill</h2>
                 <div className="space-x-4">
                     <Button className="bg-[#8770BC] hover:bg-primary text-white" onClick={handleUploadClick}>
                         Upload Document

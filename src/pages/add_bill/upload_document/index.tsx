@@ -24,7 +24,7 @@ const sections: SectionConfig[] = [
 export default function UploadDocumentPage() {
     return (
         <>
-            <h2 className="text-lg font-medium text-[#8770BC]">Upload Document</h2>
+            <h2 className="text-lg font-medium text-[#8770BC] ml-5">Upload Document</h2>
             {sections.map(({ title, component }, index) => (
                 <Card key={index} className="max-w-xl mx-auto mt-10 border-gray-300">
                     <CardContent className="upload-file-card-content">
