@@ -4,13 +4,15 @@ import { lazy } from "react";
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
 
+
 // Lazy-loaded pages/components
 const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
 const Login = lazy(() => import("./pages/login/login"));
 const Signup = lazy(() => import("./components/signup/signup"));
-const Account = lazy(() => import("./pages/account/Account"));
+const Account = lazy(() => import("./pages/Account/Account"));
 const AddBill = lazy(() => import("./pages/add_bill"));
+const About = lazy(() => import("./pages/about/about"));
 const UploadDocumentPage = lazy(() => import("./pages/add_bill/upload_document"));
 const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
@@ -29,7 +31,10 @@ export const appRoutes: RouteObject[] = [
             { path: "add-bill", element: <AddBill /> },
             { path: "add-bill/upload-document", element: <UploadDocumentPage /> },
             { path: "add-bill/manual-entry", element: <EnterManualData /> },
+            { path: "about", element: <About /> }, // About page accessible at /account/about
         ],
+        
+
     },
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_details", element: <HospitalDetails /> },

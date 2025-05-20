@@ -17,6 +17,16 @@ import user from "../assets/abrar-rahman.jpg";
 
 const MENU = [
     {
+        label: "Setup Profile",
+        icon: <FileText className="h-4 w-4" />,
+        defaultPath: "/account/about",
+        submenus: [
+        //    { name: "John Doe", path: "/authorized-account/john" },
+         //   { name: "Jane Doe", path: "/authorized-account/jane" },
+         //   { name: "Jack Doe", path: "/authorized-account/jack" },
+        ],
+    },
+    {
         label: "Authorized Account",
         icon: <FileText className="h-4 w-4" />,
         defaultPath: "/authorized-account",
