@@ -15,6 +15,7 @@ import {
 
 import logo from "../assets/icon.png";
 import user from "../assets/abrar-rahman.jpg";
+import { ToggleButton } from "@/types";
 
 const MENU = [
     {
@@ -57,13 +58,18 @@ const MENU = [
     },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({
+    open,
+    mobileSidebarOpen,
+    setMobileSidebarOpen,
+}: ToggleButton & {
+    mobileSidebarOpen: boolean;
+    setMobileSidebarOpen: (open: boolean) => void;
+}) => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
-    const [sidebarExpanded, setSidebarExpanded] = React.useState(true);
-    const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
 
     const toggleSection = (label: string) => {
         setOpenSections((prev) => ({
@@ -75,26 +81,25 @@ export const Sidebar = () => {
 
     const handleNavigate = (path: string) => {
         navigate(path);
-        setMobileSidebarOpen(false); // Close mobile sidebar on navigation
+        setMobileSidebarOpen(false);
     };
 
-    const isCollapsed = !sidebarExpanded;
+    const isCollapsed = !open;
 
     return (
         <>
             <aside
                 className={clsx(
-                    "bg-white shadow-md z-40 fixed top-0 left-0 h-screen flex flex-col justify-between py-4 transition-all duration-300 ease-in-out",
-                    "md:relative md:h-auto md:top-auto md:left-auto md:flex md:flex-col",
+                    "bg-white shadow-md z-40 fixed top-0 left-0 h-screen flex flex-col justify-between py-4",
+                    "transition-[width,transform] duration-300 ease-in-out",
                     {
-                        "w-64": sidebarExpanded,
+                        "w-64": !isCollapsed,
                         "w-16": isCollapsed,
                         "translate-x-0": mobileSidebarOpen,
                         "-translate-x-full": !mobileSidebarOpen,
-                        "md:translate-x-0": true,
+                        "md:translate-x-0 md:relative": true,
                     }
                 )}
-                style={{ transitionProperty: "width, transform" }}
             >
                 <div>
                     {/* Header with Logo */}
@@ -108,7 +113,6 @@ export const Sidebar = () => {
                             src={logo}
                             alt="Logo"
                             className={clsx(
-                                "transition-all duration-300 ease-in-out",
                                 isCollapsed ? "w-5 h-5" : "w-16 h-16"
                             )}
                         />
@@ -133,7 +137,7 @@ export const Sidebar = () => {
                                         openSections[item.label]
                                             ? "bg-[#EFEAFB] border-l-4 border-[#8770BC]"
                                             : "hover:bg-gray-100",
-                                        "transition-colors duration-300",
+                                        "transition-colors duration-500",
                                         isCollapsed ? "justify-center px-2 py-3" : "justify-between px-4 py-2"
                                     )}
                                 >
@@ -221,41 +225,6 @@ export const Sidebar = () => {
                         </button>
                     )}
                 </div>
-
-                {/* Sidebar toggle button — positioned overlapping sidebar right edge */}
-                <button
-                    onClick={() =>
-                        window.innerWidth < 768
-                            ? setMobileSidebarOpen((v) => !v)
-                            : setSidebarExpanded((v) => !v)
-                    }
-                    aria-label={sidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
-                    className={clsx(
-                        "absolute top-4 z-50 flex items-center justify-center bg-white shadow-md transition-all duration-300 rounded-tr-lg rounded-br-lg hover:bg-purple-100",
-                        sidebarExpanded ? "left-[252px]" : "left-12",
-                        sidebarExpanded ? "h-12 w-10" : "h-8 w-8" // bigger when expanded, smaller when collapsed
-                    )}
-                    style={{
-                        minWidth: sidebarExpanded ? "40px" : "32px",
-                        minHeight: sidebarExpanded ? "48px" : "32px",
-                    }}
-                >
-                    <svg
-                        className={clsx(
-                            "text-purple-700 transition-transform duration-300",
-                            !sidebarExpanded && "rotate-180"
-                        )}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                        width={sidebarExpanded ? 20 : 16}
-                        height={sidebarExpanded ? 20 : 16}
-                    >
-                        <path d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-
 
             </aside>
 
