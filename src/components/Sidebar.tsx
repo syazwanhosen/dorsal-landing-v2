@@ -70,6 +70,7 @@ export const Sidebar = () => {
             [label]: !prev[label],
         }));
     };
+    
 
     return (
         <aside className="w-64 h-screen bg-white shadow-sm">
