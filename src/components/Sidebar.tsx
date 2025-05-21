@@ -22,11 +22,7 @@ const MENU = [
         label: "Setup Profile",
         icon: <FileText className="h-4 w-4" />,
         defaultPath: "/account/about",
-        submenus: [
-        //    { name: "John Doe", path: "/authorized-account/john" },
-         //   { name: "Jane Doe", path: "/authorized-account/jane" },
-         //   { name: "Jack Doe", path: "/authorized-account/jack" },
-        ],
+        submenus: [],
     },
     {
         label: "Authorized Account",
@@ -72,12 +68,18 @@ export const Sidebar = ({
     const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
 
     const toggleSection = (label: string) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [label]: !prev[label],
-        }));
+        setOpenSections((prev) => {
+            const isCurrentlyOpen = prev[label];
+            const newState: Record<string, boolean> = {};
+            MENU.forEach((item) => {
+                newState[item.label] = false;
+            });
+            if (!isCurrentlyOpen) {
+                newState[label] = true;
+            }
+            return newState;
+        });
     };
-    
 
     const handleNavigate = (path: string) => {
         navigate(path);
@@ -112,15 +114,12 @@ export const Sidebar = ({
                         <img
                             src={logo}
                             alt="Logo"
-                            className={clsx(
-                                isCollapsed ? "w-5 h-5" : "w-16 h-16"
-                            )}
+                            className={clsx(isCollapsed ? "w-5 h-5" : "w-16 h-16")}
                         />
                         {!isCollapsed && (
                             <h1 className="text-[#8770BC] text-lg font-semibold">dorsal.fyi</h1>
                         )}
                     </div>
-
 
                     {/* Menu */}
                     <div className="px-1">
@@ -161,7 +160,7 @@ export const Sidebar = ({
                                 </Collapsible.Trigger>
 
                                 {/* Submenus - hidden if collapsed */}
-                                {!isCollapsed && (
+                                {!isCollapsed && item.submenus.length > 0 && (
                                     <Collapsible.Content className="pl-10 mt-2">
                                         <ul>
                                             {item.submenus.map((submenu, subIndex) => {
@@ -225,7 +224,6 @@ export const Sidebar = ({
                         </button>
                     )}
                 </div>
-
             </aside>
 
             {/* Overlay on mobile */}
