@@ -19,7 +19,7 @@ export const SidebarLayout = () => {
                 mobileOpen={mobileSidebarOpen}
                 setMobileOpen={setMobileSidebarOpen}
             />
-            <main className="flex-1 p-4 pt-20 md:pt-6 transition-all">
+            <main className="flex-1 p-4 pt-20 md:pt-6 transition-all mt-5">
                 <Outlet />
             </main>
         </div>
