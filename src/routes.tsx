@@ -3,6 +3,7 @@ import { lazy } from "react";
 
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
+import Roadmap from "./pages/roadmap/roadmap";
 
 
 // Lazy-loaded pages/components
@@ -38,4 +39,5 @@ export const appRoutes: RouteObject[] = [
     },
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
+    { path: "/raodmap", element: <Roadmap /> },
 ];
