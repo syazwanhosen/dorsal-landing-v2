@@ -34,10 +34,10 @@ export const appRoutes: RouteObject[] = [
             { path: "add-bill/manual-entry", element: <EnterManualData /> },
             { path: "about", element: <About /> }, // About page accessible at /account/about
         ],
-        
+
 
     },
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
-    { path: "/raodmap", element: <Roadmap /> },
+    { path: "/roadmap", element: <Roadmap /> },
 ];
