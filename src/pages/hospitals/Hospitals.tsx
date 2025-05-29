@@ -6,17 +6,11 @@ import { Header } from "../../components/Header";
 import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
-import "./Hospitals.css";
 import { SearchSection } from "@/components/hospitals/SearchSection";
 
-
-
 export default function Hospitals() {
-
   const { searchResults } = useAppSelector((state) => state.hospital);
-
   return (
-
     <>
       <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">

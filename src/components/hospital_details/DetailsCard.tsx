@@ -53,7 +53,7 @@ export const DetailsCard = () => {
                     >
                       <Popup>{selectedHospital.name}</Popup>
                     </Marker>
-                    {/* Fix: Force map to resize properly */}
+                  
                     <ResizeMap />
                   </MapContainer>
                 ) : (
@@ -87,6 +87,11 @@ export const DetailsCard = () => {
             <div className="w-full">
               <h3 className="text-lg font-semibold mb-1 flex flex-wrap items-center gap-4">
                 {selectedHospital.title}
+                {selectedHospital.code && (
+                  <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
+                    CPT Code {selectedHospital.code}
+                  </span>
+                )}
                 {selectedHospital.zipcode && (
                   <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
                     CPT Code {selectedHospital.zipcode}

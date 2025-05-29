@@ -4,6 +4,7 @@ import { lazy } from "react";
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
 import Roadmap from "./pages/roadmap/roadmap";
+import HospitalSearch from "./pages/Hospital_search/HospitalSearch";
 
 
 // Lazy-loaded pages/components
@@ -38,6 +39,7 @@ export const appRoutes: RouteObject[] = [
 
     },
     { path: "/hospitals", element: <Hospitals /> },
+    { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
     { path: "/raodmap", element: <Roadmap /> },
 ];
