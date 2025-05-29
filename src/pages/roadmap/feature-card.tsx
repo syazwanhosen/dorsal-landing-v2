@@ -1,4 +1,5 @@
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState, useEffect } from "react"
+import axios from "axios"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -25,7 +26,6 @@ import {
   ExternalLink,
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
-import { getVote, setVote } from "@/lib/voteStorage"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Separator from "@/components/ui/separator"
 import { Button } from "@/components/ui/buttons/button"
@@ -36,48 +36,35 @@ interface FeatureCardProps {
 }
 
 export function FeatureCard({ feature }: FeatureCardProps) {
-  const [votes, setVotes] = useState(feature.votes)
+  const [votes, setVotes] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [hasVoted, setHasVoted] = useState<"up" | "down" | null>(null)
 
-  const voteKey = `feature-${feature.id}`
+  const handleVote = async (value: number) => {
+    const delta =
+      (value > 0 && hasVoted === "up") || (value < 0 && hasVoted === "down")
+        ? -value
+        : hasVoted
+          ? 2 * value
+          : value
 
-  useEffect(() => {
-    const loadVotes = async () => {
-      const stored = await getVote(voteKey)
-      if (stored) {
-        setVotes(stored.count)
-        setHasVoted(stored.voted)
-      }
+    try {
+      const res = await axios.post("http://localhost:4000/vote", {
+        id: feature.id,
+        delta,
+      })
+
+      setVotes(res.data.votes)
+      setHasVoted(
+        hasVoted === null
+          ? value > 0
+            ? "up"
+            : "down"
+          : null
+      )
+    } catch (error) {
+      console.error("Voting failed", error)
     }
-    loadVotes()
-  }, [voteKey])
-
-  const handleVote = async (direction: "up" | "down") => {
-    let newCount = votes
-    let newVote: "up" | "down" | null = hasVoted
-
-    if (direction === "up") {
-      if (hasVoted === "up") {
-        newCount -= 1
-        newVote = null
-      } else {
-        newCount += hasVoted === "down" ? 2 : 1
-        newVote = "up"
-      }
-    } else {
-      if (hasVoted === "down") {
-        newCount += 1
-        newVote = null
-      } else {
-        newCount -= hasVoted === "up" ? 2 : 1
-        newVote = "down"
-      }
-    }
-
-    setVotes(newCount)
-    setHasVoted(newVote)
-    await setVote(voteKey, { count: newCount, voted: newVote })
   }
 
   const getFeatureIcon = (iconName: string) => {
@@ -149,6 +136,20 @@ export function FeatureCard({ feature }: FeatureCardProps) {
       <Building2 className="h-4 w-4 text-gray-600" />
     )
   }
+
+  useEffect(() => {
+    if (!feature?.id) return;
+
+    axios.get(`http://localhost:4000/votes/${feature.id}`)
+      .then((res) => {
+        setVotes(res.data.votes);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch vote:', error);
+      });
+  }, [feature.id]);
+
+
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
