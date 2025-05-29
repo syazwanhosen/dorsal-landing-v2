@@ -41,33 +41,33 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [hasVoted, setHasVoted] = useState<"up" | "down" | null>(null)
+  const [initialVote, setInitialVote] = useState(votes)
 
   const handleVote = async (value: number) => {
-    const delta =
-      (value > 0 && hasVoted === "up") || (value < 0 && hasVoted === "down")
-        ? -value
-        : hasVoted
-          ? 2 * value
-          : value
+    // Prevent multiple votes in the same direction
+    if (initialVote !== votes && ((value === 1 && hasVoted === "up") || (value === -1 && hasVoted === "down"))) {
+      return;
+    }
+
+    // Prevent downvote if votes is zero
+    if (value === -1 && votes <= 0) {
+      return;
+    }
+
+    const type = value === 1 ? "upvote" : "downvote";
 
     try {
       const res = await axios.post(`${baseUrl}/vote`, {
         id: feature.id,
-        delta,
-      })
+        type,
+      });
 
-      setVotes(res.data.votes)
-      setHasVoted(
-        hasVoted === null
-          ? value > 0
-            ? "up"
-            : "down"
-          : null
-      )
+      setVotes(res.data.totalVotes);
+      setHasVoted(value === 1 ? "up" : "down");
     } catch (error) {
-      console.error("Voting failed", error)
+      console.error("Voting failed", error);
     }
-  }
+  };
 
   const getFeatureIcon = (iconName: string) => {
     const icons = {
@@ -144,17 +144,17 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 
     axios.get(`${baseUrl}/votes/${feature.id}`)
       .then((res) => {
-        setVotes(res.data.votes);
+        setVotes(res.data.totalVotes);
+        setInitialVote(res.data.totalVotes);
       })
       .catch((error) => {
         console.error('Failed to fetch vote:', error);
       });
   }, [feature.id]);
 
-
-
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
+    <div className="border border-gray-200 rounded-lg overfl
+    ow-hidden bg-white hover:shadow-sm transition-shadow">
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">

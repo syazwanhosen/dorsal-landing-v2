@@ -28,41 +28,65 @@ const sheets = google.sheets({ version: 'v4', auth });
 async function getFeatures() {
     const res = await sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: 'Sheet1!A2:C',
+        range: 'Sheet1!A2:E',
     });
     const rows = res.data.values;
     if (!rows || rows.length === 0) {
         return [];
     }
-    return rows.map(([id, title, votes]) => ({
+    return rows.map(([id, title, upvotes, downvotes, totalVotes]) => ({
         id,
         title,
-        votes: parseInt(votes, 10),
+        upvotes: parseInt(upvotes || '0', 10),
+        downvotes: parseInt(downvotes || '0', 10),
+        totalVotes: parseInt(totalVotes || '0', 10),
     }));
 }
 
 // Helper function to update vote count
-async function updateVote(id, delta) {
+async function updateVote(id, type) {
     const res = await sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: 'Sheet1!A2:C',
+        range: 'Sheet1!A2:E',
     });
+    const features = await getFeatures();
     const rows = res.data.values;
     const rowIndex = rows.findIndex(row => row[0] === id);
+    const feature = features.find(item => item.id === id);
+
     if (rowIndex === -1) {
         throw new Error('Feature not found');
     }
-    const currentVotes = parseInt(rows[rowIndex][2], 10);
-    const newVotes = currentVotes + delta;
+
+    let upvotes = parseInt(rows[rowIndex][2] || '0', 10);
+    let downvotes = parseInt(rows[rowIndex][3] || '0', 10);
+    let totalVotes = feature.totalVotes
+
+    if (type === 'upvote') {
+        upvotes += 1;
+        totalVotes += 1;
+    } else if (type === 'downvote') {
+        downvotes += 1;
+        totalVotes -= 1;
+    } else {
+        throw new Error('Invalid vote type');
+    }
+
     await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
-        range: `Sheet1!C${rowIndex + 2}`,
+        range: `Sheet1!C${rowIndex + 2}:E${rowIndex + 2}`,
         valueInputOption: 'RAW',
         requestBody: {
-            values: [[newVotes.toString()]],
+            values: [[upvotes.toString(), downvotes.toString(), totalVotes.toString()]],
         },
     });
-    return newVotes;
+
+    return {
+        id,
+        upvotes,
+        downvotes,
+        totalVotes,
+    };
 }
 
 // Route to get all features
@@ -77,17 +101,18 @@ app.get('/votes', async (req, res) => {
 
 // Route to update vote count
 app.post('/vote', async (req, res) => {
-    const { id, delta } = req.body;
-    if (!id || typeof delta !== 'number') {
+    const { id, type } = req.body;
+    if (!id || !['upvote', 'downvote'].includes(type)) {
         return res.status(400).send('Invalid request');
     }
     try {
-        const newVotes = await updateVote(id, delta);
-        res.json({ id, votes: newVotes });
+        const result = await updateVote(id, type);
+        res.json(result);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
 
 // Route to get feature by ID
 app.get('/votes/:id', async (req, res) => {
