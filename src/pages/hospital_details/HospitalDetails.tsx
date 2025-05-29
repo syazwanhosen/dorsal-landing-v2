@@ -8,7 +8,7 @@ import { Header } from "../../components/Header";
 import { DetailsCard } from "../../components/hospital_details/DetailsCard";
 import { OtherServices } from "../../components/hospital_details/OtherServices";
 
-import "./HospitalDetails.css";
+
 
 export default function Data() {
 

@@ -3,7 +3,7 @@ import './style.css'
 
 interface HospitalComparisonProps {
   selectedHospitals: Hospital[];
-  onRemoveHospital: (hospitalName: string) => void; // Added prop for removal function
+  onRemoveHospital: (hospitalName: string) => void; 
 }
 
 
@@ -12,7 +12,7 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
   selectedHospitals,
   onRemoveHospital,
 }) => {
-  if (selectedHospitals.length === 0) return null; // Hide table when no hospitals are selected
+  if (selectedHospitals.length === 0) return null; 
 
   return (
     <section id="HospitalComparison" className="pt-5 pb-5">
@@ -34,7 +34,7 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
 
           {selectedHospitals.map((hospital, idx) => (
             <div
-              key={`hospital-${idx}`} // ✅ Ensuring unique key
+              key={`hospital-${idx}`} 
               className="p-4 font-semibold text-center text-base flex flex-col items-center"
             >
               {hospital.name}
@@ -64,10 +64,11 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
             Distance
           </div>
           {selectedHospitals.map((hospital, idx) => (
-            <div key={`distance-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center">
-              {hospital.distance || "Unknown"} miles
-            </div>
-          ))}
+  <div key={`distance-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center">
+    {hospital.distance ? `${parseFloat(hospital.distance).toFixed(2)} miles` : "Unknown"}
+  </div>
+))}
+
           {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
 
           {/* Rating Row */}

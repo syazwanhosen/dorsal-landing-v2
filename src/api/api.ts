@@ -136,6 +136,33 @@ export const searchHospitals = async (params: URLSearchParams) => {
   return response.json(); };
 
 
+ // ******************  Hospital Service Search Page  ********************  
+
+
+export const searchHospitalServices = async (params: {
+  service_name: string;
+  location?: string;
+  search_range?: number;
+  min_price?: number;
+  max_price?: number;
+}) => {
+  try {
+    const url = new URL(`${baseUrl}/service_search/controlled_search`);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        url.searchParams.append(key, value.toString());
+      }
+    });
+    const response = await fetch(url.toString());
+    if (!response.ok) throw new Error(`Failed to fetch hospital search results: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching hospital search data:", error);
+    throw error;
+  }
+};
+
+
 // ******************  Hospital Map  ******************** 
 
 // fetchHospitalMetadata in Hospital Map
