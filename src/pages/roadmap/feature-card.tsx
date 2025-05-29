@@ -35,6 +35,8 @@ interface FeatureCardProps {
   feature: FeatureType
 }
 
+const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
+
 export function FeatureCard({ feature }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -49,7 +51,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
           : value
 
     try {
-      const res = await axios.post("http://localhost:4000/vote", {
+      const res = await axios.post(`${baseUrl}/vote`, {
         id: feature.id,
         delta,
       })
@@ -140,7 +142,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   useEffect(() => {
     if (!feature?.id) return;
 
-    axios.get(`http://localhost:4000/votes/${feature.id}`)
+    axios.get(`${baseUrl}/votes/${feature.id}`)
       .then((res) => {
         setVotes(res.data.votes);
       })
