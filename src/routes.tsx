@@ -36,11 +36,11 @@ export const appRoutes: RouteObject[] = [
             { path: "about", element: <About /> }, 
             { path: "authorized-account", element: <Authorized /> }, 
         ],
-        
+
 
     },
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
-    { path: "/raodmap", element: <Roadmap /> }, 
+    { path: "/raodmap", element: <Roadmap /> },
 ];

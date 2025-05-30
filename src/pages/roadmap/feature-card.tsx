@@ -1,4 +1,5 @@
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react"
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState, useEffect } from "react"
+import axios from "axios"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -25,6 +26,7 @@ import {
   ExternalLink,
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
+import { getVote, setVote } from "@/lib/voteStorage"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Separator from "@/components/ui/separator"
 import { Button } from "@/components/ui/buttons/button"
@@ -34,26 +36,43 @@ interface FeatureCardProps {
   feature: FeatureType
 }
 
-export function FeatureCard({ feature }: FeatureCardProps) {
-  const [votes, setVotes] = useState(feature.votes)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [hasVoted, setHasVoted] = useState<"up" | "down" | null>(null)
+const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
 
-  const handleVote = (value: number) => {
-    if ((value > 0 && hasVoted === "up") || (value < 0 && hasVoted === "down")) {
-      // Undo vote
-      setVotes((prev) => prev - value)
-      setHasVoted(null)
-    } else {
-      // If changing vote direction, adjust by 2x
-      if (hasVoted) {
-        setVotes((prev) => prev + 2 * value)
-      } else {
-        setVotes((prev) => prev + value)
-      }
-      setHasVoted(value > 0 ? "up" : "down")
+export function FeatureCard({ feature }: FeatureCardProps) {
+  const [votes, setVotes] = useState(0)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
+
+  const handleVote = async (value: number, voteType: string) => {
+    const stored = await getVote(feature.id);
+
+    if (
+      (stored?.voted &&
+        (
+          (value === 1 && stored?.voted === "upvote" && votes > stored?.count) ||
+          (value === -1 && stored?.voted === "downvote" && votes < stored?.count)
+        )
+      ) ||
+      (value === -1 && votes <= 0)
+    ) {
+      return;
     }
-  }
+
+    const type = value === 1 ? "upvote" : "downvote";
+
+    try {
+      const res = await axios.post(`${baseUrl}/vote`, {
+        id: feature.id,
+        type,
+      });
+
+      setVotes(res.data.totalVotes);
+      setHasVoted(value === 1 ? "upvote" : "downvote");
+      await setVote(feature.id, { count: stored?.count || 0, voted: type });
+    } catch (error) {
+      console.error("Voting failed", error);
+    }
+  };
 
   const getFeatureIcon = (iconName: string) => {
     const icons = {
@@ -125,18 +144,37 @@ export function FeatureCard({ feature }: FeatureCardProps) {
     )
   }
 
+
+  useEffect(() => {
+    if (!feature?.id) return;
+
+    axios
+      .get(`${baseUrl}/votes/${feature.id}`)
+      .then(async (res) => {
+        const stored = await getVote(feature.id);
+        setVotes(res.data.totalVotes);
+        setHasVoted(stored?.voted || null);
+        if (!stored?.count) {
+          await setVote(feature.id, { count: res.data.totalVotes, voted: null });
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch vote:", error);
+      });
+  }, [feature.id]);
+
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
+    <div className="border border-gray-200 rounded-lg overfl
+    ow-hidden bg-white hover:shadow-sm transition-shadow">
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
           <Button
             variant="ghost"
-            size="sm"
-            className={`h-8 w-8 rounded-full ${
-              hasVoted === "up" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-            }`}
-            onClick={() => handleVote(1)}
+            size="md"
+            className={`h-8 w-8 rounded-full ${hasVoted === "upvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
+              }`}
+            onClick={() => handleVote(1, 'upvote')}
           >
             <ChevronUp className="h-5 w-5" />
             <span className="sr-only">Upvote</span>
@@ -144,11 +182,10 @@ export function FeatureCard({ feature }: FeatureCardProps) {
           <span className="font-semibold text-lg my-1">{votes}</span>
           <Button
             variant="ghost"
-            size="sm"
-            className={`h-8 w-8 rounded-full ${
-              hasVoted === "down" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-            }`}
-            onClick={() => handleVote(-1)}
+            size="md"
+            className={`h-8 w-8 rounded-full ${hasVoted === "downvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
+              }`}
+            onClick={() => handleVote(-1, 'downvote')}
           >
             <ChevronDown className="h-5 w-5" />
             <span className="sr-only">Downvote</span>
@@ -204,9 +241,8 @@ export function FeatureCard({ feature }: FeatureCardProps) {
                     {feature.milestones.map((milestone: { completed: any; title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; description: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined }, index: Key | null | undefined) => (
                       <div key={index} className="flex items-start gap-2">
                         <div
-                          className={`mt-1 h-4 w-4 rounded-full flex items-center justify-center ${
-                            milestone.completed ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
-                          }`}
+                          className={`mt-1 h-4 w-4 rounded-full flex items-center justify-center ${milestone.completed ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
+                            }`}
                         >
                           {milestone.completed && <CheckCircle2 className="h-3 w-3" />}
                         </div>
