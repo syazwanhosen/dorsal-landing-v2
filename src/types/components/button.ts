@@ -3,3 +3,8 @@ export interface ButtonGroupProps<T extends string> {
     selected: T;
     onSelect: (value: T) => void;
 }
+
+export type ToggleButton = {
+    open: boolean;
+    setOpen?: (open: boolean) => void;
+};

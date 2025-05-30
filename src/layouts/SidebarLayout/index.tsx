@@ -1,15 +1,28 @@
-import { Outlet } from "react-router-dom";
-
-// Components
-import { Sidebar } from "@/components/Sidebar";
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Sidebar } from '@/components/Sidebar';
+import { Topbar } from '@/components/Topbar';
 
 export const SidebarLayout = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(true);        // for desktop
+    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false); // for mobile
     return (
-        <div className="bg-[#F4F5F9] min-h-screen flex">
-            <Sidebar />
-            <div className="flex-1 p-8 space-y-6">
+        <div className="flex relative min-h-screen bg-gray-50">
+            <Sidebar
+                open={sidebarOpen}
+                mobileSidebarOpen={mobileSidebarOpen}
+                setMobileSidebarOpen={setMobileSidebarOpen}
+            />
+            <Topbar
+                open={sidebarOpen}
+                setOpen={setSidebarOpen}
+                mobileOpen={mobileSidebarOpen}
+                setMobileOpen={setMobileSidebarOpen}
+            />
+            <main className="flex-1 p-4 pt-20 md:pt-6 transition-all mt-5">
                 <Outlet />
-            </div>
+            </main>
         </div>
     );
-}
+};
+
