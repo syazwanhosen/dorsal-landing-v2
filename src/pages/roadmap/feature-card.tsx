@@ -26,6 +26,7 @@ import {
   ExternalLink,
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
+import { getVote, setVote } from "@/lib/voteStorage"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Separator from "@/components/ui/separator"
 import { Button } from "@/components/ui/buttons/button"
@@ -40,17 +41,20 @@ const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
 export function FeatureCard({ feature }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [hasVoted, setHasVoted] = useState<"up" | "down" | null>(null)
-  const [initialVote, setInitialVote] = useState(votes)
+  const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
 
-  const handleVote = async (value: number) => {
-    // Prevent multiple votes in the same direction
-    if (initialVote !== votes && ((value === 1 && hasVoted === "up") || (value === -1 && hasVoted === "down"))) {
-      return;
-    }
+  const handleVote = async (value: number, voteType: string) => {
+    const stored = await getVote(feature.id);
 
-    // Prevent downvote if votes is zero
-    if (value === -1 && votes <= 0) {
+    if (
+      (stored?.voted &&
+        (
+          (value === 1 && stored?.voted === "upvote" && votes > stored?.count) ||
+          (value === -1 && stored?.voted === "downvote" && votes < stored?.count)
+        )
+      ) ||
+      (value === -1 && votes <= 0)
+    ) {
       return;
     }
 
@@ -63,7 +67,8 @@ export function FeatureCard({ feature }: FeatureCardProps) {
       });
 
       setVotes(res.data.totalVotes);
-      setHasVoted(value === 1 ? "up" : "down");
+      setHasVoted(value === 1 ? "upvote" : "downvote");
+      await setVote(feature.id, { count: stored?.count || 0, voted: type });
     } catch (error) {
       console.error("Voting failed", error);
     }
@@ -139,16 +144,22 @@ export function FeatureCard({ feature }: FeatureCardProps) {
     )
   }
 
+
   useEffect(() => {
     if (!feature?.id) return;
 
-    axios.get(`${baseUrl}/votes/${feature.id}`)
-      .then((res) => {
+    axios
+      .get(`${baseUrl}/votes/${feature.id}`)
+      .then(async (res) => {
+        const stored = await getVote(feature.id);
         setVotes(res.data.totalVotes);
-        setInitialVote(res.data.totalVotes);
+        setHasVoted(stored?.voted || null);
+        if (!stored?.count) {
+          await setVote(feature.id, { count: res.data.totalVotes, voted: null });
+        }
       })
       .catch((error) => {
-        console.error('Failed to fetch vote:', error);
+        console.error("Failed to fetch vote:", error);
       });
   }, [feature.id]);
 
@@ -161,9 +172,9 @@ export function FeatureCard({ feature }: FeatureCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 w-8 rounded-full ${hasVoted === "up" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
+            className={`h-8 w-8 rounded-full ${hasVoted === "upvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
               }`}
-            onClick={() => handleVote(1)}
+            onClick={() => handleVote(1, 'upvote')}
           >
             <ChevronUp className="h-5 w-5" />
             <span className="sr-only">Upvote</span>
@@ -172,9 +183,9 @@ export function FeatureCard({ feature }: FeatureCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 w-8 rounded-full ${hasVoted === "down" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
+            className={`h-8 w-8 rounded-full ${hasVoted === "downvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
               }`}
-            onClick={() => handleVote(-1)}
+            onClick={() => handleVote(-1, 'downvote')}
           >
             <ChevronDown className="h-5 w-5" />
             <span className="sr-only">Downvote</span>
