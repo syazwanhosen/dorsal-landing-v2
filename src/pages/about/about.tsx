@@ -1,4 +1,4 @@
-import ProfileSetup from "@/components/profileSetup/profileSetup";
+import ProfileSetup from "@/components/dashboard/profileSetup/profileSetup";
 
 
 export default function About() {

@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { UpdateDataForm } from "@/components/add_bill";
+import { UpdateDataForm } from "@/components/dashboard/add_bill";
 
 export default function UploadDocumentPage() {
     return (

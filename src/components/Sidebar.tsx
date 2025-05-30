@@ -29,7 +29,7 @@ const MENU = [
     {
         label: "Authorized Account",
         icon: <FileText className="h-4 w-4" />,
-        defaultPath: "/authorized-account",
+        defaultPath: "/account/authorized-account",
         submenus: [
             { name: "John Doe", path: "/authorized-account/john" },
             { name: "Jane Doe", path: "/authorized-account/jane" },

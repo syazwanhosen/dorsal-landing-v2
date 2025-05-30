@@ -1,7 +1,7 @@
 // Components
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { UploadDocument, UpdateDataForm } from "@/components/add_bill";
+import { UploadDocument, UpdateDataForm } from "@/components/dashboard/add_bill";
 
 import "./style.css"
 
