@@ -126,7 +126,7 @@ const TransactionList = () => {
         <div className="bg-purple-100 p-2 rounded-full mr-2">
           <Funnel className="text-[#6E39CB]" size={12} />
         </div>
-        <span className="hidden sm:inline">Filter</span>
+        <span className="sm:inline">Filter</span>
       </div>
     </div>
   
