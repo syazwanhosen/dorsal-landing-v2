@@ -42,5 +42,5 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
-    { path: "/raodmap", element: <Roadmap /> },
+    { path: "/roadmap", element: <Roadmap /> },
 ];
