@@ -125,47 +125,50 @@ const Roadmap: React.FC = () => {
             <div className="mb-8 space-y-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-900">All Features</h2>
-                <div className="flex items-center gap-2 flex-wrap justify-end">
-                  <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                    Live: {features.filter((f) => f.status === "live").length}
-                  </Badge>
-                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                    In Progress: {features.filter((f) => f.status === "development").length}
-                  </Badge>
-                  <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
-                    Planned: {features.filter((f) => f.status === "planned" || f.status === "coming").length}
-                  </Badge>
-                </div>
               </div>
 
               <Separator />
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                  <Input
-                    placeholder="Search features..."
-                    className="pl-10"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Filter className="h-4 w-4" />
-                  <span>Filter</span>
-                </Button>
-              </div>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="w-full sm:w-2/3">
+                  <Tabs value={activeCategory} onValueChange={setActiveCategory}>
+                    <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
+                      <TabsTrigger value="all">All</TabsTrigger>
 
-              <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                <TabsList className="grid grid-cols-3 sm:grid-cols-6">
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="patient">Patient</TabsTrigger>
-                  <TabsTrigger value="provider">Provider</TabsTrigger>
-                  <TabsTrigger value="live">Live</TabsTrigger>
-                  <TabsTrigger value="development">In Progress</TabsTrigger>
-                  <TabsTrigger value="planned">Planned</TabsTrigger>
-                </TabsList>
-              </Tabs>
+                      <TabsTrigger value="live" className="flex gap-2">
+                        <span>Live</span>
+                        <span className="h-2 w-2 rounded-full bg-green-500" />
+                      </TabsTrigger>
+
+                      <TabsTrigger value="development" className="flex gap-2">
+                        <span>In Progress</span>
+                        <span className="h-2 w-2 rounded-full bg-yellow-500" />
+                      </TabsTrigger>
+
+                      <TabsTrigger value="planned" className="flex gap-2">
+                        <span>Planned</span>
+                        <span className="h-2 w-2 rounded-full bg-red-500" />
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+
+                <div className="w-full sm:w-1/3 flex flex-col sm:flex-row gap-4">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Search features..."
+                      className="pl-10 w-full"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto">
+                    <Filter className="h-4 w-4" />
+                    <span>Filter</span>
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Feature List */}
