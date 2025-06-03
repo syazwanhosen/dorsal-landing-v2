@@ -221,3 +221,9 @@ select {
 .bg-red-legend {
   background-color: #CE3C29;
 }
+
+.bg-gradient-light-purple
+{
+    background: linear-gradient(90deg, #D5D3F3 0%, #817DDC 100%);
+}
+
