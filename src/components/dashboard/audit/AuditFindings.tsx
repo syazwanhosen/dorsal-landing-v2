@@ -1,0 +1,197 @@
+import { Checkbox } from "@/components/ui/checkbox";
+
+const billingData = [
+  {
+    id: 1,
+    severity: "High",
+    item: "ICU Room & Nursing",
+    issueDescription: "Charged 5 days, patient ICU stay confirmed only 4 days",
+    amount: 255.32,
+  },
+  {
+    id: 2,
+    severity: "High",
+    item: "Cardiologist Fees",
+    issueDescription: "No documentation for Day 5 consultation",
+    amount: 123.4,
+  },
+  {
+    id: 3,
+    severity: "Medium",
+    item: "Medication & Consumables",
+    issueDescription: "Unused injection set still charged",
+    amount: 78.43,
+  },
+  {
+    id: 4,
+    severity: "Low",
+    item: "Operating Theatre & Equipment",
+    issueDescription: "No issue found. Verified with booking logs",
+    amount: 0,
+  },
+  {
+    id: 5,
+    severity: "Low",
+    item: "CABG Surgery Package",
+    issueDescription: "Billed correctly. Aligned with package HCS-CABG-2025",
+    amount: 0,
+  },
+];
+
+const severityClasses = {
+  High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
+  Medium:
+    "bg-yellow-500 text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
+  Low: "bg-green-500 text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
+};
+
+export default function AuditFindings() {
+  return (
+    <>
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Left Column */}
+        <div className="md:w-3/12 w-full bg-white rounded-lg p-6 flex flex-col items-center text-center">
+          <h2 className="text-gray-700 text-sm mb-2">Audit Status</h2>
+          <div className="text-[#6E39CB] text-5xl font-bold">3</div>
+          <p className="text-gray-500 text-sm mt-2">errors found</p>
+          <button className="mt-4 text-[#6E39CB] text-sm border border-[#00000026] rounded-md p-4 py-2 shadow-sm">
+            Audit date: 10 May 2025
+          </button>
+        </div>
+
+        {/* Right Column */}
+        <div className="md:w-9/12 w-full bg-white rounded-lg p-6">
+          <div className="space-y-3">
+            <div className="flex flex-col sm:flex-row">
+              <span className="w-40 text-gray-700">Receipt No:</span>
+              <span className="text-gray-800">EL-5414587</span>
+            </div>
+            <div className="flex flex-col sm:flex-row">
+              <span className="w-40 text-gray-700">Discharge Date:</span>
+              <span className="text-gray-800">7 May 2025</span>
+            </div>
+            <div className="flex flex-col sm:flex-row">
+              <span className="w-40 text-gray-700">Patient Name:</span>
+              <span className="text-gray-800">John A Rogers</span>
+            </div>
+            <div className="flex flex-col sm:flex-row">
+              <span className="w-40 text-gray-700">Hospital:</span>
+              <span className="text-gray-800">
+                Alaska Medical Center, Anchorage, AK 99508
+              </span>
+            </div>
+            <div className="flex flex-col sm:flex-row font-semibold">
+              <span className="w-40 text-gray-900">Bill Total:</span>
+              <span className="text-black">$14,382.98</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6 bg-white rounded-lg shadow-md lg:mt-6 mt-4 lg:mb-8 mb-4">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 gap-2">
+          <p className="text-lg font-semibold text-black">Select to Appeal</p>
+          <button className="bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full md:w-auto justify-center">
+            Submit for Appeal
+          </button>
+        </div>
+
+        {/* Responsive Table Container */}
+        <div className="overflow-hidden">
+  {/* Desktop Table (shown on md screens and up) */}
+  <div className="hidden md:block">
+    <table className="w-full min-w-[400px]">
+      {/* Table Head */}
+      <thead>
+        <tr className="pb-4">
+          <th className="p-3 font-semibold text-left lg:py-4" colSpan={2}>
+            <Checkbox />
+          </th>
+          <th className="p-3 font-semibold text-left lg:py-4">Severity</th>
+          <th className="font-semibold text-left lg:py-4">Item</th>
+          <th className="font-semibold text-left lg:py-4">Issue Description</th>
+          <th className="font-semibold text-right lg:py-4">Amount (USD)</th>
+        </tr>
+      </thead>
+
+      {/* Table Body */}
+      <tbody>
+        {billingData.map((data) => (
+          <tr key={data.id} className="text-[#89868D] border-t border-[#89868d4a] ">
+            <td className="font-semibold text-left p-3 lg:py-5" colSpan={2}>
+              <Checkbox />
+            </td>
+            <td>
+              <button className={severityClasses[data.severity as keyof typeof severityClasses]}>
+                {data.severity}
+              </button>
+            </td>
+            <td>{data.item}</td>
+            <td>{data.issueDescription}</td>
+            <td className="text-end">{data.amount.toFixed(2)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {/* Mobile Cards (shown on screens smaller than md) */}
+  <div className="md:hidden space-y-4">
+    {billingData.map((data) => (
+      <div key={data.id} className="p-4 border border-[#89868d4a] rounded-lg">
+        <div className="flex justify-between items-start">
+          <div className="flex items-center space-x-3">
+            <Checkbox />
+            <button className={severityClasses[data.severity as keyof typeof severityClasses]}>
+              {data.severity}
+            </button>
+          </div>
+          <div className="text-right font-semibold">
+            ${data.amount.toFixed(2)}
+          </div>
+        </div>
+        
+        <div className="mt-3">
+          <div className="font-medium text-gray-900">{data.item}</div>
+          <div className="text-sm text-[#89868D] mt-1">{data.issueDescription}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+       
+      </div>
+         {/* Summary div  */}
+         <div className="bg-white p-6 rounded-lg lg:shadow-md lg:w-80 lg:float-right">
+            <h2 className="text-lg font-medium text-gray-800 mb-4">Summary</h2>
+
+            <div className="space-y-4">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Appeal Selected Total</span>
+                <span className="text-primary">$378.72</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-gray-600">Lower Bound (Reds only)</span>
+                <span className="text-primary">$378.72</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-gray-600">
+                  Upper Bound (Red + Yellow)
+                </span>
+                <span className="text-primary">$457.15</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-gray-600">
+                  Adjusted Final Bill (if all appeals succeed)
+                </span>
+                <span className="text-primary">$14,004.26</span>
+              </div>
+            </div>
+          </div>
+    </>
+  );
+}

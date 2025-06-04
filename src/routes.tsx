@@ -4,7 +4,6 @@ import { lazy } from "react";
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
 
-
 // Lazy-loaded pages/components
 const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
@@ -15,7 +14,8 @@ const Signup = lazy(() => import("./pages/auth/signup/signup"));
 const Account = lazy(() => import("./pages/Account/Account"));
 const AddBill = lazy(() => import("./pages/add_bill"));
 const Authorized = lazy(() => import("./pages/authorized-account/authorized"));
-const RunAudit = lazy(() => import("./pages/run-audit/RunAudit"));
+const RunAudit = lazy(() => import("./pages/audit/run-audit/RunAudit"));
+const AuditFindings = lazy(() => import("./pages/audit/audit-findings/AuditFindings"));
 const About = lazy(() => import("./pages/about/about"));
 const UploadDocumentPage = lazy(() => import("./pages/add_bill/upload_document"));
 const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
@@ -38,6 +38,7 @@ export const appRoutes: RouteObject[] = [
             { path: "about", element: <About /> }, 
             { path: "authorized-account", element: <Authorized /> }, 
             { path: "run-audit", element: <RunAudit /> }, 
+            { path: "audit-findings", element: <AuditFindings /> }, 
         ],
 
     },
