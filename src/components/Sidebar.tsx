@@ -44,7 +44,7 @@ const MENU = [
     {
         label: "Run Audit",
         icon: <ScanSearch className="h-4 w-4" />,
-        defaultPath: "/audit",
+        defaultPath: "/account/run-audit",
         submenus: [
             { name: "Quick Audit", path: "/audit/quick" },
             { name: "Detailed Report", path: "/audit/detailed" },

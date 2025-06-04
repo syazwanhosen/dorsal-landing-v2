@@ -227,3 +227,6 @@ select {
     background: linear-gradient(90deg, #D5D3F3 0%, #817DDC 100%);
 }
 
+.light-shadow {
+  box-shadow: 0px 4px 6px rgb(0 0 0 / 0%), 0px -4px 6px rgb(0 0 0 / 0%), 4px 0px 6px rgba(0, 0, 0, 0.05), -4px 0px 6px rgba(0, 0, 0, 0.05);
+}
