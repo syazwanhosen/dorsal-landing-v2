@@ -42,7 +42,7 @@ const MENU = [
         ],
     },
     {
-        label: "Run Audit",
+        label: "Audit Bill",
         icon: <ScanSearch className="h-4 w-4" />,
         defaultPath: "/account/run-audit",
         submenus: [
