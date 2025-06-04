@@ -209,7 +209,7 @@ const Roadmap: React.FC = () => {
                     <span>Filter</span>
                   </Button>
                   {showFilter && (
-                    <div className="absolute right-0 top-0 mt-1 z-50 w-72 bg-white border shadow-lg p-4">
+                    <div className="absolute right-0 top-0 z-50 w-72 bg-white border shadow-lg p-4">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-lg font-semibold">Filter Features</h3>
                         <button
