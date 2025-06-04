@@ -14,7 +14,24 @@ import { NavbarSecondary } from "@/components/NavbarSecondary";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
-
+const FILTERS = [
+  {
+    title: "Endpoints",
+    options: [
+      { label: "Patient", value: "patient" },
+      { label: "Provider", value: "provider" },
+    ]
+  },
+  {
+    title: "Product Initiatives",
+    options: [
+      { label: "Engagement", value: "engagement" },
+      { label: "Billing", value: "billing" },
+      { label: "Security", value: "security" },
+      { label: "Analytics", value: "analytics" },
+    ]
+  }
+]
 
 const Roadmap: React.FC = () => {
 
@@ -22,23 +39,40 @@ const Roadmap: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")
+  const [showFilter, setShowFilter] = useState(false)
+  const [filterOption, setFilterOption] = useState<{ [key: string]: string[] }>({});
+  const [tempFilterOption, setTempFilterOption] = useState<{ [key: string]: string[] }>({});
+
+  const applyFilters = () => {
+    return features.filter((feature) => {
+      const matchesSearch =
+        feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        feature.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const endpointFilters = filterOption["Endpoints"] || [];
+      const productFilters = filterOption["Product Initiatives"] || [];
+
+      const matchesEndpoints =
+        endpointFilters.length === 0 || endpointFilters.includes(feature.userType);
+
+      const matchesProduct =
+        productFilters.length === 0 || productFilters.includes(feature.category);
+
+      const matchesCategory =
+        activeCategory === "all" ||
+        (activeCategory === "patient" && feature.userType === "patient") ||
+        (activeCategory === "provider" && feature.userType === "provider") ||
+        (activeCategory === "live" && feature.status === "live") ||
+        (activeCategory === "development" && feature.status === "development") ||
+        (activeCategory === "planned" &&
+          (feature.status === "planned" || feature.status === "coming"));
+
+      return matchesSearch && matchesEndpoints && matchesProduct && matchesCategory;
+    });
+  };
 
   // Filter features based on active tab and search query
-  const filteredFeatures = features.filter((feature) => {
-    const matchesSearch =
-      feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      feature.description.toLowerCase().includes(searchQuery.toLowerCase())
-
-    if (activeCategory === "all") return matchesSearch
-    if (activeCategory === "patient") return matchesSearch && feature.userType === "patient"
-    if (activeCategory === "provider") return matchesSearch && feature.userType === "provider"
-    if (activeCategory === "live") return matchesSearch && feature.status === "live"
-    if (activeCategory === "development") return matchesSearch && feature.status === "development"
-    if (activeCategory === "planned")
-      return matchesSearch && (feature.status === "planned" || feature.status === "coming")
-
-    return matchesSearch
-  })
+  const filteredFeatures = applyFilters();
 
   // Get features for each tab
   const getTabFeatures = (tab: string) => {
@@ -53,6 +87,9 @@ const Roadmap: React.FC = () => {
 
   // Get featured items for the highlight section
   const featuredItems = features.filter((f) => f.votes > 300).slice(0, 3)
+
+
+
 
   return (
     <>
@@ -122,7 +159,7 @@ const Roadmap: React.FC = () => {
 
 
             {/* Search and Filter */}
-            <div className="mb-8 space-y-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <div className="mb-8 space-y-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative flex-1">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-900">All Features</h2>
               </div>
@@ -163,10 +200,79 @@ const Roadmap: React.FC = () => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
-                  <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 w-full sm:w-auto relative"
+                    onClick={() => setShowFilter(!showFilter)}
+                  >
                     <Filter className="h-4 w-4" />
                     <span>Filter</span>
                   </Button>
+                  {showFilter && (
+                    <div className="absolute right-0 top-0 mt-1 z-50 w-72 bg-white border shadow-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold">Filter Features</h3>
+                        <button
+                          className="text-sm text-[#8771BC] bg-[#EEE5FF] px-3 py-1 rounded-full"
+                          onClick={() => {
+                            setTempFilterOption({});
+                            setFilterOption({});
+                            setShowFilter(false);
+                          }}
+                        >
+                          Reset
+                        </button>
+                      </div>
+                      {
+                        FILTERS.map((filter) => (
+                          <div key={filter.title} className="mb-4">
+                            <h4 className="text-sm font-medium mb-2">{filter.title}</h4>
+                            <div className="flex gap-2 flex-wrap">
+                              {filter.options.map((option) => {
+                                const isSelected = tempFilterOption[filter.title]?.includes(option.value);
+
+                                return (
+                                  <button
+                                    key={option.value}
+                                    className={`rounded-full px-3 py-1 text-sm ${isSelected ? "bg-[#EEE5FF] text-[#8771BC]" : "border border-gray-200"
+                                      }`}
+                                    onClick={() => {
+                                      const selected = tempFilterOption[filter.title] || [];
+                                      const isSelected = selected.includes(option.value);
+
+                                      setTempFilterOption({
+                                        ...tempFilterOption,
+                                        [filter.title]: isSelected
+                                          ? selected.filter((v) => v !== option.value)
+                                          : [...selected, option.value]
+                                      });
+                                    }}
+
+                                  >
+                                    {option.label}
+                                  </button>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        )
+                        )
+                      }
+
+
+                      <button
+                        className="w-full mt-2 bg-[#8771BC] text-white py-2 rounded-xl"
+                        onClick={() => {
+                          setShowFilter(false);
+                          setFilterOption(tempFilterOption);
+                        }}
+                      >
+                        Apply
+                      </button>
+
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
