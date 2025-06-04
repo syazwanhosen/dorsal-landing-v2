@@ -86,11 +86,11 @@ export default function Audit() {
           {/* Table Head */}
           <thead>
             <tr className="pb-4">
-              <th className="p-3  text-left lg:py-4">Serial Code</th>
-              <th className="p-3 text-left lg:py-4">Description</th>
-              <th className="p-3 text-center lg:py-4">Quantity</th>
-              <th className="p-3 text-right lg:py-4">Unit Cost (USD)</th>
-              <th className="p-3 text-right lg:py-4">Amount (USD)</th>
+              <th className="p-3 font-semibold text-left lg:py-4">Service Code</th>
+              <th className="p-3 font-semibold text-left lg:py-4">Description</th>
+              <th className="p-3 font-semibold text-center lg:py-4">Quantity</th>
+              <th className="p-3 font-semibold text-right lg:py-4">Unit Cost (USD)</th>
+              <th className="p-3 font-semibold text-right lg:py-4">Amount (USD)</th>
             </tr>
           </thead>
 
