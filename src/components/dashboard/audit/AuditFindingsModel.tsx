@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 
 interface AuditFindingsModalProps {
@@ -6,70 +6,62 @@ interface AuditFindingsModalProps {
   onClose: () => void;
 }
 
+const levels = ["Simple", "Standard", "Technical"];
+const positions = [0, 47, 98]; // Predefined handle positions
 
 const AuditFindingsModal: React.FC<AuditFindingsModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  const [position, setPosition] = useState(0);
-  const levels = ["Simple", "Standard", "Technical"];
-  const currentLevel = levels[Math.round(position / 50)];
-  const barRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
+  const [currentLevel, setCurrentLevel] = useState(0); // 0 = Simple, 1 = Standard, 2 = Technical
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const barRect = barRef.current?.getBoundingClientRect();
-    const handleRect = handleRef.current?.getBoundingClientRect();
-    const offsetX = event.clientX - (handleRect?.left || 0);
+  const handleBarClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const barRect = event.currentTarget.getBoundingClientRect();
+    const clickPosition = event.clientX - barRect.left;
+    const barWidth = barRect.width;
 
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      if (barRect) {
-        let newX = moveEvent.clientX - barRect.left - offsetX;
-        newX = Math.max(0, Math.min(newX, barRect.width - (handleRect?.width || 0)));
-        setPosition((newX / barRect.width) * 100);
-      }
-    };
+    // Find the closest predefined position
+    const closestLevel = positions.reduce((prev, curr, index) => 
+      Math.abs(curr - (clickPosition / barWidth) * 100) < Math.abs(prev - (clickPosition / barWidth) * 100) 
+        ? index 
+        : prev
+    , 0);
 
-    const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    setCurrentLevel(closestLevel);
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-md shadow-lg w-[600px] max-w-[90%] max-h-[80vh] overflow-y-auto ">
+      <div className="bg-white rounded-md shadow-lg w-[600px] max-w-[90%] max-h-[80vh] overflow-y-auto">
         {/* Modal Header */}
         <div className="flex justify-between items-center p-4 lg:px-6 lg:py-4">
-        <p className="text-gray-900 text-[14px] lg:text-base">
-  Explanation Complexity Level
-</p>
-
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 focus:outline-none" aria-label="Close modal">
+          <p className="text-gray-900 text-[14px] lg:text-base">Explanation Complexity Level</p>
+          <button 
+            onClick={onClose} 
+            className="text-gray-500 hover:text-gray-700 focus:outline-none" 
+            aria-label="Close modal"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <hr className="my-0 border-t border-gray-300" />
+        <hr className="border-t border-gray-300 w-full" />
 
         {/* Progress Bar Section */}
-        <div className=" p-4 lg:px-6 lg:py-4">
-          <p className="text-xs text-purple-600 mb-3 lg:mt-2">Currently set to: {currentLevel} explanations</p>
-          <div ref={barRef} className="relative w-full h-2 bg-gradient-to-r from-[#F3CC5C] via-[#AFB940] to-[#6CA724] rounded-full">
-            {/* Draggable Handle */}
-            <div
-              ref={handleRef}
-              className="absolute top-1/2 -translate-y-1/2 h-5 w-5 bg-white border border-gray-400 rounded-full cursor-pointer"
-              style={{ left: `${position}%` }}
-              onMouseDown={handleMouseDown}
+        <div className="p-4 lg:px-6 lg:py-4">
+          <p className="text-xs text-purple-600 mb-3 lg:mt-2">Currently set to: {levels[currentLevel]} explanations</p>
+          <div 
+            className="relative w-full h-2 bg-gradient-to-r from-[#F3CC5C] via-[#AFB940] to-[#6CA724] rounded-full cursor-pointer" 
+            onClick={handleBarClick}
+          >
+            {/* Circular Handle (Snaps to Clicked Position) */}
+            <div 
+              className="absolute top-[-8px] h-5 w-5 bg-white border border-gray-400 rounded-full cursor-pointer transition-all duration-200"
+              style={{ left: `${positions[currentLevel]}%` }}
             ></div>
           </div>
 
-          {/* Level markers */}
-          <div className="flex justify-between mt-2">
+          {/* Level Markers */}
+          <div className="flex justify-between mt-1">
             {levels.map((level) => (
               <span key={level} className="text-xs text-[#89868D]">
                 {level}

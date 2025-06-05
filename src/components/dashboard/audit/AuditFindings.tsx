@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Info } from "lucide-react";
+
 
 
 import { useState } from "react";
@@ -57,7 +57,7 @@ export default function AuditFindings() {
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left Column */}
         <div className="md:w-3/12 w-full bg-white rounded-lg p-6 flex flex-col items-center text-center light-shadow">
-  <h2 className="text-gray-700 text-base font-medium mb-2">
+  <h2 className="text-gray-700 text-base font-semibold mb-2">
     Audit Status
   </h2>
 
@@ -65,11 +65,11 @@ export default function AuditFindings() {
     3
   </div>
 
-  <p className="text-gray-500 text-[15px] font-medium mt-2">
+  <p className="text-gray-500 text-[15px] mt-2">
     errors found
   </p>
 
-  <button className="mt-4 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
+  <button className="mt-2 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
     Audit date: 10 May 2025
   </button>
 </div>
