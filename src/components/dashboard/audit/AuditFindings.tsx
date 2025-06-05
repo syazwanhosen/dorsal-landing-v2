@@ -1,5 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Info } from "lucide-react";
+
+
 import { useState } from "react";
 import AuditFindingsModal from "./AuditFindingsModel";
 
@@ -44,8 +46,8 @@ const billingData = [
 const severityClasses = {
   High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
   Medium:
-    "bg-yellow-500 text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
-  Low: "bg-green-500 text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
+    "bg-[#FCAC12] text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
+  Low: "bg-[#6CA724] text-white px-3 py-1 rounded-md w-full md:w-24 text-center text-xs",
 };
 
 export default function AuditFindings() {
@@ -54,39 +56,49 @@ export default function AuditFindings() {
     <>
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left Column */}
-        <div className="md:w-3/12 w-full bg-white rounded-lg p-6 flex flex-col items-center text-center">
-          <h2 className="text-gray-700 text-sm mb-2">Audit Status</h2>
-          <div className="text-[#6E39CB] text-5xl font-bold">3</div>
-          <p className="text-gray-500 text-sm mt-2">errors found</p>
-          <button className="mt-4 text-[#6E39CB] text-sm border border-[#00000026] rounded-md p-4 py-2 shadow-sm">
-            Audit date: 10 May 2025
-          </button>
-        </div>
+        <div className="md:w-3/12 w-full bg-white rounded-lg p-6 flex flex-col items-center text-center light-shadow">
+  <h2 className="text-gray-700 text-base font-medium mb-2">
+    Audit Status
+  </h2>
+
+  <div className="text-[#6E39CB] text-6xl font-bold">
+    3
+  </div>
+
+  <p className="text-gray-500 text-[15px] font-medium mt-2">
+    errors found
+  </p>
+
+  <button className="mt-4 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
+    Audit date: 10 May 2025
+  </button>
+</div>
+
 
         {/* Right Column */}
-        <div className="md:w-9/12 w-full bg-white rounded-lg p-6">
+        <div className="md:w-9/12 w-full bg-white rounded-lg p-6 light-shadow">
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row">
-              <span className="w-40 text-gray-700">Receipt No:</span>
-              <span className="text-gray-800">EL-5414587</span>
+              <span className="w-40 text-gray-700 text-sm">Receipt No:</span>
+              <span className="text-gray-800  text-sm">EL-5414587</span>
             </div>
             <div className="flex flex-col sm:flex-row">
-              <span className="w-40 text-gray-700">Discharge Date:</span>
-              <span className="text-gray-800">7 May 2025</span>
+              <span className="w-40 text-gray-700  text-sm">Discharge Date:</span>
+              <span className="text-gray-800  text-sm">7 May 2025</span>
             </div>
             <div className="flex flex-col sm:flex-row">
-              <span className="w-40 text-gray-700">Patient Name:</span>
-              <span className="text-gray-800">John A Rogers</span>
+              <span className="w-40 text-gray-700  text-sm">Patient Name:</span>
+              <span className="text-gray-800 text-sm">John A Rogers</span>
             </div>
             <div className="flex flex-col sm:flex-row">
-              <span className="w-40 text-gray-700">Hospital:</span>
-              <span className="text-gray-800">
+              <span className="w-40 text-gray-700 text-sm">Hospital:</span>
+              <span className="text-gray-800 text-sm">
                 Alaska Medical Center, Anchorage, AK 99508
               </span>
             </div>
             <div className="flex flex-col sm:flex-row font-semibold">
-              <span className="w-40 text-gray-900">Bill Total:</span>
-              <span className="text-black">$14,382.98</span>
+              <span className="w-40 text-gray-900 text-[15px]">Bill Total:</span>
+              <span className="text-black text-[15px]">$14,382.98</span>
             </div>
           </div>
         </div>
@@ -96,13 +108,13 @@ export default function AuditFindings() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 gap-2">
         <p className="text-lg font-semibold text-black inline-flex items-center gap-2 relative pr-8">
-        Select to View Audit Findings{" "}
+        Select to Appeal{" "}
         <span 
-          className="absolute top-0 right-0 text-[#8770BC] cursor-pointer"
-          onClick={() => setModalOpen(true)}
-        >
-          <Info />
-        </span>
+  className="absolute top-[-4px] right-0 text-white bg-[#8770BC] rounded-full cursor-pointer flex items-center justify-center text-xs h-5 w-5"
+  onClick={() => setModalOpen(true)}
+>
+  i
+</span>
       </p>
 
           <button className="bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full md:w-auto justify-center">
@@ -119,14 +131,14 @@ export default function AuditFindings() {
             <table className="w-full min-w-[400px]">
               {/* Table Head */}
               <thead>
-                <tr className="pb-4">
+                <tr className="pb-4 text-lg">
                   <th
                     className="p-3 font-semibold text-left lg:py-4"
                     colSpan={2}
                   >
                     <Checkbox />
                   </th>
-                  <th className="p-3 font-semibold text-left lg:py-4">
+                  <th className="p-3 font-semibold text-left lg:py-4 " colSpan={4}>
                     Severity
                   </th>
                   <th className="font-semibold text-left lg:py-4">Item</th>
@@ -144,7 +156,7 @@ export default function AuditFindings() {
                 {billingData.map((data) => (
                   <tr
                     key={data.id}
-                    className="text-[#89868D] border-t border-[#89868d4a] "
+                    className="text-[#89868D] border-t border-[#89868d4a] text-sm"
                   >
                     <td
                       className="font-semibold text-left p-3 lg:py-5"
@@ -152,13 +164,14 @@ export default function AuditFindings() {
                     >
                       <Checkbox />
                     </td>
-                    <td>
+                    <td  colSpan={4}>
                       <button
                         className={
                           severityClasses[
                             data.severity as keyof typeof severityClasses
                           ]
-                        }
+                        } 
+                       
                       >
                         {data.severity}
                       </button>
@@ -209,30 +222,36 @@ export default function AuditFindings() {
         </div>
       </div>
       {/* Summary div  */}
-      <div className="bg-white p-6 rounded-lg lg:shadow-md lg:w-100 lg:float-right">
-        <h2 className="text-lg font-medium text-gray-800 mb-4">Summary</h2>
+      <div className="bg-white p-6 rounded-lg border border-gray-300 lg:w-100 lg:float-right">
+
+       
 
         <div className="space-y-4">
+        <div className="flex justify-between">
+        <h2 className="text-lg font-medium text-gray-800 mb-4">Summary</h2>
+            <span className="text-primary text-[14px] font-normal">Amount (USD)</span>
+          </div> 
+
           <div className="flex justify-between">
-            <span className="text-gray-600">Appeal Selected Total</span>
-            <span className="text-primary">$378.72</span>
+            <span className="text-gray-600 text-[14px] font-normal ">Appeal Selected Total</span>
+            <span className="text-primary text-[14px] font-normal">$378.72</span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-gray-600">Lower Bound (Reds only)</span>
-            <span className="text-primary">$378.72</span>
+            <span className="text-gray-600 text-[14px] font-normal">Lower Bound (Reds only)</span>
+            <span className="text-primary text-[14px] font-normal">$378.72</span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-gray-600">Upper Bound (Red + Yellow)</span>
-            <span className="text-primary">$457.15</span>
+            <span className="text-gray-600 text-[14px] font-normal">Upper Bound (Red + Yellow)</span>
+            <span className="text-primary text-[14px] font-normal">$457.15</span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-gray-600 mr-3">
+            <span className="text-gray-600 text-[14px] font-normal mr-6">
               Adjusted Final Bill (if all appeals succeed)
             </span>
-            <span className="text-primary">$14,004.26</span>
+            <span className="text-primary text-[14px] font-normal">$14,004.26</span>
           </div>
         </div>
       </div>
