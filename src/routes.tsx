@@ -21,6 +21,7 @@ const UploadDocumentPage = lazy(() => import("./pages/add_bill/upload_document")
 const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
+const AppealOutcomesPage = lazy(() => import("./pages/audit/run-audit/AppealOutcomes"));
 
 export const appRoutes: RouteObject[] = [
     { path: "/", element: <App /> },
@@ -35,10 +36,11 @@ export const appRoutes: RouteObject[] = [
             { path: "add-bill", element: <AddBill /> },
             { path: "add-bill/upload-document", element: <UploadDocumentPage /> },
             { path: "add-bill/manual-entry", element: <EnterManualData /> },
-            { path: "about", element: <About /> }, 
-            { path: "authorized-account", element: <Authorized /> }, 
-            { path: "run-audit", element: <RunAudit /> }, 
-            { path: "audit-findings", element: <AuditFindings /> }, 
+            { path: "about", element: <About /> },
+            { path: "authorized-account", element: <Authorized /> },
+            { path: "run-audit", element: <RunAudit /> },
+            { path: "audit-findings", element: <AuditFindings /> },
+            { path: "audit/detailed", element: <AppealOutcomesPage /> },
         ],
 
     },
