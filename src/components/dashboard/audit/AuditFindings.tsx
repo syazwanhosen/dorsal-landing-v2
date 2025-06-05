@@ -1,4 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { Info } from "lucide-react";
+import { useState } from "react";
+import AuditFindingsModal from "./AuditFindingsModel";
 
 const billingData = [
   {
@@ -46,6 +49,7 @@ const severityClasses = {
 };
 
 export default function AuditFindings() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
       <div className="flex flex-col md:flex-row gap-6">
@@ -91,107 +95,150 @@ export default function AuditFindings() {
       <div className="p-6 bg-white rounded-lg shadow-md lg:mt-6 mt-4 lg:mb-8 mb-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 gap-2">
-          <p className="text-lg font-semibold text-black">Select to Appeal</p>
+        <p className="text-lg font-semibold text-black inline-flex items-center gap-2 relative pr-8">
+        Select to View Audit Findings{" "}
+        <span 
+          className="absolute top-0 right-0 text-[#8770BC] cursor-pointer"
+          onClick={() => setModalOpen(true)}
+        >
+          <Info />
+        </span>
+      </p>
+
           <button className="bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full md:w-auto justify-center">
             Submit for Appeal
           </button>
         </div>
 
+     
+
         {/* Responsive Table Container */}
         <div className="overflow-hidden">
-  {/* Desktop Table (shown on md screens and up) */}
-  <div className="hidden md:block">
-    <table className="w-full min-w-[400px]">
-      {/* Table Head */}
-      <thead>
-        <tr className="pb-4">
-          <th className="p-3 font-semibold text-left lg:py-4" colSpan={2}>
-            <Checkbox />
-          </th>
-          <th className="p-3 font-semibold text-left lg:py-4">Severity</th>
-          <th className="font-semibold text-left lg:py-4">Item</th>
-          <th className="font-semibold text-left lg:py-4">Issue Description</th>
-          <th className="font-semibold text-right lg:py-4">Amount (USD)</th>
-        </tr>
-      </thead>
+          {/* Desktop Table (shown on md screens and up) */}
+          <div className="hidden md:block">
+            <table className="w-full min-w-[400px]">
+              {/* Table Head */}
+              <thead>
+                <tr className="pb-4">
+                  <th
+                    className="p-3 font-semibold text-left lg:py-4"
+                    colSpan={2}
+                  >
+                    <Checkbox />
+                  </th>
+                  <th className="p-3 font-semibold text-left lg:py-4">
+                    Severity
+                  </th>
+                  <th className="font-semibold text-left lg:py-4">Item</th>
+                  <th className="font-semibold text-left lg:py-4">
+                    Issue Description
+                  </th>
+                  <th className="font-semibold text-right lg:py-4">
+                    Amount (USD)
+                  </th>
+                </tr>
+              </thead>
 
-      {/* Table Body */}
-      <tbody>
-        {billingData.map((data) => (
-          <tr key={data.id} className="text-[#89868D] border-t border-[#89868d4a] ">
-            <td className="font-semibold text-left p-3 lg:py-5" colSpan={2}>
-              <Checkbox />
-            </td>
-            <td>
-              <button className={severityClasses[data.severity as keyof typeof severityClasses]}>
-                {data.severity}
-              </button>
-            </td>
-            <td>{data.item}</td>
-            <td>{data.issueDescription}</td>
-            <td className="text-end">{data.amount.toFixed(2)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-
-  {/* Mobile Cards (shown on screens smaller than md) */}
-  <div className="md:hidden space-y-4">
-    {billingData.map((data) => (
-      <div key={data.id} className="p-4 border border-[#89868d4a] rounded-lg">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center space-x-3">
-            <Checkbox />
-            <button className={severityClasses[data.severity as keyof typeof severityClasses]}>
-              {data.severity}
-            </button>
+              {/* Table Body */}
+              <tbody>
+                {billingData.map((data) => (
+                  <tr
+                    key={data.id}
+                    className="text-[#89868D] border-t border-[#89868d4a] "
+                  >
+                    <td
+                      className="font-semibold text-left p-3 lg:py-5"
+                      colSpan={2}
+                    >
+                      <Checkbox />
+                    </td>
+                    <td>
+                      <button
+                        className={
+                          severityClasses[
+                            data.severity as keyof typeof severityClasses
+                          ]
+                        }
+                      >
+                        {data.severity}
+                      </button>
+                    </td>
+                    <td>{data.item}</td>
+                    <td>{data.issueDescription}</td>
+                    <td className="text-end">{data.amount.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="text-right font-semibold">
-            ${data.amount.toFixed(2)}
+
+          {/* Mobile Cards (shown on screens smaller than md) */}
+          <div className="md:hidden space-y-4">
+            {billingData.map((data) => (
+              <div
+                key={data.id}
+                className="p-4 border border-[#89868d4a] rounded-lg"
+              >
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center space-x-3">
+                    <Checkbox />
+                    <button
+                      className={
+                        severityClasses[
+                          data.severity as keyof typeof severityClasses
+                        ]
+                      }
+                    >
+                      {data.severity}
+                    </button>
+                  </div>
+                  <div className="text-right font-semibold">
+                    ${data.amount.toFixed(2)}
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div className="font-medium text-gray-900">{data.item}</div>
+                  <div className="text-sm text-[#89868D] mt-1">
+                    {data.issueDescription}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        
-        <div className="mt-3">
-          <div className="font-medium text-gray-900">{data.item}</div>
-          <div className="text-sm text-[#89868D] mt-1">{data.issueDescription}</div>
+      </div>
+      {/* Summary div  */}
+      <div className="bg-white p-6 rounded-lg lg:shadow-md lg:w-100 lg:float-right">
+        <h2 className="text-lg font-medium text-gray-800 mb-4">Summary</h2>
+
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <span className="text-gray-600">Appeal Selected Total</span>
+            <span className="text-primary">$378.72</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600">Lower Bound (Reds only)</span>
+            <span className="text-primary">$378.72</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600">Upper Bound (Red + Yellow)</span>
+            <span className="text-primary">$457.15</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600 mr-3">
+              Adjusted Final Bill (if all appeals succeed)
+            </span>
+            <span className="text-primary">$14,004.26</span>
+          </div>
         </div>
       </div>
-    ))}
-  </div>
-</div>
-       
-      </div>
-         {/* Summary div  */}
-         <div className="bg-white p-6 rounded-lg lg:shadow-md lg:w-80 lg:float-right">
-            <h2 className="text-lg font-medium text-gray-800 mb-4">Summary</h2>
 
-            <div className="space-y-4">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Appeal Selected Total</span>
-                <span className="text-primary">$378.72</span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-gray-600">Lower Bound (Reds only)</span>
-                <span className="text-primary">$378.72</span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  Upper Bound (Red + Yellow)
-                </span>
-                <span className="text-primary">$457.15</span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  Adjusted Final Bill (if all appeals succeed)
-                </span>
-                <span className="text-primary">$14,004.26</span>
-              </div>
-            </div>
-          </div>
+       {/* Modal Component */}
+       <AuditFindingsModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }
