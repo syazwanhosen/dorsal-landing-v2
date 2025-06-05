@@ -10,7 +10,7 @@ export default function RecentActivityCard() {
                 </button>
             </div>
 
-            <div className="bg-white rounded-lg overflow-hidden">
+            <div className="bg-white rounded-lg overflow-hidden col-span-1 light-shadow">
                 <div className="divide-y divide-gray-200">
                     <div className="p-4 flex">
                         <div className="flex-shrink-0 h-10 w-10 bg-light-green rounded-lg flex items-center justify-center mr-4 self-center">

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/buttons/button';
 
 export default function ActiveAppealsCard() {
     return (
-        <div className="bg-white rounded-lg overflow-hidden col-span-1">
+        <div className="bg-white rounded-lg overflow-hidden col-span-1 light-shadow">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-medium text-gray-700 flex items-center">
                     Active Appeals

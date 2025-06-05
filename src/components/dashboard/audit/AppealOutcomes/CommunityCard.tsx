@@ -4,7 +4,7 @@ export default function CommunityCard() {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-medium text-gray-700">Community Support</h2>
             </div>
-            <div className="bg-white rounded-lg overflow-hidden col-span-1">
+            <div className="bg-white rounded-lg overflow-hidden col-span-1 light-shadow">
                 <div className="px-6 py-4">
                     <div className="bg-[#F5F3FF] rounded-lg p-4 mb-4">
                         <div className="flex items-start">
