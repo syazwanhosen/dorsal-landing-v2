@@ -65,6 +65,7 @@ const AuditFindingsModal: React.FC<AuditFindingsModalProps> = ({
         </div>
       </div>
     </div>
+    <p className="text-sm text-purple-600 mb-3">AI Assistant Explanation</p>
 
     {/* AI Assistant Explanation */}
     <div className="space-y-4 border border-gray-200 p-4 rounded-lg bg-white">
