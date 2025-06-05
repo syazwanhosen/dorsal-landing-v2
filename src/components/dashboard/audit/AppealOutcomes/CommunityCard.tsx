@@ -22,14 +22,14 @@ export default function CommunityCard() {
                             <div className="rounded border border-gray-200 p-3">
                                 <div className="flex justify-between">
                                     <p className="font-medium">ICU Overcharges</p>
-                                    <span className="bg-green-legend text-white text-xs px-2 py-0.5 rounded">85% success</span>
+                                    <span className="bg-green-legend text-white text-xs px-2 py-1 rounded">85% success</span>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">Average savings: $218</p>
                             </div>
                             <div className="rounded border border-gray-200 p-3">
                                 <div className="flex justify-between">
                                     <p className="font-medium">Cardiologist Fees</p>
-                                    <span className="bg-yellow-400 text-white text-xs px-2 py-0.5 rounded ">62% success</span>
+                                    <span className="bg-yellow-400 text-white text-xs px-2 py-1 rounded ">62% success</span>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">Average savings: $142</p>
                             </div>
