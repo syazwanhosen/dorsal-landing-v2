@@ -56,7 +56,7 @@ export default function ActiveAppealsCard() {
                             <p className="text-sm font-medium text-red-500">$0</p>
                         </div>
                         <div className="mt-5 flex items-center justify-center">
-                            <Button className='bg-purple'>
+                            <Button className='bg-purple w-[350px]'>
                                 Upload supporting document
                             </Button>
                         </div>
