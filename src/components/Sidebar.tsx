@@ -47,7 +47,7 @@ const MENU = [
         defaultPath: "/account/run-audit",
         submenus: [
             { name: "Audit Findings", path: "/account/audit-findings" },
-            { name: "Appeal Outcomes", path: "/audit/detailed" },
+            { name: "Appeal Outcomes", path: "/account/audit/detailed" },
         ],
     },
 ];
