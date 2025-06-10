@@ -1,4 +1,4 @@
-import AuditFinding from "@/components/dashboard/audit/AuditFindings";
+import AuditFinding from "@/components/dashboard/audit/AuditFindings/AuditFindings";
 
 export default function AuditFindings() {
     return (
