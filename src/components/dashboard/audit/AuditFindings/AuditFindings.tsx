@@ -1,9 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
-
-
-
 import { useState } from "react";
 import AuditFindingsModal from "./AuditFindingsModel";
+
 
 const billingData = [
   {
@@ -126,7 +124,6 @@ export default function AuditFindings() {
 
         {/* Responsive Table Container */}
         <div className="overflow-hidden">
-          {/* Desktop Table (shown on md screens and up) */}
           <div className="hidden md:block">
             <table className="w-full min-w-[400px]">
               {/* Table Head */}
@@ -221,6 +218,9 @@ export default function AuditFindings() {
           </div>
         </div>
       </div>
+        {/* Responsive Table Container End */}
+
+      
       {/* Summary div  */}
       <div className="bg-white p-6 rounded-lg border border-gray-300 lg:w-100 lg:float-right">
 

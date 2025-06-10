@@ -14,14 +14,14 @@ const Signup = lazy(() => import("./pages/auth/signup/signup"));
 const Account = lazy(() => import("./pages/Account/Account"));
 const AddBill = lazy(() => import("./pages/add_bill"));
 const Authorized = lazy(() => import("./pages/authorized-account/authorized"));
-const RunAudit = lazy(() => import("./pages/audit/run-audit/RunAudit"));
-const AuditFindings = lazy(() => import("./pages/audit/audit-findings/AuditFindings"));
+const RunAudit = lazy(() => import("./pages/audit/RunAudit"));
+const AuditFindings = lazy(() => import("./pages/audit/AuditFindings"));
 const About = lazy(() => import("./pages/about/about"));
 const UploadDocumentPage = lazy(() => import("./pages/add_bill/upload_document"));
 const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
-const AppealOutcomesPage = lazy(() => import("./pages/audit/run-audit/AppealOutcomes"));
+const AppealOutcomesPage = lazy(() => import("./pages/audit/AppealOutcomes"));
 
 export const appRoutes: RouteObject[] = [
     { path: "/", element: <App /> },

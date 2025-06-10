@@ -20,6 +20,10 @@ select {
   appearance: none;
 }
 
+.table-responsive {
+  @apply overflow-x-auto w-full;
+}
+
 .the-seasons {
   font-family: 'the-seasons', sans-serif;
   font-style: normal;
@@ -231,3 +235,6 @@ select {
   box-shadow: 
   0 10px 15px -3px rgb(0 0 0 / 3%), 0 4px 6px -4px rgb(0 0 0 / 9%);
 }
+
+
+
