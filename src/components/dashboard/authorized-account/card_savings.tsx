@@ -36,39 +36,41 @@ export default function CardSavings() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-stretch justify-start">
-  <div className="bg-[#E2F6CB] p-4 rounded mr-2 flex items-center justify-center h-full">
-    <ShoppingBasket  className="text-[#6CA724]" size={42} />
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-3">
+  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-stretch justify-start">
+    <div className="bg-[#E2F6CB] p-4 rounded mr-2 flex items-center justify-center h-full">
+      <ShoppingBasket className="text-[#6CA724]" size={42} />
+    </div>
+    <div className="flex flex-col justify-center h-full">
+      <p className="text-sm text-[#6CA724] font-bold">Approved</p>
+      <p className="text-2xl font-bold">$255.32</p>
+      <p className="text-xs text-gray-500 mt-1">+50 points</p>
+    </div>
   </div>
-  <div className="flex flex-col justify-center h-full">
-    <p className="text-sm text-[#6CA724] font-bold">Approved</p>
-    <p className="text-2xl font-bold">$255.32</p>
-    <p className="text-xs text-gray-500 mt-1">+50 points</p>
+
+  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-center justify-start">
+    <div className="bg-[#FEF3C7] p-4 rounded mr-2">
+      <Package className="text-[#FBBF24]" size={42} />
+    </div>
+    <div className="flex flex-col">
+      <p className="text-sm text-[#FBBF24] font-bold">Approved</p>
+      <p className="text-2xl font-bold">$255.32</p>
+      <p className="text-xs text-gray-500 mt-1">0 points</p>
+    </div>
+  </div>
+
+  <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-center justify-start">
+    <div className="bg-[#FECACA] p-4 rounded mr-2">
+      <ShoppingBag className="text-[#CE3C29]" size={42} />
+    </div>
+    <div className="flex flex-col">
+      <p className="text-sm text-[#CE3C29] font-bold">Rewards</p>
+      <p className="text-2xl font-bold">84</p>
+      <p className="text-xs text-gray-500 mt-1">Next: 100 pts</p>
+    </div>
   </div>
 </div>
 
-          <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-center justify-start">
-            <div className="bg-[#FEF3C7] p-4 rounded mr-2">
-              <Package className="text-[#FBBF24]" size={42} />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-sm text-[#FBBF24] font-bold">Approved</p>
-              <p className="text-2xl font-bold">$255.32</p>
-              <p className="text-xs text-gray-500 mt-1">0 points</p>
-            </div>
-          </div>
-          <div className="border border-gray-200 rounded-lg p-3 bg-gradient-to-b shadow-sm flex items-center justify-start">
-            <div className="bg-[#FECACA] p-4 rounded mr-2">
-              <ShoppingBag className=" text-[#CE3C29]" size={42}/>
-            </div>
-            <div className="flex flex-col">
-              <p className="text-sm text-[#CE3C29] font-bold">Rewards</p>
-              <p className="text-2xl font-bold">84</p>
-              <p className="text-xs text-gray-500 mt-1">Next: 100 pts</p>
-            </div>
-          </div>
-        </div>
 
         <div className="mt-6 flex flex-col md:flex-row gap-3">
           <button className="bg-gradient-to-r bg-[#8771BC] text-white px-4 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow">
