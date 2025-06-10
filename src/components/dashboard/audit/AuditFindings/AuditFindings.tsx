@@ -104,21 +104,22 @@ export default function AuditFindings() {
 
       <div className="p-6 bg-white rounded-lg shadow-md lg:mt-6 mt-4 lg:mb-8 mb-4">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 gap-2">
-        <p className="text-lg font-semibold text-black inline-flex items-center gap-2 relative pr-8">
-        Select to Appeal{" "}
-        <span 
-  className="absolute top-[-4px] right-0 text-white bg-[#8770BC] rounded-full cursor-pointer flex items-center justify-center text-xs h-5 w-5"
-  onClick={() => setModalOpen(true)}
->
-  i
-</span>
-      </p>
+        <div className="lg:flex flex-col md:flex-row md:justify-between items-center mb-4 gap-2">
+  <p className="text-lg font-semibold text-black text-left md:text-left lg:text-left inline-flex items-center gap-2 relative pr-8">
+    Select to Appeal{" "}
+    <span 
+      className="absolute top-[-4px] right-0 text-white bg-[#8770BC] rounded-full cursor-pointer flex items-center justify-center text-xs h-5 w-5"
+      onClick={() => setModalOpen(true)}
+    >
+      i
+    </span>
+  </p>
 
-          <button className="bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full md:w-auto justify-center">
-            Submit for Appeal
-          </button>
-        </div>
+  <button className="hidden lg:flex bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center">
+    Submit for Appeal
+  </button>
+</div>
+
 
      
 
@@ -192,7 +193,19 @@ export default function AuditFindings() {
                 <div className="flex justify-between items-start">
                   <div className="flex items-center space-x-3">
                     <Checkbox />
-                    <button
+                    <div className="font-medium text-gray-900">{data.item}</div>
+                  </div>
+                  <div className="text-right font-semibold">
+                    ${data.amount.toFixed(2)}
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                 
+                  <div className="text-sm text-[#89868D] mt-1">
+                    {data.issueDescription}
+                  </div>
+                  <button
                       className={
                         severityClasses[
                           data.severity as keyof typeof severityClasses
@@ -201,17 +214,6 @@ export default function AuditFindings() {
                     >
                       {data.severity}
                     </button>
-                  </div>
-                  <div className="text-right font-semibold">
-                    ${data.amount.toFixed(2)}
-                  </div>
-                </div>
-
-                <div className="mt-3">
-                  <div className="font-medium text-gray-900">{data.item}</div>
-                  <div className="text-sm text-[#89868D] mt-1">
-                    {data.issueDescription}
-                  </div>
                 </div>
               </div>
             ))}
@@ -255,6 +257,11 @@ export default function AuditFindings() {
           </div>
         </div>
       </div>
+
+      <button className=" mt-4 lg:hidden bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center">
+    Submit for Appeal
+</button>
+
 
        {/* Modal Component */}
        <AuditFindingsModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
