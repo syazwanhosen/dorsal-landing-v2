@@ -90,7 +90,7 @@ export const Sidebar = ({
         <>
             <aside
                 className={clsx(
-                    "bg-white shadow-md z-40 fixed top-0 left-0 flex flex-col justify-between py-4",
+                    "bg-white shadow-md z-40 fixed top-0 left-0 flex flex-col justify-between py-4 md:h-auto h-screen",
                     "transition-[width,transform] duration-300 ease-in-out",
                     {
                         "w-64": !isCollapsed,
