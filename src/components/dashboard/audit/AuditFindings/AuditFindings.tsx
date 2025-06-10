@@ -41,10 +41,10 @@ const billingData = [
 ];
 
 const severityClasses = {
-  High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-full lg:w-16 text-center text-xs",
+  High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-16 text-center text-xs",
   Medium:
-    "bg-[#FCAC12] text-white px-3 py-1 rounded-md w-full lg:w-16 text-center text-xs",
-  Low: "bg-[#6CA724] text-white px-3 py-1 rounded-md w-full lg:w-16 text-center text-xs",
+    "bg-[#FCAC12] text-white px-3 py-1 rounded-md w-16 text-center text-xs",
+  Low: "bg-[#6CA724] text-white px-3 py-1 rounded-md w-16 text-center text-xs",
 };
 
 export default function AuditFindings() {
@@ -198,7 +198,7 @@ export default function AuditFindings() {
                 </div>
 
                 <div className="mt-3">
-                  <div className="text-sm text-[#89868D] mt-1">
+                  <div className="text-sm text-[#89868D] mt-1 mb-2">
                     {data.issueDescription}
                   </div>
                   <button
