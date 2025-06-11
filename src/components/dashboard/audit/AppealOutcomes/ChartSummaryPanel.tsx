@@ -61,7 +61,7 @@ export default function ChartSummaryPanel() {
             </div>
 
             {/* Potential Remaining Appeal */}
-            <div className="flex-1 flex items-center gap-4">
+            <div className="flex-1 flex items-center gap-4 md:border-l md:border-gray-200 md:pl-6">
                 <div className="w-20">
                     <Line
                         data={createChartData([2, 6, 12, 4, 9, 6, 8], '#FCAC12')}
@@ -76,7 +76,7 @@ export default function ChartSummaryPanel() {
             </div>
 
             {/* Rewards */}
-            <div className="flex-1 flex items-center gap-4">
+            <div className="flex-1 flex items-center gap-4 md:border-l md:border-gray-200 md:pl-6">
                 <div className="w-20">
                     <Line
                         data={createChartData([3, 7, 13, 6, 11, 8, 6], '#6E39CB')}
