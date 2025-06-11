@@ -55,11 +55,11 @@ export default function ActiveAppealsCard() {
                             <p className="text-sm text-gray-500">Appeal ID: AP-20250510-03</p>
                             <p className="text-sm font-medium text-red-500">$0</p>
                         </div>
-                        <div className="mt-5 flex items-center justify-center">
-                            <Button className='bg-purple w-[350px]'>
-                                Upload supporting document
-                            </Button>
-                        </div>
+                        <button className="mt-5 flex justify-center items-center w-full bg-purple border border-purple-200 px-4 py-3 rounded-lg">
+                        <span className="flex items-center text-white font-medium">
+                            Upload supporting document
+                        </span>
+                    </button>
                     </li>
                 </ul>
                 <button className="mt-2 text-purple text-sm font-medium flex items-center justify-center w-full">
