@@ -44,7 +44,7 @@ const createChartData = (data: number[], borderColor: string) => ({
 
 export default function ChartSummaryPanel() {
     return (
-        <div className="bg-white rounded-xl shadow-sm p-4 flex flex-col md:flex-row justify-between gap-6 light-shadow">
+        <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex flex-col md:flex-row justify-between gap-6 light-shadow">
             {/* Total Saving So Far */}
             <div className="flex-1 flex items-center gap-4">
                 <div className="w-20">
