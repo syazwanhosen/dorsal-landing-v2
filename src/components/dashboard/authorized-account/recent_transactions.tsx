@@ -4,6 +4,8 @@ import {
   Funnel,
   ShieldCheck,
   SquareCheck,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFilePdf } from "react-icons/fa";
@@ -21,8 +23,48 @@ type Transaction = {
   status: "approved" | "pending" | "";
 };
 
+const FILTERS = [
+  {
+    type: "select",
+    title: "Filter By",
+    options: [
+      { label: "Specialty", value: "specialty" },
+      { label: "Cost", value: "cost" },
+      { label: "Best Rated", value: "best-rated" },
+    ],
+  },
+  {
+    type: "select",
+    title: "Sort By",
+    options: [
+      { label: "Highest", value: "highest" },
+      { label: "Lowest", value: "lowest" },
+      { label: "Newest", value: "newest" },
+      { label: "Oldest", value: "oldest" },
+    ],
+  },
+  {
+    type: "other",
+    title: "Range Inclusive",
+    element: () => (
+      <div className="flex items-center justify-between w-full">
+        <span className="text-sm font-medium text-gray-900">Choose Range</span>
+        <div className="flex items-center cursor-pointer">
+          <ChevronLeft size={16} />
+          <span className="text-sm text-gray-500">10 miles from home</span>
+          <ChevronRight size={16} />
+        </div>
+      </div>
+    ),
+  },
+];
+
 const TransactionList = () => {
   const [selectedTab, setSelectedTab] = useState<TabKey>("Today");
+  const [showFilter, setShowFilter] = useState(false);
+  const [tempFilterOption, setTempFilterOption] = useState<{
+    [key: string]: string[];
+  }>({});
 
   const transactions: Record<TabKey, Transaction[]> = {
     Today: [
@@ -98,7 +140,7 @@ const TransactionList = () => {
 
   return (
     <>
-      <div className="bg-white rounded-xl p-4 md:p-6">
+      <div className="relative bg-white rounded-xl p-4 md:p-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-3 md:gap-0">
           <div className="flex items-center gap-2">
@@ -134,12 +176,82 @@ const TransactionList = () => {
           </div>
 
           {/* Filter Button (Aligned correctly with tabs) */}
-          <div className="flex items-center gap-1 md:gap-2 text-sm text-gray-500 cursor-pointer self-end md:self-auto">
+          <div
+            className="flex items-center gap-1 md:gap-2 text-sm text-gray-500 cursor-pointer self-end md:self-auto"
+            onClick={() => setShowFilter(!showFilter)}
+          >
             <div className="bg-purple-100 p-2 rounded-full">
               <Funnel className="text-[#6E39CB]" size={12} />
             </div>
             <span>Filter</span>
           </div>
+          {showFilter && (
+            <div className="absolute right-0 top-0 z-50 w-80 bg-white border shadow-lg p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Filter Transaction</h3>
+                <button
+                  className="text-sm text-[#8771BC] bg-[#EEE5FF] px-3 py-1 rounded-full"
+                  onClick={() => {
+                    setShowFilter(false);
+                  }}
+                >
+                  Reset
+                </button>
+              </div>
+              {FILTERS.map((filter) => (
+                <div key={filter.title} className="mb-4">
+                  <h4 className="text-sm font-medium mb-2">{filter.title}</h4>
+                  <div className="flex gap-2 flex-wrap">
+                    {filter.type === "select" && Array.isArray(filter.options)
+                      ? filter.options.map((option) => {
+                          const isSelected = tempFilterOption[
+                            filter.title
+                          ]?.includes(option.value);
+
+                          return (
+                            <button
+                              key={option.value}
+                              className={`rounded-full px-3 py-1 text-sm ${
+                                isSelected
+                                  ? "bg-[#EEE5FF] text-[#8771BC]"
+                                  : "border border-gray-200"
+                              }`}
+                              onClick={() => {
+                                const selected =
+                                  tempFilterOption[filter.title] || [];
+                                const isSelected = selected.includes(
+                                  option.value
+                                );
+
+                                setTempFilterOption({
+                                  ...tempFilterOption,
+                                  [filter.title]: isSelected
+                                    ? selected.filter((v) => v !== option.value)
+                                    : [...selected, option.value],
+                                });
+                              }}
+                            >
+                              {option.label}
+                            </button>
+                          );
+                        })
+                      : typeof filter.element === "function"
+                      ? filter.element()
+                      : null}
+                  </div>
+                </div>
+              ))}
+
+              <button
+                className="w-full mt-2 bg-[#8771BC] text-white py-2 rounded-xl"
+                onClick={() => {
+                  setShowFilter(false);
+                }}
+              >
+                Apply
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Transactions */}

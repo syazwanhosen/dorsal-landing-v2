@@ -44,7 +44,7 @@ const createChartData = (data: number[], borderColor: string) => ({
 
 export default function ChartSummaryPanel() {
     return (
-        <div className="bg-white rounded-xl shadow-sm p-4 flex flex-col md:flex-row justify-between gap-6 light-shadow">
+        <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex flex-col md:flex-row justify-between gap-6 light-shadow">
             {/* Total Saving So Far */}
             <div className="flex-1 flex items-center gap-4">
                 <div className="w-20">
@@ -61,7 +61,7 @@ export default function ChartSummaryPanel() {
             </div>
 
             {/* Potential Remaining Appeal */}
-            <div className="flex-1 flex items-center gap-4 border-l border-gray-200 pl-6">
+            <div className="flex-1 flex items-center gap-4 md:border-l md:border-gray-200 md:pl-6">
                 <div className="w-20">
                     <Line
                         data={createChartData([2, 6, 12, 4, 9, 6, 8], '#FCAC12')}
@@ -76,7 +76,7 @@ export default function ChartSummaryPanel() {
             </div>
 
             {/* Rewards */}
-            <div className="flex-1 flex items-center gap-4 border-l border-gray-200 pl-6">
+            <div className="flex-1 flex items-center gap-4 md:border-l md:border-gray-200 md:pl-6">
                 <div className="w-20">
                     <Line
                         data={createChartData([3, 7, 13, 6, 11, 8, 6], '#6E39CB')}
