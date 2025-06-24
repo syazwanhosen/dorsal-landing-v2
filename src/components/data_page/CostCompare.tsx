@@ -211,7 +211,8 @@ export const CostCompare = () => {
           </div>
         </div>
         {/* Dropdown & CostMap (Appears only after selections) */}
-        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4">
+        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative">
+
           <div className="flex flex-col sm:flex-row justify-between items-center py-5">
             {/* Left Side Text Updating Based on Selection */}
             <div className="text-lg font-bold text-black pb-4">
@@ -253,7 +254,13 @@ export const CostCompare = () => {
             </div>
           </div>
 
-          <CostMap />
+          {selectedHospital1 && selectedHospital2 ? (
+    <CostMap />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center text-center text-gray-600 text-base px-4">
+    Choose hospitals from the dropdowns above to view pricing comparison
+  </div>
+  )}
         </div>
       </div>
     </section>
