@@ -6,6 +6,12 @@ import {
 } from "../../api/api";
 import { CostMap } from "./Map";
 
+const DEFAULT_STATE_1 = "FL - Florida";
+const DEFAULT_HOSPITAL_1 = "Lakewood Ranch Medical Center";
+const DEFAULT_STATE_2 = "CA - California";
+const DEFAULT_HOSPITAL_2 = "Marian Regional Medical Center";
+
+
 export const CostCompare = () => {
   const [states, setStates] = useState<string[]>([]);
   const [selectedState1, setSelectedState1] = useState("");
@@ -22,6 +28,8 @@ export const CostCompare = () => {
       try {
         const statesData = await fetchStates();
         setStates(statesData);
+        setSelectedState1(DEFAULT_STATE_1);
+      setSelectedState2(DEFAULT_STATE_2);
       } catch (error) {
         console.error("Error loading states:", error);
       }
@@ -35,6 +43,9 @@ export const CostCompare = () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState1);
           setHospitals1(hospitalsData);
+          if (selectedState1 === DEFAULT_STATE_1) {
+            setSelectedHospital1(DEFAULT_HOSPITAL_1);
+          }
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState1}:`,
@@ -52,6 +63,9 @@ export const CostCompare = () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState2);
           setHospitals2(hospitalsData);
+          if (selectedState2 === DEFAULT_STATE_2) {
+            setSelectedHospital2(DEFAULT_HOSPITAL_2);
+          }
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState2}:`,

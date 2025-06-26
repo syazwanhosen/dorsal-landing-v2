@@ -52,7 +52,7 @@ export const TotalStats = () => {
             </div>
             <div className="ml-6">
               <p className="text-gray-600 text-sm">{stat.label}</p>
-              <p className="text-2xl sm:text-3xl font-bold text-left">{stat.value}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-left text-black">{stat.value}</p>
             </div>
           </div>
         ))}
