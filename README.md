@@ -41,7 +41,7 @@ Create a .env file in the root of the project and add the following variables:
 ```bash
 VITE_MAP_ACCESS_TOKEN=zt7wt1ZXSBmlye8q8IQ6HuOv6p4idsbIbLl3Qi2ns2X4ZcbQbarIZpGE6YAkfi6L
 VITE_API_BASE_URL=https://dorsaldata1.apurbatech.io
-VITE_LANDING_BASE_URL=http://localhost:4000
+VITE_LANDING_BASE_URL=http://localhost:5000
 ```
 
 4. **Running the App**
@@ -80,7 +80,7 @@ Create backend environment variables
 Create a .env file in the backend/ directory and add the following variables:
 ```bash
 SPREADSHEET_ID=10F52NcXEVgj41xw3_PS-aPnJ8fGsyEnX-D4qz2Tzafo
-PORT=4000
+PORT=5000
 ```
 
 Start the backend server
