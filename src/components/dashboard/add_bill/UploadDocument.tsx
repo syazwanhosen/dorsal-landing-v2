@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/store";
 import { UploadCloud, X, ChevronDown } from "lucide-react";
@@ -32,9 +32,12 @@ import { uploadToOcrApi } from "@/api/api";
 const DOCUMENT_TYPES = ["Itemized Bill", "Discharge Summary", "Medical Report"];
 
 export const UploadDocument = () => {
+  const isMountedRef = useRef(true);
+
   const [documentType, setDocumentType] = useState("Itemized Bill");
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -47,18 +50,34 @@ export const UploadDocument = () => {
 
     const file = files[0];
     setLoading(true);
+    setUploadProgress(0);
 
     try {
-      const data = (await uploadToOcrApi(file)) as AuditRecord;
-      dispatch(addAuditRecord(data));
-      navigate("/account/run-audit");
+      const data = await uploadToOcrApi(file, (progressEvent) => {
+        if (!isMountedRef.current) return;
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / (progressEvent.total || 1)
+        );
+        setUploadProgress(percentCompleted);
+      }) as AuditRecord;
+
+      if (isMountedRef.current) {
+        setUploadProgress(100);
+        dispatch(addAuditRecord(data));
+        toast.success("Upload complete!");
+        setTimeout(() => {
+          if (isMountedRef.current) navigate("/account/run-audit");
+        }, 500);
+      }
     } catch (error: any) {
       console.error("Upload failed:", error);
-      toast.error("Upload failed", {
-        description: error.message || "An unexpected error occurred.",
-      });
+      if (isMountedRef.current) {
+        toast.error("Upload failed", {
+          description: error.message || "An unexpected error occurred.",
+        });
+      }
     } finally {
-      setLoading(false);
+      if (isMountedRef.current) setLoading(false);
     }
   };
 
@@ -68,6 +87,13 @@ export const UploadDocument = () => {
         file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
       }" has been rejected`,
     });
+  }, []);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
   }, []);
 
   return (
@@ -150,6 +176,18 @@ export const UploadDocument = () => {
         </FileUploadList>
       </FileUpload>
 
+
+      {loading && (
+        <div className="w-full mt-4">
+          <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-[#8770BC] transition-all duration-300"
+              style={{ width: `${uploadProgress}%` }}
+            />
+          </div>
+          <p className="text-xs text-right mt-1">{uploadProgress}%</p>
+        </div>
+      )}
       <div className="flex justify-end mt-6">
         <Button
           onClick={handleUpload}
