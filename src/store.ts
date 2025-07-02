@@ -5,7 +5,9 @@ import storageSession from "redux-persist/lib/storage/session";
 // Hospital Services
 import hospitalSlice from "./features/hospitalSlice";
 import hospitalMapReducer from "./features/hospitalMapSlice";
-import hospitalServiceSearchReducer from "./features/hospitalServiceSearchSlice"; // 
+import hospitalServiceSearchReducer from "./features/hospitalServiceSearchSlice"; 
+import auditReducer from "./features/auditSlice";
+
 
 const persistConfig = {
   key: "hospitalMap",
@@ -19,6 +21,7 @@ export const store = configureStore({
     hospital: hospitalSlice,
     hospitalMap: persistedHospitalMapReducer,
     hospitalServiceSearch: hospitalServiceSearchReducer, 
+    audit: auditReducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
