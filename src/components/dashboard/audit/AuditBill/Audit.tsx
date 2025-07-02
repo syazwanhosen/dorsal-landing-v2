@@ -3,7 +3,7 @@ import AuditBillTable from "./AuditBillTable";
 
 export default function Audit() {
   const auditRecords = useAppSelector((state) => state.audit.auditRecords);
-  const latest = auditRecords.at(-1); // Get the most recent upload
+  const latest = auditRecords.at(-1); 
 
   if (!latest) {
     return <p className="p-6 text-gray-600">No audit data available.</p>;

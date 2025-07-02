@@ -219,10 +219,18 @@ export const uploadToOcrApi = async (file: File) => {
     body: formData,
   });
 
-  if (!response.ok) {
-    throw new Error("OCR API request failed");
+  const result = await response.json();
+
+  if (!response.ok || result.status !== "success") {
+    const statusCode = result?.status_code || response.status;
+    let errorMessage = result?.error || result?.message || "Unknown error occurred";
+
+    if (statusCode === 415) {
+      errorMessage = "Unsupported file type. Please upload a valid image (JPG, PNG, BMP, TIFF, or GIF).";
+    }
+
+    throw new Error(errorMessage);
   }
 
-  const result = await response.json();
-  return result.data; 
+  return result.data;
 };

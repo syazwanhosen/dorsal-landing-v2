@@ -44,21 +44,24 @@ export const UploadDocument = () => {
       toast.error("Please select a file to upload.");
       return;
     }
-
+  
     const file = files[0];
     setLoading(true);
-
+  
     try {
       const data = await uploadToOcrApi(file) as AuditRecord;
       dispatch(addAuditRecord(data));
       navigate("/account/run-audit");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Upload failed:", error);
-      toast.error("Failed to extract data from document.");
+      toast.error("Upload failed", {
+        description: error.message || "An unexpected error occurred.",
+      });
     } finally {
       setLoading(false);
     }
   };
+  
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast(message, {
