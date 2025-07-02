@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Types based on OCR API response
 export interface BillingItem {
+  unit_cost: string;
+  quantity: string;
   code: string;
   description: string;
   price: string;

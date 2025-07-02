@@ -44,12 +44,12 @@ export const UploadDocument = () => {
       toast.error("Please select a file to upload.");
       return;
     }
-  
+
     const file = files[0];
     setLoading(true);
-  
+
     try {
-      const data = await uploadToOcrApi(file) as AuditRecord;
+      const data = (await uploadToOcrApi(file)) as AuditRecord;
       dispatch(addAuditRecord(data));
       navigate("/account/run-audit");
     } catch (error: any) {
@@ -61,11 +61,12 @@ export const UploadDocument = () => {
       setLoading(false);
     }
   };
-  
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast(message, {
-      description: `"${file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name}" has been rejected`,
+      description: `"${
+        file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
+      }" has been rejected`,
     });
   }, []);
 
@@ -76,13 +77,19 @@ export const UploadDocument = () => {
         <p className="text-sm font-medium mb-1">Hospital Document Type</p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full sm:w-[240px] justify-between border-gray-300">
+            <Button
+              variant="outline"
+              className="w-full sm:w-[240px] justify-between border-gray-300"
+            >
               {documentType}
               <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="min-w-[200px] w-auto border-gray-300">
-            <DropdownMenuRadioGroup value={documentType} onValueChange={setDocumentType}>
+            <DropdownMenuRadioGroup
+              value={documentType}
+              onValueChange={setDocumentType}
+            >
               {DOCUMENT_TYPES.map((type) => (
                 <DropdownMenuRadioItem key={type} value={type}>
                   {type}
@@ -111,7 +118,10 @@ export const UploadDocument = () => {
                 <UploadCloud className="size-6 text-muted-foreground" />
               </div>
               <p className="text-sm text-gray-600">
-                <span className="text-[#8770BC] font-medium">Click to upload</span> or drag and drop
+                <span className="text-[#8770BC] font-medium">
+                  Click to upload
+                </span>{" "}
+                or drag and drop
               </p>
               <p className="text-sm text-gray-600">PDF, PNG or JPG</p>
               <p className="text-xs text-gray-400">(max 5MB)</p>
@@ -120,8 +130,15 @@ export const UploadDocument = () => {
         </div>
         <FileUploadList>
           {files.map((file, index) => (
-            <FileUploadItem key={index} value={file} className="border-gray-300">
-              <FileUploadItemPreview />
+            <FileUploadItem
+              key={index}
+              value={file}
+              className="border-gray-300"
+            >
+              <div className="w-[50px] h-[50px] overflow-hidden rounded-md border border-gray-300">
+                <FileUploadItemPreview className="object-cover w-full h-full" />
+              </div>
+
               <FileUploadItemMetadata />
               <FileUploadItemDelete asChild>
                 <Button variant="ghost" size="icon" className="size-7">
@@ -134,7 +151,11 @@ export const UploadDocument = () => {
       </FileUpload>
 
       <div className="flex justify-end mt-6">
-        <Button onClick={handleUpload} className="w-auto min-w-[120px] bg-[#8770BC]" disabled={loading}>
+        <Button
+          onClick={handleUpload}
+          className="w-auto min-w-[120px] bg-[#8770BC]"
+          disabled={loading}
+        >
           {loading ? "Uploading..." : "Upload"}
         </Button>
       </div>
