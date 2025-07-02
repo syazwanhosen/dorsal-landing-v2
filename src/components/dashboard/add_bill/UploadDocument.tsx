@@ -26,7 +26,8 @@ import {
 // Redux
 import { addAuditRecord, AuditRecord } from "@/features/auditSlice";
 
-
+// API
+import { uploadToOcrApi } from "@/api/api";
 
 const DOCUMENT_TYPES = ["Itemized Bill", "Discharge Summary", "Medical Report"];
 
@@ -43,23 +44,12 @@ export const UploadDocument = () => {
       toast.error("Please select a file to upload.");
       return;
     }
-  
+
     const file = files[0];
-    const formData = new FormData();
-    formData.append("image_file", file);
-  
     setLoading(true);
+
     try {
-      const response = await fetch("http://123.200.16.106:3838/ocr/cloud_ocr", {
-        method: "POST",
-        body: formData,
-      });
-  
-      if (!response.ok) throw new Error("OCR API failed");
-  
-      const result = await response.json();
-      const data: AuditRecord = result.data; 
-  
+      const data = await uploadToOcrApi(file) as AuditRecord;
       dispatch(addAuditRecord(data));
       navigate("/account/run-audit");
     } catch (error) {
@@ -69,7 +59,6 @@ export const UploadDocument = () => {
       setLoading(false);
     }
   };
-  
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast(message, {

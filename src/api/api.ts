@@ -207,3 +207,22 @@ export const getServices = async (hospitalName: string, serviceCategory: string,
   if (!response.ok) throw new Error("Failed to fetch services");
   return response.json();
 };
+
+// OCR API Image upload to Data Extraction 
+
+export const uploadToOcrApi = async (file: File) => {
+  const formData = new FormData();
+  formData.append("image_file", file);
+
+  const response = await fetch("http://123.200.16.106:3838/ocr/cloud_ocr", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("OCR API request failed");
+  }
+
+  const result = await response.json();
+  return result.data; 
+};
