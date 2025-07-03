@@ -19,7 +19,22 @@ const severityClasses = {
 };
 
 export default function AuditFindings() {
-  const submittedAudit = useAppSelector((state) => state.audit.submittedAudit);
+  const {submittedAudit, auditRecords} = useAppSelector((state) => state.audit);
+  const latest = auditRecords.at(-1);
+
+  if (!latest) {
+    return <p className="p-6 text-gray-600">No audit data available.</p>;
+  }
+
+  const {
+    invoice_number,
+    date,
+    patient_information,
+    hospital_name,
+    billing_data
+  } = latest
+  
+  const total = billing_data.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -63,29 +78,29 @@ export default function AuditFindings() {
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Receipt No:</span>
-              <span className="text-gray-800 text-sm">EL-5414587</span>
+              <span className="text-gray-800 text-sm">{invoice_number}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">
                 Discharge Date:
               </span>
-              <span className="text-gray-800 text-sm">7 May 2025</span>
+              <span className="text-gray-800 text-sm">{date}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Patient Name:</span>
-              <span className="text-gray-800 text-sm">John A Rogers</span>
+              <span className="text-gray-800 text-sm">{patient_information.name}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Hospital:</span>
               <span className="text-gray-800 text-sm">
-                Alaska Medical Center, Anchorage, AK 99508
+                {hospital_name}
               </span>
             </div>
             <div className="flex flex-col sm:flex-row font-semibold">
               <span className="w-40 text-gray-900 text-[15px]">
                 Bill Total:
               </span>
-              <span className="text-black text-[15px]">$14,382.98</span>
+              <span className="text-black text-[15px]">${total}</span>
             </div>
           </div>
         </div>
