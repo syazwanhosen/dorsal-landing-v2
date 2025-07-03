@@ -1,44 +1,15 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+import { toast } from "sonner";
+
+import { Checkbox } from "@/components/ui/checkbox";
 import AuditFindingsModal from "./AuditFindingsModel";
 
-const billingData = [
-  {
-    id: 1,
-    severity: "High",
-    item: "ICU Room & Nursing",
-    issueDescription: "Charged 5 days, patient ICU stay confirmed only 4 days",
-    amount: 255.32,
-  },
-  {
-    id: 2,
-    severity: "High",
-    item: "Cardiologist Fees",
-    issueDescription: "No documentation for Day 5 consultation",
-    amount: 123.4,
-  },
-  {
-    id: 3,
-    severity: "Medium",
-    item: "Medication & Consumables",
-    issueDescription: "Unused injection set still charged",
-    amount: 78.43,
-  },
-  {
-    id: 4,
-    severity: "Low",
-    item: "Operating Theatre & Equipment",
-    issueDescription: "No issue found. Verified with booking logs",
-    amount: 0,
-  },
-  {
-    id: 5,
-    severity: "Low",
-    item: "CABG Surgery Package",
-    issueDescription: "Billed correctly. Aligned with package HCS-CABG-2025",
-    amount: 0,
-  },
-];
+const getSeverityLabel = (value: number): "Low" | "Medium" | "High" => {
+  if (value >= 0 && value <= 0.3) return "Low";
+  if (value >= 0.4 && value <= 0.7) return "Medium";
+  return "High";
+};
 
 const severityClasses = {
   High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-16 text-center text-xs",
@@ -48,7 +19,27 @@ const severityClasses = {
 };
 
 export default function AuditFindings() {
+  const submittedAudit = useAppSelector((state) => state.audit.submittedAudit);
+
   const [modalOpen, setModalOpen] = useState(false);
+
+  const billingData = submittedAudit?.data?.audit_result?.audit_result?.map(({
+    code,
+    confidence,
+    description,
+    explanation,
+    estimated_savings
+  }) => ({
+    id: code,
+    severity: getSeverityLabel(confidence),
+    item: description,
+    issueDescription: explanation,
+    amount: estimated_savings
+  }))
+
+  const handleSubmitForAppeal = () => {
+    toast.success("Your appeal is submitted");
+  };
   return (
     <>
       <div className="flex flex-col md:flex-col lg:flex-row gap-6">
@@ -113,7 +104,10 @@ export default function AuditFindings() {
             </span>
           </p>
 
-          <button className="hidden lg:flex bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center">
+          <button
+            className="hidden lg:flex bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center"
+            onClick={handleSubmitForAppeal}
+            >
             Submit for Appeal
           </button>
         </div>
@@ -265,7 +259,10 @@ export default function AuditFindings() {
         </div>
       </div>
 
-      <button className=" mt-4 lg:hidden bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center">
+      <button 
+        className=" mt-4 lg:hidden bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center"
+        onClick={handleSubmitForAppeal}
+        >
         Submit for Appeal
       </button>
 
