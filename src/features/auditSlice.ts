@@ -26,10 +26,12 @@ export interface AuditRecord {
 
 interface AuditState {
   auditRecords: AuditRecord[];
+  loading: boolean;
 }
 
 const initialState: AuditState = {
   auditRecords: [],
+  loading: false,
 };
 
 const auditSlice = createSlice({
@@ -42,8 +44,11 @@ const auditSlice = createSlice({
     clearAuditRecords: (state) => {
       state.auditRecords = [];
     },
+    setLoadingData: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { addAuditRecord, clearAuditRecords } = auditSlice.actions;
+export const { addAuditRecord, clearAuditRecords, setLoadingData } = auditSlice.actions;
 export default auditSlice.reducer;

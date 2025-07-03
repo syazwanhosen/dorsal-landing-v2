@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/file-upload";
 
 // Redux
-import { addAuditRecord, AuditRecord } from "@/features/auditSlice";
+import { addAuditRecord, AuditRecord, setLoadingData } from "@/features/auditSlice";
 
 // API
 import { uploadToOcrApi } from "@/api/ocr";
@@ -51,6 +51,7 @@ export const UploadDocument = () => {
     const file = files[0];
     setLoading(true);
     setUploadProgress(0);
+    dispatch(setLoadingData(true));
 
     try {
       const data = await uploadToOcrApi(file, (progressEvent) => {
@@ -64,6 +65,7 @@ export const UploadDocument = () => {
       if (isMountedRef.current) {
         setUploadProgress(100);
         dispatch(addAuditRecord(data));
+        dispatch(setLoadingData(false));
         toast.success("Upload complete!");
         setTimeout(() => {
           if (isMountedRef.current) navigate("/account/run-audit");
@@ -77,7 +79,10 @@ export const UploadDocument = () => {
         });
       }
     } finally {
-      if (isMountedRef.current) setLoading(false);
+      if (isMountedRef.current) { 
+        setLoading(false);
+        dispatch(setLoadingData(false));
+      }
     }
   };
 
