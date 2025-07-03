@@ -234,8 +234,9 @@ export const uploadToOcrApi = async (
       let errorMessage = result?.error || result?.message || "Unknown error occurred";
 
       if (statusCode === 415) {
-        errorMessage = "Unsupported file type. Please upload a valid image (JPG, PNG, BMP, TIFF, or GIF).";
+        errorMessage = "Unsupported file type. Please upload a valid image (PDF, PNG, or JPG).";
       }
+      
 
       throw new Error(errorMessage);
     }

@@ -5,7 +5,11 @@ interface AuditBillTableProps {
 }
 
 export default function AuditBillTable({ billingData }: AuditBillTableProps) {
-  const total = billingData.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
+  const total = billingData.reduce((sum, item) => {
+    const price = parseFloat(item.price ?? "0");
+    return isNaN(price) ? sum : sum + price;
+  }, 0);
+  
 
   const hasCode = billingData.some((item) => item.code);
   const hasDescription = billingData.some((item) => item.description);
@@ -59,14 +63,25 @@ export default function AuditBillTable({ billingData }: AuditBillTableProps) {
             ))}
           </tbody>
           {hasPrice && (
-            <tfoot>
-              <tr>
-                <td className="p-3 text-gray-700 font-semibold" colSpan={visibleColumns - 1}>
-                  Total Payable (USD)
-                </td>
-                <td className="p-3 font-bold text-gray-800 text-right">${total.toFixed(2)}</td>
-              </tr>
-            </tfoot>
+           <tfoot>
+           <tr>
+             <td colSpan={visibleColumns} className="p-3">
+               <div className="flex justify-end items-center gap-8 text-gray-800">
+                 <span className="font-semibold">Subtotal</span>
+                 <span className="font-bold">${total.toFixed(2)}</span>
+               </div>
+               <div className="flex justify-end items-center gap-8 text-gray-800 pt-2">
+                 <span className="font-semibold">Tax(15%)</span>
+                 <span className="font-bold">${total.toFixed(2)}</span>
+               </div>
+               <div className="flex justify-end items-center gap-8 text-gray-800 pt-2">
+                 <span className="font-semibold">Total Payable (USD)</span>
+                 <span className="font-bold">${total.toFixed(2)}</span>
+               </div>
+             </td>
+           </tr>
+         </tfoot>
+         
           )}
         </table>
       </div>
