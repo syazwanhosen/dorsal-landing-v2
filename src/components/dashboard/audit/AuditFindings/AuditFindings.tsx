@@ -141,12 +141,12 @@ export default function AuditFindings() {
                   >
                     <Checkbox />
                   </th>
-                  <th
+                  {/* <th
                     className="font-semibold text-left lg:py-4 pr-3"
                     colSpan={4}
                   >
                     Severity
-                  </th>
+                  </th> */}
                   <th className="font-semibold text-left lg:py-4">Item</th>
                   <th className="font-semibold text-left lg:py-4">
                     Issue Description
@@ -169,7 +169,7 @@ export default function AuditFindings() {
                     >
                       <Checkbox />
                     </td>
-                    <td colSpan={4}>
+                    {/* <td colSpan={4}>
                       <button
                         className={
                           severityClasses[
@@ -179,7 +179,7 @@ export default function AuditFindings() {
                       >
                         {data.severity}
                       </button>
-                    </td>
+                    </td> */}
                     <td>{data.item}</td>
                     <td>{data.issueDescription}</td>
                     <td className="text-end">{data.amount.toFixed(2)}</td>
