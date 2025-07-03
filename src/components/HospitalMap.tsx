@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon, LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { HospitalComparison } from "./hospitals/HospitalComparison";

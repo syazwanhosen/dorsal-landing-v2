@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/store";
+import { useAppSelector } from "@/store/hooks";
 import AuditBillTable from "./AuditBillTable";
 
 export default function Audit() {

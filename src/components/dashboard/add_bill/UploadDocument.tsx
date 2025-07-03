@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/store";
+import { useAppDispatch } from "@/store/hooks";
 import { UploadCloud, X, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 
