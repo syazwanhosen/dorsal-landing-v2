@@ -27,7 +27,7 @@ import {
 import { addAuditRecord, AuditRecord } from "@/features/auditSlice";
 
 // API
-import { uploadToOcrApi } from "@/api/api";
+import { uploadToOcrApi } from "@/api/ocr";
 
 const DOCUMENT_TYPES = ["Itemized Bill", "Discharge Summary", "Medical Report"];
 
