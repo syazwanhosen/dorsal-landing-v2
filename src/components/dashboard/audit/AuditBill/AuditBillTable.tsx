@@ -1,5 +1,6 @@
 import { useAppDispatch } from "@/store/hooks";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 import { BillingItem, submittedAudit, setLoadingData } from "@/features/auditSlice";
 import { postAuditData } from "@/api/audit";
@@ -11,6 +12,7 @@ interface AuditBillTableProps {
 
 export default function AuditBillTable({ hospitalName, billingData }: AuditBillTableProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const total = billingData.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
 
@@ -33,6 +35,9 @@ export default function AuditBillTable({ hospitalName, billingData }: AuditBillT
       dispatch(setLoadingData(false));
       dispatch(submittedAudit(data));
       toast.success(data?.message);
+      setTimeout(() => {
+          navigate("/account/audit-findings");
+      }, 500);
     } catch (error: any) {
       toast.error("Audit failed", {
           description: error.message || "An unexpected error occurred.",

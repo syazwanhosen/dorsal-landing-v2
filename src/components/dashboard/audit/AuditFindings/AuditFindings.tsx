@@ -143,7 +143,7 @@ export default function AuditFindings() {
               </thead>
               {/* Table Body */}
               <tbody>
-                {billingData.map((data) => (
+                {billingData?.map((data) => (
                   <tr
                     key={data.id}
                     className="text-[#89868D] border-t border-[#89868d4a] text-sm"
@@ -176,7 +176,7 @@ export default function AuditFindings() {
 
           {/* Mobile & Medium Screen Cards (Shown on md & smaller screens) */}
           <div className="block md:block lg:hidden space-y-4">
-            {billingData.map((data) => (
+            {billingData?.map((data) => (
               <div
                 key={data.id}
                 className="p-4 border border-[#89868d4a] rounded-lg"
