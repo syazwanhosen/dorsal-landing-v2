@@ -6,8 +6,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import AuditFindingsModal from "./AuditFindingsModel";
 
 const getSeverityLabel = (value: number): "Low" | "Medium" | "High" => {
-  if (value >= 0 && value <= 0.3) return "Low";
-  if (value >= 0.4 && value <= 0.7) return "Medium";
+  if (value === 1) return "Low";
+  if (value >= 0.5 && value <= 0.99) return "Medium";
   return "High";
 };
 
