@@ -35,6 +35,7 @@ export default function AuditFindings() {
   } = latest
   
   const total = billing_data.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
+  const errorStatus = submittedAudit?.data?.audit_result?.audit_result?.reduce((sum, item) => item.flag_type !== "no_issue" ? sum + 1 : sum, 0) || 0;
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -64,7 +65,7 @@ export default function AuditFindings() {
             Audit Status
           </h2>
 
-          <div className="text-[#6E39CB] text-6xl font-bold">3</div>
+          <div className="text-[#6E39CB] text-6xl font-bold">{errorStatus}</div>
 
           <p className="text-gray-500 text-[15px] mt-2">errors found</p>
 
