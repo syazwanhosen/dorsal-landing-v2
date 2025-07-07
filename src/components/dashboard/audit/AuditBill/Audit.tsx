@@ -1,10 +1,12 @@
-import { useAppSelector } from "@/store";
+import { useAppSelector } from "@/store/hooks";
+
+// Components
 import AuditBillTable from "./AuditBillTable";
+import WithLoading from "@/components/WithLoading";
 
 export default function Audit() {
   const auditRecords = useAppSelector((state) => state.audit.auditRecords);
   const latest = auditRecords.at(-1);
-
   if (!latest) {
     return <p className="p-6 text-gray-600">No audit data available.</p>;
   }
@@ -19,7 +21,7 @@ export default function Audit() {
   } = latest;
 
   return (
-    <>
+    <WithLoading sliceKey="audit">
       <div className="p-6 bg-white rounded-lg shadow-md lg:mt-6 mt-4 lg:mb-8 mb-4 overflow-hidden">
         <h2 className="text-lg font-semibold text-gray-700 mb-4">
           Transaction Details
@@ -132,7 +134,7 @@ export default function Audit() {
 
       </div>
 
-      <AuditBillTable billingData={latest.billing_data} />
-    </>
+      <AuditBillTable billingData={latest.billing_data} hospitalName={latest.hospital_name}/>
+    </WithLoading>
   );
 }

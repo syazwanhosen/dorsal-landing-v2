@@ -8,7 +8,7 @@ import RewardsCard from "@/components/dashboard/audit/AppealOutcomes/RewardsCard
 export default function AppealOutcomesPage() {
     return (
         <>
-            <h1 className="text-lg font-medium text-[#8770BC]">Appeal Outcomes</h1>
+            <h1 className="text-lg font-medium text-[#8770BC] ml-10">Appeal Outcomes</h1>
             <div className="bg-gradient-to-b from-gray-50 to-purple-50 min-h-screen">
                 <main className="py-4">
                     <ChartSummaryPanel />

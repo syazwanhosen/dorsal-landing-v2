@@ -24,12 +24,38 @@ export interface AuditRecord {
   billing_data: BillingItem[];
 }
 
+export interface AuditFinding {
+  code: string;
+  description: string;
+  flag_type: "no_issue" | "unclear_pricing" | "upcoding" | string; // extend as needed
+  confidence: number;
+  estimated_savings: number;
+  explanation: string;
+}
+
+export interface SubmittedAuditData {
+  audit_result: {
+    audit_result: AuditFinding[];
+  };
+}
+
+export interface SubmittedAuditResponse {
+  status: string;
+  status_code: number;
+  data: SubmittedAuditData;
+  error: any;
+  message: string;
+}
 interface AuditState {
   auditRecords: AuditRecord[];
+  submittedAudit: SubmittedAuditResponse | null;
+  loading: boolean;
 }
 
 const initialState: AuditState = {
   auditRecords: [],
+  submittedAudit: null,
+  loading: false,
 };
 
 const auditSlice = createSlice({
@@ -42,8 +68,14 @@ const auditSlice = createSlice({
     clearAuditRecords: (state) => {
       state.auditRecords = [];
     },
+    submittedAudit: (state, action: PayloadAction<SubmittedAuditResponse>) => {
+      state.submittedAudit = action.payload;
+    },
+    setLoadingData: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { addAuditRecord, clearAuditRecords } = auditSlice.actions;
+export const { addAuditRecord, clearAuditRecords, submittedAudit, setLoadingData } = auditSlice.actions;
 export default auditSlice.reducer;

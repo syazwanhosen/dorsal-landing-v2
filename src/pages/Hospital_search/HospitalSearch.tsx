@@ -1,5 +1,5 @@
 import { ServiceSearchProcedureCard } from "@/components/hospitals_search/ServiceSearchProcedureCard";
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "@/store/hooks";
 import { HospitalServiceSearch } from "@/components/hospitals_search/HospitalServiceSearch";
 import { SearchSection } from "@/components/hospitals/SearchSection";
 import { NavbarSecondary } from "@/components/NavbarSecondary";
