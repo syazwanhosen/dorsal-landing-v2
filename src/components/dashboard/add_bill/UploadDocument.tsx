@@ -69,6 +69,7 @@ export const UploadDocument = () => {
         toast.success("Upload complete!");
         setTimeout(() => {
           if (isMountedRef.current) navigate("/account/run-audit");
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }, 500);
       }
     } catch (error: any) {
@@ -154,7 +155,7 @@ export const UploadDocument = () => {
                 </span>{" "}
                 or drag and drop
               </p>
-              <p className="text-sm text-gray-600">PDF, PNG or JPG</p>
+              <p className="text-sm text-gray-600">PNG or JPG</p>
               <p className="text-xs text-gray-400">(max 5MB)</p>
             </div>
           </FileUploadDropzone>

@@ -81,7 +81,7 @@ export default function Audit() {
                 const phoneMatch = doctor_information.details.match(/Phone:\s*(.*)$/);
                 return (
                   <>
-                    {licenseMatch && <p className="text-gray-600 pb-2 break-words">Practitioner Id: {licenseMatch[1].trim()}</p>}
+                    {licenseMatch && <p className="text-gray-600 pb-2 break-words">Practitioner ID: {licenseMatch[1].trim()}</p>}
                     {phoneMatch && <p className="text-gray-600 pb-2 break-words">Contact Info: {phoneMatch[1].trim()}</p>}
                     {specialtyMatch && <p className="text-gray-600 pb-2 break-words">Speciality: {specialtyMatch[1].trim()}</p>}
                   </>
