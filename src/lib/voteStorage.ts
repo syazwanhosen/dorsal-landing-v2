@@ -22,7 +22,9 @@ export const setVote = async (
     vote: { count: number; voted: "upvote" | "downvote" | null }
 ) => {
     try {
-        await voteStore.setItem(featureId, vote)
+        const stored = await getVote(featureId);
+
+        await voteStore.setItem(featureId, {count: vote.count, voted: vote.voted || stored?.voted})
     } catch (e) {
         console.error("Error writing to localforage:", e)
     }

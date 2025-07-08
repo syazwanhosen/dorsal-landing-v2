@@ -42,15 +42,14 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
-
   const handleVote = async (value: number, voteType: string) => {
     const stored = await getVote(feature.id);
 
     if (
       (stored?.voted &&
         (
-          (value === 1 && stored?.voted === "upvote" && votes > stored?.count) ||
-          (value === -1 && stored?.voted === "downvote" && votes < stored?.count)
+          (value === 1 && stored?.voted === "upvote" && votes >= stored?.count) ||
+          (value === -1 && stored?.voted === "downvote" && votes <= stored?.count)
         )
       ) ||
       (value === -1 && votes <= 0)
@@ -68,7 +67,8 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 
       setVotes(res.data.totalVotes);
       setHasVoted(value === 1 ? "upvote" : "downvote");
-      await setVote(feature.id, { count: stored?.count || 0, voted: type });
+      const prevCount = typeof stored?.count === "number" ? stored.count : 0;
+      await setVote(feature.id, { count: value === 1 ? prevCount + 1 : Math.max(prevCount - 1, 0), voted: type });
     } catch (error) {
       console.error("Voting failed", error);
     }
@@ -154,9 +154,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
         const stored = await getVote(feature.id);
         setVotes(res.data.totalVotes);
         setHasVoted(stored?.voted || null);
-        if (!stored?.count) {
-          await setVote(feature.id, { count: res.data.totalVotes, voted: null });
-        }
+        await setVote(feature.id, { count: res.data.totalVotes, voted: null });
       })
       .catch((error) => {
         console.error("Failed to fetch vote:", error);
