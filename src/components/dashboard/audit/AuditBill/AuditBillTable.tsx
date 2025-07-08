@@ -1,15 +1,20 @@
-import { BillingItem } from "@/features/auditSlice";
+import { useAppDispatch } from "@/store/hooks";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+
+import { BillingItem, submittedAudit, setLoadingData } from "@/features/auditSlice";
+import { postAuditData } from "@/api/audit";
 
 interface AuditBillTableProps {
+  hospitalName: string;
   billingData: BillingItem[];
 }
 
-export default function AuditBillTable({ billingData }: AuditBillTableProps) {
-  const total = billingData.reduce((sum, item) => {
-    const price = parseFloat(item.price ?? "0");
-    return isNaN(price) ? sum : sum + price;
-  }, 0);
-  
+export default function AuditBillTable({ hospitalName, billingData }: AuditBillTableProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const total = billingData.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
 
   const hasCode = billingData.some((item) => item.code);
   const hasDescription = billingData.some((item) => item.description);
@@ -19,12 +24,39 @@ export default function AuditBillTable({ billingData }: AuditBillTableProps) {
 
   const visibleColumns = [hasCode, hasDescription, hasQuantity, hasUnitCost, hasPrice].filter(Boolean).length;
 
+  const handleRunAuditClick = async () => {
+    dispatch(setLoadingData(true));
+
+    try {
+      const data = await postAuditData({
+        hospital_name: hospitalName,
+        billing_information: billingData
+      })
+      dispatch(setLoadingData(false));
+      dispatch(submittedAudit(data));
+      toast.success(data?.message);
+      setTimeout(() => {
+          navigate("/account/audit-findings");
+      }, 500);
+    } catch (error: any) {
+      toast.error("Audit failed", {
+          description: error.message || "An unexpected error occurred.",
+        });
+      alert(error?.message || "An unexpected error occurred while running the audit.");
+    }finally {
+        dispatch(setLoadingData(false));
+    }
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md lg:mt-6 mt-4 lg:mb-8 mb-4">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:justify-between lg:items-center mb-4 gap-2">
         <p className="text-lg font-semibold text-black">Bill Statement</p>
-        <button className="hidden lg:flex bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center">
+        <button
+          className="hidden lg:flex bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center"
+          onClick={handleRunAuditClick}
+          >
           Run Audit
         </button>
       </div>
@@ -63,25 +95,14 @@ export default function AuditBillTable({ billingData }: AuditBillTableProps) {
             ))}
           </tbody>
           {hasPrice && (
-           <tfoot>
-           <tr>
-             <td colSpan={visibleColumns} className="p-3">
-               <div className="flex justify-end items-center gap-8 text-gray-800">
-                 <span className="font-semibold">Subtotal</span>
-                 <span className="font-bold">${total.toFixed(2)}</span>
-               </div>
-               <div className="flex justify-end items-center gap-8 text-gray-800 pt-2">
-                 <span className="font-semibold">Tax(15%)</span>
-                 <span className="font-bold">${total.toFixed(2)}</span>
-               </div>
-               <div className="flex justify-end items-center gap-8 text-gray-800 pt-2">
-                 <span className="font-semibold">Total Payable (USD)</span>
-                 <span className="font-bold">${total.toFixed(2)}</span>
-               </div>
-             </td>
-           </tr>
-         </tfoot>
-         
+            <tfoot>
+              <tr>
+                <td className="p-3 text-gray-700 font-semibold" colSpan={visibleColumns - 1}>
+                  Total Payable (USD)
+                </td>
+                <td className="p-3 font-bold text-gray-800 text-right">${total.toFixed(2)}</td>
+              </tr>
+            </tfoot>
           )}
         </table>
       </div>
@@ -125,7 +146,9 @@ export default function AuditBillTable({ billingData }: AuditBillTableProps) {
             <p>Total Payable (USD): ${total.toFixed(2)}</p>
           </div>
         )}
-        <button className="bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center mt-4">
+        <button
+          className="bg-[#8771BC] text-white px-6 py-2 rounded-md flex items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center mt-4"
+          onClick={handleRunAuditClick}>
           Run Audit
         </button>
       </div>

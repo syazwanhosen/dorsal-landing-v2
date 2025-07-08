@@ -25,7 +25,7 @@ export default function AddBill() {
     return (
         <>
             <div className="flex items-center justify-between flex-wrap gap-3 lg:mb-5 mb-5">
-                <h2 className="text-lg font-medium text-[#8770BC] mb-3">Add Bill</h2>
+                <h2 className="text-lg font-medium text-[#8770BC] mb-3 ml-10">Add Bill</h2>
                 <div className="flex flex-col md:flex-row w-full md:w-auto space-y-3 md:space-y-0 md:space-x-3">
                     <Button
                         className="bg-[#8770BC] hover:bg-primary text-white w-full sm:w-auto"

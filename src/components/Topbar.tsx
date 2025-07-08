@@ -8,7 +8,7 @@ export const Topbar = ({ open, setOpen, mobileOpen, setMobileOpen }: ToggleButto
     setMobileOpen: (open: boolean) => void;
 }) => {
     return (
-        <header className={clsx("h-16 z-50 flex items-center px-2")}>
+        <header className={clsx("h-16 z-50 block items-center absolute")}>
             {/* Mobile toggle */}
             <div className="md:hidden fixed">
                 <button onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle Mobile Sidebar">
