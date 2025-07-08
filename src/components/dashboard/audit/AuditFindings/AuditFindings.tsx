@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 
@@ -64,6 +64,11 @@ export default function AuditFindings() {
   const handleSubmitForAppeal = () => {
     toast.success("Your appeal is submitted");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="flex flex-col md:flex-col lg:flex-row gap-6">
