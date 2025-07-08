@@ -139,19 +139,20 @@ export default function AuditBillTable({
 
       {/* Billing Summary - Desktop Only */}
       <div className="hidden lg:block mt-6 w-full max-w-md ml-auto space-y-2 text-right text-gray-800 font-medium">
-        <div className="flex justify-between">
-          <span>Subtotal</span>
-          <span>${subtotal?.toFixed(2) ?? "0.00"}</span>
-        </div>
+      <div className="grid grid-cols-2 gap-x-4">
+  <span>Subtotal</span>
+  <span className="text-right">{subtotal?.toFixed(2) ?? "0.00"}</span>
+</div>
+
         {showTax && (
           <>
-            <div className="flex justify-between">
+            <div className="grid grid-cols-2 gap-x-4">
               <span>Tax({taxPercentage}%)</span>
-              <span>${payableTax?.toFixed(2) ?? "0.00"}</span>
+              <span>{payableTax?.toFixed(2) ?? "0.00"}</span>
             </div>
           </>
         )}
-        <div className="flex justify-between font-bold text-[#8770BC]">
+        <div className="grid grid-cols-2 gap-x-4 font-bold text-[#8770BC]">
           <span>Total Payable (USD)</span>
           <span>${totalAmount?.toFixed(2) ?? "0.00"}</span>
         </div>
@@ -195,15 +196,15 @@ export default function AuditBillTable({
 
         {/* Billing Summary - Mobile Only */}
         <div className="lg:hidden p-4 font-bold text-gray-800 text-right bg-gray-100 rounded-lg shadow-md space-y-1">
-          <p>Subtotal: ${subtotal?.toFixed(2) ?? "0.00"}</p>
+          <p>Subtotal: {subtotal?.toFixed(2) ?? "0.00"}</p>
           {showTax && (
             <>
               <p>
-                Tax({taxPercentage})%: ${payableTax?.toFixed(2) ?? "0.00"}
+                Tax({taxPercentage})%: {payableTax?.toFixed(2) ?? "0.00"}
               </p>
             </>
           )}
-          <p className="text-[#8770BC]">Total Payable (USD): ${totalAmount?.toFixed(2) ?? "0.00"}</p>
+          <p className="text-[#8770BC]">Total Payable (USD): {totalAmount?.toFixed(2) ?? "0.00"}</p>
         </div>
 
         <button
