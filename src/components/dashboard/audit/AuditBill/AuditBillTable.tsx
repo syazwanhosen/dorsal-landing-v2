@@ -125,11 +125,11 @@ export default function AuditBillTable({
                 )}
                 {hasUnitCost && (
                   <td className="p-3 text-right lg:py-4">
-                    ${item.unit_cost ?? "-"}
+                    {item.unit_cost ?? "-"}
                   </td>
                 )}
                 {hasPrice && (
-                  <td className="p-3 text-right lg:py-4">${item.price}</td>
+                  <td className="p-3 text-right lg:py-4">{item.price}</td>
                 )}
               </tr>
             ))}
@@ -182,13 +182,13 @@ export default function AuditBillTable({
             )}
             {hasUnitCost && (
               <p className="text-gray-600 text-sm">
-                <span className="whitespace-nowrap">Unit Cost:</span> $
+                <span className="whitespace-nowrap">Unit Cost:</span> 
                 {item.unit_cost ?? "-"}
               </p>
             )}
             {hasPrice && (
               <p className="text-gray-600 text-sm">
-                <span className="whitespace-nowrap">Price:</span> ${item.price}
+                <span className="whitespace-nowrap">Price:</span> {item.price}
               </p>
             )}
           </div>
