@@ -52,6 +52,15 @@ export default function AuditFindings() {
     amount: estimated_savings
   }))
 
+  const formattedDate = submittedAudit?.data?.audit_response?.audit_date
+  ? new Date(submittedAudit.data.audit_response.audit_date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : "";
+
+
   const handleSubmitForAppeal = () => {
     toast.success("Your appeal is submitted");
   };
@@ -69,7 +78,7 @@ export default function AuditFindings() {
           <p className="text-gray-500 text-[15px] mt-2">errors found</p>
 
           <button className="mt-2 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
-            Audit date: {submittedAudit?.data?.audit_response?.audit_date}
+            Audit date: {formattedDate}
           </button>
         </div>
 
