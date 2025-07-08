@@ -34,8 +34,10 @@ export interface AuditFinding {
 }
 
 export interface SubmittedAuditData {
-  audit_result: {
+  audit_response: {
+    audit_date: string;
     audit_result: AuditFinding[];
+    total_issues: number;
   };
 }
 
