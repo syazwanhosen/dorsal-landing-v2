@@ -153,8 +153,8 @@ export function FeatureCard({ feature }: FeatureCardProps) {
       .then(async (res) => {
         const stored = await getVote(feature.id);
         setVotes(res.data.totalVotes);
-        setHasVoted(stored?.voted || null);
-        await setVote(feature.id, { count: res.data.totalVotes, voted: null });
+        setHasVoted(res.data.totalVotes ? (stored?.voted ?? null) : null);
+        await setVote(feature.id, { count: res.data.totalVotes, voted: res.data.totalVotes ? (stored?.voted ?? null) : null });
       })
       .catch((error) => {
         console.error("Failed to fetch vote:", error);
