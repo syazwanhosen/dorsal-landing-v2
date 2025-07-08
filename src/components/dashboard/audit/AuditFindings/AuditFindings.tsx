@@ -35,11 +35,10 @@ export default function AuditFindings() {
   } = latest
   
   const total = billing_data.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
-  const errorStatus = submittedAudit?.data?.audit_result?.audit_result?.reduce((sum, item) => item.flag_type !== "no_issue" ? sum + 1 : sum, 0) || 0;
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const billingData = submittedAudit?.data?.audit_result?.audit_result?.map(({
+  const billingData = submittedAudit?.data?.audit_response?.audit_result?.map(({
     code,
     confidence,
     description,
@@ -65,12 +64,12 @@ export default function AuditFindings() {
             Audit Status
           </h2>
 
-          <div className="text-[#6E39CB] text-6xl font-bold">{errorStatus}</div>
+          <div className="text-[#6E39CB] text-6xl font-bold">{submittedAudit?.data?.audit_response?.total_issues}</div>
 
           <p className="text-gray-500 text-[15px] mt-2">errors found</p>
 
           <button className="mt-2 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
-            Audit date: 10 May 2025
+            Audit date: {submittedAudit?.data?.audit_response?.audit_date}
           </button>
         </div>
 
