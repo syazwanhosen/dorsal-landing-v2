@@ -14,6 +14,13 @@ export interface PersonInfo {
   details: string;
 }
 
+export interface TotalPrice {
+  subtotal: number;
+  tax_percentage: number;
+  payable_tax: number;
+  total: number;
+}
+
 export interface AuditRecord {
   hospital_name: string;
   state: string;
@@ -22,12 +29,13 @@ export interface AuditRecord {
   patient_information: PersonInfo;
   doctor_information: PersonInfo;
   billing_data: BillingItem[];
+  total_price: TotalPrice;
 }
 
 export interface AuditFinding {
   code: string;
   description: string;
-  flag_type: "no_issue" | "unclear_pricing" | "upcoding" | string; // extend as needed
+  flag_type: "no_issue" | "unclear_pricing" | "upcoding" | string;
   confidence: number;
   estimated_savings: number;
   explanation: string;
@@ -46,6 +54,7 @@ export interface SubmittedAuditResponse {
   error: any;
   message: string;
 }
+
 interface AuditState {
   auditRecords: AuditRecord[];
   submittedAudit: SubmittedAuditResponse | null;
@@ -77,5 +86,11 @@ const auditSlice = createSlice({
   },
 });
 
-export const { addAuditRecord, clearAuditRecords, submittedAudit, setLoadingData } = auditSlice.actions;
+export const {
+  addAuditRecord,
+  clearAuditRecords,
+  submittedAudit,
+  setLoadingData
+} = auditSlice.actions;
+
 export default auditSlice.reducer;
