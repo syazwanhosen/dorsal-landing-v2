@@ -1,4 +1,6 @@
 import { useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
+
 
 // Components
 import AuditBillTable from "./AuditBillTable";
@@ -21,6 +23,11 @@ export default function Audit() {
     billing_data,
     total_price
   } = latest;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  
 
   return (
     <WithLoading sliceKey="audit">
@@ -60,10 +67,23 @@ export default function Audit() {
                   const emailMatch = patient_information.details.match(/Email:\s*(.*)$/);
                   return (
                     <>
-                      {addressMatch && <p className="text-gray-600 pb-2 break-words">{addressMatch[1].trim()}</p>}
-                      {emailMatch && <p className="text-gray-600 pb-2 break-words">{emailMatch[1].trim()}</p>}
-                      {phoneMatch && <p className="text-gray-600 pb-2 break-words">{phoneMatch[1].trim()}</p>}
-                    </>
+                    {addressMatch && (
+                      <p className="text-[#3A3541] pb-2 break-words">
+                        {addressMatch[1].trim()}
+                      </p>
+                    )}
+                    {emailMatch && (
+                      <p className="text-[#3A3541] pb-2 break-words">
+                        {emailMatch[1].trim()}
+                      </p>
+                    )}
+                    {phoneMatch && (
+                      <p className="text-[#3A3541] pb-2 break-words">
+                        {phoneMatch[1].trim()}
+                      </p>
+                    )}
+                  </>
+                  
                   );
                 })()}
               </div>
@@ -81,10 +101,27 @@ export default function Audit() {
                 const phoneMatch = doctor_information.details.match(/Phone:\s*(.*)$/);
                 return (
                   <>
-                    {licenseMatch && <p className="text-gray-600 pb-2 break-words">Practitioner ID: {licenseMatch[1].trim()}</p>}
-                    {phoneMatch && <p className="text-gray-600 pb-2 break-words">Contact Info: {phoneMatch[1].trim()}</p>}
-                    {specialtyMatch && <p className="text-gray-600 pb-2 break-words">Speciality: {specialtyMatch[1].trim()}</p>}
-                  </>
+                  {licenseMatch && (
+                    <p className="text-[#3A3541] pb-2 break-words flex">
+                      <span className="lg:w-40">Practitioner ID:</span>
+                      <span>{licenseMatch[1].trim()}</span>
+                    </p>
+                  )}
+                  {phoneMatch && (
+                    <p className="text-[#3A3541] pb-2 break-words flex">
+                      <span className="lg:w-40">Contact Info:</span>
+                      <span>{phoneMatch[1].trim()}</span>
+                    </p>
+                  )}
+                  {specialtyMatch && (
+                    <p className="text-[#3A3541] pb-2 break-words flex">
+                      <span className="lg:w-40">Speciality:</span>
+                      <span>{specialtyMatch[1].trim()}</span>
+                    </p>
+                  )}
+                </>
+                
+                
                 );
               })()}
             </div>
