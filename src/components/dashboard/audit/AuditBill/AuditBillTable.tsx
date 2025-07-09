@@ -147,14 +147,14 @@ export default function AuditBillTable({
         {showTax && (
           <>
             <div className="grid grid-cols-2 gap-x-4">
-              <span>Tax({taxPercentage}%)</span>
+              <span>Tax ({taxPercentage}%)</span>
               <span>{payableTax?.toFixed(2) ?? "0.00"}</span>
             </div>
           </>
         )}
         <div className="grid grid-cols-2 gap-x-4 font-bold text-[#8770BC]">
           <span>Total Payable (USD)</span>
-          <span>${totalAmount?.toFixed(2) ?? "0.00"}</span>
+          <span>{totalAmount?.toFixed(2) ?? "0.00"}</span>
         </div>
       </div>
 
@@ -200,7 +200,7 @@ export default function AuditBillTable({
           {showTax && (
             <>
               <p>
-                Tax({taxPercentage})%: {payableTax?.toFixed(2) ?? "0.00"}
+                Tax ({taxPercentage})%: {payableTax?.toFixed(2) ?? "0.00"}
               </p>
             </>
           )}

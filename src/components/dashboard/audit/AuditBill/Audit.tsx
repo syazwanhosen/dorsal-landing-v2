@@ -1,7 +1,5 @@
 import { useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
-
-
 // Components
 import AuditBillTable from "./AuditBillTable";
 import WithLoading from "@/components/WithLoading";
@@ -119,9 +117,7 @@ export default function Audit() {
                       <span>{specialtyMatch[1].trim()}</span>
                     </p>
                   )}
-                </>
-                
-                
+                </>                               
                 );
               })()}
             </div>
