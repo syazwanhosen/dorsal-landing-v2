@@ -16,7 +16,7 @@ export const StatewisePricing = () => {
   const [stateName, setStateName] = useState("");
   const [pricingData, setPricingData] = useState<Record<string, number>>({});
   const [distributedPrices, setDistributedPrices] = useState<Record<string, number>>({});
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Overall");
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -31,15 +31,15 @@ export const StatewisePricing = () => {
     setDistributedPrices({});
   }, [selectedCategory]);
 
+  useEffect(() => _onFetchPricingData() ,[])
+
   const handleReset = () => {
     setSelectedCategory("");
     setStateName("");
     setPricingData({});
   };
 
-  const loadPricingData = () => {
-    if (!selectedCategory) return alert("Please select a category first");
-  
+  const _onFetchPricingData = () => {
     fetchPricingData(selectedCategory)
       .then((data) => {
         if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
@@ -82,6 +82,12 @@ export const StatewisePricing = () => {
         console.error("Error fetching pricing data:", err);
         alert(`Failed to load pricing data: ${err.message || "Unknown error"}. Please try again.`);
       });
+  }
+
+  const loadPricingData = () => {
+    if (!selectedCategory) return alert("Please select a category first");
+  
+    else _onFetchPricingData()
   };
 
   const prices = Object.values(pricingData).filter((p) => !isNaN(p));

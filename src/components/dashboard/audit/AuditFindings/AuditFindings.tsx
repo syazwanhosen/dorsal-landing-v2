@@ -1,44 +1,15 @@
+import { useState, useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
+import { toast } from "sonner";
+
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
 import AuditFindingsModal from "./AuditFindingsModel";
 
-const billingData = [
-  {
-    id: 1,
-    severity: "High",
-    item: "ICU Room & Nursing",
-    issueDescription: "Charged 5 days, patient ICU stay confirmed only 4 days",
-    amount: 255.32,
-  },
-  {
-    id: 2,
-    severity: "High",
-    item: "Cardiologist Fees",
-    issueDescription: "No documentation for Day 5 consultation",
-    amount: 123.4,
-  },
-  {
-    id: 3,
-    severity: "Medium",
-    item: "Medication & Consumables",
-    issueDescription: "Unused injection set still charged",
-    amount: 78.43,
-  },
-  {
-    id: 4,
-    severity: "Low",
-    item: "Operating Theatre & Equipment",
-    issueDescription: "No issue found. Verified with booking logs",
-    amount: 0,
-  },
-  {
-    id: 5,
-    severity: "Low",
-    item: "CABG Surgery Package",
-    issueDescription: "Billed correctly. Aligned with package HCS-CABG-2025",
-    amount: 0,
-  },
-];
+const getSeverityLabel = (value: number): "Low" | "Medium" | "High" => {
+  if (value === 1) return "Low";
+  if (value >= 0.5 && value <= 0.99) return "Medium";
+  return "High";
+};
 
 const severityClasses = {
   High: "bg-[#CE3C29] text-white px-3 py-1 rounded-md w-16 text-center text-xs",
@@ -48,7 +19,56 @@ const severityClasses = {
 };
 
 export default function AuditFindings() {
+  const {submittedAudit, auditRecords} = useAppSelector((state) => state.audit);
+  const latest = auditRecords.at(-1);
+
+  if (!latest) {
+    return <p className="p-6 text-gray-600">No audit data available.</p>;
+  }
+
+  const {
+    invoice_number,
+    date,
+    patient_information,
+    hospital_name,
+    billing_data
+  } = latest
+  
+  const total = billing_data.reduce((sum, item) => sum + parseFloat(item.price || "0"), 0);
+
   const [modalOpen, setModalOpen] = useState(false);
+
+  const billingData = submittedAudit?.data?.audit_response?.audit_result?.map(({
+    code,
+    confidence,
+    description,
+    explanation,
+    estimated_savings
+  }) => ({
+    id: code,
+    severity: getSeverityLabel(confidence),
+    item: description,
+    issueDescription: explanation,
+    amount: estimated_savings
+  }))
+
+  const formattedDate = submittedAudit?.data?.audit_response?.audit_date
+  ? new Date(submittedAudit.data.audit_response.audit_date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : "";
+
+
+  const handleSubmitForAppeal = () => {
+    toast.success("Your appeal is submitted");
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="flex flex-col md:flex-col lg:flex-row gap-6">
@@ -58,12 +78,12 @@ export default function AuditFindings() {
             Audit Status
           </h2>
 
-          <div className="text-[#6E39CB] text-6xl font-bold">3</div>
+          <div className="text-[#6E39CB] text-6xl font-bold">{submittedAudit?.data?.audit_response?.total_issues}</div>
 
           <p className="text-gray-500 text-[15px] mt-2">errors found</p>
 
           <button className="mt-2 text-[#6E39CB] text-base font-medium border border-[#00000026] rounded-md px-4 py-2">
-            Audit date: 10 May 2025
+            Audit date: {formattedDate}
           </button>
         </div>
 
@@ -72,29 +92,29 @@ export default function AuditFindings() {
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Receipt No:</span>
-              <span className="text-gray-800 text-sm">EL-5414587</span>
+              <span className="text-gray-800 text-sm">{invoice_number}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">
                 Discharge Date:
               </span>
-              <span className="text-gray-800 text-sm">7 May 2025</span>
+              <span className="text-gray-800 text-sm">{date}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Patient Name:</span>
-              <span className="text-gray-800 text-sm">John A Rogers</span>
+              <span className="text-gray-800 text-sm">{patient_information.name}</span>
             </div>
             <div className="flex flex-col sm:flex-row">
               <span className="w-40 text-gray-700 text-sm">Hospital:</span>
               <span className="text-gray-800 text-sm">
-                Alaska Medical Center, Anchorage, AK 99508
+                {hospital_name}
               </span>
             </div>
             <div className="flex flex-col sm:flex-row font-semibold">
               <span className="w-40 text-gray-900 text-[15px]">
                 Bill Total:
               </span>
-              <span className="text-black text-[15px]">$14,382.98</span>
+              <span className="text-black text-[15px]">${total}</span>
             </div>
           </div>
         </div>
@@ -113,7 +133,10 @@ export default function AuditFindings() {
             </span>
           </p>
 
-          <button className="hidden lg:flex bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center">
+          <button
+            className="hidden lg:flex bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow md:w-auto justify-center"
+            onClick={handleSubmitForAppeal}
+            >
             Submit for Appeal
           </button>
         </div>
@@ -149,7 +172,7 @@ export default function AuditFindings() {
               </thead>
               {/* Table Body */}
               <tbody>
-                {billingData.map((data) => (
+                {billingData?.map((data) => (
                   <tr
                     key={data.id}
                     className="text-[#89868D] border-t border-[#89868d4a] text-sm"
@@ -182,7 +205,7 @@ export default function AuditFindings() {
 
           {/* Mobile & Medium Screen Cards (Shown on md & smaller screens) */}
           <div className="block md:block lg:hidden space-y-4">
-            {billingData.map((data) => (
+            {billingData?.map((data) => (
               <div
                 key={data.id}
                 className="p-4 border border-[#89868d4a] rounded-lg"
@@ -265,7 +288,10 @@ export default function AuditFindings() {
         </div>
       </div>
 
-      <button className=" mt-4 lg:hidden bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center">
+      <button 
+        className=" mt-4 lg:hidden bg-gradient-to-r bg-[#8771BC] text-white px-6 py-2 rounded-md items-center shadow-md hover:shadow-lg transition-shadow w-full justify-center"
+        onClick={handleSubmitForAppeal}
+        >
         Submit for Appeal
       </button>
 

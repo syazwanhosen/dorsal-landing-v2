@@ -6,6 +6,12 @@ import {
 } from "../../api/api";
 import { CostMap } from "./Map";
 
+const DEFAULT_STATE_1 = "FL - Florida";
+const DEFAULT_HOSPITAL_1 = "Lakewood Ranch Medical Center";
+const DEFAULT_STATE_2 = "CA - California";
+const DEFAULT_HOSPITAL_2 = "Marian Regional Medical Center";
+
+
 export const CostCompare = () => {
   const [states, setStates] = useState<string[]>([]);
   const [selectedState1, setSelectedState1] = useState("");
@@ -22,6 +28,8 @@ export const CostCompare = () => {
       try {
         const statesData = await fetchStates();
         setStates(statesData);
+        setSelectedState1(DEFAULT_STATE_1);
+      setSelectedState2(DEFAULT_STATE_2);
       } catch (error) {
         console.error("Error loading states:", error);
       }
@@ -35,6 +43,9 @@ export const CostCompare = () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState1);
           setHospitals1(hospitalsData);
+          if (selectedState1 === DEFAULT_STATE_1) {
+            setSelectedHospital1(DEFAULT_HOSPITAL_1);
+          }
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState1}:`,
@@ -52,6 +63,9 @@ export const CostCompare = () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState2);
           setHospitals2(hospitalsData);
+          if (selectedState2 === DEFAULT_STATE_2) {
+            setSelectedHospital2(DEFAULT_HOSPITAL_2);
+          }
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState2}:`,
@@ -211,7 +225,8 @@ export const CostCompare = () => {
           </div>
         </div>
         {/* Dropdown & CostMap (Appears only after selections) */}
-        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4">
+        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative">
+
           <div className="flex flex-col sm:flex-row justify-between items-center py-5">
             {/* Left Side Text Updating Based on Selection */}
             <div className="text-lg font-bold text-black pb-4">
@@ -253,7 +268,13 @@ export const CostCompare = () => {
             </div>
           </div>
 
-          <CostMap />
+          {selectedHospital1 && selectedHospital2 ? (
+    <CostMap />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center text-center text-gray-600 text-base px-4">
+    Choose hospitals from the dropdowns above to view pricing comparison
+  </div>
+  )}
         </div>
       </div>
     </section>

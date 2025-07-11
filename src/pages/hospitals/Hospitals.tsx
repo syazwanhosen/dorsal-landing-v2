@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "@/store/hooks";
 import { NavbarSecondary } from "../../components/NavbarSecondary";
 import { Footer } from "../../components/Footer";
 import { ScrollToTop } from "../../components/ScrollToTop";

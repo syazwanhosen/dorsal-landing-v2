@@ -7,6 +7,7 @@ interface HospitalMapState {
   sortOption: "lowestPrice" | "shortestDistance";
   sidebarOpen: boolean;
   selectedLocation: [number, number] | null;
+  loading: boolean;
 }
 
 const initialState: HospitalMapState = {
@@ -15,7 +16,8 @@ const initialState: HospitalMapState = {
   selectedHospital: null, 
   sortOption: "lowestPrice",
   sidebarOpen: true,
-  selectedLocation: null
+  selectedLocation: null,
+  loading: false,
 };
 
 export const hospitalMapSlice = createSlice({
@@ -39,7 +41,10 @@ export const hospitalMapSlice = createSlice({
     },
     setSelectedLocation: (state, action: PayloadAction<[number, number] | null>) => {
       state.selectedLocation = action.payload;
-    }
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   }
 });
 
@@ -49,7 +54,8 @@ export const {
   setSelectedHospitals, 
   setSortOption, 
   setSidebarOpen, 
-  setSelectedLocation 
+  setSelectedLocation,
+  setLoading
 } = hospitalMapSlice.actions;
 
 export default hospitalMapSlice.reducer;

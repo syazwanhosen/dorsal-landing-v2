@@ -3,7 +3,7 @@ import {
   getServices,
   getSubCategoriesByHospital,
 } from "@/api/api";
-import { useAppSelector } from "@/store";
+import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 
 interface Service {

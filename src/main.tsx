@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { store, persistor } from "./store"; // ✅ Import Redux Persist
+import { store, persistor } from "@/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";

@@ -1,4 +1,3 @@
-// api.ts
 export interface Statistics {
   total_states: number;
   total_hospitals: number;
@@ -207,3 +206,5 @@ export const getServices = async (hospitalName: string, serviceCategory: string,
   if (!response.ok) throw new Error("Failed to fetch services");
   return response.json();
 };
+
+
