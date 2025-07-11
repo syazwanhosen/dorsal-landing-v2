@@ -50,5 +50,5 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
-    { path: "/redirect", element: <Canary /> },
+    { path: "/data/investor-dataroom", element: <Canary /> },
 ];

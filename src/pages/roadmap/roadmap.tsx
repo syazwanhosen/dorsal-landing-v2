@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/buttons/button"
 import { SteeringQuestions } from "@/components/roadmap/steering-questions";
-import { Badge } from "@/components/ui/badge";
 import Separator from "@/components/ui/separator";
 import { Search, Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
@@ -35,7 +34,7 @@ const FILTERS = [
 
 const Roadmap: React.FC = () => {
 
-  const [activeTab, setActiveTab] = useState("roadmap")
+  const [activeTab, _setActiveTab] = useState("roadmap")
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")

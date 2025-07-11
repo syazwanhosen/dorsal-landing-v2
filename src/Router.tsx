@@ -9,7 +9,7 @@ export default function AppRouter() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/data" element={<Data />} />
-        <Route path="/redirect" element={<Canary />} />
+        <Route path="/data/investor-dataroom" element={<Canary />} />
       </Routes>
     </Router>
   );

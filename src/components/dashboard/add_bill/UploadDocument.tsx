@@ -27,7 +27,7 @@ const DOCUMENT_TYPES = ["Itemized Bill", "Discharge Summary", "Medical Report"];
 export const UploadDocument = () => {
     const [documentType, setDocumentType] = useState("Itemized Bill");
     const [files, setFiles] = useState<File[]>([]);
-    const [file, setFile] = useState<File | null>(null);
+    const [file, _setFile] = useState<File | null>(null);
 
     const handleUpload = () => {
         if (!file) {

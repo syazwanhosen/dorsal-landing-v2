@@ -3,12 +3,24 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import { stateNames } from "../../utils/stateUtils";
 import { getColor } from "../../utils/colorUtils";
+import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 
 interface USMapProps {
   onStateHover: (stateName: string, price: string) => void;
   pricingData: Record<string, number>;
   minPrice: number;
   maxPrice: number;
+}
+
+function isFeatureCollection(
+  fc: unknown
+): fc is FeatureCollection<Geometry, GeoJsonProperties> {
+  return (
+    typeof fc === "object" &&
+    fc !== null &&
+    "features" in fc &&
+    Array.isArray((fc as any).features)
+  );
 }
 
 const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) => {
@@ -32,7 +44,14 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
     const path = d3.geoPath().projection(projection);
 
     d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then((us: any) => {
-      const states = topojson.feature(us, us.objects.states).features;
+      const statesFeature = topojson.feature(us, us.objects.states);
+
+      if (!isFeatureCollection(statesFeature)) {
+        console.error("Invalid states feature", statesFeature);
+        return;
+      }
+
+      const states = statesFeature.features; // TypeScript now knows this is an array!
 
       svg
         .selectAll("path")
@@ -54,7 +73,7 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
 
           return "#eee"; // Fallback for undefined or missing price
         })
-        .on("mouseover", function (event: any, d: any) {
+        .on("mouseover", function (_event: any, d: any) {
           const fips = d.id;
           const info = stateNames[fips];
           const abbr = info?.abbr;

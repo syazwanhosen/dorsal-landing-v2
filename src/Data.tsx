@@ -11,7 +11,7 @@ export default function Data() {
   return (
     <>
       <NavbarSecondary />
-      <Header />
+      <Header title="Data" />
       <TotalStats />
       <StatewisePricing />
       <HospitalPrices />

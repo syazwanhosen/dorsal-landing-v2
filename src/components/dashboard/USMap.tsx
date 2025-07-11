@@ -33,6 +33,7 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
 
     d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then((us: any) => {
       const statesFeature = topojson.feature(us, us.objects.states) as unknown as GeoJSON.FeatureCollection;
+      
       const states = statesFeature.features;
 
       svg

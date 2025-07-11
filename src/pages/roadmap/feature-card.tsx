@@ -43,7 +43,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
 
-  const handleVote = async (value: number, voteType: string) => {
+  const handleVote = async (value: number, _voteType: string) => {
     const stored = await getVote(feature.id);
 
     if (
@@ -171,7 +171,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
         <div className="flex flex-col items-center mr-4 w-16">
           <Button
             variant="ghost"
-            size="md"
+            size="default"
             className={`h-8 w-8 rounded-full ${hasVoted === "upvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
               }`}
             onClick={() => handleVote(1, 'upvote')}
@@ -182,7 +182,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
           <span className="font-semibold text-lg my-1">{votes}</span>
           <Button
             variant="ghost"
-            size="md"
+            size="default"
             className={`h-8 w-8 rounded-full ${hasVoted === "downvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
               }`}
             onClick={() => handleVote(-1, 'downvote')}
