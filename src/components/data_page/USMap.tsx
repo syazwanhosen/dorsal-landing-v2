@@ -44,14 +44,18 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
     const path = d3.geoPath().projection(projection);
 
     d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then((us: any) => {
-      const statesFeature = topojson.feature(us, us.objects.states);
+      
+      const statesFeature = topojson.feature(
+        us,
+        us.objects.states
+      ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
 
       if (!isFeatureCollection(statesFeature)) {
         console.error("Invalid states feature", statesFeature);
         return;
       }
 
-      const states = statesFeature.features; // TypeScript now knows this is an array!
+      const states = statesFeature.features; 
 
       svg
         .selectAll("path")
