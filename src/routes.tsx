@@ -4,6 +4,7 @@ import { lazy } from "react";
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
 
+
 // Lazy-loaded pages/components
 const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
@@ -22,6 +23,7 @@ const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
 const AppealOutcomesPage = lazy(() => import("./pages/audit/AppealOutcomes"));
+const Canary = lazy(() => import("./Canary"));
 
 export const appRoutes: RouteObject[] = [
     { path: "/", element: <App /> },
@@ -48,4 +50,5 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
+    { path: "/redirect", element: <Canary /> },
 ];
