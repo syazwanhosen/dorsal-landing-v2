@@ -1,5 +1,6 @@
 import nvidia from "../assets/nvidia.avif";
 import deepgram from "../assets/deepgram.svg";
+import mitsui from "../assets/mitsui.svg";
 import microsoft from "../assets/ms_forstartups.png";
 import amazon from "../assets/amazon.avif";
 import google from "../assets/google.png";
@@ -23,6 +24,15 @@ const sponsors: SponsorProps[] = [
       src={deepgram}
       alt={"Deepgram"}
       width={125}
+      
+    />,
+    name: "Deepgram",
+  },
+  {
+    icon: <img
+      src={mitsui}
+      alt={"Mitsui"}
+      width={75}
       
     />,
     name: "Deepgram",
