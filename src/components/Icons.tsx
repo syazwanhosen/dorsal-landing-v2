@@ -5,7 +5,7 @@ export const LogoIcon = () => {
     <img
       src={dorsal_logo}
       alt="Logo: A Shark Fin"
-      className="lucide lucide-panels-top-left mr-2 w-50 h-10 dark:filter dark:invert"
+      className="lucide lucide-panels-top-left mr-2 w-50 h-10"
       style={{ borderRadius: '4px' }}
     />
   );

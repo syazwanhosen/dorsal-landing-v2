@@ -15,7 +15,7 @@ import {
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/buttons/button";
 import { Menu } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
+// import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
 
 interface RouteProps {
@@ -66,7 +66,7 @@ export const Navbar = () => {
 
           {/* mobile */}
           <span className="flex md:hidden">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
 
             <Sheet
               open={isOpen}
@@ -129,7 +129,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <a
               href="https://calendly.com/abrarfrahman/30min/"
               className={`${buttonVariants({ variant: "default" })}`}
