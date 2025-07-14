@@ -23,6 +23,7 @@ const EnterManualData = lazy(() => import("./pages/add_bill/manual_data"));
 const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
 const AppealOutcomesPage = lazy(() => import("./pages/audit/AppealOutcomes"));
+const OldLandingPage = lazy(() => import("./pages/old_landingpage/App"));
 const Canary = lazy(() => import("./Canary"));
 
 export const appRoutes: RouteObject[] = [
@@ -50,5 +51,6 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
+    { path: "/old_landingpage", element: <OldLandingPage /> },
     { path: "/data/investor-dataroom", element: <Canary /> },
 ];
