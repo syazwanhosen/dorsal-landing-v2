@@ -26,7 +26,7 @@ export const Map = () => {
 export const CostMap = () => (
     <iframe
          id="chartFrame"
-        src="/public/cost_comparison.html"
+         src="/cost_comparison.html"
         width="100%"
         height="100%"
         title="Google Address Map"
