@@ -129,7 +129,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <a
               href="https://calendly.com/abrarfrahman/30min/"
               className={`${buttonVariants({ variant: "default" })}`}
