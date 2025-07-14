@@ -1,29 +1,26 @@
 import { Footer } from "./components/Footer";
-import { Hero } from "./components/Hero";
 import { Navbar } from "./components/Navbar";
-import { Newsletter } from "./components/Newsletter";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { FAQ } from "./components/FAQ";
 
-import { Services } from "./components/Services";
-import { Sponsors } from "./components/Sponsors";
+import { Hero } from "./components/Hero";
+import { UploadBill } from "./components/UploadBill";
+import { NameAndShame } from "./components/NameAndShame";
+import { Cta } from "./components/Cta";
+import { Testimonials } from "./components/Testimonials";
+import { Pricing } from "./components/Pricing";
+import { FAQ } from "./components/FAQ";
 
 function App() {
   return (
     <>
       <Navbar />
       <Hero />
-      <Sponsors />
-      {/*<About />*/}
-      {/*<HowItWorks />*/}
-      {/*<Features />*/}
-      <Services />
-      {/*<Cta />*/}
-      {/*<Testimonials />
-      <Pricing />*/}
-      <Newsletter />
+      <UploadBill />
+      <NameAndShame />
+      <Cta />
+      <Testimonials />
+      <Pricing />
       <FAQ />
-      {/*<Team />*/}
       <Footer />
       <ScrollToTop />
     </>

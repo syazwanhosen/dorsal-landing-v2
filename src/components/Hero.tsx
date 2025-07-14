@@ -1,61 +1,54 @@
-import { buttonVariants } from "./ui/buttons/button";
-import { HeroCards } from "./HeroCards";
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import React from "react";
+import { Search, FileText } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center py-4 md:py- gap-10">
-      <div className="text-center lg:text-start space-y-6">
-        <main className="text-5xl md:text-6xl font-bold">
-          <h1 className="inline">
-            {" "}
-            <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text animate-gradient">
-              AI agents
-            </span>{" "}
-            for managing
-          </h1>{" "}
-          your{" "}
-          <h2 className="inline">
-            <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text animate-gradient">
-              medical bills
-            </span>
-          </h2>
-        </main>
+    <div className="flex flex-col items-center bg-white min-h-screen py-16 px-4">
+      <h1 className="text-4xl font-bold text-center text-gray-900 mb-4">
+        Fight smarter, not harder.
+      </h1>
+      <p className="text-gray-600 text-center mb-8 text-lg">
+        Insights on pricing, procedures, providers and more!
+      </p>
 
-        <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-          Cut through hidden fees, secure fair rates, and take control of your healthcare costs.
+      <div className="flex flex-wrap justify-center gap-4 mb-6">
+        {["MRI with contrast", "Colonoscopy", "Cesarean"].map((item) => (
+          <div
+            key={item}
+            className="flex items-center border rounded-full px-4 py-2 text-purple-700 border-purple-300 hover:shadow-md transition-all"
+          >
+            <span className="mr-2">{item}</span>
+            <Search size={16} />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center w-full max-w-xl rounded-full border border-gray-300 px-4 py-2 shadow-md">
+        <input
+          type="text"
+          placeholder="Search procedures, providers, or conditions..."
+          className="flex-grow outline-none text-gray-700 placeholder-gray-400"
+        />
+        <button className="bg-purple-600 text-white rounded-full px-4 py-2 ml-2 text-sm font-semibold hover:bg-purple-700 transition">
+          Search
+        </button>
+      </div>
+
+      <button className="mt-6 flex items-center bg-purple-600 text-white font-semibold px-6 py-2 rounded-full shadow hover:bg-purple-700 transition">
+        <FileText size={18} className="mr-2" />
+        NEGOTIATE YOUR BILL
+      </button>
+
+      {/* Section below */}
+      <div className="mt-20 text-center max-w-xl">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+          Know what you'll pay for <span className="text-purple-600">MRIs</span>
+        </h2>
+        <p className="text-gray-600 text-base">
+          Get real pricing data from people who've been there. Compare costs
+          across providers and negotiate with confidence.
         </p>
-
-        <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <a
-            href="#waitlist"
-            className={`w-full md:w-1/3 ${buttonVariants({
-              variant: "default",
-            })}`}
-          >
-            Get Started
-          </a>
-
-          <a
-            href="https://www.linkedin.com/company/dorsal-fyi"
-            target="_blank"
-            className={`w-full md:w-1/3 ${buttonVariants({
-              variant: "outline",
-            })}`}
-          >
-            Check us out on
-            <LinkedInLogoIcon className="ml-2 w-5 h-5" />
-          </a>
-        </div>
       </div>
-
-      {/* Hero cards sections */}
-      <div className="z-10">
-        <HeroCards />
-      </div>
-
-      {/* Shadow effect */}
-      <div className="shadow"></div>
-    </section>
+    </div>
   );
 };
