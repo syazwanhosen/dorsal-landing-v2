@@ -45,14 +45,14 @@ export const Hero = () => {
         </div>
 
         {/* Search Input */}
-        <div className="mt-6 w-full max-w-xl flex items-center bg-white border border-gray-300 rounded-full shadow-md px-4 py-2">
-          <Search size={16} className="mr-3"/>
+        <div className="mt-6 w-full max-w-xl flex items-center bg-white border border-gray-300 rounded-xl shadow-md2">
+          <Search size={16} className="mx-3"/>
           <input
             type="text"
             placeholder="Search procedures, providers, or conditions..."
             className="flex-grow outline-none text-gray-700 placeholder-gray-400 bg-transparent"
           />
-          <button className="bg-[#8B5FBF] hover:bg-purple-700 text-white font-semibold rounded-full px-4 py-2 text-sm transition">
+          <button className="bg-[#8B5FBF] hover:bg-purple-700 text-white rounded-xl px-6 py-2 text-sm transition">
             Search
           </button>
         </div>
