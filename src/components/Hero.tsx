@@ -24,7 +24,7 @@ export const Hero = () => {
         </span>
 
         {/* Title */}
-        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+        <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 leading-tight mb-4">
           Fight <span className="text-[#D247BF]">smarter</span>, not harder.
         </h1>
         <p className="text-gray-600 text-lg max-w-xl">
