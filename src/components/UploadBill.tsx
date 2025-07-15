@@ -37,7 +37,7 @@ export const UploadBill = () => {
         </p>
 
         {/* Example Upload List */}
-        <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+        {/* <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
           {[
             {
               title: "MRI Brain",
@@ -75,7 +75,7 @@ export const UploadBill = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
