@@ -44,7 +44,7 @@ export const NameAndShame = () => {
             </span>
           </span>
 
-          <h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mt-3 text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900 sm:text-4xl">
             Top Overbilling Hospitals
           </h2>
 

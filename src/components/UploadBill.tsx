@@ -17,8 +17,6 @@ export const UploadBill = () => {
     console.log("File rejected:", file.name, message);
   };
 
-
-
   const handleRemoveFile = () => {
     setFiles([]);
   };
@@ -32,7 +30,9 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] font-bold text-gray-900">Share Your Bill</h4>
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px]  font-bold text-gray-900">
+              Share Your Bill
+            </h4>
           </div>
           <p className="text-sm text-gray-600 mb-6 lg:mb-8">
             Your upload helps others understand medical costs better.
@@ -47,24 +47,26 @@ export const UploadBill = () => {
               multiple={false}
               className="w-full"
             >
-            <FileUploadDropzone className="border-0">
-  <div className="flex flex-col items-center gap-1">
-    <Upload className="mx-auto mb-3 text-[#8B5FBF]" size={32} />
-    <p className="font-medium text-gray-700 mb-1 lg:mb-2">
-      Drag & drop your medical bill
-    </p>
-    <p className="text-sm text-gray-500 mb-4 lg:mb-6">
-      Help others by sharing your pricing data anonymously
-    </p>
-    <div
-      className={`bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
-        files.length > 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-      }`}
-    >
-      Choose File
-    </div>
-  </div>
-</FileUploadDropzone>
+              <FileUploadDropzone className="border-0">
+                <div className="flex flex-col items-center gap-1">
+                  <Upload className="mx-auto mb-3 text-[#8B5FBF]" size={32} />
+                  <p className="font-medium text-gray-700 mb-1 lg:mb-2">
+                    Drag & drop your medical bill
+                  </p>
+                  <p className="text-sm text-gray-500 mb-4 lg:mb-6">
+                    Help others by sharing your pricing data anonymously
+                  </p>
+                  <div
+                    className={`bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
+                      files.length > 0
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                  >
+                    Choose File
+                  </div>
+                </div>
+              </FileUploadDropzone>
 
               <FileUploadList className="mt-4">
                 {files.map((file, index) => (
@@ -95,7 +97,9 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Users className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] font-bold text-gray-900">Recent Community Upload</h4>
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900">
+              Recent Community Upload
+            </h4>
           </div>
           <p className="text-sm text-gray-600 mb-4 lg:mb-6">
             See what others are paying and how much they've saved

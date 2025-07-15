@@ -19,7 +19,7 @@ const RoadmapCTA = () => {
             </span>
           </span>
 
-          <h2 className="text-3xl sm:text-4xl font-bold leading-tight mb-4">
+          <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold leading-tight mb-4">
             Where Will Dorsal Go Next? You Decide!
           </h2>
           <p className="text-base sm:text-lg text-white/90 mb-6">
