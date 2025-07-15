@@ -1,4 +1,3 @@
-import React from "react";
 import { Search, FileText } from "lucide-react";
 
 export const Hero = () => {
