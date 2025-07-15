@@ -66,14 +66,14 @@ export const Hero = () => {
         {/* Cards and Image Layer */}
         <div className="relative mt-5 mb-[8rem] w-full flex flex-col items-center z-10">
           {/* Statistic cards */}
-          <div className="absolute -left-10 lg:left-60 top-20 bg-white rounded-xl shadow-xl p-4 text-left md:w-72 lg:w-60">
+          <div className="absolute -left-10 lg:left-60 top-20 bg-white rounded-xl shadow-[0_12px_40px_0_rgba(0,0,0,0.25)] p-4 text-left md:w-72 lg:w-60">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[#A1A0BD]">Approved</p>
               <span className="text-xs bg-[#8770BC] text-white px-2 py-1 rounded-full mt-2 inline-block">+23%</span>
             </div>
             <p className="text-xl font-bold text-gray-800 mt-1">$783.02</p>
           </div>
-          <div className="absolute -left-10 lg:left-60 top-60 bg-white rounded-xl shadow-xl p-4 text-left md:w-72 lg:w-60">
+          <div className="absolute -left-10 lg:left-60 top-60 bg-white rounded-xl shadow-[0_12px_40px_0_rgba(0,0,0,0.25)] p-4 text-left md:w-72 lg:w-60">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[#A1A0BD]">Pending</p>
               <span className="text-xs bg-[#D247BF] text-white px-2 py-1 rounded-full mt-2 inline-block">+11%</span>
@@ -85,11 +85,11 @@ export const Hero = () => {
           <img
             src={person}
             alt="Person smiling"
-            className="w-[40rem] h-auto z-10"
+            className="w-[40rem] h-auto z-10 mb-[-2.5rem]"
           />
 
           {/* Graph card */}
-          <div className="absolute -right-20 lg:right-60 top-10 bg-white rounded-xl shadow-xl p-4 w-64 md:w-72 lg:w-60 h-60 flex flex-col justify-between">
+          <div className="absolute -right-20 lg:right-60 top-10 bg-white rounded-xl shadow-[0_12px_40px_0_rgba(0,0,0,0.25)] p-4 w-64 md:w-72 lg:w-60 h-60 flex flex-col justify-between">
           <div>
             <p className="text-sm text-gray-500 mb-1 text-left">Total Saving</p>
             <p className="text-xl font-bold text-gray-800 mb-2 text-left">$8532.52</p>
