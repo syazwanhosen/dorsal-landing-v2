@@ -9,6 +9,7 @@ import { Cta } from "./components/Cta";
 import { Testimonials } from "./components/Testimonials";
 import { Pricing } from "./components/Pricing";
 import { FAQ } from "./components/FAQ";
+import RoadmapCTA from "./components/RoadmapCTA";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Hero />
       <UploadBill />
       <NameAndShame />
+      <RoadmapCTA />
       <Cta />
       <Testimonials />
       <Pricing />
