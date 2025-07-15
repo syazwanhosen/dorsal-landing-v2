@@ -35,45 +35,55 @@ const hospitalData = [
 
 export const NameAndShame = () => {
   return (
-    <div className="bg-white py-16 px-4 md:px-10">
-      <div className="text-center mb-6">
-        <span className="text-xs font-semibold uppercase text-purple-500 tracking-wide">
-          Name and Shame
-        </span>
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mt-2">
-          Top Overbilling Hospitals
-        </h2>
-        <p className="mt-2 text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-          We're tracking hospitals with the highest patient complaint rates about overbilling.
-          Updated daily to help you avoid excessive medical bills.
-        </p>
-      </div>
+    <div className="bg-white lg:py-16 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+        <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#9F70FD1A] text-purple-700">
+  <span className="bg-gradient-to-r from-[#E770C1] to-[#9F70FD] bg-clip-text text-transparent">
+    NAME AND SHAME
+  </span>
+</span>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <thead className="bg-purple-600 text-white text-left text-sm">
-            <tr>
-              <th className="px-4 py-3">Rank</th>
-              <th className="px-4 py-3">Hospital / Network</th>
-              <th className="px-4 py-3">Location</th>
-              <th className="px-4 py-3">Incident Rate</th>
-              <th className="px-4 py-3">Overbilling Score</th>
-              <th className="px-4 py-3">Avg Bill Amount</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-700 text-sm divide-y divide-gray-200">
-            {hospitalData.map((item) => (
-              <tr key={item.rank}>
-                <td className="px-4 py-3">{item.rank}</td>
-                <td className="px-4 py-3">{item.name}</td>
-                <td className="px-4 py-3">{item.location}</td>
-                <td className="px-4 py-3">{item.rate}</td>
-                <td className="px-4 py-3">{item.score}</td>
-                <td className="px-4 py-3">{item.amount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+<h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
+  Top Overbilling Hospitals
+</h2>
+
+          <p className="mt-4  text-gray-600 mx-auto">
+            We're tracking hospitals with the highest patient complaint rates about overbilling. 
+            Updated daily to help you avoid excessive medical bills.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto scrollbar-thin ring-1 ring-black ring-opacity-5 rounded-lg">
+  <table className="min-w-full divide-y divide-gray-300">
+    <thead className="bg-[#8B5FBF] text-white">
+      <tr>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Rank</th>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Hospital / Network</th>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Location</th>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Incident Rate</th>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Overbilling Score</th>
+        <th scope="col" className="px-6 py-3 text-left text-base font-bold">Avg Bill Amount</th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+      {hospitalData.map((item) => (
+        <tr key={item.rank} className="hover:bg-gray-50">
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41]">{item.rank}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41]">{item.name}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41]">{item.location}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41]">{item.rate}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41] font-bold">{item.score}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2D2B41]">{item.amount}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+
+
       </div>
     </div>
   );
