@@ -22,7 +22,7 @@ export const UploadBill = () => {
   };
 
   return (
-    <section className="bg-white upload-bill">
+    <section className="bg-white upload-bill lg:pt-10">
       <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 p-6 bg-white">
         {/* Share Your Bill Card - Narrower Column */}
         <div className="bg-[#F5F1FF] p-6 lg:py-10 lg:px-12 rounded-xl border border-gray-200">
@@ -30,7 +30,7 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px]  font-bold text-gray-900">
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900">
               Share Your Bill
             </h4>
           </div>
@@ -97,7 +97,7 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Users className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900">
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px]  font-bold text-gray-900">
               Recent Community Upload
             </h4>
           </div>
