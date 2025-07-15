@@ -17,8 +17,8 @@ export const Hero = () => {
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center px-6 pt-16 text-center">
         {/* Badge */}
-        <span className="inline-block bg-purple-100 px-3 py-1 rounded-full mb-4">
-          <span className="text-sm bg-gradient-to-r from-[#F596D3] to-[#D247BF] text-transparent bg-clip-text font-semibold">
+        <span className="inline-block bg-[#F6F1FF] px-3 py-1 rounded-full mb-4">
+          <span className="text-sm bg-gradient-to-r from-[#E771C1] to-[#9F71FD] text-transparent bg-clip-text font-semibold">
             AI AGENTS
           </span>
         </span>
