@@ -31,7 +31,7 @@ const RoadmapCTA = () => {
           </button>
         </div>
 
-        {/* 📱 Mobile App Preview */}
+        {/* Mobile App Preview */}
         <div className="flex justify-center">
           <img
             src={ShotImg}
