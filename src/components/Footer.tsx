@@ -25,9 +25,17 @@ const Footer = () => {
         <div>
           <h3 className="text-base text-white font-bold mb-3">Product</h3>
           <ul className="space-y-1 text-sm text-white">
-            <li><Link to="#">Search Bills</Link></li>
-            <li><Link to="#">Upload Bills</Link></li>
-            <li><Link to="#">Negotiate</Link></li>
+            <li><Link to="/hospitals">Search Bills</Link></li>
+            <li><a href="/#UploadBill">Upload Bills</a></li>
+            <li>
+              <Link
+                to="#"
+                onClick={(e) => e.preventDefault()}
+                className="pointer-events-none opacity-50 cursor-not-allowed"
+              >
+                Negotiate
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -35,9 +43,19 @@ const Footer = () => {
         <div>
           <h3 className="text-base text-white font-bold mb-3">Company</h3>
           <ul className="space-y-1 text-sm text-white">
-            <li><Link to="#">About</Link></li>
-            <li><Link to="#">Privacy</Link></li>
-            <li><Link to="#">Terms</Link></li>
+            <li>
+              <a
+                href="https://www.linkedin.com/company/dorsal-fyi/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                About
+              </a>
+            </li>
+            <li><Link to="/privacy-policy">Privacy</Link></li>
+            <li><Link to="/terms-and-conditions">Terms</Link></li>
+            <li><Link to="/team">Team</Link></li>
+            <li><Link to="/security">Security</Link></li>
           </ul>
         </div>
 
@@ -45,9 +63,21 @@ const Footer = () => {
         <div>
           <h3 className="text-base text-white font-bold mb-3">Support</h3>
           <ul className="space-y-1 text-sm text-white">
-            <li><Link to="#">Help Center</Link></li>
-            <li><Link to="#">Contact</Link></li>
-            <li><Link to="#">Community</Link></li>
+            <li>
+              <a
+                href="https://substack.com/@dorsalfyi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a href="mailto:abrar@dorsal.fyi">Contact</a>
+            </li>
+            <li>
+              <span className="opacity-50 cursor-not-allowed">Community (Coming Soon)</span>
+            </li>
           </ul>
         </div>
       </div>

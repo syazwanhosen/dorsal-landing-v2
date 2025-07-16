@@ -36,7 +36,7 @@ export const Hero = () => {
           {["MRI with contrast", "Colonoscopy", "Cesarean"].map((item) => (
             <button
               key={item}
-              className="flex items-center gap-2 px-4 py-2 border border-[#8B5FBF] text-[#8B5FBF] border-2 rounded-full hover:shadow-md transition"
+              className="flex items-center gap-2 px-4 py-2 border border-[#8B5FBF] text-[#8B5FBF] rounded-full hover:shadow-md transition"
             >
               <span>{item}</span>
               <Search size={16} />
