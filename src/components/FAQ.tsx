@@ -58,14 +58,21 @@ export const FAQ = () => {
   return (
     <section
       id="faq"
-      className="container py-24 sm:py-32"
+      className="lg:py-16 py-6 text-center bg-white"
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">
-        Frequently Asked{" "}
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Questions
+      <div className="container lg:px-24">
+     <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] lg:mb-4 mb-2">
+          <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
+            GENERAL FAQ
+          </span>
         </span>
-      </h2>
+
+        {/* Title */}
+        <div className="text-center lg:mb-12 mb-4">
+          <h3 className="lg:text-4xl text-[20px] sm:text-[24px] md:text-[24px] font-bold text-gray-800">
+            Frequently Asked Question
+          </h3>
+        </div>
 
       <Accordion
         type="single"
@@ -81,20 +88,21 @@ export const FAQ = () => {
               {question}
             </AccordionTrigger>
 
-            <AccordionContent>{answer}</AccordionContent>
+            <AccordionContent> <p className="text-left">{answer}</p></AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
 
-      <h3 className="font-medium mt-4">
+      <h3 className="font-medium mt-4 text-left">
         Still have questions?{" "}
         <a
           href="#"
-          className="text-primary transition-all border-primary hover:border-b-2"
+          className="text-[#8770BC] transition-all border-primary hover:border-b-2"
         >
           Contact us
         </a>
       </h3>
+      </div>
     </section>
   );
 };
