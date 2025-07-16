@@ -9,13 +9,15 @@ import { Toaster } from "@/components/ui/sooner";
 import AppRouter from "./AppRouter";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
+import ScrollToTop from "./ScrollToTop";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}> {/* ✅ Ensure persisted state is restored */}
+      <PersistGate loading={<div>Loading...</div>} persistor={persistor}> 
         <ThemeProvider>
           <BrowserRouter>
+          <ScrollToTop />
             <AppRouter />
           </BrowserRouter>
           <Toaster />

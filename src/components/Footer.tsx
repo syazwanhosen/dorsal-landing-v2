@@ -8,12 +8,14 @@ const Footer = () => {
         {/* Brand Section */}
         <div>
           <div className="flex items-center mb-2">
-            <img
-              src={logo}
-              alt="Dorsal Logo"
-              className="lucide lucide-panels-top-left mr-2 w-50 h-10"
-              loading="lazy"
-            />
+            <Link to="/">
+              <img
+                src={logo}
+                alt="Dorsal Logo"
+                className="lucide lucide-panels-top-left mr-2 w-50 h-10"
+                loading="lazy"
+              />
+            </Link>
           </div>
           <p className="text-sm text-white lg:pr-24">
             Crowdsourcing medical bill transparency for everyone.
@@ -23,7 +25,7 @@ const Footer = () => {
         {/* Product */}
         <div>
           <h3 className="text-base text-white font-bold mb-3">Product</h3>
-          <ul className="space-y-1 text-sm text-white">
+          <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
               <Link to="/hospitals">Search Bills</Link>
             </li>
@@ -36,7 +38,7 @@ const Footer = () => {
                 onClick={(e) => e.preventDefault()}
                 className="pointer-events-none opacity-50 cursor-not-allowed"
               >
-                Negotiate
+                Negotiate (Coming Soon)
               </Link>
             </li>
           </ul>
@@ -45,7 +47,7 @@ const Footer = () => {
         {/* Company */}
         <div>
           <h3 className="text-base text-white font-bold mb-3">Company</h3>
-          <ul className="space-y-1 text-sm text-white">
+          <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
               <a
                 href="https://www.linkedin.com/company/dorsal-fyi/"
@@ -61,7 +63,6 @@ const Footer = () => {
             <li>
               <Link to="/terms-and-conditions">Terms</Link>
             </li>
-
             <li>
               <Link to="/team">Team</Link>
             </li>
@@ -74,7 +75,7 @@ const Footer = () => {
         {/* Support */}
         <div>
           <h3 className="text-base text-white font-bold mb-3">Support</h3>
-          <ul className="space-y-1 text-sm text-white">
+          <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
               <a
                 href="https://substack.com/@dorsalfyi"
