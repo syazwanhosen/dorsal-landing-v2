@@ -21,9 +21,7 @@ function App() {
       <NameAndShame />
       <RoadmapCTA />
       <Testimonials />
-      <Cta />
-      
-      <Pricing />
+    
       <FAQ />
       <Footer />
       <ScrollToTop />
