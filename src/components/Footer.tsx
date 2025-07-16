@@ -5,7 +5,6 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        
         {/* Brand Section */}
         <div>
           <div className="flex items-center mb-2">
@@ -25,8 +24,12 @@ const Footer = () => {
         <div>
           <h3 className="text-base text-white font-bold mb-3">Product</h3>
           <ul className="space-y-1 text-sm text-white">
-            <li><Link to="/hospitals">Search Bills</Link></li>
-            <li><a href="/#UploadBill">Upload Bills</a></li>
+            <li>
+              <Link to="/hospitals">Search Bills</Link>
+            </li>
+            <li>
+              <a href="/#UploadBill">Upload Bills</a>
+            </li>
             <li>
               <Link
                 to="#"
@@ -52,12 +55,19 @@ const Footer = () => {
                 About
               </a>
             </li>
-            <li><Link to="/privacy-policy">Privacy</Link></li>
-            <li><Link to="/terms-and-conditions">Terms</Link></li>
-          
-            <li><Link to="/team">Team</Link></li>
-            <li><Link to="/security">Security</Link></li>
-           
+            <li>
+              <Link to="/privacy-policy">Privacy</Link>
+            </li>
+            <li>
+              <Link to="/terms-and-conditions">Terms</Link>
+            </li>
+
+            <li>
+              <Link to="/team">Team</Link>
+            </li>
+            <li>
+              <Link to="/security">Security</Link>
+            </li>
           </ul>
         </div>
 
@@ -76,10 +86,11 @@ const Footer = () => {
             </li>
             <li>
               <a href="mailto:abrar@dorsal.fyi">Contact</a>
-
             </li>
             <li>
-              <span className="opacity-50 cursor-not-allowed">Community (Coming Soon)</span>
+              <span className="opacity-50 cursor-not-allowed">
+                Community (Coming Soon)
+              </span>
             </li>
           </ul>
         </div>

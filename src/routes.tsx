@@ -24,6 +24,10 @@ const Hospitals = lazy(() => import("./pages/hospitals/Hospitals"));
 const HospitalDetails = lazy(() => import("./pages/hospital_details/HospitalDetails"));
 const AppealOutcomesPage = lazy(() => import("./pages/audit/AppealOutcomes"));
 const OldLandingPage = lazy(() => import("./pages/old_landingpage/App"));
+const Team = lazy(() => import("./pages/team/Team"));
+const PrivacyPolicy = lazy(() => import("./pages/legal/privacy_policy"));
+const Security = lazy(() => import("./pages/legal/security"));
+const TermsConditions = lazy(() => import("./pages/legal/terms_conditions"));
 const Canary = lazy(() => import("./Canary"));
 
 export const appRoutes: RouteObject[] = [
@@ -52,5 +56,9 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospital_details", element: <HospitalDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
     { path: "/old_landingpage", element: <OldLandingPage /> },
+    { path: "/team", element: <Team /> },
+    { path: "/privacy-policy", element: <PrivacyPolicy /> },
+    { path: "/security", element: <Security /> },
+    { path: "/terms-and-conditions", element: <TermsConditions /> },
     { path: "/data/investor-dataroom", element: <Canary /> },
 ];
