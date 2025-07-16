@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import quotation from "@/assets/qutation.png"; // Adjust the path if needed
+import quotation from "@/assets/qutation.png"; 
 
 const Testimonials = () => {
   const testimonials = [
