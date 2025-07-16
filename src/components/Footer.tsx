@@ -54,8 +54,10 @@ const Footer = () => {
             </li>
             <li><Link to="/privacy-policy">Privacy</Link></li>
             <li><Link to="/terms-and-conditions">Terms</Link></li>
+             {/*  
             <li><Link to="/team">Team</Link></li>
             <li><Link to="/security">Security</Link></li>
+            */}
           </ul>
         </div>
 
@@ -74,6 +76,7 @@ const Footer = () => {
             </li>
             <li>
               <a href="mailto:abrar@dorsal.fyi">Contact</a>
+
             </li>
             <li>
               <span className="opacity-50 cursor-not-allowed">Community (Coming Soon)</span>
