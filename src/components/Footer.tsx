@@ -1,152 +1,68 @@
-import { LogoIcon } from "./Icons";
+import { Link } from "react-router-dom";
+import logo from "@/assets/Footer-logo.png";
 
-export const Footer = () => {
+const Footer = () => {
   return (
-    <footer id="footer" className="w-full py-4 mt-14">
-      {/*
-      <hr className="w-11/12 mx-auto" />
-      
-      <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-        <div className="col-span-full xl:col-span-2">
-          <a
-            href="/"
-            className="font-bold text-xl flex"
-            style={{ fontFamily: 'the-seasons, sans-serif' }}
-          >
-            <LogoIcon />
-          </a>
+    <footer className="bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        
+        {/* Brand Section */}
+        <div>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              alt="Dorsal Logo"
+              className="lucide lucide-panels-top-left mr-2 w-50 h-10"
+              loading="lazy"
+            />
+          </div>
+          <p className="text-sm text-white lg:pr-24">
+            Crowdsourcing medical bill transparency for everyone.
+          </p>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Follow Us</h3>
-          <div>
-            <a
-              href="https://github.com/abrarfrahman/dorsal-fyi-landing"
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Github
-            </a>
-          </div>
-
-          <div>
-            <a
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Twitter - Coming Soon
-            </a>
-          </div>
-
-          <div>
-            <a
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Substack - Coming Soon
-            </a>
-          </div>
+        {/* Product */}
+        <div>
+          <h3 className="text-base text-white font-bold mb-3">Product</h3>
+          <ul className="space-y-1 text-sm text-white">
+            <li><Link to="#">Search Bills</Link></li>
+            <li><Link to="#">Upload Bills</Link></li>
+            <li><Link to="#">Negotiate</Link></li>
+          </ul>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">About</h3>
-          <div>
-            <a
-              href="#howItWorks"
-              className="opacity-60 hover:opacity-100"
-            >
-              Features
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="#pricing"
-              className="opacity-60 hover:opacity-100"
-            >
-              Pricing
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="#waitlist"
-              className="opacity-60 hover:opacity-100"
-            >
-              Waitlist
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="#team"
-              className="opacity-60 hover:opacity-100"
-            >
-              Team
-            </a>
-          </div>
+        {/* Company */}
+        <div>
+          <h3 className="text-base text-white font-bold mb-3">Company</h3>
+          <ul className="space-y-1 text-sm text-white">
+            <li><Link to="#">About</Link></li>
+            <li><Link to="#">Privacy</Link></li>
+            <li><Link to="#">Terms</Link></li>
+          </ul>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Community</h3>
-          <div>
-            <a
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Discord - Coming Soon
-            </a>
-          </div>
-
-          <div>
-            <a
-              href="https://www.linkedin.com/company/dorsal-fyi/"
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </div>
-
-          <div>
-            <a
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Facebook - Coming Soon
-            </a>
-          </div>
-          
-          <div>
-            <a
-              className="opacity-60 hover:opacity-100"
-              target="_blank" rel="noopener noreferrer"
-            >
-              YouTube - Coming Soon
-            </a>
-          </div>
+        {/* Support */}
+        <div>
+          <h3 className="text-base text-white font-bold mb-3">Support</h3>
+          <ul className="space-y-1 text-sm text-white">
+            <li><Link to="#">Help Center</Link></li>
+            <li><Link to="#">Contact</Link></li>
+            <li><Link to="#">Community</Link></li>
+          </ul>
         </div>
-      </section>
-      */}
-      <section className="container mx-auto flex flex-col lg:flex-col items-center lg:items-start lg:space-y-4 relative">
-        {/* First row: Left-aligned Logo */}
-        <div className="w-full flex lg:justify-start justify-center">
-          <a
-            href="/"
-            className="font-bold text-xl"
-            style={{ fontFamily: "the-seasons, sans-serif" }}
-          >
-            <LogoIcon />
-          </a>
-        </div>
+      </div>
 
-        {/* Second row: Center-aligned text */}
-        <div className="w-full flex justify-center">
-          <h3 className="text-center text-sm">
-            &copy; Dorsal.fyi {new Date().getFullYear()}. Made with ♡ in CA.
-          </h3>
-        </div>
-      </section>
+      {/* Divider Line */}
+      <div className="max-w-7xl mx-auto px-6 mt-10">
+        <div className="border-t border-white/70" />
+      </div>
+
+      {/* Copyright */}
+      <div className="lg:mt-7 lg:mb-2 mt-4 text-center text-sm text-white">
+        © 2025 Dorsal. All rights reserved.
+      </div>
     </footer>
   );
 };
+
+export default Footer;

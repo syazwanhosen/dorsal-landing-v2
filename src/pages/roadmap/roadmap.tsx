@@ -10,8 +10,9 @@ import { FeatureCard } from "./feature-card";
 import { FeatureHighlight } from "./feature-highlight";
 import { VisualRoadmap } from "./visual-roadmap";
 import { NavbarSecondary } from "@/components/NavbarSecondary";
-import { Footer } from "@/components/Footer";
+
 import { ScrollToTop } from "@/components/ScrollToTop";
+import Footer from "@/components/Footer";
 
 const FILTERS = [
   {
@@ -294,7 +295,7 @@ const Roadmap: React.FC = () => {
         </main>
 
       </div>
-      <Footer />
+     <Footer />
       <ScrollToTop />
     </>
   );

@@ -1,12 +1,13 @@
 import { useAppSelector } from "@/store/hooks";
 import { NavbarSecondary } from "../../components/NavbarSecondary";
-import { Footer } from "../../components/Footer";
+
 import { ScrollToTop } from "../../components/ScrollToTop";
 import { Header } from "../../components/Header";
 import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
 import { MapResult } from "../../components/hospitals/MapResult";
 import { SearchSection } from "@/components/hospitals/SearchSection";
+import Footer from "@/components/Footer";
 
 export default function Hospitals() {
   const { searchResults } = useAppSelector((state) => state.hospital);
@@ -33,7 +34,7 @@ export default function Hospitals() {
           ) : <SearchSection />}
         </div>
 
-        <Footer />
+       <Footer />
         <ScrollToTop />
       </div>
     </>

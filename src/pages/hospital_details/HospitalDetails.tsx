@@ -2,11 +2,12 @@
 
 // Components
 import { NavbarSecondary } from "../../components/NavbarSecondary";
-import { Footer } from "../../components/Footer";
+
 import { ScrollToTop } from "../../components/ScrollToTop";
 import { Header } from "../../components/Header";
 import { DetailsCard } from "../../components/hospital_details/DetailsCard";
 import { OtherServices } from "../../components/hospital_details/OtherServices";
+import Footer from "@/components/Footer";
 
 
 
@@ -20,7 +21,7 @@ export default function Data() {
         <DetailsCard />
         <OtherServices />
       </div>
-      <Footer />
+     <Footer />
       <ScrollToTop />
     </div>
   );
