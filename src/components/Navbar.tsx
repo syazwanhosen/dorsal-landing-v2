@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,129 +12,233 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/buttons/button";
-import { Menu } from "lucide-react";
-// import { ModeToggle } from "./mode-toggle";
+import { Menu, ChevronDown } from "lucide-react";
 import { LogoIcon } from "./Icons";
 
 interface RouteProps {
   href: string;
   label: string;
+  disabled?: boolean;
+  group?: "about" | "terms";
 }
 
 const routeList: RouteProps[] = [
-  {
-    href: "#services",
-    label: "About",
-  },
-  /**
-  {
-    href: "#pricing",
-    label: "Pricing",
-  },
-  */
-  {
-    href: "#waitlist",
-    label: "Waitlist",
-  },
-  {
-    href: "#faq",
-    label: "FAQ",
-  },
-  {
-    href: "/data",
-    label: "Data",
-  }
+  { href: "/hospitals", label: "Search" },
+  { href: "#UploadBill", label: "Upload" },
+  { href: "#", label: "Community", disabled: true },
+  { href: "/data", label: "Data" },
+  { href: "https://www.linkedin.com/company/dorsal-fyi/", label: "Company", group: "about" },
+  { href: "/team", label: "Team", group: "about" },
+  { href: "/privacy-policy", label: "Privacy Policy", group: "terms" },
+  { href: "/terms-and-conditions", label: "Terms & Conditions", group: "terms" },
+  { href: "/security", label: "Security", group: "terms" },
 ];
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
+
+  const aboutRef = useRef(null);
+  const termsRef = useRef(null);
+
+  const mainNav = routeList.filter((r) => !r.group);
+  const aboutLinks = routeList.filter((r) => r.group === "about");
+  const termsLinks = routeList.filter((r) => r.group === "terms");
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        aboutRef.current &&
+        !aboutRef.current.contains(event.target) &&
+        termsRef.current &&
+        !termsRef.current.contains(event.target)
+      ) {
+        setAboutOpen(false);
+        setTermsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
+    <header className="sticky top-0 z-40 w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb' }}>
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
+        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between">
           <NavigationMenuItem className="font-bold flex">
-            <a
-              href="/"
-              className="ml-2 font-bold text-xl flex"
-              style={{ fontFamily: 'the-seasons, sans-serif' }}
-            >
+            <a href="/" className="ml-2 font-bold text-xl flex" style={{ fontFamily: 'the-seasons, sans-serif' }}>
               <LogoIcon />
             </a>
           </NavigationMenuItem>
 
-          {/* mobile */}
-          <span className="flex md:hidden">
-            {/* <ModeToggle /> */}
-
-            <Sheet
-              open={isOpen}
-              onOpenChange={setIsOpen}
-            >
+          {/* Mobile */}
+          <span className="flex md:hidden justify-end">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger className="px-2">
-                <Menu
-                  className="flex md:hidden h-5 w-5"
-                  onClick={() => setIsOpen(true)}
-                >
-                  <span className="sr-only">Menu Icon</span>
-                </Menu>
+                <Menu className="h-5 w-5" />
               </SheetTrigger>
-
-              <SheetContent side={"left"}>
+              <SheetContent side="left">
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
-                    dorsal.fyi
-                  </SheetTitle>
+                  <SheetTitle className="font-bold text-xl">dorsal.fyi</SheetTitle>
                 </SheetHeader>
-                <nav className="flex flex-col justify-center items-center gap-2 mt-4">
-                  {routeList.map(({ href, label }: RouteProps) => (
+                <nav className="flex flex-col items-center gap-2 mt-4">
+                  {mainNav.map(({ href, label, disabled }) => (
                     <a
                       key={label}
-                      href={href}
-                      onClick={() => setIsOpen(false)}
-                      className={buttonVariants({ variant: "ghost" })}
+                      href={disabled ? undefined : href}
+                      onClick={(e) => disabled ? e.preventDefault() : setIsOpen(false)}
+                      className={`${buttonVariants({ variant: "ghost" })} ${disabled ? "text-gray-400 cursor-not-allowed" : "text-center"}`}
                     >
-                      {label}
+                      {label} {disabled && "(Coming Soon)"}
                     </a>
                   ))}
-                  <a
-                    href="https://github.com/abrarfrahman/dorsal-fyi-landing"
-                    target="_blank"
-                    className={`w-[110px] border ${buttonVariants({
-                      variant: "secondary",
-                    })}`}
-                  >
-                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
-                    Github
-                  </a>
+
+                  {/* About dropdown */}
+                  <div className="w-full flex flex-col items-center">
+                    <button
+                      onClick={() => {
+                        setAboutOpen(!aboutOpen);
+                        setTermsOpen(false);
+                      }}
+                      className="flex items-center justify-center w-11/12 px-4 py-2 text-sm font-medium text-center rounded"
+                    >
+                      About
+                      <ChevronDown className={`ml-2 h-4 w-4 transform transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {aboutOpen && (
+                      <div className="flex flex-col items-center w-full text-sm">
+                        {aboutLinks.map(({ href, label }) => (
+                          <a
+                            key={label}
+                            href={href}
+                            className="block w-full text-center px-4 py-2 hover:bg-gray-100 rounded"
+                            target={href.startsWith("http") ? "_blank" : undefined}
+                            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          >
+                            {label}
+                          </a>
+                        ))}
+                        <span className="block w-full text-center px-4 py-2 text-gray-400">Blog (Coming Soon)</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Terms dropdown */}
+                  <div className="w-full flex flex-col items-center">
+                    <button
+                      onClick={() => {
+                        setTermsOpen(!termsOpen);
+                        setAboutOpen(false);
+                      }}
+                      className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-center rounded"
+                    >
+                      Terms
+                      <ChevronDown className={`ml-2 h-4 w-4 transform transition-transform duration-300 ${termsOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {termsOpen && (
+                      <div className="w-full px-8 text-sm">
+                        {termsLinks.map(({ href, label }) => (
+                          <a key={label} 
+                            href={href} 
+                            className="block w-full text-center px-2 py-2 text-gray-400 hover:bg-gray-100 rounded"
+                            target={href.startsWith("http") ? "_blank" : undefined}
+                            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            >
+                            {label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
           </span>
 
-          {/* desktop */}
-          <nav className="hidden md:flex gap-2">
-            {routeList.map((route: RouteProps, i) => (
+          {/* Desktop */}
+          <nav className="hidden md:flex justify-center gap-2 items-center relative">
+            {mainNav.map(({ label, href, disabled }) => (
               <a
-                href={route.href}
-                key={i}
-                className={`text-[17px] ${buttonVariants({
-                  variant: "ghost",
-                })}`}
+                key={label}
+                href={disabled ? undefined : href}
+                onClick={disabled ? (e) => e.preventDefault() : undefined}
+                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${disabled ? "text-gray-400 cursor-not-allowed" : "hover:text-black"}`}
               >
-                {route.label}
+                {label}
               </a>
             ))}
+
+            {/* About Dropdown */}
+            <div ref={aboutRef} className="relative">
+              <button
+                onClick={() => {
+                  setAboutOpen(!aboutOpen);
+                  setTermsOpen(false);
+                }}
+                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${aboutOpen ? "text-black" : "text-gray-700"}`}
+              >
+                About <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform duration-300 ${aboutOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {aboutOpen && (
+                <ul className="absolute left-0 mt-2 bg-white border rounded shadow-md w-44 z-50 animate-fade-in">
+                  {aboutLinks.map(({ href, label }) => (
+                    <li key={label}>
+                      <a
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="block px-4 py-2 hover:bg-gray-100 text-sm font-medium"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                  <li>
+                    <span className="block px-4 py-2 text-sm text-gray-400 cursor-not-allowed">Blog (Coming Soon)</span>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Terms Dropdown */}
+            <div ref={termsRef} className="relative">
+              <button
+                onClick={() => {
+                  setTermsOpen(!termsOpen);
+                  setAboutOpen(false);
+                }}
+                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${termsOpen ? "text-black" : "text-gray-700"}`}
+              >
+                Terms <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform duration-300 ${termsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {termsOpen && (
+                <ul className="absolute left-0 mt-2 bg-white border rounded shadow-md w-56 z-50 animate-fade-in">
+                  {termsLinks.map(({ href, label }) => (
+                    <li key={label}>
+                      <a href={href} 
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="block px-4 py-2 hover:bg-gray-100 text-sm font-medium"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </nav>
 
-          <div className="hidden md:flex gap-2">
-            {/* <ModeToggle /> */}
-            <a
-              href="https://calendly.com/abrarfrahman/30min/"
-              className={`${buttonVariants({ variant: "default" })}`}
-            >
-              Book a Meeting →
+          <div className="hidden md:flex items-center justify-end gap-2">
+            <a href="/signin" className="text-sm px-4 font-medium rounded-md py-2 text-gray-700 hover:text-black hover:bg-gray-100">
+              Sign In
+            </a>
+            <a href="/signup" className="text-sm px-4 py-2 bg-[#8B5FBF] text-white rounded-md hover:bg-purple-700">
+              Sign Up
             </a>
           </div>
         </NavigationMenuList>
