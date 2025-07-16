@@ -22,7 +22,7 @@ export const UploadBill = () => {
   };
 
   return (
-    <section className="bg-white upload-bill lg:pt-10">
+    <section id="UploadBill" className="bg-white upload-bill lg:pt-10 scroll-mt-24">
       <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 p-6 bg-white">
         {/* Share Your Bill Card - Narrower Column */}
         <div className="bg-[#F5F1FF] p-6 lg:py-10 lg:px-12 rounded-xl border border-gray-200">
