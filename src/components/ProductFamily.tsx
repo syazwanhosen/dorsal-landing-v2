@@ -40,7 +40,7 @@ export const ProductFamily = () => {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative min-h-screen w-full overflow-hidden bg-white">
       <div className="absolute inset-0">
         <img
           src={union}
