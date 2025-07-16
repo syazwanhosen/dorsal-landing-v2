@@ -89,7 +89,7 @@ const Testimonials = () => {
               >
                 <div className="bg-white p-6 rounded-lg border border-black shadow-lg h-full font-sans">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-purple-700 font-bold text-lg">
+                    <h4 className="text-[#8B5FBF] font-bold text-lg">
                       John Smith
                     </h4>
                     <img
