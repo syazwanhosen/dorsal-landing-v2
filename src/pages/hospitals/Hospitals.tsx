@@ -16,7 +16,7 @@ export default function Hospitals() {
       <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">
           <NavbarSecondary />
-          <Header title="Hospitals" />
+          <Header title="Search Hospitals" />
           <SearchHospital />
           {searchResults ? (
             <>
