@@ -5,9 +5,10 @@ import { SearchSection } from "@/components/hospitals/SearchSection";
 import { NavbarSecondary } from "@/components/NavbarSecondary";
 
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { Footer } from "@/components/Footer";
+
 import { Header } from "@/components/Header";
 import { HospitalServiceSearchMap } from "@/components/hospitals_search/HospitalServiceSearchMap";
+import Footer from "@/components/Footer";
 
 export default function Hospitals() {
   const { serviceSearchResults } = useAppSelector(

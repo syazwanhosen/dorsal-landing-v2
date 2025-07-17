@@ -40,8 +40,8 @@ export const Navbar = () => {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
 
-  const aboutRef = useRef(null);
-  const termsRef = useRef(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const termsRef = useRef<HTMLDivElement>(null);
 
   const mainNav = routeList.filter((r) => !r.group);
   const aboutLinks = routeList.filter((r) => r.group === "about");
@@ -49,17 +49,21 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+  
       if (
         aboutRef.current &&
-        !aboutRef.current.contains(event.target) &&
         termsRef.current &&
-        !termsRef.current.contains(event.target)
+        !aboutRef.current.contains(target) &&
+        !termsRef.current.contains(target)
       ) {
         setAboutOpen(false);
         setTermsOpen(false);
       }
     };
+  
     document.addEventListener("mousedown", handleClickOutside);
+  
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

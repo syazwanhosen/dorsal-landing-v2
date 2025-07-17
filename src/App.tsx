@@ -1,4 +1,4 @@
-import { Footer } from "./components/Footer";
+
 import { Navbar } from "./components/Navbar";
 import { ScrollToTop } from "./components/ScrollToTop";
 
@@ -10,6 +10,7 @@ import { NameAndShame } from "./components/NameAndShame";
 import { FAQ } from "./components/FAQ";
 import RoadmapCTA from "./components/RoadmapCTA";
 import Testimonials from "./components/Testimonials";
+import Footer from "./components/Footer";
 
 function App() {
   return (

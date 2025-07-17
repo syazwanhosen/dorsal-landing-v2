@@ -105,7 +105,7 @@ export const OtherServices = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <section className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <section className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6 lg:pb-8">
       {/* Filter Card */}
       <div className="border rounded-lg p-4 shadow-sm col-span-1">
         <h3 className="text-md font-semibold mb-4">Other Services</h3>
