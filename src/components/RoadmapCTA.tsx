@@ -1,9 +1,9 @@
 import ShotImg from "/src/assets/Shot.png";
 import deisgnIcon from "@/assets/shape_icon.webp";
+import { Link } from "react-router-dom";
 
 const RoadmapCTA = () => {
   return (
-    
     <div
       className="relative flex items-center lg:bg-white overflow-hidden text-white 
              pt-8 pb-8 lg:py-12
@@ -28,9 +28,12 @@ const RoadmapCTA = () => {
             Make your voice heard and help our community prioritize our upcoming
             features.
           </p>
-          <button className="bg-white text-black text-sm font-normal px-6 py-3 rounded-md hover:bg-gray-100 transition">
+          <Link
+            to="/roadmap"
+            className="bg-white text-black text-sm font-normal px-6 py-3 rounded-md hover:bg-gray-100 transition"
+          >
             Contribute to Dorsal Product Roadmap
-          </button>
+          </Link>
         </div>
 
         {/* Mobile App Preview */}
@@ -44,18 +47,13 @@ const RoadmapCTA = () => {
         </div>
       </div>
       <img
-  src={deisgnIcon}
-  alt="Dorsal Design Icon"
-  className="hidden lg:block lg:absolute lg:left-[45%] lg:top-[40%] lg:w-[300px]
+        src={deisgnIcon}
+        alt="Dorsal Design Icon"
+        className="hidden lg:block lg:absolute lg:left-[45%] lg:top-[40%] lg:w-[300px]
              drop-shadow-xl rounded-xl"
-  loading="lazy"
-/>
-
-
-
-
+        loading="lazy"
+      />
     </div>
-   
   );
 };
 

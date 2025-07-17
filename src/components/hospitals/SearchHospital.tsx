@@ -6,7 +6,7 @@ import {
   setLoading,
   setSearchResults,
 } from "../../features/hospitalSlice";
-import { getStates, getCategories, getSubCategories, updateDropdowns, searchHospitals } from "@/api/api";
+import { getStates, getCategories, getSubCategories, updateDropdowns, searchHospitals } from "@/api/Hospital/api";
 
 export const SearchHospital = () => {
   const dispatch = useAppDispatch();

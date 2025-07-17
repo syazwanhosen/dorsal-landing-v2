@@ -2,7 +2,7 @@ import {
   getCategoriesByHospital,
   getServices,
   getSubCategoriesByHospital,
-} from "@/api/api";
+} from "@/api/Hospital/api";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 

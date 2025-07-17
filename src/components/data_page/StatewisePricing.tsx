@@ -3,7 +3,7 @@ import USMap from "./USMap";
 import SearchBar from "./SearchBar";
 import DataDisplay from "./DataDisplay";
 import { stateNames } from "../../utils/stateUtils";
-import { fetchCategories, fetchPricingData } from "../../api/api";
+import { fetchCategories, fetchPricingData } from "../../api/Hospital/api";
 import { getColor } from "../../utils/colorUtils";
 
 interface PriceItem {

@@ -17,7 +17,7 @@ import {
 
 import hospital from "@/assets/hospital.png";
 import location from "@/assets/location-pin.svg";
-import { fetchHospitalMetadata } from "@/api/api";
+import { fetchHospitalMetadata } from "@/api/Hospital/api";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
 
 
