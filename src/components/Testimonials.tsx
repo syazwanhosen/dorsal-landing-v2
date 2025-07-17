@@ -1,148 +1,102 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from 'react';
 import quotation from "@/assets/qutation.png";
 
+const testimonials = [
+  { id: 1, quote: "The transparency in billing blew my mind. I finally feel in control." },
+  { id: 2, quote: "Such a relief to know what others paid before heading to the hospital." },
+  { id: 3, quote: "Negotiated my bill and saved RM800. This app is gold!" },
+  { id: 4, quote: "Uploading bills was seamless. Proud to help the community." },
+  { id: 5, quote: "I was able to compare bills and get clarity before surgery." },
+  { id: 6, quote: "Effortless upload and reliable cost estimates — total game-changer." },
+  { id: 7, quote: "This platform saved me time and stress. Highly recommended." },
+  { id: 8, quote: "The breakdowns helped me ask the right questions at the hospital." },
+];
+
 const Testimonials = () => {
-  const testimonials = [
-    {
-      id: 1,
-      quote: "The transparency in billing blew my mind. I finally feel in control.",
-    },
-    {
-      id: 2,
-      quote: "Such a relief to know what others paid before heading to the hospital.",
-    },
-    { id: 3, quote: "Negotiated my bill and saved RM800. This app is gold!" },
-    {
-      id: 4,
-      quote: "Uploading bills was seamless. Proud to help the community.",
-    },
-    {
-      id: 5,
-      quote: "I was able to compare bills and get clarity before surgery.",
-    },
-    {
-      id: 6,
-      quote: "Effortless upload and reliable cost estimates — total game-changer.",
-    },
-    {
-      id: 7,
-      quote: "This platform saved me time and stress. Highly recommended.",
-    },
-    {
-      id: 8,
-      quote: "The breakdowns helped me ask the right questions at the hospital.",
-    },
-  ];
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slidesToShow, setSlidesToShow] = useState(4);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setSlidesToShow(4);
-      else if (window.innerWidth >= 768) setSlidesToShow(2);
-      else setSlidesToShow(1);
+    const debounce = (func: () => void, delay: number) => {
+      let timeout: NodeJS.Timeout;
+      return () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(func, delay);
+      };
     };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const calculateAnimation = () => {
+      if (!sliderRef.current || !contentRef.current) return;
+      const contentWidth = contentRef.current.scrollWidth / 2;
+      sliderRef.current.style.setProperty('--marquee-distance', `-${contentWidth}px`);
+      sliderRef.current.style.setProperty('--marquee-duration', `${contentWidth / 100}s`);
+    };
+    const debouncedCalculate = debounce(calculateAnimation, 100);
+    calculateAnimation();
+    window.addEventListener('resize', debouncedCalculate);
+    return () => window.removeEventListener('resize', debouncedCalculate);
   }, []);
-
-  // Auto-slide every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => {
-        const maxIndex = Math.ceil(testimonials.length / slidesToShow) - 1;
-        const currentGroup = Math.floor(prev / slidesToShow);
-        return currentGroup >= maxIndex ? 0 : (currentGroup + 1) * slidesToShow;
-      });
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [slidesToShow, testimonials.length]);
 
   return (
     <div className="lg:pt-20 lg:pb-20 pt-8 pb-8 bg-white">
-      <div className="container mx-auto text-center">
-        {/* Gradient Badge */}
+      <div className="mx-auto text-center px-4">
+        {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
-          <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
-            TESTIMONIALS
-          </span>
+          <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">TESTIMONIALS</span>
         </span>
 
         {/* Title */}
         <div className="text-center mb-6 lg:mb-10">
-          <h3 className="lg:text-4xl text-[20px] sm:text-[24px] md:text-[24px] font-bold text-gray-800">
-            Walls Of Love
-          </h3>
+          <h3 className="lg:text-4xl text-[20px] sm:text-[24px] md:text-[24px] font-bold text-gray-800">Walls Of Love</h3>
+        </div>
         </div>
 
-        {/* Slider */}
-        <div className="relative overflow-hidden">
-          <div
-            className="flex transition-transform duration-300 ease-in-out"
-            style={{
-              transform: `translateX(-${currentSlide * (100 / slidesToShow)}%)`,
-            }}
-          >
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="flex-shrink-0 px-3"
-                style={{ width: `${100 / slidesToShow}%` }}
-              >
-                <div className="bg-white p-6 rounded-lg border border-black shadow-lg h-full font-sans">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-[#8B5FBF] font-bold text-lg">John Smith</h4>
-                    <img src={quotation} alt="Quotation" className="h-12 w-12 object-contain" />
-                  </div>
-                  <p className="text-black text-base leading-snug text-left mb-0">
-                    "{testimonial.quote}"
-                  </p>
+      <div className="relative overflow-hidden w-full" ref={sliderRef}>
+        <div 
+          className="flex flex-nowrap gap-6 animate-marquee"
+          ref={contentRef}
+          style={{
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+            backfaceVisibility: "hidden"
+          }}
+        >
+          {[...testimonials, ...testimonials].map((testimonial, index) => (
+            <div key={index} className="flex-shrink-0 px-3 w-full sm:w-1/2 lg:w-1/4">
+              <div className="bg-white p-6 rounded-lg border border-black shadow-lg h-full font-sans">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-[#8B5FBF] font-bold text-lg">John Smith</h4>
+                  <img 
+                    src={quotation} 
+                    alt="Quotation" 
+                    className="h-12 w-12 object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
+                <p className="text-black text-base leading-snug text-left mb-0">
+                  "{testimonial.quote}"
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dots */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {Array.from({ length: Math.ceil(testimonials.length / slidesToShow) }).map((_, index) => {
-            const isActive =
-              currentSlide >= index * slidesToShow &&
-              currentSlide < (index + 1) * slidesToShow;
-
-            return (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index * slidesToShow)}
-                className={`relative transition-all ${
-                  isActive ? "w-4 h-4" : "w-3 h-3 mt-[2px]"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              >
-                {!isActive && (
-                  <span className="absolute inset-0 rounded-full border border-black" />
-                )}
-                {isActive && (
-                  <span className="relative block w-full h-full">
-                    <span className="absolute inset-0 rounded-full bg-[#9F70FD]" />
-                    <span
-                      className="absolute inset-0 rounded-full border-2 border-white"
-                      style={{
-                        transform: "scale(0.8)",
-                        boxShadow: "0 0 0 1px #9F70FD",
-                      }}
-                    />
-                  </span>
-                )}
-              </button>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(var(--marquee-distance, -50%)); }
+        }
+        .animate-marquee {
+          animation: marquee var(--marquee-duration, 30s) linear infinite;
+          transform: translateZ(0);
+        }
+        @media (max-width: 768px) {
+          .animate-marquee {
+            animation-duration: calc(var(--marquee-duration, 30s) * 0.75);
+          }
+        }
+      `}</style>
     </div>
   );
 };
