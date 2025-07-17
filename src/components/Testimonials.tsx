@@ -28,7 +28,7 @@ const Testimonials = () => {
       if (!sliderRef.current || !contentRef.current) return;
       const contentWidth = contentRef.current.scrollWidth / 2;
       sliderRef.current.style.setProperty('--marquee-distance', `-${contentWidth}px`);
-      sliderRef.current.style.setProperty('--marquee-duration', `${contentWidth / 100}s`);
+      sliderRef.current.style.setProperty('--marquee-duration', `${contentWidth / 50}s`);
     };
     const debouncedCalculate = debounce(calculateAnimation, 100);
     calculateAnimation();
