@@ -1,6 +1,6 @@
 import { Upload, Users, Clock, TrendingUp, X } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   FileUpload,
   FileUploadDropzone,
@@ -16,6 +16,19 @@ export const UploadBill = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#UploadBill") {
+      // Use setTimeout to ensure DOM is ready
+      setTimeout(() => {
+        const el = document.getElementById("UploadBill");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+  }, [location]);
 
   const onFileReject = (file: File, message: string) => {
     console.log("File rejected:", file.name, message);
@@ -72,7 +85,7 @@ export const UploadBill = () => {
 
           {!isUploaded && !isUploading ? (
             <div>
-            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg px-2 py-4 lg:py-12 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+            <div className="bg-white border-2 border-dashed border-[#8770BC] rounded-lg px-2 py-4 lg:py-12 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
               <FileUpload
                 maxFiles={1}
                 maxSize={5 * 1024 * 1024}
@@ -84,7 +97,7 @@ export const UploadBill = () => {
               >
                 <FileUploadDropzone className="border-0">
                   <div className="flex flex-col items-center gap-1">
-                    <Upload className="mx-auto mb-3 text-[#8B5FBF]" size={32} />
+                    <Upload className="mx-auto mb-3 text-[#8770BC]" size={32} />
                     <p className="font-medium text-gray-700 mb-1 lg:mb-2">
                       Drag & drop your medical bill
                     </p>
@@ -92,7 +105,7 @@ export const UploadBill = () => {
                       Help others by sharing your pricing data anonymously
                     </p>
                     <div
-                      className={`bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
+                      className={`bg-[#8770BC] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
                         files.length > 0
                           ? "opacity-50 cursor-not-allowed"
                           : "cursor-pointer"
@@ -132,14 +145,14 @@ export const UploadBill = () => {
               </p>
             </div>
           ) : isUploading ? (
-            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8">
+            <div className="bg-white border-2 border-dashed border-[#8770BC] rounded-lg p-6 lg:p-8">
               <div className="text-center mb-4">
                 <p className="font-medium text-gray-700 mb-2">
                   Uploading your file...
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   <div
-                    className="bg-[#8B5FBF] h-2.5 rounded-full"
+                    className="bg-[#8770BC] h-2.5 rounded-full"
                     style={{ width: `${uploadProgress}%` }}
                   ></div>
                 </div>
@@ -150,7 +163,7 @@ export const UploadBill = () => {
             </div>
           ) : (
            
-              <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg px-2 py-4 lg:py-14 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+              <div className="bg-white border-2 border-dashed border-[#8770BC] rounded-lg px-2 py-4 lg:py-14 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
                 <div className="text-center">
                   <h5 className="lg:text-xl font-bold text-gray-800 mb-4 lg:px-10">
                     Thank you
@@ -166,7 +179,7 @@ export const UploadBill = () => {
                   </p>
                   <Link
                     to="/signup"
-                    className="inline-block bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
+                    className="inline-block bg-[#8770BC] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
                   >
                     Sign Up
                   </Link>
@@ -191,7 +204,7 @@ export const UploadBill = () => {
             See what others are paying and how much they've saved
           </p>
 
-          <div className="space-y-3 max-h-96 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8B5FBF] scrollbar-track-gray-100">
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8770BC] scrollbar-track-gray-100">
             {[
               {
                 title: "MRI Brain",
