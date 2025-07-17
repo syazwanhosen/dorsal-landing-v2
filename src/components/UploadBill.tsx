@@ -57,7 +57,7 @@ export const UploadBill = () => {
     <section className="bg-white upload-bill lg:pt-10" id="UploadBill">
       <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 p-6 bg-white">
         {/* Share Your Bill Card */}
-        <div className="bg-[#F5F1FF] p-6 lg:py-10 lg:px-12 rounded-xl border border-gray-200">
+        <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
@@ -71,7 +71,8 @@ export const UploadBill = () => {
           </p>
 
           {!isUploaded && !isUploading ? (
-            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+            <div>
+            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg px-2 py-4 lg:py-12 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
               <FileUpload
                 maxFiles={1}
                 maxSize={5 * 1024 * 1024}
@@ -123,6 +124,13 @@ export const UploadBill = () => {
                 </FileUploadList>
               </FileUpload>
             </div>
+            <p className="text-sm text-black mb-2 text-center py-2 lg:pt-4">
+                <Link to="/signup" className="text-[#D247BF] hover:underline">
+                  Sign up
+                </Link>{" "}
+                if you want to start saving
+              </p>
+            </div>
           ) : isUploading ? (
             <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8">
               <div className="text-center mb-4">
@@ -141,8 +149,8 @@ export const UploadBill = () => {
               </div>
             </div>
           ) : (
-            <div>
-              <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:py-12 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+           
+              <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg px-2 py-4 lg:py-14 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
                 <div className="text-center">
                   <h5 className="lg:text-xl font-bold text-gray-800 mb-4 lg:px-10">
                     Thank you
@@ -164,13 +172,8 @@ export const UploadBill = () => {
                   </Link>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-2 text-center py-2">
-                <Link to="/signup" className="text-[#D247BF] hover:underline">
-                  Sign up
-                </Link>{" "}
-                if you want to start saving
-              </p>
-            </div>
+            
+           
           )}
         </div>
 
@@ -188,7 +191,7 @@ export const UploadBill = () => {
             See what others are paying and how much they've saved
           </p>
 
-          <div className="space-y-3 max-h-80 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8B5FBF] scrollbar-track-gray-100">
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8B5FBF] scrollbar-track-gray-100">
             {[
               {
                 title: "MRI Brain",
