@@ -3,7 +3,7 @@ import {
   fetchStates,
   fetchHospitals,
   fetchPriceComparison,
-} from "../../api/api";
+} from "../../api/Hospital/api";
 import { CostMap } from "./Map";
 
 const DEFAULT_STATE_1 = "FL - Florida";

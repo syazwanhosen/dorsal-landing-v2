@@ -4,7 +4,7 @@ import {
   setServiceSearchLoading,
   setServiceSearchResults,
 } from "../../features/hospitalServiceSearchSlice";
-import { searchHospitalServices } from "@/api/api";
+import { searchHospitalServices } from "@/api/Hospital/api";
 
 export const HospitalServiceSearch = () => {
   const dispatch = useAppDispatch();

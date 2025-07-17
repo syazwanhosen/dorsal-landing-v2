@@ -1,5 +1,6 @@
 import { Upload, Users, Clock, TrendingUp, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FileUpload,
   FileUploadDropzone,
@@ -12,6 +13,9 @@ import {
 
 export const UploadBill = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   const onFileReject = (file: File, message: string) => {
     console.log("File rejected:", file.name, message);
@@ -19,90 +23,168 @@ export const UploadBill = () => {
 
   const handleRemoveFile = () => {
     setFiles([]);
+    setIsUploaded(false);
+    setUploadProgress(0);
+    setIsUploading(false);
+  };
+
+  const handleFileChange = (newFiles: File[]) => {
+    setFiles(newFiles);
+    if (newFiles.length > 0) {
+      startUploadProcess();
+    }
+  };
+
+  const startUploadProcess = () => {
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    // Simulate upload progress
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsUploading(false);
+          setIsUploaded(true);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 300);
   };
 
   return (
     <section className="bg-white upload-bill lg:pt-10" id="UploadBill">
-
       <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 p-6 bg-white">
-        {/* Share Your Bill Card - Narrower Column */}
+        {/* Share Your Bill Card */}
         <div className="bg-[#F5F1FF] p-6 lg:py-10 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900">
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px] font-bold text-gray-900">
               Share Your Bill
             </h4>
           </div>
-          <p className="text-sm text-gray-600 mb-6 lg:mb-8">
+          <p className="text-base text-[#6A6A6A] mb-6 lg:mb-8">
             Your upload helps others understand medical costs better.
           </p>
-          <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8 text-center hover:border-purple-700 transition-colors">
-            <FileUpload
-              maxFiles={1}
-              maxSize={5 * 1024 * 1024}
-              value={files}
-              onValueChange={setFiles}
-              onFileReject={onFileReject}
-              multiple={false}
-              className="w-full"
-            >
-              <FileUploadDropzone className="border-0">
-                <div className="flex flex-col items-center gap-1">
-                  <Upload className="mx-auto mb-3 text-[#8B5FBF]" size={32} />
-                  <p className="font-medium text-gray-700 mb-1 lg:mb-2">
-                    Drag & drop your medical bill
-                  </p>
-                  <p className="text-sm text-gray-500 mb-4 lg:mb-6">
-                    Help others by sharing your pricing data anonymously
-                  </p>
-                  <div
-                    className={`bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
-                      files.length > 0
-                        ? "opacity-50 cursor-not-allowed"
-                        : "cursor-pointer"
-                    }`}
-                  >
-                    Choose File
-                  </div>
-                </div>
-              </FileUploadDropzone>
 
-              <FileUploadList className="mt-4">
-                {files.map((file, index) => (
-                  <FileUploadItem
-                    key={index}
-                    value={file}
-                    className="border-gray-200 bg-gray-50"
-                  >
-                    <div className="w-[40px] h-[40px] overflow-hidden rounded-md border border-gray-200">
-                      <FileUploadItemPreview className="object-cover w-full h-full" />
+          {!isUploaded && !isUploading ? (
+            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+              <FileUpload
+                maxFiles={1}
+                maxSize={5 * 1024 * 1024}
+                value={files}
+                onValueChange={handleFileChange}
+                onFileReject={onFileReject}
+                multiple={false}
+                className="w-full"
+              >
+                <FileUploadDropzone className="border-0">
+                  <div className="flex flex-col items-center gap-1">
+                    <Upload className="mx-auto mb-3 text-[#8B5FBF]" size={32} />
+                    <p className="font-medium text-gray-700 mb-1 lg:mb-2">
+                      Drag & drop your medical bill
+                    </p>
+                    <p className="text-sm text-gray-500 mb-4 lg:mb-6">
+                      Help others by sharing your pricing data anonymously
+                    </p>
+                    <div
+                      className={`bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
+                        files.length > 0
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
+                    >
+                      Choose File
                     </div>
-                    <FileUploadItemMetadata className="text-sm text-gray-700" />
-                    <FileUploadItemDelete asChild onClick={handleRemoveFile}>
-                      <button className="p-1 rounded-full hover:bg-gray-100">
-                        <X className="w-4 h-4 text-gray-500" />
-                      </button>
-                    </FileUploadItemDelete>
-                  </FileUploadItem>
-                ))}
-              </FileUploadList>
-            </FileUpload>
-          </div>
+                  </div>
+                </FileUploadDropzone>
+
+                <FileUploadList className="mt-4">
+                  {files.map((file, index) => (
+                    <FileUploadItem
+                      key={index}
+                      value={file}
+                      className="border-gray-200 bg-gray-50"
+                    >
+                      <div className="w-[40px] h-[40px] overflow-hidden rounded-md border border-gray-200">
+                        <FileUploadItemPreview className="object-cover w-full h-full" />
+                      </div>
+                      <FileUploadItemMetadata className="text-sm text-gray-700" />
+                      <FileUploadItemDelete asChild onClick={handleRemoveFile}>
+                        <button className="p-1 rounded-full hover:bg-gray-100">
+                          <X className="w-4 h-4 text-gray-500" />
+                        </button>
+                      </FileUploadItemDelete>
+                    </FileUploadItem>
+                  ))}
+                </FileUploadList>
+              </FileUpload>
+            </div>
+          ) : isUploading ? (
+            <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:p-8">
+              <div className="text-center mb-4">
+                <p className="font-medium text-gray-700 mb-2">
+                  Uploading your file...
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div
+                    className="bg-[#8B5FBF] h-2.5 rounded-full"
+                    style={{ width: `${uploadProgress}%` }}
+                  ></div>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  {uploadProgress}% complete
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="bg-white border-2 border-dashed border-[#8B5FBF] rounded-lg p-6 lg:py-12 lg:px-8 text-center hover:border-purple-700 transition-colors shadow-lg">
+                <div className="text-center">
+                  <h5 className="lg:text-xl font-bold text-gray-800 mb-4 lg:px-10">
+                    Thank you
+                    <br />
+                    for uploading your medical bill.
+                  </h5>
+
+                  <p className="lg:text-base text-sm text-gray-600 ">
+                    Want to start saving?
+                  </p>
+                  <p className="lg:text-base text-sm text-gray-600 mb-6 lg:px-10">
+                    Sign up now to unlock better rates and exclusive benefits.
+                  </p>
+                  <Link
+                    to="/signup"
+                    className="inline-block bg-[#8B5FBF] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600 mb-2 text-center py-2">
+                <Link to="/signup" className="text-[#D247BF] hover:underline">
+                  Sign up
+                </Link>{" "}
+                if you want to start saving
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Recent Community Upload Card - Wider Column */}
+        {/* Recent Community Upload Card */}
         <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:px-12 lg:pb-1 pb-4 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Users className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px]  font-bold text-gray-900">
+            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px]  font-bold text-gray-900">
               Recent Community Upload
             </h4>
           </div>
-          <p className="text-sm text-gray-600 mb-4 lg:mb-6">
+          <p className="text-base text-[#6A6A6A] mb-4 lg:mb-6">
             See what others are paying and how much they've saved
           </p>
 
