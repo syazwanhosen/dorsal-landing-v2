@@ -36,7 +36,7 @@ export const Hero = () => {
           {["MRI with contrast", "Colonoscopy", "Cesarean"].map((item) => (
             <button
               key={item}
-              className="flex items-center gap-2 px-4 py-2 border border-[#8B5FBF] text-[#8B5FBF] rounded-full hover:shadow-md transition"
+              className="flex items-center gap-2 px-4 py-2 border border-[#8770BC] text-[#8770BC] rounded-full hover:shadow-md transition"
             >
               <span>{item}</span>
               <Search size={16} />
@@ -52,13 +52,13 @@ export const Hero = () => {
             placeholder="Search procedures, providers, or conditions..."
             className="flex-grow outline-none text-gray-700 placeholder-gray-400 bg-transparent"
           />
-          <button className="bg-[#8B5FBF] hover:bg-purple-700 text-white rounded-xl px-6 py-2 text-sm transition">
+          <button className="bg-[#8770BC] hover:bg-purple-700 text-white rounded-xl px-6 py-2 text-sm transition">
             Search
           </button>
         </div>
 
         {/* CTA Button */}
-        <button className="mt-6 flex items-center gap-2 bg-[#8B5FBF] hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+        <button className="mt-6 flex items-center gap-2 bg-[#8770BC] hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
           <FileText size={18} />
           NEGOTIATE YOUR BILL
         </button>

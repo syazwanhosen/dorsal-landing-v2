@@ -64,7 +64,7 @@ const Testimonials = () => {
             <div key={index} className="flex-shrink-0 px-3 w-full sm:w-1/2 lg:w-1/4">
               <div className="bg-white p-6 rounded-lg border border-black shadow-lg h-full font-sans">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-[#8B5FBF] font-bold text-lg">John Smith</h4>
+                  <h4 className="text-[#8770BC] font-bold text-lg">John Smith</h4>
                   <img 
                     src={quotation} 
                     alt="Quotation" 

@@ -57,7 +57,7 @@ export const NameAndShame = () => {
 
         <div className="overflow-x-auto scrollbar-thin ring-1 ring-black ring-opacity-5 rounded-lg">
           <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-[#8B5FBF] text-white">
+            <thead className="bg-[#8770BC] text-white">
               <tr>
                 <th
                   scope="col"
