@@ -103,7 +103,10 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="mailto:abrar@dorsal.fyi">Contact</a>
+              <a href="https://cal.com/abrar/15min" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >Contact</a>
             </li>
             <li>
               <a href="/coming-soon">Community </a>
