@@ -53,7 +53,7 @@ const Testimonials = () => {
 
       <div className="relative overflow-hidden w-full" ref={sliderRef}>
         <div 
-          className="flex flex-nowrap gap-6 animate-marquee"
+          className="flex flex-nowrap gap-0 animate-marquee"
           ref={contentRef}
           style={{
             transformStyle: "preserve-3d",
