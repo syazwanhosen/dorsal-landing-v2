@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export const Hero = () => {
   return (
     <section className="relative bg-white">
-    
       {/* Main Content */}
       <div className="flex flex-col items-center px-6 pt-16 text-center">
         {/* Badge */}
@@ -21,7 +20,6 @@ export const Hero = () => {
         <p className="text-gray-600 text-lg max-w-xl">
           Insights on pricing, procedures, providers and more!
         </p>
-
         {/* CTA Button */}
         <div className="flex gap-10">
            <Link to="/hospitals">
