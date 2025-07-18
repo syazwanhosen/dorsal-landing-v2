@@ -1,4 +1,37 @@
+import { useState, useEffect } from "react";
+
+const phrases = [
+  "an MRI 🩻",
+  "a CT scan 💡",
+  "an ultrasound",
+  "a blood test",
+  "a biopsy",
+  "a flu shot 💉",
+  "a refill 💊",
+  "a colonoscopy",
+  "a mammogram 🍼",
+  "an operation",
+  "a follow-up",
+];
+
 export const Banner = () => {
+   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false); 
+      setTimeout(() => {
+        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setFade(true); 
+      }, 300); 
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const animatedPhrase = phrases[currentPhraseIndex];
+  
     return (
         <section className="banner bg-white lg:pt-12 pt-8">
       <div
@@ -47,12 +80,19 @@ export const Banner = () => {
   
      
         <div className="text-center px-4 mt-12 lg:absolute lg:bottom-12">
-  <h2 className="text-4xl font-semibold mb-6">
-    Know what you'll pay for <span className="font-bold">MRIs</span>
-  </h2>
-  <p className="max-w-xl mx-auto text-base">
-    Get real pricing data from people who’ve been there. Compare costs across providers and negotiate with confidence.
-  </p>
+     <h2 className="text-4xl font-semibold mb-10">
+            Know what you'll pay for{" "}
+            <span
+              className={`text-black font-semibold inline-block transition-opacity duration-300 ease-in-out ${
+                fade ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {animatedPhrase}
+            </span>
+          </h2>
+          <p className="max-w-xl text-base px-4">
+            Get real pricing data from people who’ve been there. Compare costs across providers and negotiate with confidence.
+          </p>
 </div>
 
       </div>
