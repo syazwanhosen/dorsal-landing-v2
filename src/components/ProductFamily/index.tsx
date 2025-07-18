@@ -70,6 +70,8 @@ const ProductFamily = () => {
   const objectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let animationFrameId: number;
+
     const updateHeight = () => {
       if (objectRef.current) {
         const objectWidth = objectRef.current.scrollWidth;
@@ -79,10 +81,12 @@ const ProductFamily = () => {
     };
 
     const handleScroll = () => {
-      if (containerRef.current) {
-        const offsetTop = -containerRef.current.offsetTop;
-        setTranslateX(offsetTop);
-      }
+      animationFrameId = requestAnimationFrame(() => {
+        if (containerRef.current) {
+          const offsetTop = -containerRef.current.offsetTop;
+          setTranslateX(offsetTop);
+        }
+      });
     };
 
     updateHeight();
@@ -90,10 +94,12 @@ const ProductFamily = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", updateHeight);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
 
   return (
     <section
@@ -120,7 +126,7 @@ const ProductFamily = () => {
           <div
             className="horizontal-translate-container"
             ref={objectRef}
-            style={{ transform: `translateX(${translateX}px)` }}
+            style={{ transform: `translate3d(${translateX}px, 0, 0)` }}
           >
             <div className="cards-container">
               <ProductCard />
