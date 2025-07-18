@@ -9,7 +9,7 @@ const ComingSoon = () => {
     <div className="justify-center h-screen bg-white">
       <Navbar />
       <div className="container text-center lg:pt-16 pt-4 pb-4 bg-white">
-        <h1 className="lg:text-7xl text-2xl font-bold">
+        <h1 className="md:text-7xl text-2xl font-bold">
           Coming <span className="text-pink">Soon</span>
         </h1>
         <h2 className="md:text-3xl md:my-6 my-3 text-gray-600">
