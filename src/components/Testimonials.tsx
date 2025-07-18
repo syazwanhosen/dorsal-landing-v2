@@ -37,7 +37,8 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <div className="lg:pt-20 lg:pb-20 pt-8 pb-8 bg-white">
+    <section className='Testimonial bg-white'>
+    <div className="lg:pt-20 pt-8 pb-8 container">
       <div className="mx-auto text-center px-4">
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
@@ -98,6 +99,7 @@ const Testimonials = () => {
         }
       `}</style>
     </div>
+    </section>
   );
 };
 

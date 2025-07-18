@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 
 const RoadmapCTA = () => {
   return (
+    <section className="bg-white">
     <div
-      className="relative flex items-center lg:bg-white overflow-hidden text-white 
+      className="container relative flex items-center lg:bg-white overflow-hidden text-white 
              pt-8 pb-8 lg:py-12
              bg-gradient-to-br from-[#864196] to-[#EB3897]
              lg:bg-[url('/src/assets/Roadmap-bg.webp')]
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
              lg:bg-gradient-none lg:h-[500px]"
     >
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-[1fr_0.7fr] items-center gap-10">
+      <div className=" px-6 grid grid-cols-1 md:grid-cols-[1fr_0.7fr] items-center gap-10">
         {/* 📝 Content Block */}
-        <div>
+        <div className="md:text-left text-center">
           <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white lg:mb-4 mb-2">
             <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
               ROADMAP
@@ -54,6 +55,7 @@ const RoadmapCTA = () => {
         loading="lazy"
       />
     </div>
+    </section>
   );
 };
 
