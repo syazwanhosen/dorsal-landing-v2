@@ -89,7 +89,7 @@ export const NavbarSecondary = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb' }}>
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between">
+        <NavigationMenuList className="container h-14 px-16 w-screen flex justify-between">
           <NavigationMenuItem className="font-bold flex">
             <a href="/" className="ml-2 font-bold text-xl flex" style={{ fontFamily: 'the-seasons, sans-serif' }}>
               <LogoIcon />
