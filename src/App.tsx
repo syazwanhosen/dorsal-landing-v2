@@ -12,6 +12,7 @@ import RoadmapCTA from "./components/RoadmapCTA";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import { Banner } from "./components/Banner";
+import ProductFamily from "./components/ProductFamily/index";
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
       <NameAndShame />
       <Experts />
       <RoadmapCTA />
-      <Testimonials /> 
+      <Testimonials />
+      <ProductFamily />
       <FAQ />
       <Footer />
       <ScrollToTop />
