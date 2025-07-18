@@ -103,7 +103,7 @@ const ProductFamily = () => {
 
   return (
     <section
-      className="horizontal-section bg-white
+      className="container px-0 horizontal-section bg-white
                  bg-gradient-to-br from-[#864196] to-[#EB3897]
                  lg:bg-[url('/src/assets/union.png')]
                  lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
