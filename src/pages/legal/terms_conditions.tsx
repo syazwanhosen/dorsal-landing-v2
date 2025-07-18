@@ -7,6 +7,15 @@ export default function TermsConditions() {
     <>
       <Navbar />
       <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-4 py-8 gap-8">
+
+        {/* Mobile Heading */}
+        <div className="md:hidden mb-4">
+          <h1 className="text-3xl font-bold">
+            <span className="text-gray-900">Terms and</span>{" "}
+            <span className="text-[#D247BF]">Conditions</span>
+          </h1>
+        </div>
+
         {/* Sidebar */}
         <aside className="md:w-1/4 sticky top-20">
           <nav className="space-y-2 text-md font-medium text-gray-700">
@@ -30,10 +39,13 @@ export default function TermsConditions() {
         {/* Main Content */}
         <main className="md:w-3/4 space-y-6 text-gray-800">
           
-            <h1 className="text-3xl font-bold mb-2">
+            {/* Desktop heading*/}
+            <div className="hidden md:block">
+              <h1 className="text-3xl font-bold mb-2">
                 <span className="text-gray-900">Terms and</span>{" "}
                 <span className="text-[#D247BF]">Conditions</span>
-            </h1>
+              </h1>
+            </div>
             <p className="mb-4"><strong>Last Updated:</strong> July 14th, 2025</p>
 
             <p>Your use of Dorsal Health Inc (“Dorsal”, “Dorsal.fyi”, “we,” “us,” or “our”) platform and associated services (“Services”) is governed by these Terms and Conditions (“Terms”). You accept these terms by using our services. You must not use our services if you disagree with any of the content.</p>

@@ -15,7 +15,7 @@ module.exports = {
         xl: '4rem',          // applies when screen ≥ 1280px
       },
       screens: {
-        xl: '1440px',        // set container max-width at 1400px
+        xl: '1536px',        // set container max-width at 1400px
       },
     },
     extend: {
@@ -71,10 +71,20 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "scrollLeft": {
+        '0%': { transform: 'translateX(0)' },
+        '100%': { transform: 'translateX(-50%)' },
+        },
+        "scrollRight": {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "scrollLeft": 'scrollLeft 80s linear infinite',
+        "scrollRight": 'scrollRight 80s linear infinite',
       },
     },
   },
