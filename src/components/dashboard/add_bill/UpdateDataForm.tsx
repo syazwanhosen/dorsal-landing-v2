@@ -146,7 +146,7 @@ export const UpdateDataForm: React.FC = () => {
 
             {/* Submit */}
             <div className="flex justify-end mt-6">
-                <Button type="submit" className="w-auto min-w-[120px] bg-[#8770BC]">
+                <Button type="submit" className="w-auto min-w-[120px] bg-purple">
                     Submit
                 </Button>
             </div>

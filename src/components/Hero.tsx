@@ -25,7 +25,7 @@ export const Hero = () => {
 
         {/* Title */}
         <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 leading-tight mb-4">
-          Fight <span className="text-[#D247BF]">smarter</span>, not harder.
+          Fight <span className="text-pink">smarter</span>, not harder.
         </h1>
         <p className="text-gray-600 text-lg max-w-xl">
           Insights on pricing, procedures, providers and more!
@@ -52,13 +52,13 @@ export const Hero = () => {
             placeholder="Search procedures, providers, or conditions..."
             className="flex-grow outline-none text-gray-700 placeholder-gray-400 bg-transparent"
           />
-          <button className="bg-[#8770BC] hover:bg-purple-700 text-white rounded-xl px-6 py-2 text-sm transition">
+          <button className="bg-purple hover:bg-purple-700 text-white rounded-xl px-6 py-2 text-sm transition">
             Search
           </button>
         </div>
 
         {/* CTA Button */}
-        <button className="mt-6 flex items-center gap-2 bg-[#8770BC] hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+        <button className="mt-6 flex items-center gap-2 bg-purple hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
           <FileText size={18} />
           NEGOTIATE YOUR BILL
         </button>
@@ -69,14 +69,14 @@ export const Hero = () => {
           <div className="absolute -left-10 lg:left-60 top-20 bg-white rounded-xl shadow-[0_12px_40px_0_rgba(0,0,0,0.25)] p-4 text-left md:w-72 lg:w-60">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[#A1A0BD]">Approved</p>
-              <span className="text-xs bg-[#8770BC] text-white px-2 py-1 rounded-full mt-2 inline-block">+23%</span>
+              <span className="text-xs bg-purple text-white px-2 py-1 rounded-full mt-2 inline-block">+23%</span>
             </div>
             <p className="text-xl font-bold text-gray-800 mt-1">$783.02</p>
           </div>
           <div className="absolute -left-10 lg:left-60 top-60 bg-white rounded-xl shadow-[0_12px_40px_0_rgba(0,0,0,0.25)] p-4 text-left md:w-72 lg:w-60">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[#A1A0BD]">Pending</p>
-              <span className="text-xs bg-[#D247BF] text-white px-2 py-1 rounded-full mt-2 inline-block">+11%</span>
+              <span className="text-xs bg-pink text-white px-2 py-1 rounded-full mt-2 inline-block">+11%</span>
             </div>
             <p className="text-xl font-bold text-gray-800 mt-1">$491.37</p>
           </div>

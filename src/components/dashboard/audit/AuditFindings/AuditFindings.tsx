@@ -126,7 +126,7 @@ export default function AuditFindings() {
           <p className="text-lg font-semibold text-black text-left md:text-left lg:text-left inline-flex items-center gap-2 relative pr-8">
             Select to Appeal{" "}
             <span
-              className="absolute top-[-4px] right-0 text-white bg-[#8770BC] rounded-full cursor-pointer flex items-center justify-center text-xs h-5 w-5"
+              className="absolute top-[-4px] right-0 text-white bg-purple rounded-full cursor-pointer flex items-center justify-center text-xs h-5 w-5"
               onClick={() => setModalOpen(true)}
             >
               i
