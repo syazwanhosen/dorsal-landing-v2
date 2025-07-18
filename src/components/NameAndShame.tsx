@@ -36,7 +36,7 @@ const hospitalData = [
 export const NameAndShame = () => {
   return (
     <div className="bg-white lg:py-16 py-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
         <div className="text-center mb-10">
           <span className="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#9F70FD1A] text-purple-700">
             <span className="bg-gradient-to-r from-[#E770C1] to-[#9F70FD] bg-clip-text text-transparent">

@@ -11,12 +11,14 @@ import { FAQ } from "./components/FAQ";
 import RoadmapCTA from "./components/RoadmapCTA";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
+import { Banner } from "./components/Banner";
 
 function App() {
   return (
     <>
       <Navbar />
       <Hero />
+      <Banner />
       <UploadBill />
       <NameAndShame />
       <RoadmapCTA />

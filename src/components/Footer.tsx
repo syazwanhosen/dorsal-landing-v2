@@ -3,8 +3,9 @@ import logo from "@/assets/Footer-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+    <section className="bg-white footer">
+    <footer className="container  bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
+      <div className="mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
         <div>
           <div className="flex items-center mb-2">
@@ -125,6 +126,7 @@ const Footer = () => {
         © 2025 Dorsal. All rights reserved.
       </div>
     </footer>
+    </section>
   );
 };
 
