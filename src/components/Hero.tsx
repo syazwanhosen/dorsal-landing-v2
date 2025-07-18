@@ -1,4 +1,5 @@
 import { Hospital, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -23,14 +24,18 @@ export const Hero = () => {
 
         {/* CTA Button */}
         <div className="flex gap-10">
-          <button className="mt-6 flex items-center gap-2 bg-purple hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
-            <Hospital size={18} />
-            SEARCH HOSPITAL
-          </button>
+           <Link to="/hospitals">
+            <button className="mt-6 flex items-center gap-2 bg-purple hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+              <Hospital size={18} />
+              SEARCH HOSPITAL
+            </button>
+          </Link>
+           <Link to="/coming-soon">
           <button className="mt-6 flex items-center gap-2 bg-pink hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
             <FileText size={18} />
             NEGOTIATE YOUR BILL
           </button>
+          </Link>
         </div>
       </div>
     </section>
