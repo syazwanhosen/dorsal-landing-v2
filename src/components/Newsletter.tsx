@@ -51,7 +51,7 @@ export const Newsletter = () => {
 
   return (
     <section id="waitlist" className="bg-white">
-      <div className="container pt-4 pb-6 lg:pb-20 text-center">
+      <div className="container pt-4 pb-6 md:pb-20 md:pt-12 text-center">
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
@@ -60,10 +60,10 @@ export const Newsletter = () => {
         </span>
 
         {/* Title */}
-        <h3 className="text-center ;g:text-3xl md:text-5xl font-bold">
+        <h3 className="text-center md:text-4xl  font-bold">
           Join Our <span className="text-pink">Waitlist</span>
         </h3>
-        <p className="lg:text-xl text-gray-600 font-normal text-muted-foreground text-center lg:mt-4 lg:mb-8 mt-2 mb-4">
+        <p className="md:text-xl text-gray-600 font-normal text-muted-foreground text-center lg:mt-4 lg:mb-8 mt-2 mb-4">
           We're launching soon. Keep up with our journey.
         </p>
 
