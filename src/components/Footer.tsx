@@ -20,6 +20,29 @@ const Footer = () => {
           <p className="text-sm text-white lg:pr-24">
             Crowdsourcing medical bill transparency for everyone.
           </p>
+          <details className="text-xs opacity-60 hover:opacity-100 w-64 mt-2">
+            <summary className="cursor-pointer underline">
+              Cookies Policy
+            </summary>
+            <div className="mt-1">
+              When you visit or log in to our website, cookies and similar
+              technologies may be used by our online data partners or vendors to
+              associate these activities with other personal information they or
+              others have about you, including by association with your email.
+              We (or service providers on our behalf) may then send
+              communications and marketing to these emails. You may opt out by
+              visiting{" "}
+              <a
+                href="https://app.retention.com/optout"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-500"
+              >
+                this link
+              </a>
+              .
+            </div>
+          </details>
         </div>
 
         {/* Product */}
@@ -33,13 +56,7 @@ const Footer = () => {
               <a href="/#UploadBill">Upload Bills</a>
             </li>
             <li>
-              <Link
-                to="#"
-                onClick={(e) => e.preventDefault()}
-                className="pointer-events-none opacity-50 cursor-not-allowed"
-              >
-                Negotiate (Coming Soon)
-              </Link>
+              <a href="/coming-soon">Negotiate </a>
             </li>
           </ul>
         </div>
@@ -86,12 +103,13 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="mailto:abrar@dorsal.fyi">Contact</a>
+              <a href="https://cal.com/abrar/15min" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >Contact</a>
             </li>
             <li>
-              <span className="opacity-50 cursor-not-allowed">
-                Community (Coming Soon)
-              </span>
+              <a href="/coming-soon">Community </a>
             </li>
           </ul>
         </div>

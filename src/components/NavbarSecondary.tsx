@@ -265,7 +265,7 @@ export const NavbarSecondary = () => {
             <a href="/login" className="text-sm px-4 font-medium rounded-md py-2 text-gray-700 hover:text-black hover:bg-gray-100">
               Sign In
             </a>
-            <a href="/signup" className="text-sm px-4 py-2 bg-[#8770BC] text-white rounded-md hover:bg-purple-700">
+            <a href="/signup" className="text-sm px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-700">
               Sign Up
             </a>
           </div>
