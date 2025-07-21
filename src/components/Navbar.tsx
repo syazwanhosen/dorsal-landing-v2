@@ -20,14 +20,14 @@ interface RouteProps {
   href: string;
   label: string;
   disabled?: boolean;
-  group?: "about" | "terms";
+  group?: "about" | "terms" | "data";
 }
 
 const routeList: RouteProps[] = [
-  { href: "/hospitals", label: "Search" },
+  { href: "/data", label: "Explore Data", group: "data" },
+  { href: "/hospitals", label: "Search Hospitals", group: "data" },
   { href: "#UploadBill", label: "Upload" },
   { href: "/coming-soon", label: "Community"},
-  { href: "/data", label: "Data" },
   { href: "https://www.linkedin.com/company/dorsal-fyi", label: "Company", group: "about" },
   { href: "/team", label: "Team", group: "about" },
   { href: "https://dorsalfyi.substack.com", label: "Blog", group: "about" },
@@ -38,17 +38,22 @@ const routeList: RouteProps[] = [
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dataOpenMobile, setDataOpenMobile] = useState(false);
   const [aboutOpenMobile, setAboutOpenMobile] = useState(false);
   const [termsOpenMobile, setTermsOpenMobile] = useState(false);
+  const [dataOpenDesktop, setDataOpenDesktop] = useState(false);
   const [aboutOpenDesktop, setAboutOpenDesktop] = useState(false);
   const [termsOpenDesktop, setTermsOpenDesktop] = useState(false);
 
+  const dataRefMobile = useRef<HTMLDivElement>(null);
   const aboutRefMobile = useRef<HTMLDivElement>(null);
   const termsRefMobile = useRef<HTMLDivElement>(null);
+  const dataRefDesktop = useRef<HTMLDivElement>(null);
   const aboutRefDesktop = useRef<HTMLDivElement>(null);
   const termsRefDesktop = useRef<HTMLDivElement>(null);
 
   const mainNav = routeList.filter((r) => !r.group);
+  const dataLinks = routeList.filter((r) => r.group === "data");
   const aboutLinks = routeList.filter((r) => r.group === "about");
   const termsLinks = routeList.filter((r) => r.group === "terms");
 
@@ -57,23 +62,29 @@ export const Navbar = () => {
     const target = event.target as Node;
 
     const clickedOutsideMobile =
+      dataRefMobile.current &&
       aboutRefMobile.current &&
       termsRefMobile.current &&
+      !dataRefMobile.current.contains(target) &&
       !aboutRefMobile.current.contains(target) &&
       !termsRefMobile.current.contains(target);
 
     const clickedOutsideDesktop =
+      dataRefDesktop.current &&
       aboutRefDesktop.current &&
       termsRefDesktop.current &&
+      !dataRefDesktop.current.contains(target) &&
       !aboutRefDesktop.current.contains(target) &&
       !termsRefDesktop.current.contains(target);
 
     if (clickedOutsideMobile) {
+      setDataOpenMobile(false);
       setAboutOpenMobile(false);
       setTermsOpenMobile(false);
     }
 
     if (clickedOutsideDesktop) {
+      setDataOpenDesktop(false);
       setAboutOpenDesktop(false);
       setTermsOpenDesktop(false);
     }
@@ -107,6 +118,41 @@ export const Navbar = () => {
                   <SheetTitle className="font-bold text-xl">dorsal.fyi</SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col items-center gap-2 mt-4">
+                  {/* Data dropdown */}
+                  <div className="w-full flex flex-col items-center">
+                    <button
+                      onClick={() => {
+                        setDataOpenMobile(!dataOpenMobile);
+                        setAboutOpenMobile(false);
+                        setTermsOpenMobile(false);
+                      }}
+                      className="flex items-center justify-center w-11/12 px-4 py-2 text-sm font-medium text-center rounded"
+                    >
+                      Data
+                      <ChevronDown className={`ml-2 h-4 w-4 transform transition-transform duration-300 ${dataOpenMobile ? "rotate-180" : ""}`} />
+                    </button>
+                    {dataOpenMobile && (
+                      <div className="flex flex-col items-center w-full text-sm">
+                        {dataLinks.map(({ href, label }) => (
+                          <a
+                            key={label}
+                            href={href}
+                            className="block w-full text-center px-4 py-2 hover:bg-gray-100 rounded"
+                            target={href.startsWith("http") ? "_blank" : undefined}
+                            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            onClick={() => {
+                              if (!href.startsWith("http")) {
+                                setIsOpen(false); // only close if it's internal
+                              }
+                            }}
+                          >
+                            {label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   {mainNav.map(({ href, label, disabled }) => (
                     <a
                       key={label}
@@ -123,6 +169,7 @@ export const Navbar = () => {
                     <button
                       onClick={() => {
                         setAboutOpenMobile(!aboutOpenMobile);
+                        setDataOpenMobile(false);
                         setTermsOpenMobile(false);
                       }}
                       className="flex items-center justify-center w-11/12 px-4 py-2 text-sm font-medium text-center rounded"
@@ -157,6 +204,7 @@ export const Navbar = () => {
                     <button
                       onClick={() => {
                         setTermsOpenMobile(!termsOpenMobile);
+                        setDataOpenMobile(false);
                         setAboutOpenMobile(false);
                       }}
                       className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-center rounded"
@@ -207,6 +255,36 @@ export const Navbar = () => {
 
           {/* Desktop */}
           <nav className="hidden md:flex justify-center gap-2 items-center relative">
+            {/* Data Dropdown */}
+            <div ref={dataRefDesktop} className="relative">
+              <button
+                onClick={() => {
+                  setDataOpenDesktop(!dataOpenDesktop);
+                  setAboutOpenDesktop(false);
+                  setTermsOpenDesktop(false);
+                }}
+                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${dataOpenDesktop ? "text-black" : "text-gray-700"}`}
+              >
+                Data <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform duration-300 ${dataOpenDesktop ? 'rotate-180' : ''}`} />
+              </button>
+              {dataOpenDesktop && (
+                <ul className="absolute left-0 mt-2 bg-white border rounded shadow-md w-48 z-50 animate-fade-in">
+                  {dataLinks.map(({ href, label }) => (
+                    <li key={label}>
+                      <a
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="block px-4 py-2 hover:bg-gray-100 text-sm font-medium"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
             {mainNav.map(({ label, href, disabled }) => (
               <a
                 key={label}
@@ -223,6 +301,7 @@ export const Navbar = () => {
               <button
                 onClick={() => {
                   setAboutOpenDesktop(!aboutOpenDesktop);
+                  setDataOpenDesktop(false);
                   setTermsOpenDesktop(false);
                 }}
                 className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${aboutOpenDesktop ? "text-black" : "text-gray-700"}`}
@@ -252,6 +331,7 @@ export const Navbar = () => {
               <button
                 onClick={() => {
                   setTermsOpenDesktop(!termsOpenDesktop);
+                  setDataOpenDesktop(false);
                   setAboutOpenDesktop(false);
                 }}
                 className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${termsOpenDesktop ? "text-black" : "text-gray-700"}`}
