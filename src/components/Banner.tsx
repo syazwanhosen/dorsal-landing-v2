@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import mobilebg from "@/assets/mobile-banner.webp";
 import desktopBanner from "@/assets/rectangle-1.webp";
 
 const phrases = [
@@ -34,53 +33,61 @@ export const Banner = () => {
 
   return (
     <section className="banner bg-white">
-      {/* Mobile Content (shown on mobile only) */}
-      <div className="lg:hidden relative h-[550px] bg-white">
+ 
+{/* Mobile Content (shown on mobile only) */}
+<div className="lg:hidden relative w-full sm:h-[600px] h-[600px] overflow-hidden">
+      {/* Full-screen Background Image */}
+      <div className="absolute inset-0 w-full h-full">
         <img
-          src={mobilebg}
+          src={desktopBanner}
           alt="Healthcare background"
-          className=" w-full h-full object-fill sm:object-scale-down pt-6"
+          className="w-full h-full object-cover object-center"
           loading="lazy"
+          style={{
+            minHeight: '100%',
+            minWidth: '100%',
+          }}
         />
-        {/* Card Box Positioned Bottom Right */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-[16rem] z-10 w-[220px] ml-12">
-          <div className="bg-white rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 text-left">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-[#A1A0BD]">Approved</p>
-              <span className="text-xs bg-purple text-white px-2 py-1 rounded-full">
-                +23%
-              </span>
-            </div>
-            <p className="text-xl font-bold text-gray-800 mt-1">$783.02</p>
-          </div>
-        </div>
+      </div>
 
-        {/* Text Content Centered Near Bottom */}
-        <div className="absolute bottom-[20px] w-full px-4 text-white text-center z-10">
-          <h2 className="text-2xl font-semibold">
-            Know what you'll pay for <br />
-            <span className="inline-block relative min-w-[160px] h-[40px] text-black">
-              {phrases.map((phrase, index) => (
-                <span
-                  key={index}
-                  className={`absolute inset-0 whitespace-nowrap transition-all duration-300 ease-in-out ${
-                    currentPhraseIndex === index
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-3"
-                  }`}
-                >
-                  {phrase}
-                </span>
-              ))}
-              <span className="invisible">{phrases[0]}</span>
-            </span>
-          </h2>
-          <p className="max-w-sm mx-auto text-white font-normal">
-            Get real pricing data from people who've been there. Compare costs
-            across providers and negotiate with confidence.
-          </p>
+      {/* Card Container - Fixed at Bottom of Image */}
+      <div className="absolute bottom-[35%] left-[60%] -translate-x-1/2 z-10 w-[220px]">
+        <div className="bg-white rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 text-left">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-semibold text-[#A1A0BD]">Approved</p>
+            <span className="text-xs bg-purple text-white px-2 py-1 rounded-full">+23%</span>
+          </div>
+          <p className="text-xl font-bold text-gray-800 mt-1">$783.02</p>
         </div>
       </div>
+
+      {/* Text Content - Fixed at Bottom of Screen */}
+      <div className="absolute bottom-[2%] w-full px-4 text-white text-center z-10">
+      <h2 className="text-2xl md:text-3xl font-semibold text-white text-center">
+              Know what you'll pay for{" "}<br></br>
+              <span className="inline-block relative min-w-[180px] h-[40px] text-black">
+                {phrases.map((phrase, index) => (
+                  <span
+                    key={index}
+                    className={`absolute inset-0 whitespace-nowrap transition-all duration-300 ease-in-out ${
+                      currentPhraseIndex === index
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-3"
+                    }`}
+                  >
+                    {phrase}
+                  </span>
+                ))}
+                <span className="invisible">{phrases[0]}</span>
+              </span>
+            </h2>
+        <p className="max-w-sm mx-auto text-white font-normal mt-2 text-sm md:text-base">
+          Get real pricing data from people who've been there. Compare costs across providers and negotiate with confidence.
+        </p>
+      </div>
+    </div>
+
+
 
       {/* Desktop Content (shown on desktop only) */}
       <div className="hidden lg:block relative container text-center px-0">
