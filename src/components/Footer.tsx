@@ -111,9 +111,8 @@ const Footer = () => {
               href="https://forms.gle/mEAD77cJjNadMtDQA"
               target="_blank"
               rel="noopener noreferrer"
-              className="opacity-50"
             >
-              Community (Waitlist)
+              Waitlist
             </a>
             </li>
           </ul>
