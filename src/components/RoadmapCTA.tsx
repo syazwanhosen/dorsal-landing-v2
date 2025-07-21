@@ -13,7 +13,7 @@ const RoadmapCTA = () => {
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
              lg:bg-gradient-none lg:h-[500px]"
     >
-      <div className=" px-6 grid grid-cols-1 md:grid-cols-[1fr_0.7fr] items-center gap-10">
+      <div className=" px-6 grid grid-cols-1 md:grid-cols-[1fr_0.7fr] items-center gap-10 w-full">
         {/* 📝 Content Block */}
         <div className="md:text-left text-center">
           <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white lg:mb-4 mb-2">

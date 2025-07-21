@@ -40,7 +40,7 @@ export const Banner = () => {
                   bg-gradient-to-br from-[#864196] to-[#EB3897]
                   lg:relative
                   lg:bg-white
-                  lg:bg-[url('@/assets/rectangle2.webp')]
+                  lg:bg-[url('@/assets/rectangle-1.webp')]
                   lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
                   lg:bg-gradient-none lg:h-[600px]"
       >
