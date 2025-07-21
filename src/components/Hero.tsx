@@ -28,7 +28,6 @@ export const Hero = () => {
               Find your hospital
             </button>
           </Link>
-
           <Link to="/coming-soon" className="min-w-[200px]">
             <button className="whitespace-nowrap uppercase flex items-center gap-2 bg-pink hover:bg-pink-700 text-white text-sm lg:text-lg font-semibold px-4 py-3 rounded-lg shadow-lg transition">
               <FileText size={20} />
