@@ -9,12 +9,12 @@ export const Hero = () => {
         {/* Badge */}
         <span className="inline-block bg-[#F6F1FF] px-3 py-1 rounded-full mb-4">
           <span className="text-sm bg-gradient-to-r from-[#E771C1] to-[#9F71FD] text-transparent bg-clip-text font-semibold">
-            AI AGENTS
+            WE GOT YOUR BACK
           </span>
         </span>
 
         {/* Title */}
-        <h1 className="text-4xl font-semibold text-gray-900 leading-tight mb-4">
+        <h1 className="text-5xl font-semibold text-gray-900 leading-tight mb-4">
           Fight <span className="text-pink">smarter</span>, not harder.
         </h1>
         <p className="text-gray-600 text-lg max-w-xl">
