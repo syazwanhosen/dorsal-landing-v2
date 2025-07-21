@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const phrases = [
   "an MRI 🩻",
-  "a CT scan 💡",
+  "a CT scan 🧠",
   "an ultrasound 🤰",
   "a blood test 🩸",
   "a biopsy 🔬",
