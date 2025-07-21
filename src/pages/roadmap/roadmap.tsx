@@ -9,7 +9,7 @@ import { Tabs, TabsList, TabsTrigger, } from "@/components/ui/tab"
 import { FeatureCard } from "./feature-card";
 import { FeatureHighlight } from "./feature-highlight";
 import { VisualRoadmap } from "./visual-roadmap";
-import { NavbarSecondary } from "@/components/NavbarSecondary";
+import { Navbar } from "@/components/Navbar";
 
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
@@ -93,7 +93,7 @@ const Roadmap: React.FC = () => {
 
   return (
     <>
-      <NavbarSecondary />
+      <Navbar />
       <div className="min-h-screen bg-gray-50 p-6 pt-0">
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">

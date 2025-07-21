@@ -1,5 +1,5 @@
 import "./Data.css";
-import { NavbarSecondary } from "./components/NavbarSecondary";
+import { Navbar } from "./components/Navbar";
 
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Header } from "./components/Header";
@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 export default function Data() {
   return (
     <>
-      <NavbarSecondary />
+      <Navbar />
       <Header title="Data" />
       <TotalStats />
       <StatewisePricing />

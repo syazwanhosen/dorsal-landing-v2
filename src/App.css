@@ -63,7 +63,7 @@ select {
     --radius: 0.5rem;
   }
 
-  .dark {
+  /*.dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
 
@@ -91,7 +91,7 @@ select {
     --border: 258 36% 59%;
     --input: 258 36% 59%;
     --ring: 263.4 70% 50.4%;
-  }
+  }*/
 
   * {
     @apply border-border;

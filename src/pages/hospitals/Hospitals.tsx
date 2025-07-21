@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/store/hooks";
-import { NavbarSecondary } from "../../components/NavbarSecondary";
+import { Navbar } from "../../components/Navbar";
 
 import { ScrollToTop } from "../../components/ScrollToTop";
 import { Header } from "../../components/Header";
@@ -15,7 +15,7 @@ export default function Hospitals() {
     <>
       <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">
-          <NavbarSecondary />
+          <Navbar />
           <Header title="Search Hospitals" />
           <SearchHospital />
           {searchResults ? (

@@ -21,7 +21,7 @@ function App() {
       <Hero />
       <Banner />
       <UploadBill />
-      <NameAndShame />
+      {/*<NameAndShame />*/}
       <Experts />
       <RoadmapCTA />
       <Testimonials />

@@ -4,7 +4,7 @@ import { lazy } from "react";
 // Layout
 import { SidebarLayout } from "./layouts/SidebarLayout";
 import ComingSoon from "./pages/coming-soon/ComingSoon";
-
+import UploadBill from "./pages/upload-bill/UploadBill";
 
 // Lazy-loaded pages/components
 const App = lazy(() => import("./App"));
@@ -37,6 +37,7 @@ export const appRoutes: RouteObject[] = [
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <Signup /> },
     { path: "/coming-soon", element: <ComingSoon /> },
+    { path: "/upload-bill", element: <UploadBill /> },
     {
         path: "/account",
         element: <SidebarLayout />,
