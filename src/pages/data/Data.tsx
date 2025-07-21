@@ -13,7 +13,7 @@ export default function Data() {
   return (
     <>
       <NavbarSecondary />
-      <Header title="Dashboard" />
+      <Header title="Explore Data" />
       <TotalStats />
       <StatewisePricing />
       <HospitalPrices />
