@@ -55,13 +55,13 @@ export const Newsletter = () => {
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
-            NEWSLETTER
+            WAITLIST
           </span>
         </span>
 
         {/* Title */}
         <h3 className="text-center md:text-4xl  font-bold">
-          Join Our <span className="text-pink">Waitlist</span>
+          Join The <span className="text-pink">Movement</span>
         </h3>
         <p className="md:text-xl text-gray-600 font-normal text-muted-foreground text-center lg:mt-4 lg:mb-8 mt-2 mb-4">
           We're launching soon. Keep up with our journey.
