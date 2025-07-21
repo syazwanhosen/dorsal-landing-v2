@@ -1,7 +1,7 @@
 
 
 // Components
-import { NavbarSecondary } from "../../components/NavbarSecondary";
+import { Navbar } from "../../components/Navbar";
 
 import { ScrollToTop } from "../../components/ScrollToTop";
 import { Header } from "../../components/Header";
@@ -16,7 +16,7 @@ export default function Data() {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-grow">
-        <NavbarSecondary />
+        <Navbar />
         <Header title="Hospital Details" />
         <DetailsCard />
         <OtherServices />
