@@ -23,7 +23,7 @@ export const Hero = () => {
         {/* CTA Button */}
         <div className="flex flex-wrap justify-center gap-4">
           <Link to="/hospitals" className="min-w-[200px]">
-            <button className="whitespace-nowrap uppercase flex items-center gap-2 bg-purple text-white text-sm lg:text-lg font-semibold px-4 py-3 rounded-lg shadow-lg transition">
+            <button className="whitespace-nowrap shadow-lg uppercase flex items-center gap-2 bg-purple text-white text-sm lg:text-lg font-semibold px-4 py-3 rounded-lg transition">
               <Hospital size={20} />
               Find your hospital
             </button>
