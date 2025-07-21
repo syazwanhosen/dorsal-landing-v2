@@ -2,7 +2,7 @@ import { ServiceSearchProcedureCard } from "@/components/hospitals_search/Servic
 import { useAppSelector } from "@/store/hooks";
 import { HospitalServiceSearch } from "@/components/hospitals_search/HospitalServiceSearch";
 import { SearchSection } from "@/components/hospitals/SearchSection";
-import { NavbarSecondary } from "@/components/NavbarSecondary";
+import { Navbar } from "@/components/Navbar";
 
 import { ScrollToTop } from "@/components/ScrollToTop";
 
@@ -20,7 +20,7 @@ export default function Hospitals() {
     <>
       <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">
-          <NavbarSecondary />
+          <Navbar />
           <Header title="Hospitals Service Search" />
           <HospitalServiceSearch />
           {serviceSearchResults ? (

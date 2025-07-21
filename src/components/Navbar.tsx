@@ -26,7 +26,7 @@ interface RouteProps {
 const routeList: RouteProps[] = [
   { href: "/data", label: "Explore Data", group: "data" },
   { href: "/hospitals", label: "Search Hospitals", group: "data" },
-  { href: "#UploadBill", label: "Upload" },
+  { href: "/upload-bill", label: "Upload" },
   { href: "/coming-soon", label: "Community"},
   { href: "https://www.linkedin.com/company/dorsal-fyi", label: "Company", group: "about" },
   { href: "/team", label: "Team", group: "about" },
@@ -100,7 +100,7 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb' }}>
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-16 w-screen flex justify-between">
+        <NavigationMenuList className="container h-14 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16 w-screen flex justify-between">
           <NavigationMenuItem className="font-bold flex">
             <a href="/" className="ml-2 font-bold text-xl flex" style={{ fontFamily: 'the-seasons, sans-serif' }}>
               <LogoIcon />
@@ -235,6 +235,7 @@ export const Navbar = () => {
                   </div>
 
                   <div className="w-full mt-4 flex flex-col gap-2 px-4">
+                  {/*  
                   <a
                     href="/login"
                     className="w-full text-sm text-center py-2 rounded-md text-gray-700 hover:text-black hover:bg-gray-100"
@@ -247,6 +248,13 @@ export const Navbar = () => {
                   >
                     Sign Up
                   </a>
+                  */}
+                  <div className="w-full flex flex-col gap-2 px-4">
+                    <a href="https://cal.com/abrar/15min" target="_blank"
+                      className="self-center text-sm text-center font-medium py-2 px-4 rounded-md bg-purple text-white hover:bg-purple-700">
+                      Book a Demo
+                    </a>
+                  </div>
                 </div>
                 </nav>
               </SheetContent>
@@ -357,11 +365,18 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex items-center justify-end gap-2">
+            {/* 
             <a href="/login" className="text-sm px-4 font-medium rounded-md py-2 text-gray-700 hover:text-black hover:bg-gray-100">
               Sign In
             </a>
             <a href="/signup" className="text-sm px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-700">
               Sign Up
+            </a>
+            */}
+            <a href="https://cal.com/abrar/15min"
+               target="_blank" 
+               className="text-sm text-center px-4 md:px-2 py-2 bg-purple font-medium text-white rounded-md hover:bg-purple-700">
+              Book a Demo
             </a>
           </div>
         </NavigationMenuList>
