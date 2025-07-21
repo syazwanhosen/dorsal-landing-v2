@@ -173,10 +173,7 @@ export default function TermsConditions() {
 
         <section id="section13">
             <h2 className="text-xl text-[#D247BF] font-bold mt-8 mb-2">13. Contact Us</h2>
-            <p>By using our Services, you agree to these Terms. If you have questions, email us at{" "}  
-            <a href="mailto:abrar@dorsal.fyi" className="text-[#D247BF] hover:underline">
-            abrar@dorsal.fyi
-            </a>.
+            <p>By using our Services, you agree to these Terms. If you have questions, email us at abrar [at] dorsal [dot] fyi
         </p>
         </section>
           

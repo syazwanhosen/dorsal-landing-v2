@@ -52,10 +52,7 @@ export default function security() {
         </p>
 
         <p>
-          If you have any questions regarding our security practices, please contact us at{" "}
-          <a href="mailto:abrar@dorsal.fyi" className="text-[#D247BF] hover:underline">
-            abrar@dorsal.fyi
-          </a>.
+          If you have any questions regarding our security practices, please contact us at abrar [at] dorsal [dot] fyi
         </p>
       </div>
 

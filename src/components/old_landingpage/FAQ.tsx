@@ -89,7 +89,8 @@ export const FAQ = () => {
       <h3 className="font-medium mt-4">
         Still have questions?{" "}
         <a
-          href="#"
+          href="https://cal.com/abrar/15min"
+          target="_blank"
           className="text-primary transition-all border-primary hover:border-b-2"
         >
           Contact us

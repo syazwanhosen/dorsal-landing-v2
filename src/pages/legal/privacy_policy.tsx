@@ -74,10 +74,7 @@ export default function privacy_policy() {
         <li><strong>Communication Preferences</strong>: Opt out of promotional emails</li>
       </ul>
       <p className="mb-4">
-        If you have any questions or concerns, please email us at{" "}
-        <a href="mailto:abrar@dorsal.fyi" className="text-[#D247BF] hover:underline">
-          abrar@dorsal.fyi
-        </a>.
+        If you have any questions or concerns, please reach us at abrar [at] dorsal [dot] fyi
       </p>
     </div>
 

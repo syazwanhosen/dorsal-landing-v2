@@ -82,16 +82,21 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Help Center
+                Resources
               </a>
             </li>
             <li>
-              <a href="mailto:abrar@dorsal.fyi">Contact</a>
+              <a href="https://cal.com/abrar/15min"  target="_blank">Demo</a>
             </li>
             <li>
-              <span className="opacity-50 cursor-not-allowed">
-                Community (Coming Soon)
-              </span>
+            <a
+              href="https://forms.gle/mEAD77cJjNadMtDQA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-50"
+            >
+              Community (Waitlist)
+            </a>
             </li>
           </ul>
         </div>
@@ -104,7 +109,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="lg:mt-7 lg:mb-2 mt-4 text-center text-sm text-white">
-        © 2025 Dorsal. All rights reserved.
+        © 2025 Dorsal Health. Made with ❤️‍🩹 in CA. All rights reserved.
       </div>
     </footer>
   );
