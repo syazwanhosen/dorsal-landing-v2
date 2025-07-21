@@ -233,7 +233,7 @@ const ProfileSetup = () => {
                   <Button
                     type="submit"
                     onClick={nextStep}
-                    className="bg-[#8770BC] text-white px-10 py-2 rounded-md shadow-md"
+                    className="bg-purple text-white px-10 py-2 rounded-md shadow-md"
                   >
                     Next
                   </Button>
@@ -316,7 +316,7 @@ const ProfileSetup = () => {
                   <Button
                     type="submit"
                     onClick={nextStep}
-                    className="bg-[#8770BC] text-white px-10 py-2 rounded-md shadow-md"
+                    className="bg-purple text-white px-10 py-2 rounded-md shadow-md"
                   >
                     Next
                   </Button>
@@ -390,7 +390,7 @@ const ProfileSetup = () => {
                 <div className="flex justify-end">
                   <Button
                     type="submit"
-                    className="bg-[#8770BC] text-white px-10 py-2 rounded-md shadow-md"
+                    className="bg-purple text-white px-10 py-2 rounded-md shadow-md"
                   >
                     Send
                   </Button>

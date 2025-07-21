@@ -183,7 +183,7 @@ export const Sidebar = ({
         {/* User Profile */}
         <div
           className={clsx(
-            "bg-[#8770BC] text-white flex items-center gap-3 rounded-xl mx-2",
+            "bg-purple text-white flex items-center gap-3 rounded-xl mx-2",
             isCollapsed ? "justify-center py-1" : "px-4 py-3"
           )}
         >

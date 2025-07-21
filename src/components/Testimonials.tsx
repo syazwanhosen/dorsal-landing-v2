@@ -28,7 +28,7 @@ const Testimonials = () => {
       if (!sliderRef.current || !contentRef.current) return;
       const contentWidth = contentRef.current.scrollWidth / 2;
       sliderRef.current.style.setProperty('--marquee-distance', `-${contentWidth}px`);
-      sliderRef.current.style.setProperty('--marquee-duration', `${contentWidth / 100}s`);
+      sliderRef.current.style.setProperty('--marquee-duration', `${contentWidth / 50}s`);
     };
     const debouncedCalculate = debounce(calculateAnimation, 100);
     calculateAnimation();
@@ -37,7 +37,8 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <div className="lg:pt-20 lg:pb-20 pt-8 pb-8 bg-white">
+    <section className='Testimonial bg-white'>
+    <div className="lg:pt-20 pt-8 pb-8 container px-0 max-w">
       <div className="mx-auto text-center px-4">
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
@@ -52,7 +53,7 @@ const Testimonials = () => {
 
       <div className="relative overflow-hidden w-full" ref={sliderRef}>
         <div 
-          className="flex flex-nowrap gap-6 animate-marquee"
+          className="flex flex-nowrap gap-0 animate-marquee"
           ref={contentRef}
           style={{
             transformStyle: "preserve-3d",
@@ -98,6 +99,7 @@ const Testimonials = () => {
         }
       `}</style>
     </div>
+    </section>
   );
 };
 

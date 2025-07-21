@@ -187,7 +187,7 @@ export const UploadDocument = () => {
         <div className="w-full mt-4">
           <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="absolute top-0 left-0 h-full bg-[#8770BC] transition-all duration-300"
+              className="absolute top-0 left-0 h-full bg-purple transition-all duration-300"
               style={{ width: `${uploadProgress}%` }}
             />
           </div>
@@ -197,7 +197,7 @@ export const UploadDocument = () => {
       <div className="flex justify-end mt-6">
         <Button
           onClick={handleUpload}
-          className="w-auto min-w-[120px] bg-[#8770BC]"
+          className="w-auto min-w-[120px] bg-purple"
           disabled={loading}
         >
           {loading ? "Uploading..." : "Upload"}

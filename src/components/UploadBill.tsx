@@ -20,7 +20,6 @@ export const UploadBill = () => {
 
   useEffect(() => {
     if (location.hash === "#UploadBill") {
-      // Use setTimeout to ensure DOM is ready
       setTimeout(() => {
         const el = document.getElementById("UploadBill");
         if (el) {
@@ -68,7 +67,7 @@ export const UploadBill = () => {
 
   return (
     <section className="bg-white upload-bill lg:pt-10" id="UploadBill">
-      <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 p-6 bg-white">
+      <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-6 bg-white">
         {/* Share Your Bill Card */}
         <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
@@ -105,7 +104,7 @@ export const UploadBill = () => {
                       Help others by sharing your pricing data anonymously
                     </p>
                     <div
-                      className={`bg-[#8770BC] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
+                      className={`bg-purple text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition ${
                         files.length > 0
                           ? "opacity-50 cursor-not-allowed"
                           : "cursor-pointer"
@@ -138,7 +137,7 @@ export const UploadBill = () => {
               </FileUpload>
             </div>
             <p className="text-sm text-black mb-2 text-center py-2 lg:pt-4">
-                <Link to="/signup" className="text-[#D247BF] hover:underline">
+                <Link to="/signup" className="text-pink hover:underline">
                   Sign up
                 </Link>{" "}
                 if you want to start saving
@@ -152,7 +151,7 @@ export const UploadBill = () => {
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   <div
-                    className="bg-[#8770BC] h-2.5 rounded-full"
+                    className="bg-purple h-2.5 rounded-full"
                     style={{ width: `${uploadProgress}%` }}
                   ></div>
                 </div>
@@ -179,7 +178,7 @@ export const UploadBill = () => {
                   </p>
                   <Link
                     to="/signup"
-                    className="inline-block bg-[#8770BC] text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
+                    className="inline-block bg-purple text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
                   >
                     Sign Up
                   </Link>

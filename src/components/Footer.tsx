@@ -3,8 +3,9 @@ import logo from "@/assets/Footer-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+    <section className="bg-white footer">
+    <footer className="container  bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
+      <div className="mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
         <div>
           <div className="flex items-center mb-2">
@@ -20,6 +21,29 @@ const Footer = () => {
           <p className="text-sm text-white lg:pr-24">
             Crowdsourcing medical bill transparency for everyone.
           </p>
+          <details className="text-xs opacity-60 hover:opacity-100 w-64 mt-2">
+            <summary className="cursor-pointer underline">
+              Cookies Policy
+            </summary>
+            <div className="mt-1">
+              When you visit or log in to our website, cookies and similar
+              technologies may be used by our online data partners or vendors to
+              associate these activities with other personal information they or
+              others have about you, including by association with your email.
+              We (or service providers on our behalf) may then send
+              communications and marketing to these emails. You may opt out by
+              visiting{" "}
+              <a
+                href="https://app.retention.com/optout"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-500"
+              >
+                this link
+              </a>
+              .
+            </div>
+          </details>
         </div>
 
         {/* Product */}
@@ -33,13 +57,7 @@ const Footer = () => {
               <a href="/#UploadBill">Upload Bills</a>
             </li>
             <li>
-              <Link
-                to="#"
-                onClick={(e) => e.preventDefault()}
-                className="pointer-events-none opacity-50 cursor-not-allowed"
-              >
-                Negotiate (Coming Soon)
-              </Link>
+              <a href="/coming-soon">Negotiate </a>
             </li>
           </ul>
         </div>
@@ -112,6 +130,7 @@ const Footer = () => {
         © 2025 Dorsal Health. Made with ❤️‍🩹 in CA. All rights reserved.
       </div>
     </footer>
+    </section>
   );
 };
 

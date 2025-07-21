@@ -26,7 +26,7 @@ interface RouteProps {
 const routeList: RouteProps[] = [
   { href: "/hospitals", label: "Search" },
   { href: "#UploadBill", label: "Upload" },
-  { href: "#", label: "Community", disabled: true },
+  { href: "/coming-soon", label: "Community"},
   { href: "/data", label: "Data" },
   { href: "https://www.linkedin.com/company/dorsal-fyi", label: "Company", group: "about" },
   { href: "/team", label: "Team", group: "about" },
@@ -89,7 +89,7 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb' }}>
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between">
+        <NavigationMenuList className="container h-14 px-16 w-screen flex justify-between">
           <NavigationMenuItem className="font-bold flex">
             <a href="/" className="ml-2 font-bold text-xl flex" style={{ fontFamily: 'the-seasons, sans-serif' }}>
               <LogoIcon />
@@ -185,6 +185,21 @@ export const Navbar = () => {
                       </div>
                     )}
                   </div>
+
+                  <div className="w-full mt-4 flex flex-col gap-2 px-4">
+                  <a
+                    href="/login"
+                    className="w-full text-sm text-center py-2 rounded-md text-gray-700 hover:text-black hover:bg-gray-100"
+                  >
+                    Sign In
+                  </a>
+                  <a
+                    href="/signup"
+                    className="w-full text-sm text-center py-2 rounded-md bg-purple text-white hover:bg-purple-700"
+                  >
+                    Sign Up
+                  </a>
+                </div>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -197,7 +212,7 @@ export const Navbar = () => {
                 key={label}
                 href={disabled ? undefined : href}
                 onClick={disabled ? (e) => e.preventDefault() : undefined}
-                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ${disabled ? "text-gray-400 cursor-not-allowed" : "hover:text-black"}`}
+                className={`flex items-center text-sm font-medium rounded-md hover:hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 text-gray-700 ${disabled ? "text-gray-400 cursor-not-allowed" : "hover:text-black"}`}
               >
                 {label}
               </a>
@@ -265,7 +280,7 @@ export const Navbar = () => {
             <a href="/login" className="text-sm px-4 font-medium rounded-md py-2 text-gray-700 hover:text-black hover:bg-gray-100">
               Sign In
             </a>
-            <a href="/signup" className="text-sm px-4 py-2 bg-[#8770BC] text-white rounded-md hover:bg-purple-700">
+            <a href="/signup" className="text-sm px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-700">
               Sign Up
             </a>
           </div>

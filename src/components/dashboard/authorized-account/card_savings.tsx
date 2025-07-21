@@ -31,7 +31,7 @@ export default function CardSavings() {
 
         <div className="mt-4 w-full bg-gray-200 rounded-full h-3">
           <div
-            className="bg-gradient-to-r bg-[#8770BC] h-3 rounded-full relative"
+            className="bg-gradient-to-r bg-purple h-3 rounded-full relative"
             style={{ width: "63%" }}
           >
             <span className="absolute -right-1 -top-1 w-5 h-5 bg-white rounded-full border-2 shadow-md"></span>
