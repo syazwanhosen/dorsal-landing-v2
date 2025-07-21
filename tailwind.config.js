@@ -15,8 +15,12 @@ module.exports = {
         xl: '4rem',          // applies when screen ≥ 1280px
       },
       screens: {
-        xl: '1536px',        // set container max-width at 1400px
-      },
+      	sm: '640px',
+     	 md: '768px',
+      	lg: '1024px',
+      	xl: '1280px',
+      	'2xl': '1536px',
+   	 },
     },
     extend: {
       colors: {
