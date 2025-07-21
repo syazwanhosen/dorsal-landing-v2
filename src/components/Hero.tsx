@@ -14,7 +14,7 @@ export const Hero = () => {
         </span>
 
         {/* Title */}
-        <h1 className="text-7xl font-semibold text-gray-900 leading-tight mb-4">
+        <h1 className="text-4xl font-semibold text-gray-900 leading-tight mb-4">
           Fight <span className="text-pink">smarter</span>, not harder.
         </h1>
         <p className="text-gray-600 text-lg max-w-xl">
@@ -24,14 +24,14 @@ export const Hero = () => {
         <div className="flex gap-10">
            <Link to="/hospitals">
             <button className="mt-6 flex items-center gap-2 bg-purple hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
-              <Hospital size={18} />
-              SEARCH HOSPITAL
+              <Hospital size={14} />
+              Find your hospital
             </button>
           </Link>
            <Link to="/coming-soon">
           <button className="mt-6 flex items-center gap-2 bg-pink hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
-            <FileText size={18} />
-            NEGOTIATE YOUR BILL
+            <FileText size={14} />
+            Negotiate your bill
           </button>
           </Link>
         </div>
