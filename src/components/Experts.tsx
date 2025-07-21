@@ -50,12 +50,12 @@ export const Experts: React.FC = () => {
         <div className="text-center mb-4">
           <span className="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#9F70FD1A] text-purple-700">
             <span className="bg-gradient-to-r from-[#E770C1] to-[#9F70FD] bg-clip-text text-transparent">
-              EXPERTS
+              TEAM
             </span>
           </span>
 
           <h2 className="mt-3 text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900 sm:text-4xl">
-            Founded by <span className="text-pink">Alumni and Advisors</span> from
+            Founded by <span className="text-pink">Alumni & Advisors</span> from
           </h2>
 
         </div>
@@ -75,7 +75,7 @@ export const Experts: React.FC = () => {
                         key={`${logo}-${i}`}
                         src={`/expert_logos/${logo}`}
                         alt={`logo-${i}`}
-                        className="h-11 w-auto filter grayscale brightness-80 contrast-50 transition duration-300 hover:brightness-90"
+                        className="h-8 w-auto filter grayscale brightness-80 contrast-50 transition duration-300 hover:brightness-90"
                         />
                     </div>
                 ))}
