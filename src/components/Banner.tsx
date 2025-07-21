@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import woman from "@/assets/woman.png";
 
 const phrases = [
   "an MRI 🩻",
@@ -35,7 +36,7 @@ export const Banner = () => {
     return (
       <section className="banner bg-white lg:pt-12 pt-8">
       <div
-        className="container  flex flex-col items-center justify-center overflow-hidden text-white
+        className="container lg:z-10 flex flex-col items-center justify-center overflow-hidden text-white
                   pt-8 pb-8 lg:py-12
                   bg-gradient-to-br from-[#864196] to-[#EB3897]
                   lg:relative
@@ -60,6 +61,14 @@ export const Banner = () => {
         </div>
         <p className="text-xl font-bold text-gray-800 mt-1">$491.37</p>
       </div>
+
+      <img
+  src={woman}
+  alt="Woman Illustration"
+  className="hidden lg:block lg:absolute lg:left-1/2 lg:top-[0rem] lg:translate-x-[-50%] lg:w-[800px] lg:h-auto lg:z-0"
+  loading="lazy"
+/>
+
 
       {/* Graph Card */}
       <div className="lg:absolute lg:right-[10rem] lg:top-16 lg:mt-3 bg-white rounded-xl lg:shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 w-64 md:w-72 lg:w-60 h-60 flex flex-col justify-between mt-8">
