@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/buttons/button"
-import { SteeringQuestions } from "@/components/roadmap/steering-questions";
 import Separator from "@/components/ui/separator";
 import { Search, Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
@@ -16,19 +15,13 @@ import Footer from "@/components/Footer";
 
 const FILTERS = [
   {
-    title: "Endpoints",
-    options: [
-      { label: "Patient", value: "patient" },
-      { label: "Provider", value: "provider" },
-    ]
-  },
-  {
     title: "Product Initiatives",
     options: [
-      { label: "Engagement", value: "engagement" },
-      { label: "Billing", value: "billing" },
-      { label: "Security", value: "security" },
-      { label: "Analytics", value: "analytics" },
+      { label: "Data.fyi", value: "Data.fyi" },
+      { label: "Audit & Appeals", value: "Audit & Appeals" },
+      { label: "Enterpise", value: "Enterpise" },
+      { label: "Community", value: "Community" },
+       { label: "Companion", value: "Companion" },
     ]
   }
 ]
@@ -49,25 +42,21 @@ const Roadmap: React.FC = () => {
         feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         feature.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const endpointFilters = filterOption["Endpoints"] || [];
       const productFilters = filterOption["Product Initiatives"] || [];
-
-      const matchesEndpoints =
-        endpointFilters.length === 0 || endpointFilters.includes(feature.userType);
 
       const matchesProduct =
         productFilters.length === 0 || productFilters.includes(feature.category);
 
       const matchesCategory =
         activeCategory === "all" ||
-        (activeCategory === "patient" && feature.userType === "patient") ||
-        (activeCategory === "provider" && feature.userType === "provider") ||
-        (activeCategory === "live" && feature.status === "live") ||
-        (activeCategory === "development" && feature.status === "development") ||
-        (activeCategory === "planned" &&
-          (feature.status === "planned" || feature.status === "coming"));
+        (activeCategory === "Live" && feature.status === "Live") ||
+        (activeCategory === "In Progress" && feature.status === "In Progress") ||
+        (activeCategory === "Coming Soon" && feature.status === "Coming Soon") ||
+        (activeCategory === "Proposal" && feature.status === "Proposal") ||
+        (activeCategory === "Mothballed" && feature.status === "Mothballed") ||
+        (activeCategory === "MVP" && feature.status === "MVP");
 
-      return matchesSearch && matchesEndpoints && matchesProduct && matchesCategory;
+      return matchesSearch && matchesProduct && matchesCategory;
     });
   };
 
@@ -77,9 +66,9 @@ const Roadmap: React.FC = () => {
   // Get features for each tab
   const getTabFeatures = (tab: string) => {
     if (tab === "all") return filteredFeatures
-    if (tab === "production") return filteredFeatures.filter((f) => f.status === "live")
-    if (tab === "wip") return filteredFeatures.filter((f) => f.status === "development")
-    if (tab === "roadmap") return filteredFeatures.filter((f) => f.status === "planned" || f.status === "coming")
+    if (tab === "production") return filteredFeatures.filter((f) => f.status === "Live")
+    if (tab === "wip") return filteredFeatures.filter((f) => f.status === "In Progress")
+    if (tab === "roadmap") return filteredFeatures.filter((f) => f.status === "Coming Soon" || f.status === "Proposal")
     return filteredFeatures
   }
 
@@ -96,12 +85,12 @@ const Roadmap: React.FC = () => {
       <Navbar />
       <div className="min-h-screen bg-gray-50 p-6 pt-0">
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16">
             {/* Hero Section */}
-            <div className="mb-12 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-8 border border-purple-100">
+            <div className="mb-12 bg-gradient-to-r from-[#864196] to-[#F33594] rounded-xl p-8 border border-purple-100">
               <div className="max-w-3xl">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Dorsal.fyi Product Roadmap</h1>
-                <p className="text-gray-600 mb-6">
+                <h1 className="text-3xl font-bold text-white mb-4">Dorsal.fyi Product Roadmap</h1>
+                <p className="text-white mb-6">
                   Help shape the future of medical bill transparency. Vote on features, provide feedback, and see what
                   we're building next.
                 </p>
@@ -288,9 +277,6 @@ const Roadmap: React.FC = () => {
               )}
             </div>
 
-
-            {/* Steering Questions */}
-            <SteeringQuestions />
           </div>
         </main>
 

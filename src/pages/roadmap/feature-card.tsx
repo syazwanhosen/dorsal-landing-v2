@@ -137,14 +137,6 @@ export function FeatureCard({ feature }: FeatureCardProps) {
     }
   }
 
-  const getUserTypeIcon = (userType: string) => {
-    return userType === "patient" ? (
-      <Users className="h-4 w-4 text-gray-600" />
-    ) : (
-      <Building2 className="h-4 w-4 text-gray-600" />
-    )
-  }
-
 
   useEffect(() => {
     if (!feature?.id) return;
@@ -204,140 +196,16 @@ export function FeatureCard({ feature }: FeatureCardProps) {
                     <span className="ml-1">{getStatusText(feature.status)}</span>
                   </Badge>
                   <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
-                    {getUserTypeIcon(feature.userType)}
-                    <span className="ml-1 capitalize">{feature.userType}</span>
-                  </Badge>
-                  <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
                     <span className="capitalize">{feature.category}</span>
                   </Badge>
                 </div>
               </div>
             </div>
 
-            <Button variant="ghost" size="sm" className="text-gray-500" onClick={() => setIsExpanded(!isExpanded)}>
-              {isExpanded ? "Collapse" : "Expand"}
-            </Button>
           </div>
 
           <div className={`mt-2 ${isExpanded ? "" : "line-clamp-2"} text-gray-600`}>{feature.description}</div>
 
-          {isExpanded && (
-            <div className="mt-4 space-y-4">
-              {feature.progress !== undefined && (
-                <div>
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span className="font-medium text-gray-700">Progress</span>
-                    <span className="font-medium text-gray-700">{feature.progress}%</span>
-                  </div>
-                  <Progress value={feature.progress} className="h-2" />
-                </div>
-              )}
-
-              {feature.milestones && feature.milestones.length > 0 && (
-                <div className="space-y-2">
-                  <h4 className="font-medium text-gray-800">Milestones</h4>
-                  <div className="space-y-2">
-                    {feature.milestones.map((milestone: { completed: any; title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; description: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined }, index: Key | null | undefined) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <div
-                          className={`mt-1 h-4 w-4 rounded-full flex items-center justify-center ${milestone.completed ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
-                            }`}
-                        >
-                          {milestone.completed && <CheckCircle2 className="h-3 w-3" />}
-                        </div>
-                        <div>
-                          <p className={`font-medium ${milestone.completed ? "text-gray-900" : "text-gray-600"}`}>
-                            {milestone.title}
-                          </p>
-                          <p className="text-sm text-gray-500">{milestone.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Demo section */}
-              {feature.status === "live" && (
-                <div className="mt-4">
-                  <h4 className="font-medium text-gray-800 mb-2">Feature Demo</h4>
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="aspect-video bg-gray-100 rounded-md flex items-center justify-center mb-3">
-                      <img
-                        src={`/placeholder.svg?height=270&width=480&text=Demo+Video:+${feature.title}`}
-                        alt={`Demo for ${feature.title}`}
-                        className="rounded-md"
-                      />
-                    </div>
-                    <Button variant="outline" className="w-full">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      View full demo
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {/* Community feedback */}
-              <div className="mt-4">
-                <h4 className="font-medium text-gray-800 mb-2">Community Feedback</h4>
-                <div className="space-y-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="flex items-start gap-3">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                        <AvatarFallback>JD</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <div className="flex items-center">
-                          <span className="font-medium text-gray-900">Jane Doe</span>
-                          <span className="text-gray-500 text-sm ml-2">2 days ago</span>
-                        </div>
-                        <p className="text-gray-600 text-sm mt-1">
-                          This would be incredibly helpful for comparing prices across different hospitals.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {feature.status === "development" && (
-                    <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="h-8 w-8 bg-blue-100">
-                          <AvatarFallback className="bg-blue-500 text-white">DT</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="flex items-center">
-                            <span className="font-medium text-gray-900">Dorsal Team</span>
-                            <Badge variant="outline" className="ml-2 bg-blue-100 text-blue-700 border-blue-200 text-xs">
-                              Team
-                            </Badge>
-                          </div>
-                          <p className="text-gray-600 text-sm mt-1">
-                            We're actively working on this feature and expect to release it next month.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <Separator className="my-4" />
-
-              <div className="pt-2">
-                <div className="flex items-center gap-2">
-                  <Button className="bg-purple-600 hover:bg-purple-700">
-                    <ThumbsUp className="mr-2 h-4 w-4" />
-                    Vote for this feature
-                  </Button>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Add feedback</span>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
