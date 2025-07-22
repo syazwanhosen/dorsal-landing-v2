@@ -14,9 +14,9 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
   const [activeQuarter, setActiveQuarter] = useState<string>("current")
 
   // Group features by quarter
-  const currentQuarterFeatures = features.filter((f) => f.status === "development")
-  const nextQuarterFeatures = features.filter((f) => f.status === "planned")
-  const futureFeatures = features.filter((f) => f.status === "coming")
+  const currentQuarterFeatures = features.filter((f) => f.status === "In Progress")
+  const nextQuarterFeatures = features.filter((f) => f.status === "Proposal")
+  const futureFeatures = features.filter((f) => f.status === "Coming Soon")
 
   const getStatusIcon = (status: string) => {
     switch (status) {
