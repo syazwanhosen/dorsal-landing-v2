@@ -10,7 +10,7 @@ export interface FeatureType {
   title: string;
   description: string;
   icon: string;
-  category: string;
+  category: string[];
   status: "Live" | "In Progress" | "Coming Soon" | "Proposal" | "Mothballed" | "MVP";
   votes: number | null;
   progress?: number | null;
@@ -23,7 +23,7 @@ export const features: FeatureType[] = [
     title: "Price Transparency Dashboard",
     description: "Procedure Data (No Surprises Act)",
     icon: "fileText",
-    category: "Data.fyi",
+    category: ["Data.fyi"],
     status: "Live",
     votes: 10,
     progress: null
@@ -33,7 +33,7 @@ export const features: FeatureType[] = [
     title: "Bulk Claims Integration",
     description: "Integrate bulk claims data (ANSI 837)",
     icon: "fileText",
-    category: "Data.fyi",
+    category: ["Data.fyi"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -43,7 +43,7 @@ export const features: FeatureType[] = [
     title: "Real-Time Claims Intelligence",
     description: "Connect uploaded medical bills to public data",
     icon: "fileText",
-    category: "Data.fyi, Audit & Appeals",
+    category: ["Data.fyi", "Audit & Appeals"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -53,7 +53,7 @@ export const features: FeatureType[] = [
     title: "Bill Upload",
     description: "Upload medical bills (itemized, EOB, UB-04)",
     icon: "fileText",
-    category: "Audit & Appeals, Data.fyi",
+    category: ["Audit & Appeals", "Data.fyi"],
     status: "MVP",
     votes: 10,
     progress: null
@@ -63,7 +63,7 @@ export const features: FeatureType[] = [
     title: "Bill Audit",
     description: "Automatic analysis and comparison against similar bills from the same provider and insurer.",
     icon: "fileText",
-    category: "Audit & Appeals",
+    category: ["Audit & Appeals"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -73,7 +73,7 @@ export const features: FeatureType[] = [
     title: "Appeals Agents",
     description: "AI-powered system to automatically generate and file appeals for suspicious charges, with progress tracking and updates.",
     icon: "fileText",
-    category: "Audit & Appeals",
+    category: ["Audit & Appeals"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -83,7 +83,7 @@ export const features: FeatureType[] = [
     title: "Chart / EHR Integration",
     description: "Secure integration with medical chart data to better identify billing discrepancies and improve appeal success rates.",
     icon: "fileText",
-    category: "Audit & Appeals, Enterprise",
+    category: ["Audit & Appeals", "Enterprise"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -93,7 +93,7 @@ export const features: FeatureType[] = [
     title: "Plaid, HSA & FSA Integration",
     description: "Connect directly to payment systems to pay verified, fair medical bills after analysis and potential appeals.",
     icon: "fileText",
-    category: "Audit & Appeals, Enterprise",
+    category: ["Audit & Appeals", "Enterprise"],
     status: "Coming Soon",
     votes: 10,
     progress: null
@@ -103,7 +103,7 @@ export const features: FeatureType[] = [
     title: "Community Roadmap",
     description: "Tell us what you want Dorsal to become!",
     icon: "fileText",
-    category: "Community",
+    category: ["Community"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -113,7 +113,7 @@ export const features: FeatureType[] = [
     title: "Community Win Tracker",
     description: "Live counter showing total bills uploaded and analyzed, creating a sense of community contribution to price transparency.",
     icon: "fileText",
-    category: "Community, Data.fyi",
+    category: ["Community", "Data.fyi"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -123,7 +123,7 @@ export const features: FeatureType[] = [
     title: "Patient Education Hub",
     description: "Resources to educate patients about medical billing processes, improving understanding and reducing disputes.",
     icon: "fileText",
-    category: "Community",
+    category: ["Community"],
     status: "MVP",
     votes: 10,
     progress: null
@@ -133,7 +133,7 @@ export const features: FeatureType[] = [
     title: "Community Bill Drive",
     description: "Social campaigns to compete in 'bill drives' for increased participation navigate the medical billing system and earning rewards.",
     icon: "fileText",
-    category: "Community, Data.fyi",
+    category: ["Community", "Data.fyi"],
     status: "Coming Soon",
     votes: 10,
     progress: null
@@ -143,7 +143,7 @@ export const features: FeatureType[] = [
     title: "Dorsal Ambassadors",
     description: "Program for power users to become ambassadors, helping others navigate the medical billing system and earning rewards.",
     icon: "fileText",
-    category: "Community",
+    category: ["Community"],
     status: "Coming Soon",
     votes: 10,
     progress: null
@@ -153,7 +153,7 @@ export const features: FeatureType[] = [
     title: "Dorsal Provider Certification",
     description: "Certification program for providers who maintain transparent pricing practices, which can be displayed to patients as a trust signal.",
     icon: "fileText",
-    category: "Community, Enterprise",
+    category: ["Community", "Enterprise"],
     status: "Proposal",
     votes: 10,
     progress: null
@@ -163,7 +163,7 @@ export const features: FeatureType[] = [
     title: "Wellness Marketplace",
     description: "Use your Dorsal Dollars points for your fitness, wellness, and other wellbeing needs",
     icon: "fileText",
-    category: "Community, Enterprise",
+    category: ["Community", "Enterprise"],
     status: "Proposal",
     votes: 10,
     progress: null
@@ -173,7 +173,7 @@ export const features: FeatureType[] = [
     title: "Provider Market Intelligence",
     description: "Dashboard for providers to see how their pricing compares to market rates, helping identify competitive pricing opportunities.",
     icon: "fileText",
-    category: "Enterprise, Data.fyi",
+    category: ["Enterprise", "Data.fyi"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -183,7 +183,7 @@ export const features: FeatureType[] = [
     title: "Disputed Claim Resolution Tool",
     description: "Streamlined process for resolving disputed claims with patients who use Dorsal.fyi, reducing administrative overhead.",
     icon: "fileText",
-    category: "Enterprise, Audit & Appeals",
+    category: ["Enterprise", "Audit & Appeals"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -193,7 +193,7 @@ export const features: FeatureType[] = [
     title: "Patient Experience Dashboard",
     description: "Track patient satisfaction with billing processes and identify areas for improvement in the patient financial experience.",
     icon: "fileText",
-    category: "Enterprise, Community",
+    category: ["Enterprise", "Community"],
     status: "Coming Soon",
     votes: 10,
     progress: null
@@ -203,7 +203,7 @@ export const features: FeatureType[] = [
     title: "Loyalty & Patient Education",
     description: "Reward patients for reading EOBs, adhering to care plans, and loyalty",
     icon: "fileText",
-    category: "Enterprise, Companion",
+    category: ["Enterprise", "Companion"],
     status: "Proposal",
     votes: 10,
     progress: null
@@ -213,7 +213,7 @@ export const features: FeatureType[] = [
     title: "Personal Bill Management",
     description: "Rocket Money for YOUR Medical Bills",
     icon: "fileText",
-    category: "Companion",
+    category: ["Companion"],
     status: "MVP",
     votes: 10,
     progress: null
@@ -223,7 +223,7 @@ export const features: FeatureType[] = [
     title: "Family Bill Management",
     description: "Rocket Money for your WHOLE FAM",
     icon: "fileText",
-    category: "Companion",
+    category: ["Companion"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -233,7 +233,7 @@ export const features: FeatureType[] = [
     title: "Company Bill Management",
     description: "Rocket Money for Self-Funded employee benefits programs",
     icon: "fileText",
-    category: "Companion, Enterprise",
+    category: ["Companion", "Enterprise"],
     status: "Proposal",
     votes: 10,
     progress: null
@@ -243,7 +243,7 @@ export const features: FeatureType[] = [
     title: "Multilingual Support",
     description: "Multilingual support, optionally tuning to the local patient population's needs, but accessible to all",
     icon: "fileText",
-    category: "Companion, Community, Enterprise",
+    category: ["Companion", "Community", "Enterprise"],
     status: "In Progress",
     votes: 10,
     progress: null
@@ -253,7 +253,7 @@ export const features: FeatureType[] = [
     title: "Reading Level Support",
     description: "Multiple levels of difficulty, from ELI5 to standard to PhD",
     icon: "fileText",
-    category: "Companion, Enterprise",
+    category: ["Companion", "Enterprise"],
     status: "In Progress",
     votes: 10,
     progress: null

@@ -1,12 +1,11 @@
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 
 import { Badge } from "@/components/ui/badge"
 import {
   ChevronUp,
   ChevronDown,
-  MessageSquare,
-  ThumbsUp,
+  Circle,
   CheckCircle2,
   Clock,
   AlertCircle,
@@ -22,15 +21,10 @@ import {
   BadgeAlert,
   Sparkles,
   Users,
-  Building2,
-  ExternalLink,
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Separator from "@/components/ui/separator"
 import { Button } from "@/components/ui/buttons/button"
-import Progress from "@/components/ui/progress"
 
 interface FeatureCardProps {
   feature: FeatureType
@@ -40,7 +34,6 @@ const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
 
 export function FeatureCard({ feature }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
-  const [isExpanded, setIsExpanded] = useState(false)
   const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
 
   const handleVote = async (value: number, _voteType: string) => {
@@ -95,47 +88,61 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   }
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "live":
-        return <CheckCircle2 className="h-4 w-4 text-green-600" />
-      case "development":
-        return <Clock className="h-4 w-4 text-blue-600" />
-      case "planned":
-      case "coming":
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-      default:
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-    }
+  switch (status) {
+    case "Live":
+      return <CheckCircle2 className="h-4 w-4 text-green-600" />;
+    case "In Progress":
+      return <Clock className="h-4 w-4 text-blue-600" />;
+    case "Coming Soon":
+      return <AlertCircle className="h-4 w-4 text-yellow-500" />;
+    case "Proposal":
+      return <AlertCircle className="h-4 w-4 text-purple-600" />;
+    case "Mothballed":
+      return <Circle className="h-4 w-4 text-gray-500" />;
+    case "MVP":
+      return <CheckCircle2 className="h-4 w-4 text-indigo-500" />;
+    default:
+      return <AlertCircle className="h-4 w-4 text-gray-400" />;
   }
+};
 
   const getStatusText = (status: string) => {
-    switch (status) {
-      case "live":
-        return "Live"
-      case "development":
-        return "In Development"
-      case "planned":
-        return "Planned"
-      case "coming":
-        return "Coming Soon"
-      default:
-        return status
-    }
+  switch (status) {
+    case "Live":
+      return "Live";
+    case "In Progress":
+      return "In Progress";
+    case "Coming Soon":
+      return "Coming Soon";
+    case "Proposal":
+      return "Proposal";
+    case "Mothballed":
+      return "Mothballed";
+    case "MVP":
+      return "MVP";
+    default:
+      return status;
   }
+ };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "live":
-        return "bg-green-50 text-green-700 border-green-200"
-      case "development":
-        return "bg-blue-50 text-blue-700 border-blue-200"
-      case "planned":
-      case "coming":
-        return "bg-purple-50 text-purple-700 border-purple-200"
-      default:
-        return "bg-gray-50 text-gray-700 border-gray-200"
-    }
+  switch (status) {
+    case "Live":
+      return "bg-green-50 text-green-700 border-green-200";
+    case "In Progress":
+      return "bg-blue-50 text-blue-700 border-blue-200";
+    case "Coming Soon":
+      return "bg-yellow-50 text-yellow-700 border-yellow-200";
+    case "Proposal":
+      return "bg-purple-50 text-purple-700 border-purple-200";
+    case "Mothballed":
+      return "bg-gray-100 text-gray-600 border-gray-300";
+    case "MVP":
+      return "bg-indigo-50 text-indigo-700 border-indigo-200";
+    default:
+      return "bg-gray-50 text-gray-700 border-gray-200";
   }
+};
 
 
   useEffect(() => {
@@ -195,16 +202,22 @@ export function FeatureCard({ feature }: FeatureCardProps) {
                     {getStatusIcon(feature.status)}
                     <span className="ml-1">{getStatusText(feature.status)}</span>
                   </Badge>
-                  <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
-                    <span className="capitalize">{feature.category}</span>
-                  </Badge>
+                  {feature.category.map((cat, index) => (
+                    <Badge
+                      key={index}
+                      variant="outline"
+                      className="bg-gray-50 text-gray-700 border-gray-200 mr-1 mb-1"
+                    >
+                      <span className="capitalize">{cat}</span>
+                    </Badge>
+                  ))}
                 </div>
               </div>
             </div>
 
           </div>
 
-          <div className={`mt-2 ${isExpanded ? "" : "line-clamp-2"} text-gray-600`}>{feature.description}</div>
+          <div className="mt-2 text-gray-600">{feature.description}</div>
 
         </div>
       </div>
