@@ -74,9 +74,9 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px] font-bold text-gray-900">
+            <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px] font-bold text-gray-900">
               Share Your Bill
-            </h4>
+            </h2>
           </div>
           <p className="text-base text-[#6A6A6A] mb-6 lg:mb-8">
             Your upload helps others understand medical costs better.
@@ -195,9 +195,9 @@ export const UploadBill = () => {
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Users className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h4 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px]  font-bold text-gray-900">
+            <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[26px]  font-bold text-gray-900">
               Recent Community Upload
-            </h4>
+            </h2>
           </div>
           <p className="text-base text-[#6A6A6A] mb-4 lg:mb-6">
             See what others are paying and how much they've saved
