@@ -81,13 +81,19 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
           <Badge variant="outline" className={getStatusColor(feature.status)}>
             {getStatusIcon(feature.status)}
             <span className="ml-1">
-              {feature.status === "live"
+              {feature.status === "Live"
                 ? "Live"
-                : feature.status === "development"
-                  ? "In Development"
-                  : feature.status === "planned"
-                    ? "Planned"
-                    : "Coming Soon"}
+                : feature.status === "In Progress"
+                ? "In Progress"
+                : feature.status === "Coming Soon"
+                ? "Coming Soon"
+                : feature.status === "Proposal"
+                ? "Proposal"
+                : feature.status === "Mothballed"
+                ? "Mothballed"
+                : feature.status === "MVP"
+                ? "MVP"
+                : "Unknown"}
             </span>
           </Badge>
         </div>
@@ -99,13 +105,21 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
             <div className="w-full bg-gray-200 rounded-full h-2.5">
               <div
                 className={`h-2.5 rounded-full ${
-                  feature.status === "live"
+                  feature.status === "Live"
                     ? "bg-green-500"
-                    : feature.status === "development"
-                      ? "bg-blue-500"
-                      : "bg-purple-500"
+                    : feature.status === "In Progress"
+                    ? "bg-blue-500"
+                    : feature.status === "Coming Soon"
+                    ? "bg-yellow-500"
+                    : feature.status === "Proposal"
+                    ? "bg-orange-500"
+                    : feature.status === "Mothballed"
+                    ? "bg-gray-400"
+                    : feature.status === "MVP"
+                    ? "bg-indigo-500"
+                    : "bg-purple-500"
                 }`}
-                style={{ width: `${feature.progress}%` }}
+                style={{ width: `${feature.progress ?? 0}%` }}
               ></div>
             </div>
             <div className="flex justify-between mt-1">

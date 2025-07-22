@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/buttons/button"
-import { SteeringQuestions } from "@/components/roadmap/steering-questions";
 import Separator from "@/components/ui/separator";
 import { Search, Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
@@ -14,24 +13,74 @@ import { Navbar } from "@/components/Navbar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 
+import { FeatureType } from "@/lib/data";
+
 const FILTERS = [
-  {
-    title: "Endpoints",
-    options: [
-      { label: "Patient", value: "patient" },
-      { label: "Provider", value: "provider" },
-    ]
-  },
   {
     title: "Product Initiatives",
     options: [
-      { label: "Engagement", value: "engagement" },
-      { label: "Billing", value: "billing" },
-      { label: "Security", value: "security" },
-      { label: "Analytics", value: "analytics" },
+      { label: "Data.fyi", value: "Data.fyi" },
+      { label: "Audit & Appeals", value: "Audit & Appeals" },
+      { label: "Enterpise", value: "Enterpise" },
+      { label: "Community", value: "Community" },
+       { label: "Companion", value: "Companion" },
     ]
   }
 ]
+
+const featuredCategories = [
+  {
+    id: "data-fyi",
+    title: "Data.fyi",
+    description: "Raw healthcare pricing data, claims, and billing intelligence designed for transparency and analytics.",
+    icon: "barChart",
+    category: ["Data.fyi"],
+    status: "Coming Soon",
+    votes: 10,
+    progress: 50
+  },
+  {
+    id: "audit-appeals",
+    title: "Audit & Appeals",
+    description: "AI-powered tools to analyze medical bills, detect suspicious charges, and automate appeal filing processes.",
+    icon: "badgeAlert",
+    category: ["Audit & Appeals"],
+    status: "Coming Soon",
+    votes: 10,
+    progress: 50
+  },
+  {
+    id: "enterprise",
+    title: "Enterprise",
+    description: "Scalable integrations and dashboards tailored for providers, payors, and health tech platforms.",
+    icon: "building",
+    category: ["Enterprise"],
+    status: "Coming Soon",
+    votes: 10,
+    progress: 50
+  },
+  {
+    id: "community",
+    title: "Community",
+    description: "Initiatives to build patient engagement and advocacy through gamified experiences and bill drives.",
+    icon: "users",
+    category: ["Community"],
+    status: "Coming Soon",
+    votes: 10,
+    progress: 50
+  },
+  {
+    id: "companion",
+    title: "Companion",
+    description: "Smart assistants and mobile tools that help patients navigate billing, insurance, and appeals in real time.",
+    icon: "smartphone",
+    category: ["Companion"],
+    status: "Coming Soon",
+    votes: 10,
+    progress: 50
+  }
+]
+
 
 const Roadmap: React.FC = () => {
 
@@ -49,25 +98,22 @@ const Roadmap: React.FC = () => {
         feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         feature.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const endpointFilters = filterOption["Endpoints"] || [];
       const productFilters = filterOption["Product Initiatives"] || [];
 
-      const matchesEndpoints =
-        endpointFilters.length === 0 || endpointFilters.includes(feature.userType);
-
       const matchesProduct =
-        productFilters.length === 0 || productFilters.includes(feature.category);
-
+        productFilters.length === 0 ||
+        feature.category.some((cat) => productFilters.includes(cat));
+        
       const matchesCategory =
         activeCategory === "all" ||
-        (activeCategory === "patient" && feature.userType === "patient") ||
-        (activeCategory === "provider" && feature.userType === "provider") ||
-        (activeCategory === "live" && feature.status === "live") ||
-        (activeCategory === "development" && feature.status === "development") ||
-        (activeCategory === "planned" &&
-          (feature.status === "planned" || feature.status === "coming"));
+        (activeCategory === "Live" && feature.status === "Live") ||
+        (activeCategory === "In Progress" && feature.status === "In Progress") ||
+        (activeCategory === "Coming Soon" && feature.status === "Coming Soon") ||
+        (activeCategory === "Proposal" && feature.status === "Proposal") ||
+        (activeCategory === "Mothballed" && feature.status === "Mothballed") ||
+        (activeCategory === "MVP" && feature.status === "MVP");
 
-      return matchesSearch && matchesEndpoints && matchesProduct && matchesCategory;
+      return matchesSearch && matchesProduct && matchesCategory;
     });
   };
 
@@ -76,32 +122,62 @@ const Roadmap: React.FC = () => {
 
   // Get features for each tab
   const getTabFeatures = (tab: string) => {
-    if (tab === "all") return filteredFeatures
-    if (tab === "production") return filteredFeatures.filter((f) => f.status === "live")
-    if (tab === "wip") return filteredFeatures.filter((f) => f.status === "development")
-    if (tab === "roadmap") return filteredFeatures.filter((f) => f.status === "planned" || f.status === "coming")
-    return filteredFeatures
+  switch (tab) {
+    case "all":
+      return filteredFeatures;
+    case "production":
+      return filteredFeatures.filter((f) => f.status === "Live");
+    case "wip":
+      return filteredFeatures.filter(
+        (f) => f.status === "In Progress" || f.status === "MVP"
+      );
+    case "roadmap":
+      return filteredFeatures.filter(
+        (f) => f.status === "Coming Soon" || f.status === "Proposal"
+      );
+    case "paused":
+      return filteredFeatures.filter((f) => f.status === "Mothballed");
+    default:
+      return filteredFeatures;
   }
+};
 
   const tabFeatures = getTabFeatures(activeTab)
 
   // Get featured items for the highlight section
-  const featuredItems = features.filter((f) => f.votes > 300).slice(0, 3)
-
-
-
+  const featuredItems: FeatureType[] = featuredCategories.map((cat: {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: string | string[];
+  status: string;
+  votes: number | null;
+  progress?: number | null;
+}) => ({
+  id: cat.id,
+  title: cat.title,
+  description: cat.description,
+  icon: cat.icon,
+  category: Array.isArray(cat.category)
+    ? cat.category
+    : (cat.category as string).split(",").map((c: string) => c.trim()),
+  status: cat.status as FeatureType["status"],
+  votes: cat.votes ?? null,
+  progress: cat.progress ?? null,
+}));
 
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-50 p-6 pt-0">
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16">
             {/* Hero Section */}
-            <div className="mb-12 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-8 border border-purple-100">
+            <div className="mb-12 bg-gradient-to-r from-[#864196] to-[#F33594] rounded-xl p-8 border border-purple-100">
               <div className="max-w-3xl">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Dorsal.fyi Product Roadmap</h1>
-                <p className="text-gray-600 mb-6">
+                <h1 className="text-3xl font-bold text-white mb-4">Dorsal.fyi Product Roadmap</h1>
+                <p className="text-white mb-6">
                   Help shape the future of medical bill transparency. Vote on features, provide feedback, and see what
                   we're building next.
                 </p>
@@ -121,7 +197,7 @@ const Roadmap: React.FC = () => {
             {/* Feature Highlights */}
             <div className="mb-12">
               <div className="flex items-center justify-between flex-wrap mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Featured Initiatives</h2>
+                <h2 className="text-2xl font-bold text-gray-900">Project Initiatives</h2>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
@@ -142,7 +218,7 @@ const Roadmap: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {featuredItems.map((feature) => (
                   <FeatureHighlight key={feature.id} feature={feature} />
                 ))}
@@ -169,23 +245,42 @@ const Roadmap: React.FC = () => {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="w-full sm:w-2/3">
                   <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                    <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
-                      <TabsTrigger value="all">All</TabsTrigger>
+                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-2 w-full">
+                      
+                      <TabsTrigger value="all">
+                        All
+                      </TabsTrigger>
 
-                      <TabsTrigger value="live" className="flex gap-2">
+                      <TabsTrigger value="Live" className="flex items-center gap-2">
                         <span>Live</span>
                         <span className="h-2 w-2 rounded-full bg-green-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="development" className="flex gap-2">
+                      <TabsTrigger value="In Progress" className="flex items-center gap-2">
                         <span>In Progress</span>
+                        <span className="h-2 w-2 rounded-full bg-blue-500" />
+                      </TabsTrigger>
+
+                      <TabsTrigger value="Coming Soon" className="flex items-center gap-2">
+                        <span>Coming Soon</span>
                         <span className="h-2 w-2 rounded-full bg-yellow-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="planned" className="flex gap-2">
-                        <span>Planned</span>
-                        <span className="h-2 w-2 rounded-full bg-red-500" />
+                      <TabsTrigger value="Proposal" className="flex items-center gap-2">
+                        <span>Proposal</span>
+                        <span className="h-2 w-2 rounded-full bg-purple-500" />
                       </TabsTrigger>
+
+                      <TabsTrigger value="MVP" className="flex items-center gap-2">
+                        <span>MVP</span>
+                        <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                      </TabsTrigger>
+
+                      <TabsTrigger value="Mothballed" className="flex items-center gap-2">
+                        <span>Mothballed</span>
+                        <span className="h-2 w-2 rounded-full bg-gray-400" />
+                      </TabsTrigger>
+
                     </TabsList>
                   </Tabs>
                 </div>
@@ -288,9 +383,6 @@ const Roadmap: React.FC = () => {
               )}
             </div>
 
-
-            {/* Steering Questions */}
-            <SteeringQuestions />
           </div>
         </main>
 
