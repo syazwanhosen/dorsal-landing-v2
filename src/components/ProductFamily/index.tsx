@@ -112,7 +112,7 @@ const ProductFamily = () => {
     <section
       className="container px-0 horizontal-section bg-white" >
       <div className="tall-outer-container" style={{ height: `${dynamicHeight}px` }}>
-        <div className="sticky-inner-container  bg-[url('/src/assets/union.png')] bg-no-repeat" ref={containerRef}>
+        <div className="sticky-inner-container  bg-[url('/src/assets/union.png')] bg-no-repeat 2xl:bg-contain" ref={containerRef}>
           <div className="title-container">
             <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
               <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
