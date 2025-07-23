@@ -86,7 +86,6 @@ const Roadmap: React.FC = () => {
 
   const [activeTab, _setActiveTab] = useState("roadmap")
   const [activeCategory, setActiveCategory] = useState("all")
-  const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")
   const [showFilter, setShowFilter] = useState(false)
   const [filterOption, setFilterOption] = useState<{ [key: string]: string[] }>({});
@@ -95,8 +94,8 @@ const Roadmap: React.FC = () => {
   const applyFilters = () => {
     return features.filter((feature) => {
       const matchesSearch =
-        feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        feature.description.toLowerCase().includes(searchQuery.toLowerCase());
+        feature.title.toLowerCase() ||
+        feature.description.toLowerCase();
 
       const productFilters = filterOption["Product Initiatives"] || [];
 
@@ -125,18 +124,18 @@ const Roadmap: React.FC = () => {
   switch (tab) {
     case "all":
       return filteredFeatures;
-    case "production":
+    case "Live":
       return filteredFeatures.filter((f) => f.status === "Live");
-    case "wip":
-      return filteredFeatures.filter(
-        (f) => f.status === "In Progress" || f.status === "MVP"
-      );
-    case "roadmap":
-      return filteredFeatures.filter(
-        (f) => f.status === "Coming Soon" || f.status === "Proposal"
-      );
-    case "paused":
+    case "In Progress":
+      return filteredFeatures.filter((f) => f.status === "In Progress");
+    case "Coming Soon":
+      return filteredFeatures.filter((f) => f.status === "Coming Soon");
+    case "Proposal":
+      return filteredFeatures.filter((f) => f.status === "Proposal");
+    case "Mothballed":
       return filteredFeatures.filter((f) => f.status === "Mothballed");
+    case "MVP":
+      return filteredFeatures.filter((f) => f.status === "MVP");
     default:
       return filteredFeatures;
   }
@@ -182,9 +181,16 @@ const Roadmap: React.FC = () => {
                   we're building next.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button className="bg-purple-600 hover:bg-purple-700">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Request a feature
+                  <Button className="bg-white hover:bg-purple-700 group flex items-center">
+                    <PlusCircle className="mr-2 h-4 w-4 stroke-purple-700 group-hover:stroke-white transition-colors" />
+                    <span className="
+                        text-sm
+                        bg-gradient-to-r from-[#E771C1] to-[#9F71FD]
+                        text-transparent bg-clip-text font-semibold
+                        group-hover:bg-none group-hover:text-white
+                        transition-colors
+                      "
+                    >Request a feature</span>
                   </Button>
                   <Button variant="outline">
                     Learn about our process
@@ -200,18 +206,16 @@ const Roadmap: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900">Project Initiatives</h2>
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setViewMode("list")}
-                    className={viewMode === "list" ? "bg-purple-50 text-purple-700" : ""}
+                    className={viewMode === "list" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
                   >
                     List View
                   </Button>
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setViewMode("visual")}
-                    className={viewMode === "visual" ? "bg-purple-50 text-purple-700" : ""}
+                    className={viewMode === "visual" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
                   >
                     Visual Roadmap
                   </Button>
@@ -243,58 +247,48 @@ const Roadmap: React.FC = () => {
               <Separator />
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="w-full sm:w-2/3">
+                <div className="w-full sm:flex-1">
                   <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-2 w-full">
-                      
-                      <TabsTrigger value="all">
+                    <TabsList className="flex w-full bg-gray-50 rounded-xl p-2 gap-2 justify-start">
+                      <TabsTrigger value="all" className="flex-1 items-center gap-6">
                         All
                       </TabsTrigger>
 
-                      <TabsTrigger value="Live" className="flex items-center gap-2">
+                      <TabsTrigger value="Live" className="flex-1 items-center gap-2">
                         <span>Live</span>
                         <span className="h-2 w-2 rounded-full bg-green-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="In Progress" className="flex items-center gap-2">
+                      <TabsTrigger value="In Progress" className="flex-1 items-center gap-2">
                         <span>In Progress</span>
                         <span className="h-2 w-2 rounded-full bg-blue-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="Coming Soon" className="flex items-center gap-2">
+                      <TabsTrigger value="Coming Soon" className="flex-1 items-center gap-2">
                         <span>Coming Soon</span>
                         <span className="h-2 w-2 rounded-full bg-yellow-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="Proposal" className="flex items-center gap-2">
+                      <TabsTrigger value="Proposal" className="flex-1 items-center gap-2">
                         <span>Proposal</span>
                         <span className="h-2 w-2 rounded-full bg-purple-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="MVP" className="flex items-center gap-2">
-                        <span>MVP</span>
-                        <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                      <TabsTrigger value="Mothballed" className="flex-1 items-center gap-2">
+                        <span>Mothballed</span>
+                        <span className="h-2 w-2 rounded-full bg-gray-500" />
                       </TabsTrigger>
 
-                      <TabsTrigger value="Mothballed" className="flex items-center gap-2">
-                        <span>Mothballed</span>
-                        <span className="h-2 w-2 rounded-full bg-gray-400" />
+                      <TabsTrigger value="MVP" className="flex-1 items-center gap-2">
+                        <span>MVP</span>
+                        <span className="h-2 w-2 rounded-full bg-pink" />
                       </TabsTrigger>
 
                     </TabsList>
                   </Tabs>
                 </div>
 
-                <div className="w-full sm:w-1/3 flex flex-col sm:flex-row gap-4">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search features..."
-                      className="pl-10 w-full"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
+                <div className="w-full sm:w-auto sm:ml-4 flex flex-row justify-end">
                   <Button
                     variant="outline"
                     className="flex items-center gap-2 w-full sm:w-auto relative"
