@@ -105,7 +105,7 @@ export const ProductFamily = () => {
         >
 
           {products.map((product, index) => (
-            <SplideSlide key={index}>
+            <SplideSlide key={index} className="flex justify-center">
               <Card className="h-full min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white shadow-md">
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center">
