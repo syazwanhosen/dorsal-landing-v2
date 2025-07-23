@@ -5,8 +5,9 @@
 /* Global Styles */
 html,
 body {
+  overflow-x: hidden;
   scroll-behavior: smooth;
-  @apply bg-gray-50 text-gray-900 antialiased;
+  @apply bg-gray-50 text-gray-900 antialiased overflow-x-hidden;
 }
 
 select {
