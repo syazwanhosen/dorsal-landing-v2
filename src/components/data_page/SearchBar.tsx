@@ -35,7 +35,7 @@ const SearchBar = ({
       </select>
 
       <button
-        className="bg-purple text-white py-2 rounded-lg hover:bg-primary-700 w-full"
+        className="bg-purple text-white py-2 rounded-lg hover:bg-purple-700 w-full"
         onClick={onGenerateHeatmap}
       >
         Generate Heatmap
