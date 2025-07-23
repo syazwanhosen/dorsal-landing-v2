@@ -5,9 +5,10 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Card, CardContent } from "@/components/ui/card";
 
 // Images
-import productImage from "../assets/product-image.png";
+import productImage from "../../assets/product-image.png";
 
 import "@splidejs/react-splide/css"; 
+import "./style.css"
 
 const products = [
   {
@@ -80,26 +81,29 @@ export const ProductFamily = () => {
       <div className="relative z-10 pb-16 lg:pb-[8rem]">
         <Splide
           options={{
-            type: "slide",
-            gap: "1rem",
-            padding: { right: "1rem", left: "1rem" },
+            arrows: true,
+            pagination: false,
             perPage: 3,
+            gap: '1rem',
+            padding: { left: "1rem", right: "1rem" },
             breakpoints: {
-              1280: { perPage: 3 }, 
+              1280: { perPage: 3 },
               1024: { perPage: 3 },
               920: { perPage: 2 },
               640:  { perPage: 1 },
             },
-            arrows: false,
-            pagination: false,
             wheel: true,
-            direction: 'ltr',
+            direction: "ltr",
             snap: true,
             speed,
-            easing: 'ease-in-out',
-            omitEnd: false, 
+            easing: "ease-in-out",
+            omitEnd: false,
           }}
+          className="relative [&_.splide__arrow]:bg-white [&_.splide__arrow]:text-purple-600 
+                    [&_.splide__arrow]:rounded-full [&_.splide__arrow]:w-10 [&_.splide__arrow]:h-10 
+                    [&_.splide__arrow]:shadow-md [&_.splide__arrow]:hover:bg-purple-100"
         >
+
           {products.map((product, index) => (
             <SplideSlide key={index}>
               <Card className="h-full min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white shadow-md">
