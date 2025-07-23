@@ -64,7 +64,7 @@ export const ProductFamily = () => {
              lg:bg-gradient-none lg:h-[500px]">
 
       {/* Header */}
-      <div className="sm:py-16 pb-16 lg:pb-10 px-6 sm:px-12 text-white text-center z-10 relative mt-16 md:mt-0">
+      <div className="md:py-16 pb-16 lg:pb-10 px-6 sm:px-12 text-white text-center z-10 relative mt-16 md:mt-0">
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
             PRODUCTS
@@ -87,10 +87,10 @@ export const ProductFamily = () => {
             gap: '1rem',
             padding: { left: "1rem", right: "1rem" },
             breakpoints: {
-              1280: { perPage: 3 },
-              1024: { perPage: 3 },
-              920: { perPage: 2 },
-              640:  { perPage: 1 },
+              1024: { perPage: 3  },
+              1023: { perPage: 2  },
+              768: { perPage: 2 },
+              639:  { perPage: 1 },
             },
             wheel: true,
             direction: "ltr",
@@ -105,8 +105,8 @@ export const ProductFamily = () => {
         >
 
           {products.map((product, index) => (
-            <SplideSlide key={index} className="flex justify-center">
-              <Card className="h-full min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white shadow-md">
+            <SplideSlide key={index}>
+              <Card className="mx-auto h-full min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white shadow-md">
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center">
                     <img
