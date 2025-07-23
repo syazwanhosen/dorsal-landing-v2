@@ -132,7 +132,7 @@ export const CostCompare = () => {
   };
 
   return (
-    <section id="HospitalPrices" className="container pt-4 lg:pb-12 pb-8">
+    <section id="HospitalPrices" className="container pt-4 lg:pb-12 pb-8 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
       <div className="grid gap-4">
         <h2 className="text-xl font-bold text-left">
           <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
