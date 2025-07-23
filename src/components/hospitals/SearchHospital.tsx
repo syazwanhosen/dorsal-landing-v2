@@ -223,7 +223,8 @@ const handleSearch = () => {
           </button>
         </div>
 
-        {searchResults && (
+        {/* DF-94 - Hide filter  */}
+        {/* {searchResults && (
           <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap gap-2 text-xs mb-4 sm:mb-0">
             <span className="font-semibold w-full sm:w-auto">Filter by:</span>
           
@@ -254,7 +255,7 @@ const handleSearch = () => {
               </select>
             </div>
           </div>
-        )}
+        )} */}
       </section>
             {/*   <div className="mt-6">
   <h3 className="font-semibold text-sm mb-2">

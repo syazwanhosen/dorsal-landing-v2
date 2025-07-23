@@ -127,11 +127,11 @@ export const HospitalServiceSearch = () => {
           </button>
         </div>
 
-        {serviceSearchResults && (
+        {/* DF-94 - Hide filter  */}
+        {/* {serviceSearchResults && (
         <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 text-xs mb-4 sm:mb-0">
         <span className="font-semibold w-full sm:w-auto">Filter by:</span>
       
-        {/* ✅ Responsive Dropdown Wrapping for Mobile */}
         <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
           <select className="pl-3 pr-8 py-1 rounded border bg-white w-full sm:w-auto">
             <option disabled>Select Distance</option>
@@ -164,7 +164,7 @@ export const HospitalServiceSearch = () => {
         </div>
       </div>
       
-        )}
+        )} */}
 
         {/* Display Search Results 
         {serviceSearchResults && (
