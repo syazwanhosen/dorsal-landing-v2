@@ -110,16 +110,21 @@ const ProductFamily = () => {
 
   return (
     <section
-      className="container px-0 horizontal-section bg-white" >
+      className="container px-0 horizontal-section bg-white
+                 bg-gradient-to-br from-[#864196] to-[#EB3897]
+                 lg:bg-[url('/src/assets/union.png')]
+                 lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
+                 lg:bg-gradient-none lg:h-[1700px]"
+    >
       <div className="tall-outer-container" style={{ height: `${dynamicHeight}px` }}>
-        <div className="sticky-inner-container  bg-[url('/src/assets/union.png')] bg-no-repeat" ref={containerRef}>
+        <div className="sticky-inner-container" ref={containerRef}>
           <div className="title-container">
             <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
               <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
                 PRODUCTS
               </span>
             </span>
-            <h1 className="text-3xl font-bold mt-4">Dorsal Product Family</h1>
+            <h2 className="text-3xl font-semibold mt-4">Dorsal Product Family</h2>
             <p className="mt-4">
               Explore our suite of tools built to empower consumers, researchers, and enterprises with healthcare <br />
               price transparency and negotiation.

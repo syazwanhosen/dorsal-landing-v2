@@ -18,7 +18,7 @@
 
 .horizontal-translate-container {
   position: absolute;
-  margin-top: 10rem;
+  height: 100%;
   will-change: transform;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
 .cards-container {
   display: flex;
   padding: 2rem;
-  padding-top: 10rem;
+  padding-top: 15rem;
 }
 
 .product-card {
@@ -50,6 +50,6 @@
   color: white;
   z-index: 10;
   pointer-events: none; 
-  padding-top: 6rem;
+  padding-top: 8rem;
 }
 
