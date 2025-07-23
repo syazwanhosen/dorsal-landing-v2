@@ -10,7 +10,6 @@ import {
   Receipt,
   FileSearch,
   BarChart3,
-  Stethoscope,
   Shield,
   Wallet,
   Trophy,
@@ -20,7 +19,9 @@ import {
   Users,
   Lightbulb,
   PauseCircle,
-  Award
+  Award,
+  Building,
+  Handshake  
 } from "lucide-react"
 import { Button } from "@/components/ui/buttons/button"
 
@@ -35,13 +36,14 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
       receipt: <Receipt className="h-6 w-6 text-purple" />,
       fileSearch: <FileSearch className="h-6 w-6 text-purple" />,
       barChart: <BarChart3 className="h-6 w-6 text-purple" />,
-      stethoscope: <Stethoscope className="h-6 w-6 text-purple" />,
+      building: <Building className="h-6 w-6 text-purple" />,
       shield: <Shield className="h-6 w-6 text-purple" />,
       wallet: <Wallet className="h-6 w-6 text-purple" />,
       trophy: <Trophy className="h-6 w-6 text-purple" />,
       userCog: <UserCog className="h-6 w-6 text-purple" />,
       badgeAlert: <BadgeAlert className="h-6 w-6 text-purple" />,
       sparkles: <Sparkles className="h-6 w-6 text-purple" />,
+      handshake: <Handshake className="h-6 w-6 text-purple" />,
       users: <Users className="h-6 w-6 text-purple" />,
     }
 

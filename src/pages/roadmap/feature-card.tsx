@@ -12,7 +12,6 @@ import {
   Receipt,
   FileSearch,
   BarChart3,
-  Stethoscope,
   Shield,
   Wallet,
   Trophy,
@@ -23,7 +22,22 @@ import {
   Lightbulb,
   PauseCircle,
   Award,
-  Package
+  Package,
+  Building,
+  Handshake,
+  Upload, 
+  ClipboardList, 
+  CheckCheck,
+  LineChart,
+  Route,
+  Activity,
+  HeartPulse,
+  Tag,
+  ShoppingCart,
+  Languages,
+  BookOpen,
+  Plus,
+  ThumbsUp 
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
@@ -73,18 +87,30 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 
   const getFeatureIcon = (iconName: string) => {
     const icons = {
-      fileText: <FileText className="h-5 w-5 text-purple-600" />,
-      receipt: <Receipt className="h-5 w-5 text-purple-600" />,
-      fileSearch: <FileSearch className="h-5 w-5 text-purple-600" />,
-      barChart: <BarChart3 className="h-5 w-5 text-purple-600" />,
-      stethoscope: <Stethoscope className="h-5 w-5 text-purple-600" />,
-      shield: <Shield className="h-5 w-5 text-purple-600" />,
-      wallet: <Wallet className="h-5 w-5 text-purple-600" />,
-      trophy: <Trophy className="h-5 w-5 text-purple-600" />,
-      userCog: <UserCog className="h-5 w-5 text-purple-600" />,
-      badgeAlert: <BadgeAlert className="h-5 w-5 text-purple-600" />,
-      sparkles: <Sparkles className="h-5 w-5 text-purple-600" />,
-      users: <Users className="h-5 w-5 text-purple-600" />,
+      fileText: <FileText className="h-6 w-6 text-purple" />,
+      receipt: <Receipt className="h-6 w-6 text-purple" />,
+      fileSearch: <FileSearch className="h-6 w-6 text-purple" />,
+      barChart: <BarChart3 className="h-6 w-6 text-purple" />,
+      building: <Building className="h-6 w-6 text-purple" />,
+      shield: <Shield className="h-6 w-6 text-purple" />,
+      wallet: <Wallet className="h-6 w-6 text-purple" />,
+      trophy: <Trophy className="h-6 w-6 text-purple" />,
+      userCog: <UserCog className="h-6 w-6 text-purple" />,
+      badgeAlert: <BadgeAlert className="h-6 w-6 text-purple" />,
+      sparkles: <Sparkles className="h-6 w-6 text-purple" />,
+      handshake: <Handshake className="h-6 w-6 text-purple" />,
+      users: <Users className="h-6 w-6 text-purple" />,
+      upload: <Upload className="h-6 w-6 text-purple" />,
+      clipboard: <ClipboardList className="h-6 w-6 text-purple" />,
+      linechart: <LineChart className="h-6 w-6 text-purple" />,
+      check: <CheckCheck className="h-6 w-6 text-purple" />,
+      route: <Route className="h-6 w-6 text-purple" />,
+      activity: <Activity className="h-6 w-6 text-purple" />,
+      heartpulse: <HeartPulse className="h-6 w-6 text-purple" />,
+      tag: <Tag className="h-6 w-6 text-purple" />,
+      shoppingcart: <ShoppingCart className="h-6 w-6 text-purple" />,
+      languages: <Languages className="h-6 w-6 text-purple" />,
+      bookopen: <BookOpen className="h-6 w-6 text-purple" />,
     }
 
     return icons[iconName as keyof typeof icons] || <FileText className="h-5 w-5 text-purple-600" />
@@ -194,32 +220,14 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   }, [feature.id]);
 
   return (
-    <div className="border border-gray-200 rounded-lg overfl
-    ow-hidden bg-white hover:shadow-sm transition-shadow">
+    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
-          <Button
-            variant="ghost"
-            size="default"
-            className={`h-8 w-8 rounded-full ${hasVoted === "upvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-              }`}
-            onClick={() => handleVote(1, 'upvote')}
-          >
-            <ChevronUp className="h-5 w-5" />
-            <span className="sr-only">Upvote</span>
-          </Button>
-          <span className="font-semibold text-lg my-1">{votes}</span>
-          <Button
-            variant="ghost"
-            size="default"
-            className={`h-8 w-8 rounded-full ${hasVoted === "downvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-              }`}
-            onClick={() => handleVote(-1, 'downvote')}
-          >
-            <ChevronDown className="h-5 w-5" />
-            <span className="sr-only">Downvote</span>
-          </Button>
+          <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-purple-700 group">
+            <ThumbsUp className="h-3 w-3 text-black group-hover:text-white transition-colors" />
+          </button>
+          <span className="font-semibold text-lg my-1">10</span>
         </div>
 
         {/* Content column */}
