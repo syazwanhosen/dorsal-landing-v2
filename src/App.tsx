@@ -15,7 +15,7 @@ import ProductFamily from "./components/ProductFamily/index";
 
 function App() {
   return (
-    <>
+    <div className="bg-white">
       <Navbar />
       <Hero />
       <Banner />
@@ -27,7 +27,7 @@ function App() {
       <FAQ />
       <Footer />
       <ScrollToTop />
-    </>
+    </div>
   );
 }
 
