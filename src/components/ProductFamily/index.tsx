@@ -121,8 +121,8 @@ const ProductFamily = () => {
                 PRODUCTS
               </span>
             </span>
-            <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold leading-tight mt-4">Dorsal Product Family</h2>
-            <p className="text-base sm:text-lg text-white/90 mt-4">
+            <h1 className="text-3xl font-bold mt-4">Dorsal Product Family</h1>
+            <p className="mt-4">
               Explore our suite of tools built to empower consumers, researchers, and enterprises with healthcare <br />
               price transparency and negotiation.
             </p>
