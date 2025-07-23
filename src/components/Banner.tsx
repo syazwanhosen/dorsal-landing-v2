@@ -3,7 +3,7 @@ import desktopBanner from "@/assets/rectangle-1.webp";
 
 const phrases = [
   "an MRI 🩻",
-  "a CT scan 💡",
+  "a CT scan 🧠",
   "an ultrasound 🤰",
   "a blood test 🩸",
   "a biopsy 🔬",

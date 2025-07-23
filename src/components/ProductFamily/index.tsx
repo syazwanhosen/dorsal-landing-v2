@@ -7,27 +7,34 @@ const products = [
   {
     title: "Dorsal.fyi",
     description:
-      "Free public access to crowd-sourced medical bill data. Great for patients wanting pricing insights before receiving care.",
+      "Free forever public access to real-time crowdsourced medical bill insights. Great for patients exploring pricing and providers.",
   },
   {
     title: "Dorsal Companion",
     description:
-      "Think Rocket Money but for healthcare. Tracks bills, finds discrepancies, and assists in saving on out-of-pocket costs.",
+      "Think Rocket Money but for healthcare. Track and identify problems with bills for you and your family in any language and reading level.",
   },
   {
     title: "Dorsal Appeals Engine",
     description:
-      "Appeal denied claims via web, hospital-specific app, or even SMS. Easy-to-use engine to guide consumers through the process.",
+      "One-click appeals to save on medical bills. Web, mobile, or even SMS/WhatsApp. Let us do the hard work and get you your money back!",
   },
   {
     title: "Dorsal Data",
     description:
-      "Our polished dataset offering for researchers, policymakers, and analysts seeking deep insight into healthcare costs.",
+      "Explore our proprietary real-time bulk claims data. For researchers, policymakers, and analysts seeking deep insight into the market.",
   },
+  /** TODO: AFTER SEED ROUND
   {
     title: "Dorsal for Enterprise",
     description:
-      "Tailored for employers and clinics looking to reduce healthcare spend by leveraging Dorsal insights at a population level.",
+      "For employers, managed care, and clinics. Improve care navigation & reduce healthcare spend at a population level.",
+  },
+   */
+  {
+    title: "Dorsal for Enterprise",
+    description:
+      "For employers, managed care, and clinics. Improve care navigation & reduce healthcare spend at a population level.",
   },
 ];
 
