@@ -1,10 +1,12 @@
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { setSelectedHospital } from "@/features/hospitalMapSlice";
+import { fetchHospitalMetadata } from "@/api/Hospital/api";
 
-// Utility to fix map size issues
+// Fix map sizing after mount
 const ResizeMap = () => {
   const map = useMap();
   useEffect(() => {
@@ -14,17 +16,38 @@ const ResizeMap = () => {
 };
 
 export const DetailsCard = () => {
+  const dispatch = useAppDispatch();
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const name = params.get("name");
   const service = params.get("service");
 
+  // Fallback fetch: if Redux doesn't have hospital, load from query
   useEffect(() => {
-    console.group("🧭 Query Parameters");
-    console.log("service:", service);
-    console.groupEnd();
-    console.log("✅ Redux selectedHospital:", selectedHospital);
-  }, [service, selectedHospital]);
+    if (!selectedHospital && name) {
+      const decodedName = decodeURIComponent(decodeURIComponent(name));
+
+      fetchHospitalMetadata([decodedName])
+        .then((responses) => {
+          const hospitalData = responses[0];
+          dispatch(
+            setSelectedHospital({
+              ...hospitalData,
+              name: decodedName,
+              selectedServiceName: service || "",
+              selectedState: params.get("state") || "",
+              selectedServiceCategory: params.get("category") || "",
+              selectedSubcategory: params.get("subcategory") || "",
+              selectedCptCode: params.get("code") || "",
+            })
+          );
+        })
+        .catch((err) =>
+          console.error("❌ Failed to load hospital from query:", err)
+        );
+    }
+  }, [selectedHospital, name, service, dispatch]);
 
   if (!selectedHospital) return <div>Hospital not found</div>;
 
@@ -33,7 +56,7 @@ export const DetailsCard = () => {
       <h2 className="text-2xl font-semibold mb-4">{selectedHospital.name}</h2>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        {/* Contact + Map Section (full width if no service) */}
+        {/* Contact + Map Section */}
         <div
           className={`${
             service ? "w-full sm:w-[60%]" : "w-full"
@@ -43,22 +66,14 @@ export const DetailsCard = () => {
             <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full relative z-0">
               {selectedHospital.latitude && selectedHospital.longitude ? (
                 <MapContainer
-                  center={[
-                    selectedHospital.latitude,
-                    selectedHospital.longitude,
-                  ]}
+                  center={[selectedHospital.latitude, selectedHospital.longitude]}
                   zoom={15}
                   className="h-[300px] w-full relative z-0"
                 >
                   <TileLayer
                     url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${import.meta.env.VITE_MAP_ACCESS_TOKEN}`}
                   />
-                  <Marker
-                    position={[
-                      selectedHospital.latitude,
-                      selectedHospital.longitude,
-                    ]}
-                  >
+                  <Marker position={[selectedHospital.latitude, selectedHospital.longitude]}>
                     <Popup>{selectedHospital.name}</Popup>
                   </Marker>
                   <ResizeMap />
@@ -88,7 +103,7 @@ export const DetailsCard = () => {
           </div>
         </div>
 
-        {/* Procedure Info Section (only if service exists) */}
+        {/* Procedure Info Section */}
         {service && (
           <div className="w-full sm:w-[40%] flex flex-col border rounded-lg p-4 shadow-sm">
             <div className="w-full">
@@ -109,9 +124,7 @@ export const DetailsCard = () => {
 
             <div className="grid grid-cols-10 gap-4 h-full">
               <div className="col-span-12 lg:col-span-7">
-                <p className="text-sm text-black pt-2">
-                  {selectedHospital.description}
-                </p>
+                <p className="text-sm text-black pt-2">{selectedHospital.description}</p>
               </div>
               <div className="col-span-12 lg:col-span-3 flex flex-col lg:items-end lg:justify-center">
                 <span
