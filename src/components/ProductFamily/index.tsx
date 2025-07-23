@@ -84,8 +84,8 @@ export const ProductFamily = () => {
             arrows: true,
             pagination: false,
             perPage: 3,
-            gap: '1rem',
-            padding: { left: "1rem", right: "1rem" },
+            gap: '1.5rem',
+          padding: { left: "1rem", right: "1rem" },
             breakpoints: {
               1024: { perPage: 3  },
               1023: { perPage: 2  },
