@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge"
 import {
   ChevronUp,
   ChevronDown,
-  Circle,
   CheckCircle2,
   Clock,
   AlertCircle,
@@ -13,7 +12,6 @@ import {
   Receipt,
   FileSearch,
   BarChart3,
-  Stethoscope,
   Shield,
   Wallet,
   Trophy,
@@ -21,6 +19,25 @@ import {
   BadgeAlert,
   Sparkles,
   Users,
+  Lightbulb,
+  PauseCircle,
+  Award,
+  Package,
+  Building,
+  Handshake,
+  Upload, 
+  ClipboardList, 
+  CheckCheck,
+  LineChart,
+  Route,
+  Activity,
+  HeartPulse,
+  Tag,
+  ShoppingCart,
+  Languages,
+  BookOpen,
+  Plus,
+  ThumbsUp 
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
@@ -70,41 +87,82 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 
   const getFeatureIcon = (iconName: string) => {
     const icons = {
-      fileText: <FileText className="h-5 w-5 text-purple-600" />,
-      receipt: <Receipt className="h-5 w-5 text-purple-600" />,
-      fileSearch: <FileSearch className="h-5 w-5 text-purple-600" />,
-      barChart: <BarChart3 className="h-5 w-5 text-purple-600" />,
-      stethoscope: <Stethoscope className="h-5 w-5 text-purple-600" />,
-      shield: <Shield className="h-5 w-5 text-purple-600" />,
-      wallet: <Wallet className="h-5 w-5 text-purple-600" />,
-      trophy: <Trophy className="h-5 w-5 text-purple-600" />,
-      userCog: <UserCog className="h-5 w-5 text-purple-600" />,
-      badgeAlert: <BadgeAlert className="h-5 w-5 text-purple-600" />,
-      sparkles: <Sparkles className="h-5 w-5 text-purple-600" />,
-      users: <Users className="h-5 w-5 text-purple-600" />,
+      fileText: <FileText className="h-6 w-6 text-purple" />,
+      receipt: <Receipt className="h-6 w-6 text-purple" />,
+      fileSearch: <FileSearch className="h-6 w-6 text-purple" />,
+      barChart: <BarChart3 className="h-6 w-6 text-purple" />,
+      building: <Building className="h-6 w-6 text-purple" />,
+      shield: <Shield className="h-6 w-6 text-purple" />,
+      wallet: <Wallet className="h-6 w-6 text-purple" />,
+      trophy: <Trophy className="h-6 w-6 text-purple" />,
+      userCog: <UserCog className="h-6 w-6 text-purple" />,
+      badgeAlert: <BadgeAlert className="h-6 w-6 text-purple" />,
+      sparkles: <Sparkles className="h-6 w-6 text-purple" />,
+      handshake: <Handshake className="h-6 w-6 text-purple" />,
+      users: <Users className="h-6 w-6 text-purple" />,
+      upload: <Upload className="h-6 w-6 text-purple" />,
+      clipboard: <ClipboardList className="h-6 w-6 text-purple" />,
+      linechart: <LineChart className="h-6 w-6 text-purple" />,
+      check: <CheckCheck className="h-6 w-6 text-purple" />,
+      route: <Route className="h-6 w-6 text-purple" />,
+      activity: <Activity className="h-6 w-6 text-purple" />,
+      heartpulse: <HeartPulse className="h-6 w-6 text-purple" />,
+      tag: <Tag className="h-6 w-6 text-purple" />,
+      shoppingcart: <ShoppingCart className="h-6 w-6 text-purple" />,
+      languages: <Languages className="h-6 w-6 text-purple" />,
+      bookopen: <BookOpen className="h-6 w-6 text-purple" />,
     }
 
     return icons[iconName as keyof typeof icons] || <FileText className="h-5 w-5 text-purple-600" />
   }
 
   const getStatusIcon = (status: string) => {
-  switch (status) {
-    case "Live":
-      return <CheckCircle2 className="h-4 w-4 text-green-600" />;
-    case "In Progress":
-      return <Clock className="h-4 w-4 text-blue-600" />;
-    case "Coming Soon":
-      return <AlertCircle className="h-4 w-4 text-yellow-500" />;
-    case "Proposal":
-      return <AlertCircle className="h-4 w-4 text-purple-600" />;
-    case "Mothballed":
-      return <Circle className="h-4 w-4 text-gray-500" />;
-    case "MVP":
-      return <CheckCircle2 className="h-4 w-4 text-indigo-500" />;
+  switch (status.toLowerCase()) {
+    case "live":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <CheckCircle2 className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "in progress":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Clock className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "coming soon":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "proposal":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Lightbulb className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mothballed":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <PauseCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mvp":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Award className="h-4 w-4 text-white" />
+        </span>
+      );
     default:
-      return <AlertCircle className="h-4 w-4 text-gray-400" />;
+      // fallback
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
   }
-};
+  };
 
   const getStatusText = (status: string) => {
   switch (status) {
@@ -126,23 +184,23 @@ export function FeatureCard({ feature }: FeatureCardProps) {
  };
 
   const getStatusColor = (status: string) => {
-  switch (status) {
-    case "Live":
-      return "bg-green-50 text-green-700 border-green-200";
-    case "In Progress":
-      return "bg-blue-50 text-blue-700 border-blue-200";
-    case "Coming Soon":
-      return "bg-yellow-50 text-yellow-700 border-yellow-200";
-    case "Proposal":
-      return "bg-purple-50 text-purple-700 border-purple-200";
-    case "Mothballed":
-      return "bg-gray-100 text-gray-600 border-gray-300";
-    case "MVP":
-      return "bg-indigo-50 text-indigo-700 border-indigo-200";
-    default:
-      return "bg-gray-50 text-gray-700 border-gray-200";
+    switch (status.toLowerCase()) {
+      case "live":
+        return "bg-green-500 text-white"
+      case "in progress":
+        return "bg-blue-500 text-white"
+      case "coming soon":
+        return "bg-yellow-500 text-white"
+      case "proposal":
+        return "bg-teal-500 text-white"
+      case "mothballed":
+        return "bg-gray-500 text-white"
+      case "mvp":
+        return "bg-pink text-white"
+      default:
+        return "bg-gray-400 text-white"
+    }
   }
-};
 
 
   useEffect(() => {
@@ -162,32 +220,14 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   }, [feature.id]);
 
   return (
-    <div className="border border-gray-200 rounded-lg overfl
-    ow-hidden bg-white hover:shadow-sm transition-shadow">
+    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
-          <Button
-            variant="ghost"
-            size="default"
-            className={`h-8 w-8 rounded-full ${hasVoted === "upvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-              }`}
-            onClick={() => handleVote(1, 'upvote')}
-          >
-            <ChevronUp className="h-5 w-5" />
-            <span className="sr-only">Upvote</span>
-          </Button>
-          <span className="font-semibold text-lg my-1">{votes}</span>
-          <Button
-            variant="ghost"
-            size="default"
-            className={`h-8 w-8 rounded-full ${hasVoted === "downvote" ? "bg-purple-100 text-purple-600" : "hover:bg-purple-50 hover:text-purple-600"
-              }`}
-            onClick={() => handleVote(-1, 'downvote')}
-          >
-            <ChevronDown className="h-5 w-5" />
-            <span className="sr-only">Downvote</span>
-          </Button>
+          <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-purple-700 group">
+            <ThumbsUp className="h-3 w-3 text-black group-hover:text-white transition-colors" />
+          </button>
+          <span className="font-semibold text-lg my-1">10</span>
         </div>
 
         {/* Content column */}
@@ -198,7 +238,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
               <div>
                 <h3 className="font-semibold text-gray-900">{feature.title}</h3>
                 <div className="flex flex-wrap items-center gap-2 mt-1 text-sm">
-                  <Badge variant="outline" className={getStatusColor(feature.status)}>
+                  <Badge className={getStatusColor(feature.status)}>
                     {getStatusIcon(feature.status)}
                     <span className="ml-1">{getStatusText(feature.status)}</span>
                   </Badge>
@@ -208,6 +248,9 @@ export function FeatureCard({ feature }: FeatureCardProps) {
                       variant="outline"
                       className="bg-gray-50 text-gray-700 border-gray-200 mr-1 mb-1"
                     >
+                      <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+                        <Package className="h-4 w-4 text-gray-700" />
+                      </span>
                       <span className="capitalize">{cat}</span>
                     </Badge>
                   ))}

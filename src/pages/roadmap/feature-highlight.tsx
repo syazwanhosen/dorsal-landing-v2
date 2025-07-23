@@ -10,7 +10,6 @@ import {
   Receipt,
   FileSearch,
   BarChart3,
-  Stethoscope,
   Shield,
   Wallet,
   Trophy,
@@ -18,6 +17,11 @@ import {
   BadgeAlert,
   Sparkles,
   Users,
+  Lightbulb,
+  PauseCircle,
+  Award,
+  Building,
+  Handshake  
 } from "lucide-react"
 import { Button } from "@/components/ui/buttons/button"
 
@@ -28,48 +32,88 @@ interface FeatureHighlightProps {
 export function FeatureHighlight({ feature }: FeatureHighlightProps) {
   const getFeatureIcon = (iconName: string) => {
     const icons = {
-      fileText: <FileText className="h-6 w-6 text-purple-600" />,
-      receipt: <Receipt className="h-6 w-6 text-purple-600" />,
-      fileSearch: <FileSearch className="h-6 w-6 text-purple-600" />,
-      barChart: <BarChart3 className="h-6 w-6 text-purple-600" />,
-      stethoscope: <Stethoscope className="h-6 w-6 text-purple-600" />,
-      shield: <Shield className="h-6 w-6 text-purple-600" />,
-      wallet: <Wallet className="h-6 w-6 text-purple-600" />,
-      trophy: <Trophy className="h-6 w-6 text-purple-600" />,
-      userCog: <UserCog className="h-6 w-6 text-purple-600" />,
-      badgeAlert: <BadgeAlert className="h-6 w-6 text-purple-600" />,
-      sparkles: <Sparkles className="h-6 w-6 text-purple-600" />,
-      users: <Users className="h-6 w-6 text-purple-600" />,
+      fileText: <FileText className="h-6 w-6 text-purple" />,
+      receipt: <Receipt className="h-6 w-6 text-purple" />,
+      fileSearch: <FileSearch className="h-6 w-6 text-purple" />,
+      barChart: <BarChart3 className="h-6 w-6 text-purple" />,
+      building: <Building className="h-6 w-6 text-purple" />,
+      shield: <Shield className="h-6 w-6 text-purple" />,
+      wallet: <Wallet className="h-6 w-6 text-purple" />,
+      trophy: <Trophy className="h-6 w-6 text-purple" />,
+      userCog: <UserCog className="h-6 w-6 text-purple" />,
+      badgeAlert: <BadgeAlert className="h-6 w-6 text-purple" />,
+      sparkles: <Sparkles className="h-6 w-6 text-purple" />,
+      handshake: <Handshake className="h-6 w-6 text-purple" />,
+      users: <Users className="h-6 w-6 text-purple" />,
     }
 
     return icons[iconName as keyof typeof icons] || <FileText className="h-6 w-6 text-purple-600" />
   }
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "live":
-        return <CheckCircle2 className="h-4 w-4 text-green-600" />
-      case "development":
-        return <Clock className="h-4 w-4 text-blue-600" />
-      case "planned":
-      case "coming":
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-      default:
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-    }
+  switch (status.toLowerCase()) {
+    case "live":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <CheckCircle2 className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "in progress":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Clock className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "coming soon":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "proposal":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Lightbulb className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mothballed":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <PauseCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mvp":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Award className="h-4 w-4 text-white" />
+        </span>
+      );
+    default:
+      // fallback
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
   }
+  };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case "live":
-        return "bg-green-50 text-green-700 border-green-200"
-      case "development":
-        return "bg-blue-50 text-blue-700 border-blue-200"
-      case "planned":
-      case "coming":
-        return "bg-purple-50 text-purple-700 border-purple-200"
+        return "bg-green-500 text-white"
+      case "in progress":
+        return "bg-blue-500 text-white"
+      case "coming soon":
+        return "bg-yellow-500 text-white"
+      case "proposal":
+        return "bg-teal-500 text-white"
+      case "mothballed":
+        return "bg-gray-500 text-white"
+      case "mvp":
+        return "bg-pink text-white"
       default:
-        return "bg-gray-50 text-gray-700 border-gray-200"
+        return "bg-gray-400 text-white"
     }
   }
 
@@ -78,7 +122,7 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="bg-purple-50 p-3 rounded-lg">{getFeatureIcon(feature.icon)}</div>
-          <Badge variant="outline" className={getStatusColor(feature.status)}>
+          <Badge className={getStatusColor(feature.status)}>
             {getStatusIcon(feature.status)}
             <span className="ml-1">
               {feature.status === "Live"
@@ -134,7 +178,7 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
             <span className="text-sm font-medium text-gray-700 mr-2">{feature.votes}</span>
             <span className="text-sm text-gray-500">votes</span>
           </div>
-          <Button variant="ghost" size="sm" className="text-purple-600 hover:text-purple-700 p-0">
+          <Button variant="ghost" size="sm" className="text-purple hover:text-purple-700 p-0">
             Learn more
             <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
