@@ -41,9 +41,7 @@ const products = [
 const calcDynamicHeight = (objectWidth: number): number => {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  const height = objectWidth - vw + vh + 150;
-  
-  return (vw >= 1610 || vh >= 950) ? 750 : height
+  return objectWidth - vw + vh + 150;
 };
 
 const ProductCard = memo(() =>
@@ -112,7 +110,7 @@ const ProductFamily = () => {
 
   return (
     <section
-      className="container px-0 horizontal-section lg:pt-16 pt-6 bg-white" >
+      className="container px-0 horizontal-section bg-white lg:pt-16 pt-6" >
       <div className="tall-outer-container" style={{ height: `${dynamicHeight}px` }}>
         <div className="sticky-inner-container  bg-[url('/src/assets/union.png')] bg-no-repeat 2xl:bg-contain" ref={containerRef}>
           <div className="title-container">
