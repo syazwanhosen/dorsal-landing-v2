@@ -11,11 +11,11 @@ import RoadmapCTA from "./components/RoadmapCTA";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import { Banner } from "./components/Banner";
-import ProductFamily from "./components/ProductFamily/index";
+import ProductFamily from "./components/ProductFamily";
 
 function App() {
   return (
-    <>
+    <div className="bg-white">
       <Navbar />
       <Hero />
       <Banner />
@@ -27,7 +27,7 @@ function App() {
       <FAQ />
       <Footer />
       <ScrollToTop />
-    </>
+    </div>
   );
 }
 
