@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge"
 import {
   ChevronUp,
   ChevronDown,
-  Circle,
   CheckCircle2,
   Clock,
   AlertCircle,
@@ -21,6 +20,10 @@ import {
   BadgeAlert,
   Sparkles,
   Users,
+  Lightbulb,
+  PauseCircle,
+  Award,
+  Package
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
@@ -88,23 +91,52 @@ export function FeatureCard({ feature }: FeatureCardProps) {
   }
 
   const getStatusIcon = (status: string) => {
-  switch (status) {
-    case "Live":
-      return <CheckCircle2 className="h-4 w-4 text-green-600" />;
-    case "In Progress":
-      return <Clock className="h-4 w-4 text-blue-600" />;
-    case "Coming Soon":
-      return <AlertCircle className="h-4 w-4 text-yellow-500" />;
-    case "Proposal":
-      return <AlertCircle className="h-4 w-4 text-purple-600" />;
-    case "Mothballed":
-      return <Circle className="h-4 w-4 text-gray-500" />;
-    case "MVP":
-      return <CheckCircle2 className="h-4 w-4 text-indigo-500" />;
+  switch (status.toLowerCase()) {
+    case "live":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <CheckCircle2 className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "in progress":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Clock className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "coming soon":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "proposal":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Lightbulb className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mothballed":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <PauseCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mvp":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Award className="h-4 w-4 text-white" />
+        </span>
+      );
     default:
-      return <AlertCircle className="h-4 w-4 text-gray-400" />;
+      // fallback
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
   }
-};
+  };
 
   const getStatusText = (status: string) => {
   switch (status) {
@@ -126,23 +158,23 @@ export function FeatureCard({ feature }: FeatureCardProps) {
  };
 
   const getStatusColor = (status: string) => {
-  switch (status) {
-    case "Live":
-      return "bg-green-50 text-green-700 border-green-200";
-    case "In Progress":
-      return "bg-blue-50 text-blue-700 border-blue-200";
-    case "Coming Soon":
-      return "bg-yellow-50 text-yellow-700 border-yellow-200";
-    case "Proposal":
-      return "bg-purple-50 text-purple-700 border-purple-200";
-    case "Mothballed":
-      return "bg-gray-100 text-gray-600 border-gray-300";
-    case "MVP":
-      return "bg-indigo-50 text-indigo-700 border-indigo-200";
-    default:
-      return "bg-gray-50 text-gray-700 border-gray-200";
+    switch (status.toLowerCase()) {
+      case "live":
+        return "bg-green-500 text-white"
+      case "in progress":
+        return "bg-blue-500 text-white"
+      case "coming soon":
+        return "bg-yellow-500 text-white"
+      case "proposal":
+        return "bg-teal-500 text-white"
+      case "mothballed":
+        return "bg-gray-500 text-white"
+      case "mvp":
+        return "bg-pink text-white"
+      default:
+        return "bg-gray-400 text-white"
+    }
   }
-};
 
 
   useEffect(() => {
@@ -198,7 +230,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
               <div>
                 <h3 className="font-semibold text-gray-900">{feature.title}</h3>
                 <div className="flex flex-wrap items-center gap-2 mt-1 text-sm">
-                  <Badge variant="outline" className={getStatusColor(feature.status)}>
+                  <Badge className={getStatusColor(feature.status)}>
                     {getStatusIcon(feature.status)}
                     <span className="ml-1">{getStatusText(feature.status)}</span>
                   </Badge>
@@ -208,6 +240,9 @@ export function FeatureCard({ feature }: FeatureCardProps) {
                       variant="outline"
                       className="bg-gray-50 text-gray-700 border-gray-200 mr-1 mb-1"
                     >
+                      <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+                        <Package className="h-4 w-4 text-gray-700" />
+                      </span>
                       <span className="capitalize">{cat}</span>
                     </Badge>
                   ))}

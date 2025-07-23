@@ -208,14 +208,14 @@ const Roadmap: React.FC = () => {
                   <Button
                     size="sm"
                     onClick={() => setViewMode("list")}
-                    className={viewMode === "list" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+                    className={viewMode === "list" ? "bg-purple text-white hover:text-white" : "bg-white text-gray-700 border border-gray-300 hover:text-white"}
                   >
                     List View
                   </Button>
                   <Button
                     size="sm"
                     onClick={() => setViewMode("visual")}
-                    className={viewMode === "visual" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+                    className={viewMode === "visual" ? "bg-purple text-white hover:text-white" : "bg-white text-gray-700 border border-gray-300 hover:text-white"}
                   >
                     Visual Roadmap
                   </Button>
@@ -237,57 +237,51 @@ const Roadmap: React.FC = () => {
               </div>
             )}
 
-
-            {/* Search and Filter */}
+            {/* Tab and Filter */}
             <div className="mb-8 space-y-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative flex-1">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-900">All Features</h2>
               </div>
-
-              <Separator />
-
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="w-full sm:flex-1">
                   <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                    <TabsList className="flex w-full bg-gray-50 rounded-xl p-2 gap-2 justify-start">
-                      <TabsTrigger value="all" className="flex-1 items-center gap-6">
+                    <TabsList
+                      className="
+                        flex w-full bg-gray-50 rounded-xl p-2 gap-2 justify-start
+                        overflow-x-auto whitespace-nowrap
+                        scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent
+                      "
+                    >
+                      <TabsTrigger value="all" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         All
                       </TabsTrigger>
-
-                      <TabsTrigger value="Live" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="Live" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>Live</span>
                         <span className="h-2 w-2 rounded-full bg-green-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="In Progress" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="In Progress" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>In Progress</span>
                         <span className="h-2 w-2 rounded-full bg-blue-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="Coming Soon" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="Coming Soon" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>Coming Soon</span>
                         <span className="h-2 w-2 rounded-full bg-yellow-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="Proposal" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="Proposal" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>Proposal</span>
-                        <span className="h-2 w-2 rounded-full bg-purple-500" />
+                        <span className="h-2 w-2 rounded-full bg-teal-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="Mothballed" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="Mothballed" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>Mothballed</span>
                         <span className="h-2 w-2 rounded-full bg-gray-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="MVP" className="flex-1 items-center gap-2">
+                      <TabsTrigger value="MVP" className="min-w-[110px] flex items-center justify-center gap-2 sm:flex-1">
                         <span>MVP</span>
-                        <span className="h-2 w-2 rounded-full bg-pink" />
+                        <span className="h-2 w-2 rounded-full bg-pink-500" />
                       </TabsTrigger>
-
                     </TabsList>
                   </Tabs>
                 </div>
-
                 <div className="w-full sm:w-auto sm:ml-4 flex flex-row justify-end">
                   <Button
                     variant="outline"

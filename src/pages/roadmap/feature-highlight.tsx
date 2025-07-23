@@ -105,7 +105,7 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
       case "coming soon":
         return "bg-yellow-500 text-white"
       case "proposal":
-        return "bg-purple-500 text-white"
+        return "bg-teal-500 text-white"
       case "mothballed":
         return "bg-gray-500 text-white"
       case "mvp":
@@ -176,7 +176,7 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
             <span className="text-sm font-medium text-gray-700 mr-2">{feature.votes}</span>
             <span className="text-sm text-gray-500">votes</span>
           </div>
-          <Button variant="ghost" size="sm" className="text-purple-600 hover:text-purple-700 p-0">
+          <Button variant="ghost" size="sm" className="text-purple hover:text-purple-700 p-0">
             Learn more
             <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
