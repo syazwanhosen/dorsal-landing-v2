@@ -2,7 +2,7 @@ import { useMemo, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon, LatLngExpression } from "leaflet";
-import { HospitalComparison } from "./hospitals/HospitalComparison";
+import { HospitalComparison } from "./HospitalComparison";
 import "leaflet/dist/leaflet.css";
 import {
   setHospitals,
@@ -11,8 +11,8 @@ import {
   setSidebarOpen,
   setSelectedLocation,
 } from "@/features/hospitalMapSlice";
-import hospital from "../assets/hospital.png";
-import location from "../assets/location-pin.svg";
+import hospital from "@/assets/hospital.png";
+import location from "@/assets/location-pin.svg";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
 
@@ -193,7 +193,8 @@ export const HospitalMap = () => {
 
   const handleSelectHospital = (hospital: any) => {
     if (!searchResults) return;
-    
+  
+    // Dispatch to Redux store
     dispatch(
       setSelectedHospital({
         ...hospital,
@@ -204,12 +205,34 @@ export const HospitalMap = () => {
         selectedServiceName: searchResults.selectedServiceName || "",
       })
     );
-
+  
+    // Build URL with essential query parameters
+    const params = new URLSearchParams();
+    params.append('name', encodeURIComponent(hospital.name));
+  
+    if (searchResults.selectedServiceName) {
+      params.append('service', encodeURIComponent(searchResults.selectedServiceName));
+    } 
+     if (searchResults.selectedCptCode) {
+      params.append('code', encodeURIComponent(searchResults.selectedCptCode));
+     }
+    // Future extensibility
+    // if (searchResults.selectedState) {
+    //   params.append('state', encodeURIComponent(searchResults.selectedState));
+    // }
+    // if (searchResults.selectedServiceCategory) {
+    //   params.append('category', encodeURIComponent(searchResults.selectedServiceCategory));
+    // }
+    // if (searchResults.selectedSubcategory) {
+    //   params.append('subcategory', encodeURIComponent(searchResults.selectedSubcategory));
+    // }
+  
+    const url = `/hospital_details?${params.toString()}`;
     setTimeout(() => {
-      window.open("/hospital_details", "_blank");
+      window.open(url, "_blank");
     }, 100);
   };
-
+  
   return (
     <>
       <div className="relative lg:mt-12 mt-8 flex flex-col lg:flex-row rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">

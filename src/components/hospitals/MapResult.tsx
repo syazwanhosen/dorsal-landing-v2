@@ -1,5 +1,5 @@
 // MapResult.tsx
-import { HospitalMap } from "@/components/HospitalMap";
+import { HospitalMap } from "@/components/hospitals/HospitalMap";
 
 export const MapResult = () => {
   return (
