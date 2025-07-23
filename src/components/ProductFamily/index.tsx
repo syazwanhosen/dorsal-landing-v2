@@ -1,145 +1,131 @@
-import { useState, useEffect, useRef, memo } from "react";
+import { useEffect, useState } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+
+// Components
 import { Card, CardContent } from "@/components/ui/card";
+
+// Images
 import productImage from "../../assets/product-image.png";
-import "./styles.css";
+
+import "@splidejs/react-splide/css"; 
+import "./style.css"
 
 const products = [
   {
     title: "Dorsal.fyi",
     description:
-      "Free forever public access to real-time crowdsourced medical bill insights. Great for patients exploring pricing and providers.",
+      "Free public access to crowd-sourced medical bill data. Great for patients wanting pricing insights before receiving care.",
   },
   {
     title: "Dorsal Companion",
     description:
-      "Think Rocket Money but for healthcare. Track and identify problems with bills for you and your family in any language and reading level.",
+      "Think Rocket Money but for healthcare. Tracks bills, finds discrepancies, and assists in saving on out-of-pocket costs.",
   },
   {
     title: "Dorsal Appeals Engine",
     description:
-      "One-click appeals to save on medical bills. Web, mobile, or even SMS/WhatsApp. Let us do the hard work and get you your money back!",
+      "Appeal denied claims via web, hospital-specific app, or even SMS. Easy-to-use engine to guide consumers through the process.",
   },
   {
     title: "Dorsal Data",
     description:
-      "Explore our proprietary real-time bulk claims data. For researchers, policymakers, and analysts seeking deep insight into the market.",
+      "Our polished dataset offering for reserchers, policy makers, and analysts seeking deep insight into healthcare costs.",
   },
-  /** TODO: AFTER SEED ROUND
   {
     title: "Dorsal for Enterprise",
     description:
-      "For employers, managed care, and clinics. Improve care navigation & reduce healthcare spend at a population level.",
-  },
-   */
-  {
-    title: "Dorsal for Enterprise",
-    description:
-      "For employers, managed care, and clinics. Improve care navigation & reduce healthcare spend at a population level.",
+      "Tailored for employers and clinics looking to reduce healthcare spend by leveranging Dorsal insights at a popilation level.",
   },
 ];
 
-const calcDynamicHeight = (objectWidth: number): number => {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  return objectWidth - vw + vh + 150;
-};
+const getSpeedByWidth = (width: number): number => {
+    if (width >= 1280) return 1500;
+    if (width >= 1024) return 2000;
+    if (width >= 640) return 3500;
+    return 1000;
+  };
 
-const ProductCard = memo(() =>
-  products.map((product, index) => (
-    <Card
-      key={index}
-      className="product-card min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white"
-    >
-      <CardContent className="pt-2">
-        <div className="flex flex-col items-center">
-          <img
-            src={productImage}
-            alt="Product illustration"
-            className="h-40 object-contain mb-4"
-          />
-          <h3 className="text-lg font-semibold text-purple-700 text-center">
-            {product.title}
-          </h3>
-          <p className="text-sm text-gray-700 mt-2 text-center">
-            {product.description}
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  ))
-);
-
-const ProductFamily = () => {
-  const [dynamicHeight, setDynamicHeight] = useState(0);
-  const [translateX, setTranslateX] = useState(0);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const objectRef = useRef<HTMLDivElement>(null);
-
+export const ProductFamily = () => {
+  const [speed, setSpeed] = useState(getSpeedByWidth(window.innerWidth));
+  
   useEffect(() => {
-    let animationFrameId: number;
-
-    const updateHeight = () => {
-      if (objectRef.current) {
-        const objectWidth = objectRef.current.scrollWidth;
-        const height = calcDynamicHeight(objectWidth);
-        setDynamicHeight(height);
-      }
+    const handleResize = () => {
+      setSpeed(getSpeedByWidth(window.innerWidth));
     };
 
-    const handleScroll = () => {
-      animationFrameId = requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const offsetTop = -containerRef.current.offsetTop;
-          setTranslateX(offsetTop);
-        }
-      });
-    };
-
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", updateHeight);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   return (
-    <section
-      className="container px-0 horizontal-section bg-white
-                 bg-gradient-to-br from-[#864196] to-[#EB3897]
-                 lg:bg-[url('/src/assets/union.png')]
-                 lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
-                 lg:bg-gradient-none lg:h-[1700px]"
-    >
-      <div className="tall-outer-container" style={{ height: `${dynamicHeight}px` }}>
-        <div className="sticky-inner-container" ref={containerRef}>
-          <div className="title-container">
-            <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
-              <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
-                PRODUCTS
-              </span>
-            </span>
-            <h2 className="text-3xl font-semibold mt-4">Dorsal Product Family</h2>
-            <p className="mt-4">
-              Explore our suite of tools built to empower consumers, researchers, and enterprises with healthcare <br />
-              price transparency and negotiation.
-            </p>
-          </div>
-          <div
-            className="horizontal-translate-container"
-            ref={objectRef}
-            style={{ transform: `translate3d(${translateX}px, 0, 0)` }}
-          >
-            <div className="cards-container">
-              <ProductCard />
-            </div>
-          </div>
-        </div>
+    <section className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
+             lg:bg-[url('@/assets/Union.png')]
+             lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
+             lg:bg-gradient-none lg:h-[500px]">
+
+      {/* Header */}
+      <div className="md:py-16 pb-16 lg:pb-10 px-6 sm:px-12 text-white text-center z-10 relative mt-16 md:mt-0">
+        <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
+          <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
+            PRODUCTS
+          </span>
+        </span>
+        <h2 className="text-3xl font-semibold mt-4">Dorsal Product Family</h2>
+        <p className="mt-4">
+          Explore our suite of tools built to empower consumers, researchers, and enterprises with healthcare <br />
+          price transparency and negotiation.
+        </p>
+      </div>
+
+      {/* Slider */}
+      <div className="relative z-10 pb-16 lg:pb-[8rem]">
+        <Splide
+          options={{
+            arrows: true,
+            pagination: false,
+            perPage: 3,
+            gap: '1.5rem',
+          padding: { left: "1rem", right: "1rem" },
+            breakpoints: {
+              1024: { perPage: 3  },
+              1023: { perPage: 2  },
+              768: { perPage: 2 },
+              639:  { perPage: 1 },
+            },
+            wheel: true,
+            direction: "ltr",
+            snap: true,
+            speed,
+            easing: "ease-in-out",
+            omitEnd: false,
+          }}
+          className="relative [&_.splide__arrow]:bg-white [&_.splide__arrow]:text-purple-600 
+                    [&_.splide__arrow]:rounded-full [&_.splide__arrow]:w-10 [&_.splide__arrow]:h-10 
+                    [&_.splide__arrow]:shadow-md [&_.splide__arrow]:hover:bg-purple-100"
+        >
+
+          {products.map((product, index) => (
+            <SplideSlide key={index}>
+              <Card className="mx-auto h-full min-w-[280px] max-w-[360px] shrink-0 rounded-2xl bg-white shadow-md">
+                <CardContent className="p-6">
+                  <div className="flex flex-col items-center">
+                    <img
+                      src={productImage}
+                      alt="Product illustration"
+                      className="h-40 object-contain mb-4"
+                    />
+                    <h3 className="text-lg font-semibold text-purple-700 text-center">
+                      {product.title}
+                    </h3>
+                    <p className="text-sm text-gray-700 mt-2 text-center">
+                      {product.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </SplideSlide>
+          ))}
+        </Splide>
       </div>
     </section>
   );

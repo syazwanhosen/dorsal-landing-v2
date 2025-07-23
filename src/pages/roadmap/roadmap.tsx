@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/buttons/button"
-import Separator from "@/components/ui/separator";
-import { Search, Filter, PlusCircle, ArrowRight } from "lucide-react"
+import { Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, } from "@/components/ui/tab"
 import { FeatureCard } from "./feature-card";
 import { FeatureHighlight } from "./feature-highlight";
@@ -14,6 +12,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 
 import { FeatureType } from "@/lib/data";
+import ProductRoadmap from '../../assets/shape_icon.webp';
 
 const FILTERS = [
   {
@@ -45,9 +44,9 @@ const featuredCategories = [
     description: "AI-powered tools to analyze medical bills, detect suspicious charges, and automate appeal filing processes.",
     icon: "badgeAlert",
     category: ["Audit & Appeals"],
-    status: "Coming Soon",
+    status: "In Progress",
     votes: 10,
-    progress: 50
+    progress: 80
   },
   {
     id: "enterprise",
@@ -73,7 +72,7 @@ const featuredCategories = [
     id: "companion",
     title: "Companion",
     description: "Smart assistants and mobile tools that help patients navigate billing, insurance, and appeals in real time.",
-    icon: "smartphone",
+    icon: "handshake",
     category: ["Companion"],
     status: "Coming Soon",
     votes: 10,
@@ -86,7 +85,6 @@ const Roadmap: React.FC = () => {
 
   const [activeTab, _setActiveTab] = useState("roadmap")
   const [activeCategory, setActiveCategory] = useState("all")
-  const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")
   const [showFilter, setShowFilter] = useState(false)
   const [filterOption, setFilterOption] = useState<{ [key: string]: string[] }>({});
@@ -95,8 +93,8 @@ const Roadmap: React.FC = () => {
   const applyFilters = () => {
     return features.filter((feature) => {
       const matchesSearch =
-        feature.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        feature.description.toLowerCase().includes(searchQuery.toLowerCase());
+        feature.title.toLowerCase() ||
+        feature.description.toLowerCase();
 
       const productFilters = filterOption["Product Initiatives"] || [];
 
@@ -125,18 +123,18 @@ const Roadmap: React.FC = () => {
   switch (tab) {
     case "all":
       return filteredFeatures;
-    case "production":
+    case "Live":
       return filteredFeatures.filter((f) => f.status === "Live");
-    case "wip":
-      return filteredFeatures.filter(
-        (f) => f.status === "In Progress" || f.status === "MVP"
-      );
-    case "roadmap":
-      return filteredFeatures.filter(
-        (f) => f.status === "Coming Soon" || f.status === "Proposal"
-      );
-    case "paused":
+    case "In Progress":
+      return filteredFeatures.filter((f) => f.status === "In Progress");
+    case "Coming Soon":
+      return filteredFeatures.filter((f) => f.status === "Coming Soon");
+    case "Proposal":
+      return filteredFeatures.filter((f) => f.status === "Proposal");
+    case "Mothballed":
       return filteredFeatures.filter((f) => f.status === "Mothballed");
+    case "MVP":
+      return filteredFeatures.filter((f) => f.status === "MVP");
     default:
       return filteredFeatures;
   }
@@ -175,21 +173,39 @@ const Roadmap: React.FC = () => {
           <div className="mx-auto px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16">
             {/* Hero Section */}
             <div className="mb-12 bg-gradient-to-r from-[#864196] to-[#F33594] rounded-xl p-8 border border-purple-100">
-              <div className="max-w-3xl">
-                <h1 className="text-3xl font-bold text-white mb-4">Dorsal.fyi Product Roadmap</h1>
-                <p className="text-white mb-6">
-                  Help shape the future of medical bill transparency. Vote on features, provide feedback, and see what
-                  we're building next.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Button className="bg-purple-600 hover:bg-purple-700">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Request a feature
-                  </Button>
-                  <Button variant="outline">
-                    Learn about our process
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+              <div className="flex flex-col lg:flex-row items-center gap-8">
+                {/* Left content */}
+                <div className="w-full max-w-2xl">
+                  <h1 className="text-3xl font-bold text-white mb-4">Dorsal.fyi Product Roadmap</h1>
+                  <p className="text-white mb-6">
+                    Help shape the future of medical bill transparency. Vote on features, provide feedback, and see what
+                    we're building next.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button className="bg-white hover:bg-purple-700 group flex items-center">
+                      <PlusCircle className="mr-2 h-4 w-4 stroke-purple-700 group-hover:stroke-white transition-colors" />
+                      <span className="
+                          text-sm
+                          bg-gradient-to-r from-[#E771C1] to-[#9F71FD]
+                          text-transparent bg-clip-text font-semibold
+                          group-hover:bg-none group-hover:text-white
+                          transition-colors
+                        "
+                      >Request a feature</span>
+                    </Button>
+                    <Button variant="outline">
+                      Learn about our process
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                {/* Right image */}
+                <div className="w-full flex justify-center lg:w-1/2">
+                  <img
+                    src={ProductRoadmap}
+                    alt="Product Roadmap"
+                    className="max-w-xs w-full h-auto object-contain"
+                  />
                 </div>
               </div>
             </div>
@@ -200,18 +216,16 @@ const Roadmap: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900">Project Initiatives</h2>
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setViewMode("list")}
-                    className={viewMode === "list" ? "bg-purple-50 text-purple-700" : ""}
+                    className={viewMode === "list" ? "bg-purple text-white hover:text-white" : "bg-white text-gray-700 border border-gray-300 hover:text-white"}
                   >
                     List View
                   </Button>
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={() => setViewMode("visual")}
-                    className={viewMode === "visual" ? "bg-purple-50 text-purple-700" : ""}
+                    className={viewMode === "visual" ? "bg-purple text-white hover:text-white" : "bg-white text-gray-700 border border-gray-300 hover:text-white"}
                   >
                     Visual Roadmap
                   </Button>
@@ -233,73 +247,56 @@ const Roadmap: React.FC = () => {
               </div>
             )}
 
-
-            {/* Search and Filter */}
+            {/* Tab and Filter */}
             <div className="mb-8 space-y-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative flex-1">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-900">All Features</h2>
               </div>
-
-              <Separator />
-
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="w-full sm:w-2/3">
+                <div className="w-full sm:flex-1">
                   <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-2 w-full">
-                      
-                      <TabsTrigger value="all">
+                    <TabsList
+                        className="
+                          grid grid-cols-2 gap-2 w-full bg-gray-50 rounded-xl py-2 px-8 justify-start
+                          lg:flex lg:gap-2 lg:grid-cols-none
+                        "
+                      >
+                      <TabsTrigger value="all" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-10">
                         All
                       </TabsTrigger>
-
-                      <TabsTrigger value="Live" className="flex items-center gap-2">
+                      <TabsTrigger value="Live" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-10">
                         <span>Live</span>
                         <span className="h-2 w-2 rounded-full bg-green-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="In Progress" className="flex items-center gap-2">
+                      <TabsTrigger value="In Progress" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-8">
                         <span>In Progress</span>
                         <span className="h-2 w-2 rounded-full bg-blue-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="Coming Soon" className="flex items-center gap-2">
+                      <TabsTrigger value="Coming Soon" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-8">
                         <span>Coming Soon</span>
                         <span className="h-2 w-2 rounded-full bg-yellow-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="Proposal" className="flex items-center gap-2">
+                      <TabsTrigger value="Proposal" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-8">
                         <span>Proposal</span>
-                        <span className="h-2 w-2 rounded-full bg-purple-500" />
+                        <span className="h-2 w-2 rounded-full bg-teal-500" />
                       </TabsTrigger>
-
-                      <TabsTrigger value="MVP" className="flex items-center gap-2">
-                        <span>MVP</span>
-                        <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                      </TabsTrigger>
-
-                      <TabsTrigger value="Mothballed" className="flex items-center gap-2">
+                      <TabsTrigger value="Mothballed" className="flex items-center justify-center gap-2 px-8 lg:px-4 xl:px-8">
                         <span>Mothballed</span>
-                        <span className="h-2 w-2 rounded-full bg-gray-400" />
+                        <span className="h-2 w-2 rounded-full bg-gray-500" />
                       </TabsTrigger>
-
+                      <TabsTrigger value="MVP" className="flex items-center justify-center gap-2 px-8 xl:px-16 lg:px-4 xl:px-10">
+                        <span>MVP</span>
+                        <span className="h-2 w-2 rounded-full bg-pink" />
+                      </TabsTrigger>
                     </TabsList>
                   </Tabs>
                 </div>
-
-                <div className="w-full sm:w-1/3 flex flex-col sm:flex-row gap-4">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search features..."
-                      className="pl-10 w-full"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-2 w-full sm:w-auto relative"
-                    onClick={() => setShowFilter(!showFilter)}
-                  >
+                <div className="w-full sm:w-auto sm:ml-4 flex flex-row justify-end">
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2 w-full sm:w-auto relative"
+                      onClick={() => setShowFilter(!showFilter)}
+                    >
                     <Filter className="h-4 w-4" />
                     <span>Filter</span>
                   </Button>
@@ -373,7 +370,7 @@ const Roadmap: React.FC = () => {
             </div>
 
             {/* Feature List */}
-            <div className="space-y-4 mb-12">
+            <div className="mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {tabFeatures.length === 0 ? (
                 <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                   <p className="text-gray-500">No features match your criteria.</p>
