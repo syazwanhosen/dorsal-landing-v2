@@ -38,10 +38,10 @@ export const DetailsCard = () => {
 
   return (
     <section className="container mx-auto p-4 relative px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
-      <h2 className="text-2xl font-semibold mb-4 flex flex-wrap items-center gap-4">
+      <h2 className="lg:text-3xl text-2xl font-semibold mb-4 flex flex-wrap items-center gap-4">
         {hospitalData.name || decodeURIComponent(params.get("name") || "")}
         <span
-          className={`px-2 w-fit py-1 mt-2 rounded text-sm font-medium mb-1 ${
+          className={`px-2 text-sm w-fit py-1 mt-2 rounded  font-medium mb-1 ${
             hospitalData.negotiation_status === "Fixed"
               ? "bg-[#6CA724] text-white"
               : "bg-[#CE3C29] text-white"
