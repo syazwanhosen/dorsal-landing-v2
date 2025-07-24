@@ -38,20 +38,18 @@ export const DetailsCard = () => {
 
   return (
     <section className="container mx-auto p-4 relative px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
-    <h2 className="text-2xl font-semibold mb-4 flex flex-wrap items-center gap-4">
-  {hospitalData.name || decodeURIComponent(params.get("name") || "")}
-  <span
-    className={`px-2 w-fit py-1 mt-2 rounded text-sm font-medium mb-1 ${
-      hospitalData.negotiation_status === "Fixed"
-        ? "bg-[#6CA724] text-white"
-        : "bg-[#CE3C29] text-white"
-    }`}
-  >
-    {(hospitalData.negotiation_status || "Fixed") + " Price"}
-  </span>
-</h2>
-
-
+      <h2 className="text-2xl font-semibold mb-4 flex flex-wrap items-center gap-4">
+        {hospitalData.name || decodeURIComponent(params.get("name") || "")}
+        <span
+          className={`px-2 w-fit py-1 mt-2 rounded text-sm font-medium mb-1 ${
+            hospitalData.negotiation_status === "Fixed"
+              ? "bg-[#6CA724] text-white"
+              : "bg-[#CE3C29] text-white"
+          }`}
+        >
+          {(hospitalData.negotiation_status || "Fixed") + " Price"}
+        </span>
+      </h2>
 
       <div className="flex flex-col sm:flex-row gap-6">
         <div className="w-full border rounded-lg p-4 shadow-sm relative overflow-hidden">
@@ -66,7 +64,9 @@ export const DetailsCard = () => {
                     className="h-full w-full relative z-0"
                   >
                     <TileLayer
-                      url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${import.meta.env.VITE_MAP_ACCESS_TOKEN}`}
+                      url={`https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${
+                        import.meta.env.VITE_MAP_ACCESS_TOKEN
+                      }`}
                     />
                     <Marker
                       position={[hospitalData.latitude, hospitalData.longitude]}
@@ -83,7 +83,9 @@ export const DetailsCard = () => {
 
             {/* 📞 Contact Info — 4 Columns */}
             <div className="lg:col-span-4 h-full flex flex-col justify-start">
-              <h4 className="text-lg font-semibold mb-5">Contact Information</h4>
+              <h4 className="text-lg font-semibold mb-5">
+                Contact Information
+              </h4>
               <div className="space-y-2 lg:mb-6">
                 <div className="flex items-start gap-6 mb-6">
                   <div className="bg-[#6CA724] p-3 rounded-full">
@@ -100,7 +102,7 @@ export const DetailsCard = () => {
               </div>
               <Button
                 className="mt-4 bg-purple text-white px-12 rounded hover:bg-purple-700 transition self-start"
-                onClick={() => window.location.href = "/"}
+                onClick={() => (window.location.href = "/")}
               >
                 Contact Hospital
               </Button>
