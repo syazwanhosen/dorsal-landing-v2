@@ -194,47 +194,59 @@ export const HospitalMap = () => {
   const handleSelectHospital = (hospital: any) => {
     if (!searchResults) return;
   
-    // Dispatch to Redux store
+
+    // Step 1: Enrich data for encoding (secure context)
+    const contextPayload = {
+      title: searchResults.generic_service_name || "",
+      description: searchResults.service_description || "",
+      price: hospital.price || 0,
+      negotiation_status: hospital.negotiation_status || "Fixed",
+      selectedCptCode: searchResults.cpt_hcpcs_code || "", // ✅ Include CPT code
+    };
+  
+    // Step 2: Encode it using base64
+    const encodedContext = btoa(JSON.stringify(contextPayload)); // You can replace this with a safer encoder if needed
+  
+    // Step 3: Build minimal query parameters + encoded context
+    const params = new URLSearchParams();
+    params.set("name", encodeURIComponent(hospital.name));
+  
+    if (searchResults.selectedServiceName) {
+      params.set("service", encodeURIComponent(searchResults.selectedServiceName));
+    }
+  
+    if (searchResults.cpt_hcpcs_code) {
+      params.set("code", encodeURIComponent(searchResults.cpt_hcpcs_code));
+    }
+  
+    params.set("context", encodedContext);
+  
+    const url = `/hospital_details?${params.toString()}`;
+  
+    // Step 4: Dispatch enriched Redux hospital state
     dispatch(
       setSelectedHospital({
         ...hospital,
         selectedState: searchResults.selectedState || "",
         selectedServiceCategory: searchResults.selectedServiceCategory || "",
         selectedSubcategory: searchResults.selectedSubcategory || "",
-        selectedCptCode: searchResults.selectedCptCode || "",
         selectedServiceName: searchResults.selectedServiceName || "",
+        ...contextPayload, // includes CPT + title/price/etc.
       })
     );
   
-    // Build URL with essential query parameters
-    const params = new URLSearchParams();
-    params.append('name', encodeURIComponent(hospital.name));
-  
-    if (searchResults.selectedServiceName) {
-      params.append('service', encodeURIComponent(searchResults.selectedServiceName));
-    } 
-     if (searchResults.selectedCptCode) {
-      params.append('code', encodeURIComponent(searchResults.selectedCptCode));
-     }
-    // Future extensibility
-    // if (searchResults.selectedState) {
-    //   params.append('state', encodeURIComponent(searchResults.selectedState));
-    // }
-    // if (searchResults.selectedServiceCategory) {
-    //   params.append('category', encodeURIComponent(searchResults.selectedServiceCategory));
-    // }
-    // if (searchResults.selectedSubcategory) {
-    //   params.append('subcategory', encodeURIComponent(searchResults.selectedSubcategory));
-    // }
-  
-    const url = `/hospital_details?${params.toString()}`;
+    // Step 5: Navigate with secured context
     setTimeout(() => {
       window.open(url, "_blank");
     }, 100);
   };
   
+  
+  
+  
   return (
     <>
+       <section id="MapResult" className="container pb-6">
       <div className="relative lg:mt-12 mt-8 flex flex-col lg:flex-row rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
         {/* Mobile Toggle Button */}
         <button
@@ -446,6 +458,7 @@ export const HospitalMap = () => {
           onRemoveHospital={handleRemoveHospital}
         />
       )}
+      </section>
     </>
   );
 };

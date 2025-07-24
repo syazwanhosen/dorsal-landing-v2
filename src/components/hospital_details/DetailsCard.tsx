@@ -6,7 +6,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
 
-// Fix map sizing after mount
+// ⏱ Resize map after mount to fix size issues
 const ResizeMap = () => {
   const map = useMap();
   useEffect(() => {
@@ -20,34 +20,55 @@ export const DetailsCard = () => {
   const { selectedHospital } = useAppSelector((state) => state.hospitalMap);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const name = params.get("name");
+
   const service = params.get("service");
 
-  // Fallback fetch: if Redux doesn't have hospital, load from query
-  useEffect(() => {
-    if (!selectedHospital && name) {
-      const decodedName = decodeURIComponent(decodeURIComponent(name));
+  // 🔐 Decode encoded context (title, description, price, negotiation)
+  const rawContext = params.get("context");
+  let enrichedContext: any = null;
 
-      fetchHospitalMetadata([decodedName])
-        .then((responses) => {
-          const hospitalData = responses[0];
-          dispatch(
-            setSelectedHospital({
-              ...hospitalData,
-              name: decodedName,
-              selectedServiceName: service || "",
-              selectedState: params.get("state") || "",
-              selectedServiceCategory: params.get("category") || "",
-              selectedSubcategory: params.get("subcategory") || "",
-              selectedCptCode: params.get("code") || "",
-            })
-          );
-        })
-        .catch((err) =>
-          console.error("❌ Failed to load hospital from query:", err)
-        );
+  if (rawContext) {
+    try {
+      enrichedContext = JSON.parse(atob(rawContext));
+    } catch (err) {
+      console.error("❌ Failed to decode hospital context:", err);
     }
-  }, [selectedHospital, name, service, dispatch]);
+  }
+
+  useEffect(() => {
+    const name = params.get("name");
+    if (!name) return;
+
+    const decodedName = decodeURIComponent(decodeURIComponent(name));
+    const decodedService = decodeURIComponent(decodeURIComponent(params.get("service") || ""));
+    const decodedCode = decodeURIComponent(params.get("code") || "");
+
+
+    
+
+    fetchHospitalMetadata([decodedName])
+      .then((responses) => {
+        const hospitalData = responses[0];
+        console.log("✅ Hospital API Response:", hospitalData);
+        console.log("Context CPT Code:", enrichedContext?.selectedCptCode);
+        console.log("Final CPT Code to Dispatch:", enrichedContext?.selectedCptCode || decodedCode);
+        
+        
+        dispatch(
+          setSelectedHospital({
+            ...hospitalData,
+            name: decodedName,
+            title: enrichedContext?.title || decodedService || "Procedure not specified",
+            description: enrichedContext?.description || hospitalData.description || "No description available.",
+            price: enrichedContext?.price ?? hospitalData.price ?? 0,
+            negotiation_status: enrichedContext?.negotiation_status || hospitalData.negotiation_status || "Fixed",
+            selectedCptCode: enrichedContext?.selectedCptCode || decodedCode || hospitalData.selectedCptCode || "",
+
+          })
+        );
+      })
+      .catch((err) => console.error("❌ Failed to fetch hospital:", err));
+  }, [location.search]);
 
   if (!selectedHospital) return <div>Hospital not found</div>;
 
@@ -56,12 +77,8 @@ export const DetailsCard = () => {
       <h2 className="text-2xl font-semibold mb-4">{selectedHospital.name}</h2>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        {/* Contact + Map Section */}
-        <div
-          className={`${
-            service ? "w-full sm:w-[60%]" : "w-full"
-          } border rounded-lg p-4 shadow-sm relative overflow-hidden`}
-        >
+        {/* 🗺️ Map + Contact Info Section */}
+        <div className={`${service ? "w-full sm:w-[60%]" : "w-full"} border rounded-lg p-4 shadow-sm relative overflow-hidden`}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
             <div className="bg-gray-200 rounded flex items-center justify-center sm:h-full relative z-0">
               {selectedHospital.latitude && selectedHospital.longitude ? (
@@ -103,20 +120,20 @@ export const DetailsCard = () => {
           </div>
         </div>
 
-        {/* Procedure Info Section */}
+        {/* 🩺 Procedure Info Section */}
         {service && (
           <div className="w-full sm:w-[40%] flex flex-col border rounded-lg p-4 shadow-sm">
             <div className="w-full">
               <h3 className="text-lg font-semibold mb-1 flex flex-wrap items-center gap-4">
                 {selectedHospital.title}
-                {selectedHospital.code && (
+                {selectedHospital.selectedCptCode && (
                   <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
-                    CPT Code {selectedHospital.code}
+                    CPT Code {selectedHospital.selectedCptCode}
                   </span>
                 )}
                 {selectedHospital.zipcode && (
                   <span className="bg-purple text-white text-xs font-semibold px-2 py-1 rounded">
-                    CPT Code {selectedHospital.zipcode}
+                    Zipcode {selectedHospital.zipcode}
                   </span>
                 )}
               </h3>
