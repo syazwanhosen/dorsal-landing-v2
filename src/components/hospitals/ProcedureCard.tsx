@@ -20,7 +20,7 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
   hospitalNames,
 }) => {
   return (
-    <section id="ProcedureCard" className="mt-2 container">
+    <section id="ProcedureCard" className="mt-2 container px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
       <div className="flex flex-col lg:flex-row items-start justify-between space-y-4 lg:space-y-0 lg:space-x-6">
         {/* Left Content */}
         <div className="w-full lg:w-[60%]">

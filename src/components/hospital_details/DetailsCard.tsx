@@ -69,8 +69,17 @@ export const DetailsCard = () => {
   if (!selectedHospital) return <div>Hospital not found</div>;
 
   return (
-    <section className="container mx-auto p-4 relative">
-      <h2 className="text-2xl font-semibold mb-4">{selectedHospital.name}</h2>
+    <>
+      <section className="container mx-auto p-4 relative">
+        {/* Back Button */}
+        {/* <button
+          onClick={() => navigate("/hospitals")} 
+          className="mb-4 text-sm text-gray-600 hover:underline">
+          &larr; Back to Hospitals
+        </button> */}
+
+        {/* Hospital Name & Rating */}
+        <h2 className="text-2xl font-semibold mb-4">{selectedHospital.name}</h2>
 
       <div className="flex flex-col sm:flex-row gap-6">
         {/* 🗺️ Map + Contact Info Section */}
@@ -163,5 +172,6 @@ export const DetailsCard = () => {
         )}
       </div>
     </section>
+   </>
   );
 };

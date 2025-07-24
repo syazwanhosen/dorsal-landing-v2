@@ -78,7 +78,7 @@ export const SearchHospital = () => {
   });
 
   const [searchError, setSearchError] = useState<string | null>(null);
-  const { searchResults } = useAppSelector((state) => state.hospital);
+  useAppSelector((state) => state.hospital);
 
   const runSearch = (params: URLSearchParams) => {
     dispatch(setLoading(true));
@@ -262,7 +262,7 @@ export const SearchHospital = () => {
 
   return (
     <>
-      <section id="SearchHospital" className="container py-6">
+      <section id="SearchHospital" className="container py-6 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
         <div className="flex flex-wrap lg:flex-nowrap items-center border border-purple-400 rounded overflow-hidden bg-white text-sm">
           {/* Filter Options */}
           <div className="flex flex-wrap flex-grow">
@@ -323,8 +323,7 @@ export const SearchHospital = () => {
           {/* Search Button */}
           <button
             onClick={handleSearch}
-            disabled={loading}
-            className="bg-purple hover:bg-primary text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full disabled:opacity-50"
+            className="bg-purple hover:bg-primary text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full"
           >
             {loading ? "Searching..." : "SEARCH"}
           </button>
@@ -336,7 +335,8 @@ export const SearchHospital = () => {
           </div>
         )}
 
-        {searchResults && (
+        {/* DF-94 - Hide filter  */}
+        {/* {searchResults && (
           <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap gap-2 text-xs mb-4 sm:mb-0">
             <span className="font-semibold w-full sm:w-auto">Filter by:</span>
 
@@ -379,7 +379,7 @@ export const SearchHospital = () => {
               </select>
             </div>
           </div>
-        )}
+        )} */}
       </section>
     </>
   );

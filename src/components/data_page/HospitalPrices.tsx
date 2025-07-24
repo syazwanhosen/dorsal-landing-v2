@@ -2,7 +2,7 @@ import { Map } from "./Map";
 
 export const HospitalPrices = () => {
   return (
-    <section id="HospitalPrices" className="container py-6 mx-auto">
+    <section id="HospitalPrices" className="container px-4 py-6 mx-auto">
       <div className="grid gap-4">
         <h2 className="text-xl font-bold text-left">
           <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
