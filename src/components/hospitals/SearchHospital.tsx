@@ -154,7 +154,7 @@ const handleSearch = () => {
 
   return (
     <>
-      <section id="SearchHospital" className="container py-6">
+      <section id="SearchHospital" className="container py-6 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
         <div className="flex flex-wrap lg:flex-nowrap items-center border border-purple-400 rounded overflow-hidden bg-white text-sm">
           {/* Filter Options */}
           <div className="flex flex-wrap flex-grow">
