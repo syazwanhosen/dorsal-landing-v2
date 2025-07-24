@@ -3,8 +3,6 @@ import axios from "axios"
 
 import { Badge } from "@/components/ui/badge"
 import {
-  ChevronUp,
-  ChevronDown,
   CheckCircle2,
   Clock,
   AlertCircle,
@@ -36,7 +34,6 @@ import {
   ShoppingCart,
   Languages,
   BookOpen,
-  Plus,
   ThumbsUp 
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"

@@ -2,7 +2,14 @@
 import { useState } from "react"
 import type { FeatureType } from "@/lib/data"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, Clock, AlertCircle, ChevronRight } from "lucide-react"
+import {
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Lightbulb,
+  PauseCircle,
+  Award,
+} from "lucide-react"
 import { Button } from "@/components/ui/buttons/button"
 
 
@@ -15,34 +22,78 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
   // Group features by quarter
   const currentQuarterFeatures = features.filter((f) => f.status === "In Progress")
-  const nextQuarterFeatures = features.filter((f) => f.status === "Proposal")
-  const futureFeatures = features.filter((f) => f.status === "Coming Soon")
+  const nextQuarterFeatures = features.filter((f) => f.status === "Coming Soon")
+  const futureFeatures = features.filter(
+  (f) => ["Proposal", "Mothballed"].includes(f.status)
+  );
+  const releaseFeatures = features.filter(
+  (f) => ["MVP", "Live"].includes(f.status)
+  );
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "live":
-        return <CheckCircle2 className="h-4 w-4 text-green-600" />
-      case "development":
-        return <Clock className="h-4 w-4 text-blue-600" />
-      case "planned":
-      case "coming":
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-      default:
-        return <AlertCircle className="h-4 w-4 text-purple-600" />
-    }
+  switch (status.toLowerCase()) {
+    case "live":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <CheckCircle2 className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "in progress":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Clock className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "coming soon":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "proposal":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Lightbulb className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mothballed":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <PauseCircle className="h-4 w-4 text-white" />
+        </span>
+      );
+    case "mvp":
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <Award className="h-4 w-4 text-white" />
+        </span>
+      );
+    default:
+      // fallback
+      return (
+        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+          <AlertCircle className="h-4 w-4 text-white" />
+        </span>
+      );
   }
+  };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case "live":
-        return "bg-green-50 text-green-700 border-green-200"
-      case "development":
-        return "bg-blue-50 text-blue-700 border-blue-200"
-      case "planned":
-      case "coming":
-        return "bg-purple-50 text-purple-700 border-purple-200"
+        return "bg-green-500 text-white"
+      case "in progress":
+        return "bg-blue-500 text-white"
+      case "coming soon":
+        return "bg-yellow-500 text-white"
+      case "proposal":
+        return "bg-teal-500 text-white"
+      case "mothballed":
+        return "bg-gray-500 text-white"
+      case "mvp":
+        return "bg-pink text-white"
       default:
-        return "bg-gray-50 text-gray-700 border-gray-200"
+        return "bg-gray-400 text-white"
     }
   }
 
@@ -52,24 +103,31 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
         <div className="flex space-x-4">
           <Button
             variant="ghost"
-            className={activeQuarter === "current" ? "bg-purple-50 text-purple-700" : ""}
+            className={activeQuarter === "current" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
             onClick={() => setActiveQuarter("current")}
           >
             Current Quarter
           </Button>
           <Button
             variant="ghost"
-            className={activeQuarter === "next" ? "bg-purple-50 text-purple-700" : ""}
+            className={activeQuarter === "next" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
             onClick={() => setActiveQuarter("next")}
           >
             Next Quarter
           </Button>
           <Button
             variant="ghost"
-            className={activeQuarter === "future" ? "bg-purple-50 text-purple-700" : ""}
+            className={activeQuarter === "future" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
             onClick={() => setActiveQuarter("future")}
           >
             Future
+          </Button>
+          <Button
+            variant="ghost"
+            className={activeQuarter === "release" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+            onClick={() => setActiveQuarter("release")}
+          >
+            Released
           </Button>
         </div>
       </div>
@@ -77,13 +135,13 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
       <div className="p-6">
         {activeQuarter === "current" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Q2 2025 - Current Quarter</h3>
+            <h3 className="text-lg font-semibold mb-4">Current Quarter</h3>
             <div className="relative">
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-blue-200"></div>
               <div className="space-y-6">
                 {currentQuarterFeatures.map((feature) => (
                   <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-2 top-1 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
                       <div className="h-3 w-3 rounded-full bg-blue-500"></div>
                     </div>
                     <div className="flex items-start">
@@ -91,16 +149,12 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
                         <h4 className="font-medium text-gray-900">{feature.title}</h4>
                         <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
                         <div className="flex items-center mt-2 space-x-2">
-                          <Badge variant="outline" className={getStatusColor(feature.status)}>
+                          <Badge className={getStatusColor(feature.status)}>
                             {getStatusIcon(feature.status)}
-                            <span className="ml-1">In Development</span>
+                            <span className="ml-1">{feature.status}</span>
                           </Badge>
-                          <span className="text-sm text-gray-500">{feature.progress}% complete</span>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="ml-2">
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
                     </div>
                   </div>
                 ))}
@@ -111,29 +165,26 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
         {activeQuarter === "next" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Q3 2025 - Next Quarter</h3>
+            <h3 className="text-lg font-semibold mb-4">Next Quarter</h3>
             <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-purple-200"></div>
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-yellow-200"></div>
               <div className="space-y-6">
                 {nextQuarterFeatures.map((feature) => (
                   <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-2 top-1 h-6 w-6 rounded-full bg-purple-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-purple-500"></div>
+                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-yellow-100 flex items-center justify-center">
+                      <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
                     </div>
                     <div className="flex items-start">
                       <div className="flex-1">
                         <h4 className="font-medium text-gray-900">{feature.title}</h4>
                         <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
                         <div className="flex items-center mt-2">
-                          <Badge variant="outline" className={getStatusColor(feature.status)}>
+                          <Badge className={getStatusColor(feature.status)}>
                             {getStatusIcon(feature.status)}
-                            <span className="ml-1">Planned</span>
+                            <span className="ml-1">{feature.status}</span>
                           </Badge>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="ml-2">
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
                     </div>
                   </div>
                 ))}
@@ -144,29 +195,26 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
         {activeQuarter === "future" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Q4 2025 & Beyond</h3>
+            <h3 className="text-lg font-semibold mb-4">Future</h3>
             <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-teal-200"></div>
               <div className="space-y-6">
                 {futureFeatures.map((feature) => (
                   <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-2 top-1 h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-gray-400"></div>
+                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-teal-100 flex items-center justify-center">
+                      <div className="h-3 w-3 rounded-full bg-teal-400"></div>
                     </div>
                     <div className="flex items-start">
                       <div className="flex-1">
                         <h4 className="font-medium text-gray-900">{feature.title}</h4>
                         <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
                         <div className="flex items-center mt-2">
-                          <Badge variant="outline" className={getStatusColor(feature.status)}>
+                          <Badge className={getStatusColor(feature.status)}>
                             {getStatusIcon(feature.status)}
-                            <span className="ml-1">Coming Soon</span>
+                            <span className="ml-1">{feature.status}</span>
                           </Badge>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="ml-2">
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
                     </div>
                   </div>
                 ))}
@@ -174,6 +222,38 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
             </div>
           </div>
         )}
+
+        {activeQuarter === "release" && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Released</h3>
+            <div className="relative">
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-green-200"></div>
+              <div className="space-y-6">
+                {releaseFeatures.map((feature) => (
+                  <div key={feature.id} className="relative pl-10">
+                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
+                      <div className="h-3 w-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900">{feature.title}</h4>
+                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                        <div className="flex items-center mt-2">
+                          <Badge className={getStatusColor(feature.status)}>
+                            {getStatusIcon(feature.status)}
+                            <span className="ml-1">{feature.status}</span>
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+
       </div>
     </div>
   )
