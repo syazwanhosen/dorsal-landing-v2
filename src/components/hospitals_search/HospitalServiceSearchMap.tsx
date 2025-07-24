@@ -173,8 +173,8 @@ const {
   };
 
   return (
-    <section className="container">
-    <div className="relative lg:mt-12 mt-8 flex flex-col lg:flex-row rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
+    <section className="container px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16 mb-4">
+    <div className="relative lg:mt-4 mt-4 flex flex-col lg:flex-row rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
       {/* Mobile Toggle Button */}
       <button
         onClick={() => dispatch(setSidebarOpen(!sidebarOpen))}

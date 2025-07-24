@@ -246,7 +246,7 @@ export const HospitalMap = () => {
   
   return (
     <>
-       <section id="MapResult" className="container pb-6">
+       <section id="MapResult" className="container pb-6 mt-2 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
       <div className="relative lg:mt-12 mt-8 flex flex-col lg:flex-row rounded-xl overflow-hidden border border-purple-200 shadow-md h-[90vh] w-full max-w-screen-2xl mx-auto">
         {/* Mobile Toggle Button */}
         <button
