@@ -21,7 +21,7 @@ const FILTERS = [
     options: [
       { label: "Data.fyi", value: "Data.fyi" },
       { label: "Audit & Appeals", value: "Audit & Appeals" },
-      { label: "Enterpise", value: "Enterpise" },
+      { label: "Enterprise", value: "Enterprise" },
       { label: "Community", value: "Community" },
        { label: "Companion", value: "Companion" },
     ]
