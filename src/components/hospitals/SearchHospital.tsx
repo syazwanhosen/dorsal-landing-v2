@@ -6,15 +6,65 @@ import {
   setLoading,
   setSearchResults,
 } from "../../features/hospitalSlice";
-import { getStates, getCategories, getSubCategories, updateDropdowns, searchHospitals } from "@/api/Hospital/api";
+import {
+  getStates,
+  getCategories,
+  getSubCategories,
+  updateDropdowns,
+  searchHospitals,
+} from "@/api/Hospital/api";
+import { useNavigate, useLocation } from "react-router-dom";
+
+// Utility functions
+const buildQueryString = (params: Record<string, string>) =>
+  Object.entries(params)
+    .filter(([_, value]) => value?.trim())
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join("&");
+
+const validateFilters = (
+  filters: any,
+  options: any
+): { isValid: boolean; message?: string } => {
+  if (!filters.state?.trim()) {
+    return { isValid: false, message: "Please select a State" };
+  }
+  if (!filters.category?.trim()) {
+    return { isValid: false, message: "Please select a Service Category" };
+  }
+  if (!filters.subcategory?.trim() || !options.subcategory.includes(filters.subcategory.trim())) {
+    return { isValid: false, message: "Please select a valid Subcategory" };
+  }
+  if (
+    !filters.cpt?.trim() && 
+    !filters.service?.trim()
+  ) {
+    return { isValid: false, message: "Please select either a CPT code or Service name" };
+  }
+  if (
+    filters.cpt?.trim() && 
+    !options.cpt.includes(filters.cpt.trim())
+  ) {
+    return { isValid: false, message: "Please select a valid CPT code" };
+  }
+  if (
+    filters.service?.trim() && 
+    !options.service.includes(filters.service.trim())
+  ) {
+    return { isValid: false, message: "Please select a valid Service name" };
+  }
+  return { isValid: true };
+};
 
 export const SearchHospital = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { filters, options, loading } = useAppSelector(
     (state: { hospital: any }) => state.hospital
   );
 
-  const [dropdownVisible, setDropdownVisible] = useState({
+  const [, setDropdownVisible] = useState({
     state: false,
     category: false,
     subcategory: false,
@@ -24,20 +74,84 @@ export const SearchHospital = () => {
 
   const [disabledFields, setDisabledFields] = useState({
     cpt: false,
-    service: false
+    service: false,
   });
 
-  const { searchResults } = useAppSelector((state) => state.hospital);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  useAppSelector((state) => state.hospital);
 
-  // States 
+  const runSearch = (params: URLSearchParams) => {
+    dispatch(setLoading(true));
+    setSearchError(null);
+  
+    const state = params.get("state") ?? "";
+    const category = params.get("service_category") ?? "";
+    const subcategory = params.get("sub_category") ?? "";
+    const cpt = params.get("cpt_code") ?? "";
+    const service = params.get("service_name") ?? "";
+  
+    searchHospitals(params)
+      .then((data) => {
+        dispatch(
+          setSearchResults({
+            ...data,
+            selectedState: state,
+            selectedServiceCategory: category,
+            selectedSubcategory: subcategory,
+            selectedCptCode: cpt,
+            selectedServiceName: service,
+          })
+        );
+      })
+      .catch((error) => {
+        console.error("Search error:", error);
+        setSearchError("Failed to perform search. Please try again.");
+      })
+      .finally(() => dispatch(setLoading(false)));
+  };
+
+  // Hydrate from URL on initial load
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const state = params.get("state");
+    const category = params.get("category");
+    const subcategory = params.get("subcategory");
+    const cpt = params.get("cpt");
+    const service = params.get("service");
+  
+    if (!state || !category || !subcategory || (!cpt && !service)) return;
+  
+    dispatch(setFilters({
+      state,
+      category,
+      subcategory,
+      cpt: cpt ?? "",
+      service: service ?? "",
+    }));
+  
+    const searchParams = new URLSearchParams();
+    searchParams.set("state", state);
+    searchParams.set("service_category", category);
+    searchParams.set("sub_category", subcategory);
+    if (cpt) searchParams.set("cpt_code", cpt);
+    else if (service) searchParams.set("service_name", service);
+  
+    runSearch(searchParams);
+  }, [location.search, dispatch]);
+
+  // States
   useEffect(() => {
     getStates()
-      .then((data: any) => dispatch(setOptions({ field: "state", values: data })))
+      .then((data: any) =>
+        dispatch(setOptions({ field: "state", values: data }))
+      )
       .catch((error: any) => console.error("Error loading states:", error));
   }, [dispatch]);
 
-  // Categories 
+  // Categories
   useEffect(() => {
+    if (!filters.state) return;
+    
     getCategories(filters.state)
       .then((data) => {
         let categories = Array.isArray(data)
@@ -47,110 +161,104 @@ export const SearchHospital = () => {
       })
       .catch((error) => {
         console.error("Error loading categories:", error);
-        alert("Error loading categories. Please try again.");
       });
   }, [filters.state, dispatch]);
 
-
-  // Fetch sub-categories when category changes
+  // Sub-categories
   useEffect(() => {
-    if (!filters.category) return;
+    if (!filters.category || !filters.state) return;
   
     getSubCategories(filters.category, filters.state)
       .then((data) => {
-        if (!Array.isArray(data.sub_categories)) throw new Error("Invalid data format");
-        dispatch(setOptions({ field: "subcategory", values: data.sub_categories }));
+        if (!Array.isArray(data.sub_categories))
+          throw new Error("Invalid data format");
+        dispatch(
+          setOptions({ field: "subcategory", values: data.sub_categories })
+        );
       })
       .catch((error) => {
         console.error("Error updating sub-categories:", error);
-        alert("Error updating sub-categories. Please try again.");
       });
   }, [filters.category, filters.state, dispatch]);
 
-  // Fetch CPT codes and service names when subcategory changes
+  // CPT codes and service names
   useEffect(() => {
-    if (!filters.subcategory) return;
-  
+    if (!filters.subcategory || !filters.state) return;
+
     updateDropdowns(filters.subcategory, filters.state)
       .then((data) => {
-        if (!Array.isArray(data.selected_cpt_codes) || !Array.isArray(data.selected_service_names)) {
+        if (
+          !Array.isArray(data.selected_cpt_codes) ||
+          !Array.isArray(data.selected_service_names)
+        ) {
           throw new Error("Invalid data format from /update_dropdowns");
         }
-  
+
         dispatch(setOptions({ field: "cpt", values: data.selected_cpt_codes }));
-        dispatch(setOptions({ field: "service", values: data.selected_service_names }));
+        dispatch(
+          setOptions({ field: "service", values: data.selected_service_names })
+        );
       })
       .catch((error) => {
         console.error("Error updating CPT and Service:", error);
-        alert("Error updating CPT/Service dropdowns. Please try again.");
       });
   }, [filters.subcategory, filters.state, dispatch]);
 
-
   const handleSelect = (field: string, value: string) => {
-    dispatch(setFilters({ [field]: value }));
+    const newFilters = { ...filters, [field]: value };
+    dispatch(setFilters(newFilters));
     setDropdownVisible((prev) => ({ ...prev, [field]: false }));
 
     // Update disabled fields based on selection
-    if (field === 'cpt') {
+    if (field === "cpt") {
       if (value) {
         setDisabledFields({ cpt: false, service: true });
-        dispatch(setFilters({ service: "" })); // Clear service if CPT is selected
-      } else if (!filters.service) {
+        dispatch(setFilters({ ...newFilters, service: "" }));
+      } else if (!newFilters.service) {
         setDisabledFields({ cpt: false, service: false });
       }
-    } else if (field === 'service') {
+    } else if (field === "service") {
       if (value) {
         setDisabledFields({ cpt: true, service: false });
-        dispatch(setFilters({ cpt: "" })); // Clear CPT if service is selected
-      } else if (!filters.cpt) {
+        dispatch(setFilters({ ...newFilters, cpt: "" }));
+      } else if (!newFilters.cpt) {
         setDisabledFields({ cpt: false, service: false });
       }
     }
   };
 
+  const handleSearch = () => {
+    const validation = validateFilters(filters, options);
+    if (!validation.isValid) {
+      alert(validation.message);
+      return;
+    }
 
-const handleSearch = () => {
-  const { state, category, subcategory, cpt, service } = filters;
-
-  if (!category) {
-    alert("Please select a service category");
-    return;
-  }
-
-  if (!cpt && !service) {
-    alert("Please select either a CPT code or a Service name");
-    return;
-  }
-
-  const params = new URLSearchParams({ service_category: category });
-  if (state) params.append("state", state);
-  if (subcategory) params.append("sub_category", subcategory);
-  if (cpt) params.append("cpt_code", cpt);
-  else if (service) params.append("service_name", service);
-
-  dispatch(setLoading(true));
-
-  searchHospitals(params)
-    .then((data) => {
-      console.log("✅ Search Results API Response:", data);
-      dispatch(
-        setSearchResults({
-          ...data,
-          selectedState: state,
-          selectedServiceCategory: category,
-          selectedSubcategory: subcategory,
-          selectedCptCode: cpt,
-          selectedServiceName: service,
-        })
-      );
-    })
-    .catch((error) => {
-      console.error("❌ Error performing search:", error);
-    })
-    .finally(() => dispatch(setLoading(false)));
-};
-
+    const { state, category, subcategory, cpt, service } = filters;
+  
+    // Build query string for browser URL
+    const queryParams: Record<string, string> = {
+      state,
+      category,
+      subcategory,
+    };
+  
+    if (cpt) queryParams.cpt = cpt;
+    else if (service) queryParams.service = service;
+  
+    const queryString = buildQueryString(queryParams);
+    navigate(`/hospitals?${queryString}`, { replace: true });
+  
+    // Build backend param keys for API call
+    const searchParams = new URLSearchParams();
+    searchParams.set("state", state);
+    searchParams.set("service_category", category);
+    searchParams.set("sub_category", subcategory);
+    if (cpt) searchParams.set("cpt_code", cpt);
+    else if (service) searchParams.set("service_name", service);
+  
+    runSearch(searchParams);
+  };
 
   return (
     <>
@@ -160,56 +268,54 @@ const handleSearch = () => {
           <div className="flex flex-wrap flex-grow">
             {[
               { key: "state", label: "State", placeholder: "Select State" },
-              { key: "category", label: "Service Category", placeholder: "Select Service Category" },
-              { key: "subcategory", label: "Subcategory", placeholder: "Select Subcategory" },
-              { 
-                key: "cpt", 
-                label: "CPT Code", 
-                placeholder: "Select CPT Code",
-                disabled: disabledFields.cpt
+              {
+                key: "category",
+                label: "Service Category",
+                placeholder: "Select Service Category",
               },
-              { 
-                key: "service", 
-                label: "Service Name", 
+              {
+                key: "subcategory",
+                label: "Subcategory",
+                placeholder: "Select Subcategory",
+              },
+              {
+                key: "cpt",
+                label: "CPT Code",
+                placeholder: "Select CPT Code",
+                disabled: disabledFields.cpt,
+              },
+              {
+                key: "service",
+                label: "Service Name",
                 placeholder: "Select Service Name",
-                disabled: disabledFields.service
+                disabled: disabledFields.service,
               },
             ].map((item) => (
-              <div key={item.key} className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/5 lg:border-r md:border-r p-2">
-                <label className="block text-xs text-black font-semibold">{item.label}</label>
+              <div
+                key={item.key}
+                className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/5 lg:border-r md:border-r p-2"
+              >
+                <label className="block text-xs text-black font-semibold">
+                  {item.label}
+                </label>
                 <select
-                  className={`w-full focus:outline-none text-sm ${item.disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+                  className={`w-full focus:outline-none text-sm ${
+                    item.disabled ? "bg-gray-100 cursor-not-allowed" : ""
+                  }`}
                   value={filters[item.key as keyof typeof filters]}
                   onChange={(e) => handleSelect(item.key, e.target.value)}
                   disabled={item.disabled}
                 >
                   <option value="">{item.placeholder}</option>
                   {Array.isArray(options[item.key as keyof typeof options]) &&
-                    (options[item.key as keyof typeof options] as string[]).map((opt, idx) => (
-                      <option key={idx} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                </select>
-
-                {dropdownVisible[item.key as keyof typeof dropdownVisible] && !item.disabled && (
-                  <ul className="absolute left-0 right-0 top-full bg-white border border-purple-300 shadow-sm z-10 text-sm max-h-40 overflow-y-auto min-h-[30px]">
-                    {(options[item.key as keyof typeof options] as string[])
-                      .filter((opt) => {
-                        const filterValue = filters[item.key as keyof typeof filters].toLowerCase();
-                        return filterValue === "" || opt.toLowerCase().includes(filterValue);
-                      })
-                      .map((opt, idx) => (
-                        <li
-                          key={idx}
-                          className="px-3 py-1 hover:bg-purple-100 cursor-pointer"
-                          onMouseDown={() => handleSelect(item.key, opt)}
-                        >
+                    (options[item.key as keyof typeof options] as string[]).map(
+                      (opt, idx) => (
+                        <option key={idx} value={opt}>
                           {opt}
-                        </li>
-                      ))}
-                  </ul>
-                )}
+                        </option>
+                      )
+                    )}
+                </select>
               </div>
             ))}
           </div>
@@ -223,32 +329,50 @@ const handleSearch = () => {
           </button>
         </div>
 
+        {searchError && (
+          <div className="mt-4 text-red-500 text-sm">
+            {searchError}
+          </div>
+        )}
+
         {/* DF-94 - Hide filter  */}
         {/* {searchResults && (
           <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap gap-2 text-xs mb-4 sm:mb-0">
             <span className="font-semibold w-full sm:w-auto">Filter by:</span>
-          
+
             <div className="w-full sm:flex sm:flex-wrap sm:gap-2">
-              <select className="w-full sm:w-auto lg:mb-0 mb-2 pl-3 pr-8 py-1 rounded border bg-white" defaultValue="15 miles">
+              <select
+                className="w-full sm:w-auto lg:mb-0 mb-2 pl-3 pr-8 py-1 rounded border bg-white"
+                defaultValue="15 miles"
+              >
                 <option disabled>Select Distance</option>
                 <option value="15 miles">Within 15 miles</option>
                 <option value="30 miles">Within 30 miles</option>
                 <option value="50 miles">Within 50 miles</option>
               </select>
-          
-              <select className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Rating">
+
+              <select
+                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
+                defaultValue="Rating"
+              >
                 <option disabled>Select Rating</option>
                 <option value="5 stars">5 Stars</option>
                 <option value="2+ stars">2+ Stars</option>
               </select>
-          
-              <select className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Insurance">
+
+              <select
+                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
+                defaultValue="Insurance"
+              >
                 <option disabled>Select Insurance</option>
                 <option value="Plan A">Plan A</option>
                 <option value="Plan B">Plan B</option>
               </select>
-          
-              <select className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white" defaultValue="Fixed Price">
+
+              <select
+                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
+                defaultValue="Fixed Price"
+              >
                 <option disabled>Select Price Type</option>
                 <option value="Fixed">Fixed Price</option>
                 <option value="Negotiated">Negotiated Price</option>
@@ -257,38 +381,6 @@ const handleSearch = () => {
           </div>
         )} */}
       </section>
-            {/*   <div className="mt-6">
-  <h3 className="font-semibold text-sm mb-2">
-    Found {searchResults.hospital_count} hospitals
-  </h3>
-
-  {searchResults.hospital_count > 0 ? (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-sm border border-collapse">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="text-left px-4 py-2 border">Hospital Name</th>
-            <th className="text-left px-4 py-2 border">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {searchResults.hospital_names.map((name, idx) => (
-            <tr key={idx}>
-              <td className="px-4 py-2 border">{name}</td>
-              <td className="px-4 py-2 border">
-                {searchResults.prices[idx]
-                  ? `$${searchResults.prices[idx].toFixed(2)}`
-                  : "N/A"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  ) : (
-    <div className="text-red-500 mt-4">No hospitals found for the selected filters.</div>
-  )}
-</div> */}
     </>
   );
 };

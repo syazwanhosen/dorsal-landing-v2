@@ -5,9 +5,9 @@ import { ScrollToTop } from "../../components/ScrollToTop";
 import { Header } from "../../components/Header";
 import { SearchHospital } from "../../components/hospitals/SearchHospital";
 import { ProcedureCard } from "../../components/hospitals/ProcedureCard";
-import { MapResult } from "../../components/hospitals/MapResult";
 import { SearchSection } from "@/components/hospitals/SearchSection";
 import Footer from "@/components/Footer";
+import { HospitalMap } from "@/components/hospitals/HospitalMap";
 
 export default function Hospitals() {
   const { searchResults } = useAppSelector((state) => state.hospital);
@@ -29,7 +29,8 @@ export default function Hospitals() {
                 hospitalNames={searchResults.hospital_names}
                 labels={[]}
               />
-              <MapResult />
+              <HospitalMap />
+
             </>
           ) : <SearchSection />}
         </div>

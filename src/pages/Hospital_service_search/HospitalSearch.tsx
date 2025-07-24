@@ -1,13 +1,13 @@
-import { ServiceSearchProcedureCard } from "@/components/hospitals_search/ServiceSearchProcedureCard";
+import { ServiceSearchProcedureCard } from "@/components/hospitals_service_search/ServiceSearchProcedureCard";
 import { useAppSelector } from "@/store/hooks";
-import { HospitalServiceSearch } from "@/components/hospitals_search/HospitalServiceSearch";
+import { HospitalServiceSearch } from "@/components/hospitals_service_search/HospitalServiceSearch";
 import { SearchSection } from "@/components/hospitals/SearchSection";
 import { Navbar } from "@/components/Navbar";
 
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 import { Header } from "@/components/Header";
-import { HospitalServiceSearchMap } from "@/components/hospitals_search/HospitalServiceSearchMap";
+import { HospitalServiceSearchMap } from "@/components/hospitals_service_search/HospitalServiceSearchMap";
 import Footer from "@/components/Footer";
 
 export default function Hospitals() {
