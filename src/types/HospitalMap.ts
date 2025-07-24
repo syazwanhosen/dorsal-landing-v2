@@ -64,7 +64,11 @@ export type PopularSearchTabType = 'Procedures' | 'Condition' | 'Specialty';
 
 export type TopSearchHospital = {
     name: string;
-    address: string;
-    priceType: 'Fixed Price' | 'Negotiated Price';
+    state: string;
+};
+
+export type TopSearchServices = {
+    name: string;
+    hospital_count: string;
 };
 
