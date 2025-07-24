@@ -11,7 +11,7 @@ import HospitalServiceSearchDetails from "./pages/hospital_service_search_detail
 const App = lazy(() => import("./App"));
 const Data = lazy(() => import("./pages/data/Data"));
 const Roadmap = lazy(() => import("./pages/roadmap/roadmap"));
-const HospitalSearch = lazy(() => import("./pages/Hospital_search/HospitalSearch"));
+const HospitalSearch = lazy(() => import("./pages/Hospital_service_search/HospitalSearch"));
 const Login = lazy(() => import("./pages/auth/login/login"));
 const Signup = lazy(() => import("./pages/auth/signup/signup"));
 const Account = lazy(() => import("./pages/Account/Account"));
@@ -56,8 +56,8 @@ export const appRoutes: RouteObject[] = [
 
     },
     { path: "/hospitals", element: <Hospitals /> },
-    { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
+    { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_service_details", element: <HospitalServiceSearchDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
     { path: "/old_landingpage", element: <OldLandingPage /> },
