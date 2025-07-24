@@ -1,5 +1,4 @@
 import React from 'react';
-import { PopularSearches } from './PopularSearches';
 import { TopHospitals } from './TopHospitals';
 import { TopServices } from './TopServices';
 
