@@ -66,8 +66,8 @@ export const UploadBill = () => {
   };
 
   return (
-    <section className="bg-white upload-bill lg:pt-10" id="UploadBill">
-      <div className="container grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-6 bg-white">
+    <section className="container bg-white upload-bill mx-auto lg:pt-10 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16" id="UploadBill">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-6 bg-white">
         {/* Share Your Bill Card */}
         <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
@@ -96,7 +96,7 @@ export const UploadBill = () => {
               >
                 <FileUploadDropzone className="border-0">
                   <div className="flex flex-col items-center gap-1">
-                    <Upload className="mx-auto mb-3 text-[#8770BC]" size={32} />
+                    <Upload className="mb-3 text-[#8770BC]" size={32} />
                     <p className="font-medium text-gray-700 mb-1 lg:mb-2">
                       Drag & drop your medical bill
                     </p>

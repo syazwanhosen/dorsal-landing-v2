@@ -28,13 +28,13 @@ export default function AddBill() {
                 <h2 className="text-lg font-medium text-[#8770BC] mb-3 ml-10">Add Bill</h2>
                 <div className="flex flex-col md:flex-row w-full md:w-auto space-y-3 md:space-y-0 md:space-x-3">
                     <Button
-                        className="bg-purple hover:bg-primary text-white w-full sm:w-auto"
+                        className="bg-purple hover:bg-purple-700 text-white w-full sm:w-auto"
                         onClick={handleUploadClick}
                     >
                         Upload Document
                     </Button>
                     <Button
-                        className="bg-purple hover:bg-primary text-white w-full sm:w-auto"
+                        className="bg-purple hover:bg-purple-700 text-white w-full sm:w-auto"
                         onClick={handleEnterDataClick}
                     >
                         Enter Manual Data
@@ -61,7 +61,7 @@ export default function AddBill() {
                                                     Billing #{bill.id}: {bill.date}
                                                 </span>
                                             </div>
-                                            <Button className="bg-purple text-white hover:bg-primary text-sm px-4 py-1 h-auto w-full sm:w-auto">
+                                            <Button className="bg-purple text-white hover:bg-purple-700 text-sm px-4 py-1 h-auto w-full sm:w-auto">
                                                 View
                                             </Button>
                                         </li>

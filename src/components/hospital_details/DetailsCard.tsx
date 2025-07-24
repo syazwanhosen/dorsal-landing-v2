@@ -14,7 +14,7 @@ export const DetailsCard = () => {
 
   return (
     <>
-      <section className="container mx-auto p-4 relative">
+      <section className="container mx-auto py-4 relative px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
         {/* Back Button */}
         {/* <button
           onClick={() => navigate("/hospitals")} 
