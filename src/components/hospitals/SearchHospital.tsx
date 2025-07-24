@@ -323,7 +323,7 @@ export const SearchHospital = () => {
           {/* Search Button */}
           <button
             onClick={handleSearch}
-            className="bg-purple hover:bg-primary text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full"
+            className="bg-purple hover:bg-purple-700 text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full"
           >
             {loading ? "Searching..." : "SEARCH"}
           </button>
