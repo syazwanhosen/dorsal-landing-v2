@@ -5,6 +5,7 @@ import { lazy } from "react";
 import { SidebarLayout } from "./layouts/SidebarLayout";
 import ComingSoon from "./pages/coming-soon/ComingSoon";
 import UploadBill from "./pages/upload-bill/UploadBill";
+import HospitalServiceSearchDetails from "./pages/hospital_service_search_details/HospitalServiceSearchDetails";
 
 // Lazy-loaded pages/components
 const App = lazy(() => import("./App"));
@@ -57,6 +58,7 @@ export const appRoutes: RouteObject[] = [
     { path: "/hospitals", element: <Hospitals /> },
     { path: "/hospital_search", element: <HospitalSearch /> },
     { path: "/hospital_details", element: <HospitalDetails /> },
+    { path: "/hospital_service_details", element: <HospitalServiceSearchDetails /> },
     { path: "/roadmap", element: <Roadmap /> },
     { path: "/old_landingpage", element: <OldLandingPage /> },
     { path: "/team", element: <Team /> },
