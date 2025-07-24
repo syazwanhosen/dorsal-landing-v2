@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/buttons/button"
 import { Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 
 import { FeatureType } from "@/lib/data";
 import ProductRoadmap from '../../assets/shape_icon.webp';
+import { getVote } from "@/lib/voteStorage"
 
 const FILTERS = [
   {
@@ -82,13 +83,41 @@ const featuredCategories = [
 
 
 const Roadmap: React.FC = () => {
-
   const [activeTab, _setActiveTab] = useState("roadmap")
   const [activeCategory, setActiveCategory] = useState("all")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")
   const [showFilter, setShowFilter] = useState(false)
   const [filterOption, setFilterOption] = useState<{ [key: string]: string[] }>({});
   const [tempFilterOption, setTempFilterOption] = useState<{ [key: string]: string[] }>({});
+  const [categoryVotes, setCategoryVotes] = useState<Record<string, number>>({});
+
+  const featureMapping = async () => {
+  const mapped = await Promise.all(
+    features.map(async (feature) => {
+      const stored = await getVote(feature.id);
+      return { ...feature, votes: stored?.count ?? 0 };
+    })
+  );
+
+  return mapped;
+};
+
+useEffect(() => {
+  const loadVotes = async () => {
+    const updatedFeatures = await featureMapping();
+    const votes = updatedFeatures.reduce((acc, feature) => {
+      feature.category.forEach((cat) => {
+        const key = cat.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        acc[key] = (acc[key] || 0) + feature.votes;
+      });
+      return acc;
+    }, {} as Record<string, number>);
+    setCategoryVotes(votes);
+  };
+
+  loadVotes();
+}, [featureMapping]);
+
 
   const applyFilters = () => {
     return features.filter((feature) => {
@@ -161,7 +190,7 @@ const Roadmap: React.FC = () => {
     ? cat.category
     : (cat.category as string).split(",").map((c: string) => c.trim()),
   status: cat.status as FeatureType["status"],
-  votes: cat.votes ?? null,
+  votes: categoryVotes[cat.id],
   progress: cat.progress ?? null,
 }));
 
@@ -395,7 +424,7 @@ const Roadmap: React.FC = () => {
                   <p className="text-gray-500">No features match your criteria.</p>
                 </div>
               ) : (
-                tabFeatures.map((feature) => <FeatureCard key={feature.id} feature={feature} />)
+                tabFeatures.map((feature) => <FeatureCard key={feature.id} feature={feature} featureMapping={featureMapping}/>)
               )}
             </div>
 
