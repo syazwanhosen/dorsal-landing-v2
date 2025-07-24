@@ -14,7 +14,8 @@ interface Service {
 export const OtherServices = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const selectedHospitalName = decodeURIComponent(decodeURIComponent(params.get("name") || ""));
+
+  const decodedName = decodeURIComponent(params.get("name") || "");
 
   const [selectedServiceCategory, setSelectedServiceCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
@@ -27,31 +28,31 @@ export const OtherServices = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (selectedHospitalName) {
-      getCategoriesByHospital(selectedHospitalName)
+    if (decodedName) {
+      getCategoriesByHospital(decodedName)
         .then((data) => setCategories(data.categories))
         .catch((err) => console.error("Error fetching categories:", err));
     }
-  }, [selectedHospitalName]);
+  }, [decodedName]);
 
   useEffect(() => {
-    if (selectedHospitalName && selectedServiceCategory) {
-      getSubCategoriesByHospital(selectedHospitalName, selectedServiceCategory)
+    if (decodedName && selectedServiceCategory) {
+      getSubCategoriesByHospital(decodedName, selectedServiceCategory)
         .then((data) => setSubcategories(data.sub_categories))
         .catch((err) => console.error("Error fetching subcategories:", err));
     }
-  }, [selectedHospitalName, selectedServiceCategory]);
+  }, [decodedName, selectedServiceCategory]);
 
   const fetchServices = () => {
     if (
-      selectedHospitalName &&
+      decodedName &&
       selectedServiceCategory &&
       selectedSubcategory
     ) {
       setLoading(true);
       setError("");
 
-      getServices(selectedHospitalName, selectedServiceCategory, selectedSubcategory)
+      getServices(decodedName, selectedServiceCategory, selectedSubcategory)
         .then((data) => {
           if (data.codes && data.services) {
             setServices(
@@ -88,7 +89,7 @@ export const OtherServices = () => {
     <section className="container mx-auto px-4 sm:px-6 pb-4 md:px-4 lg:px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-4 gap-6 lg:pb-8 ">
       {/* Filter Card */}
       <div className="border rounded-lg p-4 shadow-sm col-span-1">
-        <h3 className="text-md font-semibold mb-4">Other Services</h3>
+        <h3 className="text-md font-semibold mb-4">Other Services {/*for <span className="font-bold">{decodedName}</span> */} </h3>
 
         <select
           className="w-full border rounded px-3 py-2 text-sm mb-4"
@@ -141,8 +142,8 @@ export const OtherServices = () => {
         </button>
       </div>
 
-      <div className="col-span-1 lg:col-span-3 border rounded-lg p-4 shadow-sm mb-4">
-        <h3 className="text-md font-semibold mb-4">{selectedServiceCategory}</h3>
+      <div className="col-span-1 lg:col-span-3 border rounded-lg p-4 shadow-sm">
+      {/*  <h3 className="text-md font-semibold mb-4">{selectedServiceCategory}</h3> */}
 
         {loading ? (
           <p className="text-sm text-gray-500">Loading services...</p>
