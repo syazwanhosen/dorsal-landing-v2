@@ -45,15 +45,11 @@ export const DetailsCard = () => {
 
 
     
-
     fetchHospitalMetadata([decodedName])
       .then((responses) => {
         const hospitalData = responses[0];
         console.log("✅ Hospital API Response:", hospitalData);
-        console.log("Context CPT Code:", enrichedContext?.selectedCptCode);
-        console.log("Final CPT Code to Dispatch:", enrichedContext?.selectedCptCode || decodedCode);
-        
-        
+                
         dispatch(
           setSelectedHospital({
             ...hospitalData,
