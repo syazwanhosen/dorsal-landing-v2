@@ -257,7 +257,7 @@ const Roadmap: React.FC = () => {
                   <Tabs value={activeCategory} onValueChange={setActiveCategory}>
                     <TabsList
                         className="
-                          grid grid-cols-2 gap-2 w-full bg-gray-50 rounded-xl py-2 px-8 justify-start
+                          grid grid-cols-2 gap-2 w-full bg-gray-50 rounded-xl py-2 justify-start
                           lg:flex lg:gap-2 lg:grid-cols-none
                         "
                       >
@@ -284,7 +284,7 @@ const Roadmap: React.FC = () => {
                         <span>Mothballed</span>
                         <span className="h-2 w-2 rounded-full bg-gray-500" />
                       </TabsTrigger>
-                      <TabsTrigger value="MVP" className="flex items-center justify-center gap-2 px-8 xl:px-16 lg:px-4 xl:px-10">
+                      <TabsTrigger value="MVP" className="flex items-center justify-center gap-2 px-8 xl:px-16 lg:px-4 xl:px-8 xl:px-10">
                         <span>MVP</span>
                         <span className="h-2 w-2 rounded-full bg-pink" />
                       </TabsTrigger>
@@ -304,8 +304,9 @@ const Roadmap: React.FC = () => {
                     <div className="absolute right-0 top-0 z-50 w-72 bg-white border shadow-lg p-4">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-lg font-semibold">Filter Features</h3>
+                        {/* Reset Button */}
                         <button
-                          className="text-sm text-[#8771BC] bg-[#EEE5FF] px-3 py-1 rounded-full"
+                          className="text-sm text-[#8771BC] bg-[#EEE5FF] px-3 py-1 ml-6 rounded-full"
                           onClick={() => {
                             setTempFilterOption({});
                             setFilterOption({});
@@ -314,11 +315,29 @@ const Roadmap: React.FC = () => {
                         >
                           Reset
                         </button>
+                        {/* X Icon button */}
+                        <button
+                          className="w-7 h-7 flex items-center justify-end hover:text-purple-700"
+                          aria-label="Close"
+                          onClick={() => setShowFilter(false)}
+                          type="button"
+                        >
+                          {/* X SVG */}
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
                       </div>
                       {
                         FILTERS.map((filter) => (
                           <div key={filter.title} className="mb-4">
-                            <h4 className="text-sm font-medium mb-2">{filter.title}</h4>
+                            <h4 className="text-sm font-medium mb-4">{filter.title}</h4>
                             <div className="flex gap-2 flex-wrap">
                               {filter.options.map((option) => {
                                 const isSelected = tempFilterOption[filter.title]?.includes(option.value);
