@@ -60,19 +60,19 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
           )}
 
           {/* Distance Row */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+          {/* <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
             Distance
           </div>
           {selectedHospitals.map((hospital, idx) => (
   <div key={`distance-${idx}`} className="border-t border-gray-200 lg:p-8 p-4 text-center">
     {hospital.distance ? `${parseFloat(hospital.distance).toFixed(2)} miles` : "Unknown"}
   </div>
-))}
+))} */}
 
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
+          {/* {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>} */}
 
           {/* Rating Row */}
-          <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
+          {/* <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">
             Rating
           </div>
           {selectedHospitals.map((hospital, idx) => (
@@ -80,8 +80,8 @@ export const HospitalComparison: React.FC<HospitalComparisonProps> = ({
               <div className="text-yellow-500">⭐⭐⭐⭐</div>
               <span className="text-gray-700 text-sm">{hospital.rating || "N/A"}</span>
             </div>
-          ))}
-          {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>}
+          ))} */}
+          {/* {selectedHospitals.length === 1 && <div className="border-t border-gray-200 lg:p-8 p-4 text-center"></div>} */}
 
           {/* Price Row */}
           <div className="border-t border-gray-200 lg:p-8 p-4 font-medium text-gray-700">

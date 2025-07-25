@@ -309,7 +309,7 @@ export const HospitalMap = () => {
                   className="border border-gray-300 lg:px-8 px-6 py-1 rounded-md text-sm"
                 >
                   <option value="lowestPrice">Lowest Price</option>
-                  <option value="shortestDistance">Shortest Distance</option>
+                  {/* <option value="shortestDistance">Shortest Distance</option> */}
                 </select>
               </div>
             </div>
@@ -375,7 +375,7 @@ export const HospitalMap = () => {
                             Compare
                           </button>
                         </div>
-                        <div className="flex items-center text-sm text-gray-600 mt-1">
+                        {/* <div className="flex items-center text-sm text-gray-600 mt-1">
                           <span>⭐ {hospital.rating || 0}</span>
                           <span className="flex items-center mx-2">
                             <img
@@ -385,7 +385,7 @@ export const HospitalMap = () => {
                             />
                             {hospital.distance || "10 mi"}
                           </span>
-                        </div>
+                        </div> */}
                         <p className="text-sm text-gray-500 mt-1">
                           {hospital.address}
                         </p>
@@ -445,7 +445,7 @@ export const HospitalMap = () => {
                   position={[h.latitude, h.longitude]}
                   icon={hospitalIcon}
                 >
-                  <Popup>{h.name}</Popup>
+                  <Popup><p className="cursor-pointer" onClick={() => handleSelectHospital({name: h.name})}>{h.name}</p></Popup>
                 </Marker>
               ))}
             </MapContainer>
