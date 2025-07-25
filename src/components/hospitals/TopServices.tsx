@@ -63,7 +63,7 @@ const hospitals: TopSearchServices[] = [
 
 export const TopServices: React.FC = () => {
     return (
-        <div className="border rounded-md p-4 w-full">
+        <div className="bg-[#F5F1FF] rounded-md py-4 px-4 lg:px-8 w-full">
         <div className="flex items-center mb-4">
                     <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
                       <Tag className="w-3 h-3 lg:w-5 lg:h-5 text-white" />
@@ -75,7 +75,7 @@ export const TopServices: React.FC = () => {
         <ul>
           {hospitals.map((hospital) => (
             <li key={hospital.name} className="mb-2">
-              <a href={hospital.url} target="_blank" className="flex flex-wrap items-center gap-2">
+              <a href={hospital.url} target="_blank" className="flex flex-wrap items-center gap-2 hover:underline">
                 <span className="text-[#8770BC] font-semibold">{hospital.name}</span>
                 <span className="italic text-gray-600">{hospital.hospital_count} Hospitals</span>
               </a>

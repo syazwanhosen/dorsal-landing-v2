@@ -12,7 +12,6 @@ import {
   setSelectedLocation,
 } from "@/features/hospitalMapSlice";
 import hospital from "@/assets/hospital.png";
-import location from "@/assets/location-pin.svg";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
