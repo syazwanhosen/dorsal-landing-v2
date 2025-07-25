@@ -5,7 +5,7 @@ export const Hero = () => {
   return (
     <section className="relative bg-white">
       {/* Main Content */}
-      <div className="flex flex-col items-center px-6 lg:pt-16 pt-4 text-center">
+      <div className="flex flex-col items-center px-6 lg:pt-16 pt-16 text-center">
         {/* Badge */}
         <span className="hidden lg:inline-block bg-[#F6F1FF] px-3 py-1 rounded-full mb-4">
           <span className="text-sm bg-gradient-to-r from-[#E771C1] to-[#9F71FD] text-transparent bg-clip-text font-semibold">
@@ -29,7 +29,7 @@ export const Hero = () => {
             </button>
           </Link>
           <Link to="/coming-soon" className="min-w-[200px]">
-            <button className="whitespace-nowrap uppercase flex items-center gap-2 bg-pink hover:bg-pink-700 text-white text-sm lg:text-lg font-semibold px-4 py-3 rounded-lg shadow-lg transition">
+            <button className="whitespace-nowrap uppercase flex items-center gap-2 bg-pink text-white text-sm lg:text-lg font-semibold px-4 py-3 rounded-lg shadow-lg transition hover:bg-fuchsia-700">
               <FileText size={20} />
               Negotiate your bill
             </button>

@@ -68,9 +68,9 @@ const FAQList: FAQProps[] = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="lg:py-16 py-6 text-center bg-white">
-      <div className="container lg:px-16 xl:px-24">
-        <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] lg:mb-4 mb-2">
+    <section id="faq" className="py-16 text-center bg-white">
+      <div className="container px-8 lg:px-16 xl:px-24">
+        <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-4">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
             GENERAL FAQ
           </span>
