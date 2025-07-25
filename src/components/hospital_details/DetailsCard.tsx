@@ -100,7 +100,7 @@ export const DetailsCard = () => {
                   <p>{hospitalData.phone || "Not available"}</p>
                 </div>
               </div>
-              {hospitalData.phone && (
+              {/* {hospitalData.phone && (
                 <Button
                   className="mt-4 bg-purple text-white px-12 rounded hover:bg-purple-700 transition self-start"
                   onClick={() =>
@@ -109,7 +109,7 @@ export const DetailsCard = () => {
                 >
                  Contact Hospital
                 </Button>
-              )}
+              )} */}
             </div>
           </div>
         </div>
