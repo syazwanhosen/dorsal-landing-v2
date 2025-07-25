@@ -100,12 +100,16 @@ export const DetailsCard = () => {
                   <p>{hospitalData.phone || "Not available"}</p>
                 </div>
               </div>
-              <Button
-                className="mt-4 bg-purple text-white px-12 rounded hover:bg-purple-700 transition self-start"
-                onClick={() => (window.location.href = "/")}
-              >
-                Contact Hospital
-              </Button>
+              {hospitalData.phone && (
+                <Button
+                  className="mt-4 bg-purple text-white px-12 rounded hover:bg-purple-700 transition self-start"
+                  onClick={() =>
+                    (window.location.href = `tel:${hospitalData.phone}`)
+                  }
+                >
+                 Contact Hospital
+                </Button>
+              )}
             </div>
           </div>
         </div>
