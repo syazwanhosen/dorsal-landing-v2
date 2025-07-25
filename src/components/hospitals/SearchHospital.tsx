@@ -26,29 +26,30 @@ const validateFilters = (
   filters: any,
   options: any
 ): { isValid: boolean; message?: string } => {
-  if (!filters.state?.trim()) {
-    return { isValid: false, message: "Please select a State" };
+  if (filters.state?.trim() && !options.state.includes(filters.state.trim())) {
+    return { isValid: false, message: "Please select a valid State" };
   }
+
   if (!filters.category?.trim()) {
     return { isValid: false, message: "Please select a Service Category" };
   }
-  if (!filters.subcategory?.trim() || !options.subcategory.includes(filters.subcategory.trim())) {
+  if (
+    !filters.subcategory?.trim() ||
+    !options.subcategory.includes(filters.subcategory.trim())
+  ) {
     return { isValid: false, message: "Please select a valid Subcategory" };
   }
-  if (
-    !filters.cpt?.trim() && 
-    !filters.service?.trim()
-  ) {
-    return { isValid: false, message: "Please select either a CPT code or Service name" };
+  if (!filters.cpt?.trim() && !filters.service?.trim()) {
+    return {
+      isValid: false,
+      message: "Please select either a CPT code or Service name",
+    };
   }
-  if (
-    filters.cpt?.trim() && 
-    !options.cpt.includes(filters.cpt.trim())
-  ) {
+  if (filters.cpt?.trim() && !options.cpt.includes(filters.cpt.trim())) {
     return { isValid: false, message: "Please select a valid CPT code" };
   }
   if (
-    filters.service?.trim() && 
+    filters.service?.trim() &&
     !options.service.includes(filters.service.trim())
   ) {
     return { isValid: false, message: "Please select a valid Service name" };
@@ -78,18 +79,18 @@ export const SearchHospital = () => {
   });
 
   const [searchError, setSearchError] = useState<string | null>(null);
-  useAppSelector((state) => state.hospital);
+  const [isHydrating, setIsHydrating] = useState(false);
 
   const runSearch = (params: URLSearchParams) => {
     dispatch(setLoading(true));
     setSearchError(null);
-  
+
     const state = params.get("state") ?? "";
     const category = params.get("service_category") ?? "";
     const subcategory = params.get("sub_category") ?? "";
     const cpt = params.get("cpt_code") ?? "";
     const service = params.get("service_name") ?? "";
-  
+
     searchHospitals(params)
       .then((data) => {
         dispatch(
@@ -110,35 +111,6 @@ export const SearchHospital = () => {
       .finally(() => dispatch(setLoading(false)));
   };
 
-  // Hydrate from URL on initial load
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const state = params.get("state");
-    const category = params.get("category");
-    const subcategory = params.get("subcategory");
-    const cpt = params.get("cpt");
-    const service = params.get("service");
-  
-    if (!state || !category || !subcategory || (!cpt && !service)) return;
-  
-    dispatch(setFilters({
-      state,
-      category,
-      subcategory,
-      cpt: cpt ?? "",
-      service: service ?? "",
-    }));
-  
-    const searchParams = new URLSearchParams();
-    searchParams.set("state", state);
-    searchParams.set("service_category", category);
-    searchParams.set("sub_category", subcategory);
-    if (cpt) searchParams.set("cpt_code", cpt);
-    else if (service) searchParams.set("service_name", service);
-  
-    runSearch(searchParams);
-  }, [location.search, dispatch]);
-
   // States
   useEffect(() => {
     getStates()
@@ -150,66 +122,213 @@ export const SearchHospital = () => {
 
   // Categories
   useEffect(() => {
-    if (!filters.state) return;
-    
-    getCategories(filters.state)
-      .then((data) => {
-        let categories = Array.isArray(data)
-          ? data
-          : data.categories ?? data.service_categories ?? [];
-        dispatch(setOptions({ field: "category", values: categories }));
-      })
-      .catch((error) => {
-        console.error("Error loading categories:", error);
-      });
+    if (filters.state?.trim()) {
+      getCategories(filters.state)
+        .then((data) => {
+          let categories = Array.isArray(data)
+            ? data
+            : data.categories ?? data.service_categories ?? [];
+          dispatch(setOptions({ field: "category", values: categories }));
+        })
+        .catch((error) => {
+          console.error("Error loading categories by state:", error);
+        });
+    } else {
+      getCategories()
+        .then((data) => {
+          let categories = Array.isArray(data)
+            ? data
+            : data.categories ?? data.service_categories ?? [];
+          dispatch(setOptions({ field: "category", values: categories }));
+        })
+        .catch((error) => {
+          console.error("Error loading nationwide categories:", error);
+        });
+    }
   }, [filters.state, dispatch]);
 
   // Sub-categories
   useEffect(() => {
-    if (!filters.category || !filters.state) return;
-  
-    getSubCategories(filters.category, filters.state)
-      .then((data) => {
-        if (!Array.isArray(data.sub_categories))
-          throw new Error("Invalid data format");
-        dispatch(
-          setOptions({ field: "subcategory", values: data.sub_categories })
-        );
-      })
-      .catch((error) => {
-        console.error("Error updating sub-categories:", error);
-      });
+    if (!filters.category) return;
+
+    if (filters.state?.trim()) {
+      getSubCategories(filters.category, filters.state)
+        .then((data) => {
+          const subcategories = Array.isArray(data.sub_categories) 
+            ? data.sub_categories 
+            : data.sub_categories?.sub_categories ?? [];
+          dispatch(setOptions({ field: "subcategory", values: subcategories }));
+        })
+        .catch((error) => {
+          console.error("Error loading subcategories by state:", error);
+        });
+    } else {
+      getSubCategories(filters.category)
+        .then((data) => {
+          const subcategories = Array.isArray(data.sub_categories) 
+            ? data.sub_categories 
+            : data.sub_categories?.sub_categories ?? [];
+          dispatch(setOptions({ field: "subcategory", values: subcategories }));
+        })
+        .catch((error) => {
+          console.error("Error loading subcategories nationwide:", error);
+        });
+    }
   }, [filters.category, filters.state, dispatch]);
 
   // CPT codes and service names
   useEffect(() => {
-    if (!filters.subcategory || !filters.state) return;
+    if (!filters.subcategory) return;
 
-    updateDropdowns(filters.subcategory, filters.state)
+    const apiCall = filters.state 
+      ? updateDropdowns(filters.subcategory, filters.state)
+      : updateDropdowns(filters.subcategory);
+
+    apiCall
       .then((data) => {
-        if (
-          !Array.isArray(data.selected_cpt_codes) ||
-          !Array.isArray(data.selected_service_names)
-        ) {
-          throw new Error("Invalid data format from /update_dropdowns");
-        }
+        const cptCodes = Array.isArray(data.selected_cpt_codes)
+          ? data.selected_cpt_codes
+          : data.selected_cpt_codes?.selected_cpt_codes ?? [];
+        
+        const serviceNames = Array.isArray(data.selected_service_names)
+          ? data.selected_service_names
+          : data.selected_service_names?.selected_service_names ?? [];
 
-        dispatch(setOptions({ field: "cpt", values: data.selected_cpt_codes }));
-        dispatch(
-          setOptions({ field: "service", values: data.selected_service_names })
-        );
+        dispatch(setOptions({ field: "cpt", values: cptCodes }));
+        dispatch(setOptions({ field: "service", values: serviceNames }));
       })
       .catch((error) => {
         console.error("Error updating CPT and Service:", error);
       });
   }, [filters.subcategory, filters.state, dispatch]);
 
+  // Enhanced URL hydration with proper loading sequence
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const state = params.get("state");
+    const category = params.get("category");
+    const subcategory = params.get("subcategory");
+    const cpt = params.get("cpt");
+    const service = params.get("service");
+
+    if (!category || !subcategory || (!cpt && !service)) return;
+
+    setIsHydrating(true);
+
+    const hydrateFromURL = async () => {
+      // 1. First load all required options
+      try {
+        // Load states if not already loaded
+        if (!options.state.length) {
+          await getStates()
+            .then((data: any) => dispatch(setOptions({ field: "state", values: data })));
+        }
+
+        // Load categories based on state
+        const categories = state 
+          ? await getCategories(state)
+          : await getCategories();
+        
+        const categoryList = Array.isArray(categories)
+          ? categories
+          : categories.categories ?? categories.service_categories ?? [];
+        dispatch(setOptions({ field: "category", values: categoryList }));
+
+        // Load subcategories
+        const subcategories = state
+          ? await getSubCategories(category!, state)
+          : await getSubCategories(category!);
+        
+        const subcategoryList = Array.isArray(subcategories.sub_categories)
+          ? subcategories.sub_categories
+          : subcategories.sub_categories?.sub_categories ?? [];
+        dispatch(setOptions({ field: "subcategory", values: subcategoryList }));
+
+        // Load CPT/service options
+        const optionsData = state
+          ? await updateDropdowns(subcategory!, state)
+          : await updateDropdowns(subcategory!);
+        
+        const cptCodes = Array.isArray(optionsData.selected_cpt_codes)
+          ? optionsData.selected_cpt_codes
+          : optionsData.selected_cpt_codes?.selected_cpt_codes ?? [];
+        
+        const serviceNames = Array.isArray(optionsData.selected_service_names)
+          ? optionsData.selected_service_names
+          : optionsData.selected_service_names?.selected_service_names ?? [];
+
+        dispatch(setOptions({ field: "cpt", values: cptCodes }));
+        dispatch(setOptions({ field: "service", values: serviceNames }));
+
+        // 2. Now set all filters at once
+        dispatch(setFilters({
+          state: state ?? "",
+          category: category ?? "",
+          subcategory: subcategory ?? "",
+          cpt: cpt ?? "",
+          service: service ?? ""
+        }));
+
+        // 3. Run search with the hydrated filters
+        const searchParams = new URLSearchParams();
+        if (state) searchParams.set("state", state);
+        searchParams.set("service_category", category!);
+        searchParams.set("sub_category", subcategory!);
+        if (cpt) searchParams.set("cpt_code", cpt);
+        else if (service) searchParams.set("service_name", service);
+
+        runSearch(searchParams);
+      } catch (error) {
+        console.error("Error hydrating from URL:", error);
+      } finally {
+        setIsHydrating(false);
+      }
+    };
+
+    hydrateFromURL();
+  }, [location.search]);
+
   const handleSelect = (field: string, value: string) => {
-    const newFilters = { ...filters, [field]: value };
+    let newFilters = { ...filters, [field]: value };
+  
+    if (field === "state") {
+      newFilters = {
+        ...newFilters,
+        category: "",
+        subcategory: "",
+        cpt: "",
+        service: "",
+      };
+      setDisabledFields({
+        cpt: false,
+        service: false,
+      });
+    } else if (field === "category") {
+      newFilters = {
+        ...newFilters,
+        subcategory: "",
+        cpt: "",
+        service: "",
+      };
+      setDisabledFields({
+        cpt: false,
+        service: false,
+      });
+    } else if (field === "subcategory") {
+      newFilters = {
+        ...newFilters,
+        cpt: "",
+        service: "",
+      };
+      setDisabledFields({
+        cpt: false,
+        service: false,
+      });
+    }
+  
     dispatch(setFilters(newFilters));
     setDropdownVisible((prev) => ({ ...prev, [field]: false }));
-
-    // Update disabled fields based on selection
+  
     if (field === "cpt") {
       if (value) {
         setDisabledFields({ cpt: false, service: true });
@@ -228,6 +347,8 @@ export const SearchHospital = () => {
   };
 
   const handleSearch = () => {
+    if (isHydrating) return;
+    
     const validation = validateFilters(filters, options);
     if (!validation.isValid) {
       alert(validation.message);
@@ -235,36 +356,34 @@ export const SearchHospital = () => {
     }
 
     const { state, category, subcategory, cpt, service } = filters;
-  
-    // Build query string for browser URL
-    const queryParams: Record<string, string> = {
-      state,
-      category,
-      subcategory,
-    };
-  
+
+    const queryParams: Record<string, string> = {};
+    if (state) queryParams.state = state;
+    queryParams.category = category;
+    queryParams.subcategory = subcategory;
     if (cpt) queryParams.cpt = cpt;
     else if (service) queryParams.service = service;
-  
+
     const queryString = buildQueryString(queryParams);
     navigate(`/hospitals?${queryString}`, { replace: true });
-  
-    // Build backend param keys for API call
+
     const searchParams = new URLSearchParams();
-    searchParams.set("state", state);
+    if (state) searchParams.set("state", state);
     searchParams.set("service_category", category);
     searchParams.set("sub_category", subcategory);
     if (cpt) searchParams.set("cpt_code", cpt);
     else if (service) searchParams.set("service_name", service);
-  
+
     runSearch(searchParams);
   };
 
   return (
     <>
-      <section id="SearchHospital" className="container py-6 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
+      <section
+        id="SearchHospital"
+        className="container py-6 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16"
+      >
         <div className="flex flex-wrap lg:flex-nowrap items-center border border-purple-400 rounded overflow-hidden bg-white text-sm">
-          {/* Filter Options */}
           <div className="flex flex-wrap flex-grow">
             {[
               { key: "state", label: "State", placeholder: "Select State" },
@@ -304,7 +423,16 @@ export const SearchHospital = () => {
                   }`}
                   value={filters[item.key as keyof typeof filters]}
                   onChange={(e) => handleSelect(item.key, e.target.value)}
-                  disabled={item.disabled}
+                  disabled={
+                    isHydrating ||
+                    (item.key === "subcategory"
+                      ? !filters.category
+                      : item.key === "cpt"
+                      ? disabledFields.cpt || !filters.subcategory
+                      : item.key === "service"
+                      ? disabledFields.service || !filters.subcategory
+                      : false)
+                  }
                 >
                   <option value="">{item.placeholder}</option>
                   {Array.isArray(options[item.key as keyof typeof options]) &&
@@ -320,66 +448,20 @@ export const SearchHospital = () => {
             ))}
           </div>
 
-          {/* Search Button */}
           <button
             onClick={handleSearch}
-            className="bg-purple hover:bg-purple-700 text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full"
+            disabled={isHydrating}
+            className={`bg-purple hover:bg-purple-700 text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full ${
+              isHydrating ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {loading ? "Searching..." : "SEARCH"}
           </button>
         </div>
 
         {searchError && (
-          <div className="mt-4 text-red-500 text-sm">
-            {searchError}
-          </div>
+          <div className="mt-4 text-red-500 text-sm">{searchError}</div>
         )}
-
-        {/* DF-94 - Hide filter  */}
-        {/* {searchResults && (
-          <div className="mt-4 bg-light-purple p-2 rounded flex flex-wrap gap-2 text-xs mb-4 sm:mb-0">
-            <span className="font-semibold w-full sm:w-auto">Filter by:</span>
-
-            <div className="w-full sm:flex sm:flex-wrap sm:gap-2">
-              <select
-                className="w-full sm:w-auto lg:mb-0 mb-2 pl-3 pr-8 py-1 rounded border bg-white"
-                defaultValue="15 miles"
-              >
-                <option disabled>Select Distance</option>
-                <option value="15 miles">Within 15 miles</option>
-                <option value="30 miles">Within 30 miles</option>
-                <option value="50 miles">Within 50 miles</option>
-              </select>
-
-              <select
-                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
-                defaultValue="Rating"
-              >
-                <option disabled>Select Rating</option>
-                <option value="5 stars">5 Stars</option>
-                <option value="2+ stars">2+ Stars</option>
-              </select>
-
-              <select
-                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
-                defaultValue="Insurance"
-              >
-                <option disabled>Select Insurance</option>
-                <option value="Plan A">Plan A</option>
-                <option value="Plan B">Plan B</option>
-              </select>
-
-              <select
-                className="w-full lg:mb-0 mb-2 sm:w-auto pl-3 pr-8 py-1 rounded border bg-white"
-                defaultValue="Fixed Price"
-              >
-                <option disabled>Select Price Type</option>
-                <option value="Fixed">Fixed Price</option>
-                <option value="Negotiated">Negotiated Price</option>
-              </select>
-            </div>
-          </div>
-        )} */}
       </section>
     </>
   );
