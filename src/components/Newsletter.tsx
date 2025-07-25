@@ -25,19 +25,18 @@ export const Newsletter = () => {
 
     const emailInput = e.currentTarget[0] as HTMLInputElement;
     const email = emailInput.value;
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/formResponse";
+    const BASE_URL = `https://corsproxy.io/?url=${FORM_URL}`;
 
     const formData = new FormData();
     formData.append("entry.2108239172", email);
     console.log(formData);
 
     try {
-      const response = await fetch(
-        "https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/formResponse",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(BASE_URL, {
+      method: "POST",
+      body: formData,
+    });
 
       if (response.ok) {
         console.log("Data submitted successfully!");
