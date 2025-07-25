@@ -83,6 +83,7 @@ export const ProductFamily = () => {
           options={{
             arrows: true,
             pagination: false,
+            rewind: false,
             perPage: 3,
             gap: '1.5rem',
           padding: { left: "1rem", right: "1rem" },

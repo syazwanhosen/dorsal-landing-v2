@@ -70,12 +70,12 @@ export const Experts: React.FC = () => {
                 >
                 {/* Double logos to ensure smooth infinite scroll */}
                 {row.concat(row).map((logo, i) => (
-                    <div className="bg-white my-6 h-11 flex items-center justify-center">
+                    <div className="bg-white my-6 h-8 sm:h-11 flex items-center justify-center inline-block">
                         <img
                         key={`${logo}-${i}`}
                         src={`/expert_logos/${logo}`}
                         alt={`logo-${i}`}
-                        className="h-8 w-auto filter grayscale brightness-80 contrast-50 transition duration-300 hover:brightness-90"
+                        className="h-6 sm:h-8 w-auto filter grayscale brightness-80 contrast-50 transition duration-300 hover:brightness-90"
                         />
                     </div>
                 ))}

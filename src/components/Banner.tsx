@@ -122,7 +122,7 @@ export const Banner = () => {
           {/* Right Side Graph Card */}
           <div className="absolute xl:right-32 lg:right-24 xl:top-[7rem] 2xl:top-[9rem] lg:top-[6rem] bg-white rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 w-60 h-60 flex flex-col justify-between">
             <div>
-              <p className="text-sm text-gray-500 mb-1 text-left">
+              <p className="text-sm font-semibold text-[#A1A0BD] mb-1 text-left">
                 Total Saving
               </p>
               <p className="text-xl font-bold text-gray-800 mb-2 text-left">
