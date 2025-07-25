@@ -136,9 +136,14 @@ export const UploadBill = () => {
                 </FileUploadList>
               </FileUpload>
             </div>
-            <p className="text-sm text-black mb-2 text-center py-2 lg:pt-4">
-                <Link to="/signup" className="text-pink hover:underline">
-                  Sign up
+            <p className="text-sm text-black mb-2 text-center py-2 pt-4">
+                <Link 
+                  to="https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink hover:underline"
+                >
+                  Join waitlist
                 </Link>{" "}
                 if you want to start saving
               </p>
@@ -174,13 +179,15 @@ export const UploadBill = () => {
                     Want to start saving?
                   </p>
                   <p className="lg:text-base text-sm text-gray-600 mb-6 lg:px-10">
-                    Sign up now to unlock better rates and exclusive benefits.
+                    Join waitlist now to unlock better rates and exclusive benefits.
                   </p>
                   <Link
-                    to="/signup"
+                    to="https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block bg-purple text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition"
                   >
-                    Sign Up
+                    Join waitlist
                   </Link>
                 </div>
               </div>
