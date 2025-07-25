@@ -28,7 +28,7 @@ const sheets = google.sheets({ version: 'v4', auth });
 async function getFeatures() {
     const res = await sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: 'Sheet1!A2:E',
+        range: 'Sheet1!A2:C',
     });
     const rows = res.data.values;
     if (!rows || rows.length === 0) {
@@ -47,7 +47,7 @@ async function getFeatures() {
 async function updateVote(id, type) {
     const res = await sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: 'Sheet1!A2:E',
+        range: 'Sheet1!A2:C',
     });
     const features = await getFeatures();
     const rows = res.data.values;
@@ -74,10 +74,10 @@ async function updateVote(id, type) {
 
     await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
-        range: `Sheet1!C${rowIndex + 2}:E${rowIndex + 2}`,
+        range: `Sheet1!C${rowIndex + 2}`,
         valueInputOption: 'RAW',
         requestBody: {
-            values: [[upvotes.toString(), downvotes.toString(), totalVotes.toString()]],
+            values: [[upvotes.toString()]],
         },
     });
 

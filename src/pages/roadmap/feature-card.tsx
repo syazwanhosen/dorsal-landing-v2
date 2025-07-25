@@ -38,45 +38,33 @@ import {
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
-import { Button } from "@/components/ui/buttons/button"
 
 interface FeatureCardProps {
-  feature: FeatureType
+  feature: FeatureType,
+  featureMapping: Function
 }
 
 const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
 
-export function FeatureCard({ feature }: FeatureCardProps) {
+export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
   const [votes, setVotes] = useState(0)
-  const [hasVoted, setHasVoted] = useState<"upvote" | "downvote" | null>(null)
+  const [hasVoted, setHasVoted] = useState(false);
 
-  const handleVote = async (value: number, _voteType: string) => {
-    const stored = await getVote(feature.id);
+  const handleVote = async () => {
+   const stored = await getVote(feature.id);
+   
+   if (stored?.voted) return null;
 
-    if (
-      (stored?.voted &&
-        (
-          (value === 1 && stored?.voted === "upvote" && votes >= stored?.count) ||
-          (value === -1 && stored?.voted === "downvote" && votes <= stored?.count)
-        )
-      ) ||
-      (value === -1 && votes <= 0)
-    ) {
-      return;
-    }
-
-    const type = value === 1 ? "upvote" : "downvote";
-
-    try {
+   try {
       const res = await axios.post(`${baseUrl}/vote`, {
         id: feature.id,
-        type,
+        type: 'upvote',
       });
 
-      setVotes(res.data.totalVotes);
-      setHasVoted(value === 1 ? "upvote" : "downvote");
-      const prevCount = typeof stored?.count === "number" ? stored.count : 0;
-      await setVote(feature.id, { count: value === 1 ? prevCount + 1 : Math.max(prevCount - 1, 0), voted: type });
+      setVotes(res.data.upvotes);
+      setHasVoted(true);
+      await featureMapping()
+      await setVote(feature.id, { count: res.data.upvotes, voted: 'upvote' });
     } catch (error) {
       console.error("Voting failed", error);
     }
@@ -207,9 +195,11 @@ export function FeatureCard({ feature }: FeatureCardProps) {
       .get(`${baseUrl}/votes/${feature.id}`)
       .then(async (res) => {
         const stored = await getVote(feature.id);
-        setVotes(res.data.totalVotes);
-        setHasVoted(res.data.totalVotes ? (stored?.voted ?? null) : null);
-        await setVote(feature.id, { count: res.data.totalVotes, voted: res.data.totalVotes ? (stored?.voted ?? null) : null });
+        const voted = stored?.voted ?? null;
+
+        setVotes(res.data.upvotes);
+        setHasVoted(Boolean(voted));
+        await setVote(feature.id, { count: res.data.upvotes, voted: res.data.upvotes ? voted : null });
       })
       .catch((error) => {
         console.error("Failed to fetch vote:", error);
@@ -221,10 +211,13 @@ export function FeatureCard({ feature }: FeatureCardProps) {
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
-          <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-purple-700 group">
+          <button 
+            className={`h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-purple-700 group ${hasVoted ? "bg-purple" : null}`}
+            onClick={handleVote}
+          >
             <ThumbsUp className="h-3 w-3 text-black group-hover:text-white transition-colors" />
           </button>
-          <span className="font-semibold text-lg my-1">10</span>
+          <span className="font-semibold text-lg my-1">{votes}</span>
         </div>
 
         {/* Content column */}
