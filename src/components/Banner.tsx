@@ -81,7 +81,7 @@ export const Banner = () => {
                 <span className="invisible">{phrases[0]}</span>
               </span>
             </h2>
-        <p className="max-w-sm mx-auto text-white font-normal mt-2 text-sm md:text-base">
+        <p className="max-w-sm mx-auto text-white font-normal mt-2 mb-2 text-sm md:text-base">
           Get real pricing data from people who've been there. Compare costs across providers and negotiate with confidence.
         </p>
       </div>
@@ -161,7 +161,7 @@ export const Banner = () => {
               </span>
             </h2>
 
-            <p className="max-w-2xl mx-auto text-lg text-white font-">
+            <p className="max-w-2xl mx-auto text-lg text-white mb-2">
               Get real pricing data from people who've been there. Compare costs
               across providers and negotiate with confidence.
             </p>

@@ -38,10 +38,10 @@ const Testimonials = () => {
 
   return (
     <section className='Testimonial bg-white'>
-    <div className="lg:pt-20 pt-8 pb-8 container px-0 max-w">
+    <div className="lg:pt-20 py-16 container px-0 max-w">
       <div className="mx-auto text-center px-4">
         {/* Badge */}
-        <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
+        <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-4">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">TESTIMONIALS</span>
         </span>
 
@@ -63,7 +63,7 @@ const Testimonials = () => {
         >
           {[...testimonials, ...testimonials].map((testimonial, index) => (
             <div key={index} className="flex-shrink-0 px-3 w-full sm:w-1/2 lg:w-1/4">
-              <div className="bg-white p-6 rounded-lg border border-black shadow-lg h-full font-sans">
+              <div className="bg-white p-6 rounded-lg border border-gray-300 shadow-lg h-full font-sans">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-[#8770BC] font-bold text-lg">John Smith</h4>
                   <img 

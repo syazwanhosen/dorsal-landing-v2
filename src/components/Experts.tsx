@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from 'react';
 
 const logos = [
   "aetna.png",
@@ -44,6 +45,13 @@ const rows = createRows(logos, logosPerRow);
 
 export const Experts: React.FC = () => {
 
+  useEffect(() => {
+  logos.forEach((src) => {
+    const img = new Image();
+    img.src = `/expert_logos/${src}`;
+  });
+  }, []);
+
   return (
     <div className="bg-white pt-16 pb-24">
       <div className="container px-0 items-center justify-center mx-auto">
@@ -54,7 +62,7 @@ export const Experts: React.FC = () => {
             </span>
           </span>
 
-          <h2 className="mt-3 text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mt-4 text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold text-gray-900 sm:text-4xl">
             Founded by <span className="text-pink">Alumni & Advisors</span> from
           </h2>
 
@@ -69,14 +77,16 @@ export const Experts: React.FC = () => {
                 }`}
                 >
                 {/* Double logos to ensure smooth infinite scroll */}
-                {row.concat(row).map((logo, i) => (
-                    <div className="bg-white my-6 h-8 sm:h-11 flex items-center justify-center inline-block">
-                        <img
-                        key={`${logo}-${i}`}
+               {row.concat(row).map((logo, i) => (
+                    <div
+                      key={`${logo}-${i}`}
+                      className="bg-white my-6 h-8 sm:h-11 flex items-center justify-center inline-block"
+                    >
+                      <img
                         src={`/expert_logos/${logo}`}
                         alt={`logo-${i}`}
                         className="h-6 sm:h-8 w-auto filter grayscale brightness-80 contrast-50 transition duration-300 hover:brightness-90"
-                        />
+                      />
                     </div>
                 ))}
                 </div>
