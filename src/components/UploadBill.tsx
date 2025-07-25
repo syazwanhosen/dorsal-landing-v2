@@ -136,12 +136,12 @@ export const UploadBill = () => {
                 </FileUploadList>
               </FileUpload>
             </div>
-            <p className="text-sm text-black mb-2 text-center py-2 pt-4">
+            <p className="text-sm text-black mb-2 text-center py-2 pt-8">
                 <Link 
                   to="https://docs.google.com/forms/d/e/1FAIpQLScaCHqfF56Mj8znmN0bWX_NovHkOTmiWhz5E1UdFnD8wxrBcA/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-pink hover:underline"
+                  className="text-pink font-semibold hover:underline"
                 >
                   Join waitlist
                 </Link>{" "}
