@@ -445,7 +445,7 @@ export const HospitalMap = () => {
                   position={[h.latitude, h.longitude]}
                   icon={hospitalIcon}
                 >
-                  <Popup>{h.name}</Popup>
+                  <Popup><p className="cursor-pointer" onClick={() => handleSelectHospital({name: h.name})}>{h.name}</p></Popup>
                 </Marker>
               ))}
             </MapContainer>
