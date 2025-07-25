@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
-import { Button } from "../ui/button";
+/* import { Button } from "../ui/button"; */
 
 // Resize map after mount to fix size issues
 const ResizeMap = () => {

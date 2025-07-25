@@ -70,5 +70,6 @@ export type TopSearchHospital = {
 export type TopSearchServices = {
     name: string;
     hospital_count: string;
+    url: string;
 };
 
