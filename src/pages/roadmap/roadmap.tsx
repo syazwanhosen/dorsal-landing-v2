@@ -237,7 +237,7 @@ useEffect(() => {
                   </div>
                 </div>
                 {/* Right image */}
-                <div className="w-full flex justify-center lg:w-1/2">
+                <div className="w-full lg:w-1/2 hidden lg:flex justify-center">
                   <img
                     src={ProductRoadmap}
                     alt="Product Roadmap"
