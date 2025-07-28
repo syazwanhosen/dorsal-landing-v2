@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setFilters,
   setOptions,
   setLoading,
   setSearchResults,
+  setIsHydratingFromURL,
 } from "../../features/hospitalSlice";
 import {
   getStates,
@@ -15,7 +16,6 @@ import {
 } from "@/api/Hospital/api";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// Utility functions
 const buildQueryString = (params: Record<string, string>) =>
   Object.entries(params)
     .filter(([_, value]) => value?.trim())
@@ -61,9 +61,13 @@ export const SearchHospital = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { filters, options, loading } = useAppSelector(
+  const { filters, options, loading, isHydratingFromURL } = useAppSelector(
     (state: { hospital: any }) => state.hospital
   );
+ 
+  const hydratedOnceRef = useRef(false); 
+  const searchTriggeredRef = useRef(false); // New ref to track if search was triggered
+  const [hydrationCompleted, setHydrationCompleted] = useState(false);
 
   const [, setDropdownVisible] = useState({
     state: false,
@@ -79,9 +83,10 @@ export const SearchHospital = () => {
   });
 
   const [searchError, setSearchError] = useState<string | null>(null);
-  const [isHydrating, setIsHydrating] = useState(false);
 
-  const runSearch = (params: URLSearchParams) => {
+  const runSearch = (params: URLSearchParams, fromHydration = false) => {
+    if (fromHydration && searchTriggeredRef.current) return; // Skip if already triggered by button
+    
     dispatch(setLoading(true));
     setSearchError(null);
 
@@ -211,56 +216,57 @@ export const SearchHospital = () => {
     const cpt = params.get("cpt");
     const service = params.get("service");
 
-    if (!category || !subcategory || (!cpt && !service)) return;
+    // Skip hydration if required filters aren't present or we've already hydrated
+    const hasValidFilters = category && subcategory && (cpt || service);
+    if (!hasValidFilters || hydratedOnceRef.current) {
+      setHydrationCompleted(true);
+      return;
+    }
 
-    setIsHydrating(true);
+    hydratedOnceRef.current = true;
+    dispatch(setIsHydratingFromURL(true));
 
     const hydrateFromURL = async () => {
-      // 1. First load all required options
       try {
-        // Load states if not already loaded
+        // 1. Load States if needed
         if (!options.state.length) {
-          await getStates()
-            .then((data: any) => dispatch(setOptions({ field: "state", values: data })));
+          const states = await getStates();
+          dispatch(setOptions({ field: "state", values: states }));
         }
 
-        // Load categories based on state
-        const categories = state 
+        // 2. Load Categories
+        const rawCategories = state 
           ? await getCategories(state)
           : await getCategories();
-        
-        const categoryList = Array.isArray(categories)
-          ? categories
-          : categories.categories ?? categories.service_categories ?? [];
-        dispatch(setOptions({ field: "category", values: categoryList }));
+        const categories = Array.isArray(rawCategories)
+          ? rawCategories
+          : rawCategories.categories ?? rawCategories.service_categories ?? [];
+        dispatch(setOptions({ field: "category", values: categories }));
 
-        // Load subcategories
-        const subcategories = state
+        // 3. Subcategories
+        const rawSubcategories = state
           ? await getSubCategories(category!, state)
           : await getSubCategories(category!);
-        
-        const subcategoryList = Array.isArray(subcategories.sub_categories)
-          ? subcategories.sub_categories
-          : subcategories.sub_categories?.sub_categories ?? [];
-        dispatch(setOptions({ field: "subcategory", values: subcategoryList }));
+        const subcategories = Array.isArray(rawSubcategories.sub_categories)
+          ? rawSubcategories.sub_categories
+          : rawSubcategories.sub_categories?.sub_categories ?? [];
+        dispatch(setOptions({ field: "subcategory", values: subcategories }));
 
-        // Load CPT/service options
-        const optionsData = state
+        // 4. CPT + Service Names
+        const rawOptions = state
           ? await updateDropdowns(subcategory!, state)
           : await updateDropdowns(subcategory!);
-        
-        const cptCodes = Array.isArray(optionsData.selected_cpt_codes)
-          ? optionsData.selected_cpt_codes
-          : optionsData.selected_cpt_codes?.selected_cpt_codes ?? [];
-        
-        const serviceNames = Array.isArray(optionsData.selected_service_names)
-          ? optionsData.selected_service_names
-          : optionsData.selected_service_names?.selected_service_names ?? [];
+        const cptCodes = Array.isArray(rawOptions.selected_cpt_codes)
+          ? rawOptions.selected_cpt_codes
+          : rawOptions.selected_cpt_codes?.selected_cpt_codes ?? [];
+        const serviceNames = Array.isArray(rawOptions.selected_service_names)
+          ? rawOptions.selected_service_names
+          : rawOptions.selected_service_names?.selected_service_names ?? [];
 
         dispatch(setOptions({ field: "cpt", values: cptCodes }));
         dispatch(setOptions({ field: "service", values: serviceNames }));
 
-        // 2. Now set all filters at once
+        // 5. Set Redux filters
         dispatch(setFilters({
           state: state ?? "",
           category: category ?? "",
@@ -269,7 +275,7 @@ export const SearchHospital = () => {
           service: service ?? ""
         }));
 
-        // 3. Run search with the hydrated filters
+        // 6. Trigger Search
         const searchParams = new URLSearchParams();
         if (state) searchParams.set("state", state);
         searchParams.set("service_category", category!);
@@ -277,16 +283,17 @@ export const SearchHospital = () => {
         if (cpt) searchParams.set("cpt_code", cpt);
         else if (service) searchParams.set("service_name", service);
 
-        runSearch(searchParams);
+        runSearch(searchParams, true); // Mark as from hydration
       } catch (error) {
         console.error("Error hydrating from URL:", error);
       } finally {
-        setIsHydrating(false);
+        dispatch(setIsHydratingFromURL(false));
+        setHydrationCompleted(true);
       }
     };
 
     hydrateFromURL();
-  }, [location.search]);
+  }, [location.search, dispatch, options.state]);
 
   const handleSelect = (field: string, value: string) => {
     let newFilters = { ...filters, [field]: value };
@@ -347,16 +354,17 @@ export const SearchHospital = () => {
   };
 
   const handleSearch = () => {
-    if (isHydrating) return;
-    
+    if (isHydratingFromURL || !hydrationCompleted) return;
+
     const validation = validateFilters(filters, options);
     if (!validation.isValid) {
       alert(validation.message);
       return;
     }
-
+    
+    searchTriggeredRef.current = true; // Mark that search was triggered by button
+    
     const { state, category, subcategory, cpt, service } = filters;
-
     const queryParams: Record<string, string> = {};
     if (state) queryParams.state = state;
     queryParams.category = category;
@@ -373,7 +381,6 @@ export const SearchHospital = () => {
     searchParams.set("sub_category", subcategory);
     if (cpt) searchParams.set("cpt_code", cpt);
     else if (service) searchParams.set("service_name", service);
-
     runSearch(searchParams);
   };
 
@@ -424,7 +431,7 @@ export const SearchHospital = () => {
                   value={filters[item.key as keyof typeof filters]}
                   onChange={(e) => handleSelect(item.key, e.target.value)}
                   disabled={
-                    isHydrating ||
+                    isHydratingFromURL ||
                     (item.key === "subcategory"
                       ? !filters.category
                       : item.key === "cpt"
@@ -450,9 +457,9 @@ export const SearchHospital = () => {
 
           <button
             onClick={handleSearch}
-            disabled={isHydrating}
+            disabled={isHydratingFromURL || loading}
             className={`bg-purple hover:bg-purple-700 text-white px-10 lg:py-4 py-2 sm:px-10 text-sm font-semibold border lg:w-auto w-full ${
-              isHydrating ? "opacity-50 cursor-not-allowed" : ""
+              isHydratingFromURL || loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {loading ? "Searching..." : "SEARCH"}

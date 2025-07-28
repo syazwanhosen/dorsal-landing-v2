@@ -95,7 +95,7 @@ export const Banner = () => {
           src={desktopBanner}
           alt="Healthcare background"
           className="w-full h-auto"
-          loading="lazy"
+          loading="eager"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-between py-12 px-4">
           {/* Left Side Cards */}

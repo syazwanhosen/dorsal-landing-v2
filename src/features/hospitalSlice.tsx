@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { SearchResults, Hospital, HospitalDetails } from '../types/HospitalMap';
- 
+
 interface Filters {
   state: string;
   category: string;
@@ -8,7 +8,7 @@ interface Filters {
   cpt: string;
   service: string;
 }
- 
+
 interface Options {
   state: string[];
   category: string[];
@@ -16,7 +16,7 @@ interface Options {
   cpt: string[];
   service: string[];
 }
- 
+
 interface HospitalState {
   hospitals: Hospital[] | undefined;
   searchResults: SearchResults | null;
@@ -26,8 +26,10 @@ interface HospitalState {
   detailsLoading: boolean;
   error: string | null;
   options: Options;
+  initialSearchComplete: boolean;
+  isHydratingFromURL: boolean; // New field to track URL hydration state
 }
- 
+
 const initialState: HospitalState = {
   searchResults: null,
   currentHospital: null,
@@ -48,27 +50,29 @@ const initialState: HospitalState = {
     cpt: [],
     service: [],
   },
+  initialSearchComplete: false,
+  isHydratingFromURL: false, // Initialize as false
   hospitals: undefined
 };
- 
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
- 
+
 // Async thunk for fetching hospital details
 export const fetchHospitalDetails = createAsyncThunk(
   'hospital/fetchDetails',
   async (hospitalName: string, { rejectWithValue }) => {
     try {
-      const encodedName = encodeURIComponent(hospitalName); // Ensure encoding
-      const url = `${baseUrl}/common/hospital_metadata/${encodedName}`; // Assign to a variable
-      console.log('Fetching hospital details from:', url); // Debugging log
-     
+      const encodedName = encodeURIComponent(hospitalName);
+      const url = `${baseUrl}/common/hospital_metadata/${encodedName}`;
+      console.log('Fetching hospital details from:', url);
+
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Failed to fetch hospital details for ${hospitalName}`);
       }
-     
+      
       const data = await response.json();
-      console.log('Received data:', data); // Debugging log
+      console.log('Received data:', data);
       return data.hospital_metadata;
     } catch (error) {
       console.error('Error fetching hospital details:', error);
@@ -76,8 +80,7 @@ export const fetchHospitalDetails = createAsyncThunk(
     }
   }
 );
- 
- 
+
 const hospitalSlice = createSlice({
   name: 'hospital',
   initialState,
@@ -90,6 +93,8 @@ const hospitalSlice = createSlice({
     },
     setSearchResults: (state, action: PayloadAction<SearchResults>) => {
       state.searchResults = action.payload;
+      state.initialSearchComplete = true;
+      state.isHydratingFromURL = false; // Reset hydration flag when results are set
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -97,14 +102,30 @@ const hospitalSlice = createSlice({
     resetFilters: (state) => {
       state.filters = initialState.filters;
       state.options = initialState.options;
+      state.initialSearchComplete = false;
+      state.isHydratingFromURL = false;
     },
     clearCurrentHospital: (state) => {
       state.currentHospital = null;
+    },
+    setInitialSearchComplete: (state, action: PayloadAction<boolean>) => {
+      state.initialSearchComplete = action.payload;
+    },
+    setIsHydratingFromURL: (state, action: PayloadAction<boolean>) => {
+      state.isHydratingFromURL = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+    resetSearchState: (state) => {
+      state.searchResults = null;
+      state.initialSearchComplete = false;
+      state.loading = false;
+      state.isHydratingFromURL = false;
     }
   },
   extraReducers: (builder) => {
     builder
-      // Hospital details fetch cases
       .addCase(fetchHospitalDetails.pending, (state) => {
         state.detailsLoading = true;
         state.error = null;
@@ -119,14 +140,18 @@ const hospitalSlice = createSlice({
       });
   }
 });
- 
+
 export const {
   setFilters,
   setOptions,
   setSearchResults,
   setLoading,
   resetFilters,
-  clearCurrentHospital
+  clearCurrentHospital,
+  setInitialSearchComplete,
+  setIsHydratingFromURL,
+  setError,
+  resetSearchState
 } = hospitalSlice.actions;
- 
+
 export default hospitalSlice.reducer;
