@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { cn } from "@/lib/utils";
 
 interface ProgressProps {
@@ -6,7 +6,7 @@ interface ProgressProps {
   className?: string;
 }
 
-const Progress: React.FC<ProgressProps> = ({ value, className }) => {
+const Progress: FC<ProgressProps> = ({ value, className }) => {
   return (
     <div className={cn("relative h-4 w-full overflow-hidden rounded-full bg-gray-200", className)}>
       <div

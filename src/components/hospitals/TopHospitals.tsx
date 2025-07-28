@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Hospital } from 'lucide-react';
 
 interface TopSearchHospital {
@@ -25,7 +25,7 @@ const generateHospitalUrl = (name: string, state: string) => {
   return `/hospital_details?${params.toString()}`;
 };
 
-export const TopHospitals: React.FC = () => {
+export const TopHospitals: FC = () => {
   return (
     <div className="bg-[#F5F1FF] rounded-md py-4 px-4 lg:px-8 w-full">
       <div className="flex items-center mb-4">

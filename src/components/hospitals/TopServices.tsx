@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import type { TopSearchServices } from '@/types';
 import { Tag } from "lucide-react";
 
@@ -61,7 +61,7 @@ const hospitals: TopSearchServices[] = [
      
 ];
 
-export const TopServices: React.FC = () => {
+export const TopServices: FC = () => {
     return (
         <div className="bg-[#F5F1FF] rounded-md py-4 px-4 lg:px-8 w-full">
         <div className="flex items-center mb-4">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { Button } from "@/components/ui/buttons/button"
 import { Filter, PlusCircle, ArrowRight } from "lucide-react"
 import { features } from "@/lib/data"
@@ -82,7 +82,7 @@ const featuredCategories = [
 ]
 
 
-const Roadmap: React.FC = () => {
+const Roadmap: FC = () => {
   const [activeTab, _setActiveTab] = useState("roadmap")
   const [activeCategory, setActiveCategory] = useState("all")
   const [viewMode, setViewMode] = useState<"list" | "visual">("list")
