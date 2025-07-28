@@ -48,9 +48,9 @@ const products = [
 ];
 
 const getSpeedByWidth = (width: number): number => {
-  if (width >= 1280) return 1500;
-  if (width >= 1024) return 2000;
-  if (width >= 640) return 3500;
+  if (width >= 1280) return 3000;
+  if (width >= 1024) return 4000;
+  if (width >= 640) return 7000;
   return 1000;
 };
 
