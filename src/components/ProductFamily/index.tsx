@@ -5,7 +5,11 @@ import { Splide, SplideSlide, Splide as SplideClass } from "@splidejs/react-spli
 import { Card, CardContent } from "@/components/ui/card";
 
 // Images
-import productImage from "../../assets/product-image.png";
+import dorsalFyiImage from "../../assets/product-family/dorsal_fyi.jpg";
+import dorsalCompanionImage from "../../assets/product-family/dorsal_companion.png";
+import dorsalAppealImage from "../../assets/product-family/dorsal_appeal.png";
+import dorsalDataImage from "../../assets/product-family/dorsal_data.png";
+import dorsalEnterpriseImage from "../../assets/product-family/dorsal_enterprise.png";
 
 import "@splidejs/react-splide/css";
 import "./style.css";
@@ -15,26 +19,31 @@ const products = [
     title: "Dorsal.fyi",
     description:
       "Free public access to crowd-sourced medical bill data. Great for patients wanting pricing insights before receiving care.",
+    image: dorsalFyiImage
   },
   {
     title: "Dorsal Companion",
     description:
       "Think Rocket Money but for healthcare. Tracks bills, finds discrepancies, and assists in saving on out-of-pocket costs.",
+    image: dorsalCompanionImage
   },
   {
     title: "Dorsal Appeals Engine",
     description:
       "Appeal denied claims via web, hospital-specific app, or even SMS. Easy-to-use engine to guide consumers through the process.",
+    image: dorsalAppealImage
   },
   {
     title: "Dorsal Data",
     description:
       "Our polished dataset offering for reserchers, policy makers, and analysts seeking deep insight into healthcare costs.",
+    image: dorsalDataImage
   },
   {
     title: "Dorsal for Enterprise",
     description:
       "Tailored for employers and clinics looking to reduce healthcare spend by leveranging Dorsal insights at a popilation level.",
+    image: dorsalEnterpriseImage
   },
 ];
 
@@ -148,7 +157,7 @@ export const ProductFamily = () => {
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center">
                     <img
-                      src={productImage}
+                      src={product.image}
                       alt="Product illustration"
                       className="h-40 object-contain mb-4"
                     />
