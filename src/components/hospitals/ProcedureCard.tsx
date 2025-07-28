@@ -45,6 +45,7 @@ export const ProcedureCard: React.FC<ProcedureCardProps> = ({
         )}
       </div>
 
+
       {/* Table displaying hospital names and prices */}
       {/*
        {hasSearchResult && hospitalNames.length > 0 && prices.length > 0 && (
