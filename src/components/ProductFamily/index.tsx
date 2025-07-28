@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { useEffect, useRef, useState } from "react";
+import { Splide, SplideSlide, Splide as SplideClass } from "@splidejs/react-splide";
 
 // Components
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,8 +7,8 @@ import { Card, CardContent } from "@/components/ui/card";
 // Images
 import productImage from "../../assets/product-image.png";
 
-import "@splidejs/react-splide/css"; 
-import "./style.css"
+import "@splidejs/react-splide/css";
+import "./style.css";
 
 const products = [
   {
@@ -39,15 +39,18 @@ const products = [
 ];
 
 const getSpeedByWidth = (width: number): number => {
-    if (width >= 1280) return 1500;
-    if (width >= 1024) return 2000;
-    if (width >= 640) return 3500;
-    return 1000;
-  };
+  if (width >= 1280) return 1500;
+  if (width >= 1024) return 2000;
+  if (width >= 640) return 3500;
+  return 1000;
+};
 
 export const ProductFamily = () => {
   const [speed, setSpeed] = useState(getSpeedByWidth(window.innerWidth));
-  
+  const splideRef = useRef<SplideClass | null>(null);
+  const [canGoPrev, setCanGoPrev] = useState(false);
+  const [canGoNext, setCanGoNext] = useState(true);
+
   useEffect(() => {
     const handleResize = () => {
       setSpeed(getSpeedByWidth(window.innerWidth));
@@ -57,20 +60,47 @@ export const ProductFamily = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const updateArrows = () => {
+    const splide = splideRef.current?.splide;
+    if (!splide) return;
+
+    const index = splide.index;
+    const total = splide.length;
+    const perPage = Number(splide.options.perPage ?? 1);
+
+    setCanGoPrev(index > 0);
+    setCanGoNext(index < total - perPage);
+  };
+
+  useEffect(() => {
+    const splide = splideRef.current?.splide;
+    if (splide) {
+      splide.on("mounted move resized", updateArrows);
+    }
+
+    return () => {
+      if (splide) {
+        splide.off("mounted move resized");
+      }
+    };
+  }, []);
+
   return (
-    <section className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
+    <section
+      className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
              lg:bg-[url('@/assets/Union.png')]
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
-             lg:bg-gradient-none lg:h-[500px]">
-
-      {/* Header */}
+             lg:bg-gradient-none lg:h-[500px]"
+    >
       <div className="md:py-16 pb-16 lg:pb-10 px-6 sm:px-12 text-white text-center z-10 relative mt-16 md:mt-0">
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
           <span className="text-xs font-semibold uppercase bg-gradient-to-r from-[#E770C1] to-[#9F70FD] text-transparent bg-clip-text">
             PRODUCTS
           </span>
         </span>
-        <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold leading-tight mt-4">Dorsal Product Family</h2>
+        <h2 className="text-[20px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold leading-tight mt-4">
+          Dorsal Product Family
+        </h2>
         <p className="text-base sm:text-lg text-white/90 mt-4">
           Explore our suite of tools built to empower consumers, researchers, and enterprises with healthcare <br />
           price transparency and negotiation.
@@ -80,18 +110,19 @@ export const ProductFamily = () => {
       {/* Slider */}
       <div className="relative z-10 pb-16 lg:pb-[8rem]">
         <Splide
+          ref={splideRef}
           options={{
             arrows: true,
             pagination: false,
             rewind: false,
             perPage: 3,
-            gap: '1.5rem',
-          padding: { left: "1rem", right: "1rem" },
+            gap: "1.5rem",
+            padding: { left: "1rem", right: "1rem" },
             breakpoints: {
-              1024: { perPage: 3  },
-              1023: { perPage: 2  },
+              1024: { perPage: 3 },
+              1023: { perPage: 2 },
               768: { perPage: 2 },
-              639:  { perPage: 1 },
+              639: { perPage: 1 },
             },
             wheel: true,
             direction: "ltr",
@@ -104,6 +135,12 @@ export const ProductFamily = () => {
                     [&_.splide__arrow]:rounded-full [&_.splide__arrow]:w-10 [&_.splide__arrow]:h-10 
                     [&_.splide__arrow]:shadow-md [&_.splide__arrow]:hover:bg-purple-100"
         >
+          <style>
+            {`
+              .splide__arrow--prev { display: ${canGoPrev ? "flex" : "none"} !important; }
+              .splide__arrow--next { display: ${canGoNext ? "flex" : "none"} !important; }
+            `}
+          </style>
 
           {products.map((product, index) => (
             <SplideSlide key={index}>
