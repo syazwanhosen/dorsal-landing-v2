@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import PriceChart from "../hospitals/PriceChart";
 
 
@@ -12,7 +12,7 @@ interface ServiceSearchProcedureCardProps {
   hospitalNames: string[];
 }
 
-export const ServiceSearchProcedureCard: React.FC<ServiceSearchProcedureCardProps> = ({
+export const ServiceSearchProcedureCard: FC<ServiceSearchProcedureCardProps> = ({
   serviceName,
   serviceDescription,
   cptCode,

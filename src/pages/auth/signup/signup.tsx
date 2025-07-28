@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Signup from "@/components/signup/signup";
 
-const LoginPage: React.FC = () => {
+const LoginPage: FC = () => {
   return (
     <>
     <Signup />

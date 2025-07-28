@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import  { useState, FC, FormEvent} from "react";
 import logo from '../../assets/login/login-logo.png';
 import image from '../../assets/login/login-image.png';
 import google from '../../assets/login/Googlee.svg';
 import facebook from '../../assets/login/Facebook.svg';
 import './login.css'; 
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);

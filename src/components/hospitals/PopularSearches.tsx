@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FC } from 'react';
 import type { PopularSearchTabType } from '@/types';
 import { ButtonGroup } from '../ui/buttons/button-group';
 
@@ -11,7 +11,7 @@ const searchTerms = [
     'Knee Replacement',
 ];
 
-export const PopularSearches: React.FC = () => {
+export const PopularSearches: FC = () => {
     const [activeTab, setActiveTab] = useState<PopularSearchTabType>('Procedures');
 
     return (

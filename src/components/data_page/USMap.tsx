@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import * as d3 from "d3";
-import * as topojson from "topojson-client";
+import { select, geoAlbersUsa,geoPath,json } from "d3";
+import { feature } from "topojson-client";
 import { stateNames } from "../../utils/stateUtils";
 import { getColor } from "../../utils/colorUtils";
 import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
@@ -29,23 +29,22 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
   const drawMap = () => {
     if (!mapRef.current) return;
 
-    d3.select(mapRef.current).selectAll("svg").remove(); // Clear previous map
+    select(mapRef.current).selectAll("svg").remove(); // Clear previous map
     const width = mapRef.current.clientWidth; // Responsive width
     const height = 500;
 
-    const svg = d3
-      .select(mapRef.current)
+    const svg = select(mapRef.current)
       .append("svg")
       .attr("width", width)
       .attr("height", height);
 
-    const projection = d3.geoAlbersUsa().translate([width / 2, height / 2]).scale(width);
+    const projection = geoAlbersUsa().translate([width / 2, height / 2]).scale(width);
 
-    const path = d3.geoPath().projection(projection);
+    const path = geoPath().projection(projection);
 
-    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then((us: any) => {
+    json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then((us: any) => {
       
-      const statesFeature = topojson.feature(
+      const statesFeature = feature(
         us,
         us.objects.states
       ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
@@ -89,7 +88,7 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
             onStateHover(info.name, "N/A");
           }
 
-          d3.select(this)
+          select(this)
             .attr("filter", null)
             .attr("fill", (d: any) => {
               const fips = d.id;
@@ -105,7 +104,7 @@ const USMap = ({ onStateHover, pricingData, minPrice, maxPrice }: USMapProps) =>
             });
         })
         .on("mouseout", function () {
-          d3.select(this)
+          select(this)
             .attr("fill", (d: any) => {
               const fips = d.id;
               const abbr = stateNames[fips]?.abbr;
