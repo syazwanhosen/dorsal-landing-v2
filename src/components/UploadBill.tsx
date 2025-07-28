@@ -207,7 +207,7 @@ export const UploadBill = () => {
             </h2>
           </div>
           <p className="text-base text-[#6A6A6A] mb-4 lg:mb-6">
-            See what others are paying and how much they've saved
+            Uncover real-world pricing straight from user uploads.
           </p>
 
           <div className="space-y-3 max-h-96 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8770BC] scrollbar-track-gray-100">
