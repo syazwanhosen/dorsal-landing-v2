@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
+import Spinner from "../Spinner";
 /* import { Button } from "../ui/button"; */
 
 // Resize map after mount to fix size issues
@@ -18,23 +19,35 @@ export const DetailsCard = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const [hospitalData, setHospitalData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  
   useEffect(() => {
     const name = params.get("name");
     if (!name) return;
-
+  
     const decodedName = decodeURIComponent(name);
-
+    setIsLoading(true); // ⏳ mark loading start
+  
     fetchHospitalMetadata([decodedName])
       .then((responses) => {
         const hospitalDetails = responses[0];
         console.log("✅ Hospital Map Meta Data:", hospitalDetails);
         setHospitalData(hospitalDetails);
       })
-      .catch((err) => console.error("❌ Failed to fetch hospital:", err));
+      .catch((err) => {
+        console.error("❌ Failed to fetch hospital:", err);
+        setHospitalData(null); // in case of error
+      })
+      .finally(() => {
+        setIsLoading(false); // ✅ finish loading
+      });
   }, [location.search]);
+  
 
-  if (!hospitalData) return <div>Hospital not found</div>;
+  if (isLoading) return <Spinner open={true} />;
+  if (!hospitalData) return <div className="text-center py-8 text-red-500">Hospital not found</div>;
+
 
   return (
     <section className="container mx-auto p-4 relative px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
@@ -50,11 +63,12 @@ export const DetailsCard = () => {
           {(hospitalData.negotiation_status || "Fixed") + " Price"}
         </span>
       </h2>
+     
 
       <div className="flex flex-col sm:flex-row gap-6">
         <div className="w-full border rounded-lg p-4 shadow-sm relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch h-full">
-            {/* 🌍 Map — 8 Columns */}
+            {/* Map — 8 Columns */}
             <div className="lg:col-span-8 h-full flex">
               <div className="bg-gray-200 rounded flex-grow flex items-center justify-center lg:min-h-[250px] min-h-[400px]">
                 {hospitalData.latitude && hospitalData.longitude ? (
@@ -81,7 +95,7 @@ export const DetailsCard = () => {
               </div>
             </div>
 
-            {/* 📞 Contact Info — 4 Columns */}
+            {/* Contact Info — 4 Columns */}
             <div className="lg:col-span-4 h-full flex flex-col justify-start">
               <h4 className="text-lg font-semibold mb-5">
                 Contact Information
