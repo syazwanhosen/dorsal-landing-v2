@@ -13,4 +13,13 @@ export default defineConfig({
     port: 4000,
     strictPort: true,
   },
+   build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+        },
+      },
+    },
+  },
 });
