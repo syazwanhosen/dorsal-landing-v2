@@ -1,8 +1,12 @@
 import ShotImg from "/src/assets/Shot.png";
 import deisgnIcon from "@/assets/shape_icon.webp";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const RoadmapCTA = () => {
+
+  const navigate = useNavigate();
+
   return (
     <section className="bg-white">
     <div
@@ -29,12 +33,13 @@ const RoadmapCTA = () => {
             Make your voice heard and help our community prioritize our upcoming
             features.
           </p>
-          <Link
-            to="/roadmap"
-            className="bg-white text-black text-sm font-normal px-6 py-3 rounded-md hover:bg-gray-100 transition"
+          <button
+            onClick={() => navigate("/roadmap")}
+            className="bg-white text-black text-sm font-medium px-5 py-3 rounded-md hover:bg-gray-200 transition flex items-center"
           >
             Contribute to Dorsal Product Roadmap
-          </Link>
+            <ArrowRight className="ml-2 h-4 w-4 align-middle" />
+          </button>
         </div>
 
         {/* Mobile App Preview */}

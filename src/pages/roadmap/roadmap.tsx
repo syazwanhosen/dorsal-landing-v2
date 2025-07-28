@@ -211,21 +211,29 @@ useEffect(() => {
                     we're building next.
                   </p>
                   <div className="flex flex-wrap gap-3">
+                   <a href="#" target="_blank" rel="noopener noreferrer">
                     <Button className="bg-white hover:bg-purple-700 group flex items-center">
                       <PlusCircle className="mr-2 h-4 w-4 stroke-purple-700 group-hover:stroke-white transition-colors" />
-                      <span className="
+                      <span
+                        className="
                           text-sm
                           bg-gradient-to-r from-[#E771C1] to-[#9F71FD]
                           text-transparent bg-clip-text font-semibold
                           group-hover:bg-none group-hover:text-white
                           transition-colors
                         "
-                      >Request a feature</span>
+                      >
+                        Request a feature
+                      </span>
                     </Button>
+                  </a>
+
+                  <a href="#" target="_blank" rel="noopener noreferrer">
                     <Button variant="outline">
                       Learn about our process
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
+                  </a>
                   </div>
                 </div>
                 {/* Right image */}

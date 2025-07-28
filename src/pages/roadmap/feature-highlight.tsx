@@ -1,11 +1,10 @@
+import { useState } from "react";
 import type { FeatureType } from "@/lib/data"
 import { Badge } from "@/components/ui/badge"
-
 import {
   CheckCircle2,
   Clock,
   AlertCircle,
-  ArrowRight,
   FileText,
   Receipt,
   FileSearch,
@@ -21,7 +20,7 @@ import {
   PauseCircle,
   Award,
   Building,
-  Handshake  
+  Handshake,
 } from "lucide-react"
 import { Button } from "@/components/ui/buttons/button"
 
@@ -30,6 +29,9 @@ interface FeatureHighlightProps {
 }
 
 export function FeatureHighlight({ feature }: FeatureHighlightProps) {
+
+  const [expanded, setExpanded] = useState(false);
+
   const getFeatureIcon = (iconName: string) => {
     const icons = {
       fileText: <FileText className="h-6 w-6 text-purple" />,
@@ -142,7 +144,19 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
           </Badge>
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">{feature.description}</p>
+        <p className={`text-gray-600 text-sm mb-2 ${expanded ? "" : "line-clamp-3"}`}>
+        {feature.description}
+        </p>
+        {feature.description.length > 30 && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-purple hover:text-purple-700 px-0 py-0 mb-4"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? "Show less" : "Learn more"}
+          </Button>
+        )}
 
         {feature.progress !== undefined && (
           <div className="mb-4">
@@ -175,13 +189,9 @@ export function FeatureHighlight({ feature }: FeatureHighlightProps) {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-700 mr-2">{feature.votes}</span>
-            <span className="text-sm text-gray-500">votes</span>
+            <span className="text-sm font-medium text-purple-700 mr-2">{feature.votes}</span>
+            <span className="text-sm text-black">total votes</span>
           </div>
-          <Button variant="ghost" size="sm" className="text-purple hover:text-purple-700 p-0">
-            Learn more
-            <ArrowRight className="ml-1 h-4 w-4" />
-          </Button>
         </div>
       </div>
     </div>
