@@ -135,25 +135,28 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
       <div className="p-6">
         {activeQuarter === "current" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Current Quarter</h3>
-            <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-blue-200"></div>
-              <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-10">Current Quarter</h3>
+            <div className="relative overflow-x-auto">
+              <div className="absolute top-3 left-0 right-0 h-0.5 bg-blue-200 z-0"></div>
+              <div className="flex space-x-10 pb-6 snap-x snap-mandatory overflow-x-auto">
                 {currentQuarterFeatures.map((feature) => (
-                  <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-blue-500"></div>
+                  <div
+                    key={feature.id}
+                    className="relative flex flex-col items-center text-center snap-start min-w-[240px] sm:min-w-[280px] lg:min-w-[300px]"
+                  >
+                    <div className="relative z-10">
+                      <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div className="h-3 w-3 rounded-full bg-blue-500"></div>
+                      </div>
                     </div>
-                    <div className="flex items-start">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{feature.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
-                        <div className="flex items-center mt-2 space-x-2">
-                          <Badge className={getStatusColor(feature.status)}>
-                            {getStatusIcon(feature.status)}
-                            <span className="ml-1">{feature.status}</span>
-                          </Badge>
-                        </div>
+                    <div className="mt-4">
+                      <h4 className="font-medium text-gray-900">{feature.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                      <div className="flex justify-center mt-2">
+                        <Badge className={getStatusColor(feature.status)}>
+                          {getStatusIcon(feature.status)}
+                          <span className="ml-1">{feature.status}</span>
+                        </Badge>
                       </div>
                     </div>
                   </div>
@@ -165,25 +168,28 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
         {activeQuarter === "next" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Next Quarter</h3>
-            <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-yellow-200"></div>
-              <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-10">Next Quarter</h3>
+            <div className="relative overflow-x-auto">
+              <div className="absolute top-3 left-0 right-0 h-0.5 bg-yellow-200 z-0"></div>
+              <div className="flex space-x-10 pb-6 snap-x snap-mandatory overflow-x-auto">
                 {nextQuarterFeatures.map((feature) => (
-                  <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-yellow-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+                  <div
+                    key={feature.id}
+                    className="relative flex flex-col items-center text-center snap-start min-w-[240px] sm:min-w-[280px] lg:min-w-[300px]"
+                  >
+                    <div className="relative z-10">
+                      <div className="h-6 w-6 rounded-full bg-yellow-100 flex items-center justify-center">
+                        <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+                      </div>
                     </div>
-                    <div className="flex items-start">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{feature.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
-                        <div className="flex items-center mt-2">
-                          <Badge className={getStatusColor(feature.status)}>
-                            {getStatusIcon(feature.status)}
-                            <span className="ml-1">{feature.status}</span>
-                          </Badge>
-                        </div>
+                    <div className="mt-4">
+                      <h4 className="font-medium text-gray-900">{feature.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                      <div className="flex justify-center mt-2">
+                        <Badge className={getStatusColor(feature.status)}>
+                          {getStatusIcon(feature.status)}
+                          <span className="ml-1">{feature.status}</span>
+                        </Badge>
                       </div>
                     </div>
                   </div>
@@ -195,25 +201,28 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
         {activeQuarter === "future" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Future</h3>
-            <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-teal-200"></div>
-              <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-10">Future</h3>
+            <div className="relative overflow-x-auto">
+              <div className="absolute top-3 left-0 right-0 h-0.5 bg-teal-200 z-0"></div>
+              <div className="flex space-x-10 pb-6 snap-x snap-mandatory overflow-x-auto">
                 {futureFeatures.map((feature) => (
-                  <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-teal-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-teal-400"></div>
+                  <div
+                    key={feature.id}
+                    className="relative flex flex-col items-center text-center snap-start min-w-[240px] sm:min-w-[280px] lg:min-w-[300px]"
+                  >
+                    <div className="relative z-10">
+                      <div className="h-6 w-6 rounded-full bg-teal-100 flex items-center justify-center">
+                        <div className="h-3 w-3 rounded-full bg-teal-500"></div>
+                      </div>
                     </div>
-                    <div className="flex items-start">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{feature.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
-                        <div className="flex items-center mt-2">
-                          <Badge className={getStatusColor(feature.status)}>
-                            {getStatusIcon(feature.status)}
-                            <span className="ml-1">{feature.status}</span>
-                          </Badge>
-                        </div>
+                    <div className="mt-4">
+                      <h4 className="font-medium text-gray-900">{feature.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                      <div className="flex justify-center mt-2">
+                        <Badge className={getStatusColor(feature.status)}>
+                          {getStatusIcon(feature.status)}
+                          <span className="ml-1">{feature.status}</span>
+                        </Badge>
                       </div>
                     </div>
                   </div>
@@ -225,25 +234,28 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
 
         {activeQuarter === "release" && (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Released</h3>
-            <div className="relative">
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-green-200"></div>
-              <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-10">Released</h3>
+            <div className="relative overflow-x-auto">
+              <div className="absolute top-3 left-0 right-0 h-0.5 bg-green-200 z-0"></div>
+              <div className="flex space-x-10 pb-6 snap-x snap-mandatory overflow-x-auto">
                 {releaseFeatures.map((feature) => (
-                  <div key={feature.id} className="relative pl-10">
-                    <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
-                      <div className="h-3 w-3 rounded-full bg-green-400"></div>
+                  <div
+                    key={feature.id}
+                    className="relative flex flex-col items-center text-center snap-start min-w-[240px] sm:min-w-[280px] lg:min-w-[300px]"
+                  >
+                    <div className="relative z-10">
+                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
+                        <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                      </div>
                     </div>
-                    <div className="flex items-start">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{feature.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
-                        <div className="flex items-center mt-2">
-                          <Badge className={getStatusColor(feature.status)}>
-                            {getStatusIcon(feature.status)}
-                            <span className="ml-1">{feature.status}</span>
-                          </Badge>
-                        </div>
+                    <div className="mt-4">
+                      <h4 className="font-medium text-gray-900">{feature.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                      <div className="flex justify-center mt-2">
+                        <Badge className={getStatusColor(feature.status)}>
+                          {getStatusIcon(feature.status)}
+                          <span className="ml-1">{feature.status}</span>
+                        </Badge>
                       </div>
                     </div>
                   </div>

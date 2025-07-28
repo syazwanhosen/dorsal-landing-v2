@@ -34,7 +34,7 @@ import {
   ShoppingCart,
   Languages,
   BookOpen,
-  ThumbsUp 
+  ChevronUp 
 } from "lucide-react"
 import type { FeatureType } from "@/lib/data"
 import { getVote, setVote } from "@/lib/voteStorage"
@@ -212,10 +212,16 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
           <button 
-            className={`h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-purple-700 group ${hasVoted ? "bg-purple" : null}`}
+            className={`h-8 w-8 rounded-full flex items-center justify-center group ${
+              hasVoted ? "bg-purple text-white" : "bg-gray-200 hover:bg-purple-700"
+            }`}
             onClick={handleVote}
           >
-            <ThumbsUp className="h-3 w-3 text-black group-hover:text-white transition-colors" />
+            <ChevronUp
+              className={`h-5 w-5 transition-colors ${
+                hasVoted ? "text-white" : "text-black group-hover:text-white"
+              }`}
+            />
           </button>
           <span className="font-semibold text-lg my-1">{votes}</span>
         </div>
