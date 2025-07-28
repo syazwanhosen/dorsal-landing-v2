@@ -11,25 +11,25 @@ const DEFAULT_HOSPITAL_1 = "Lakewood Ranch Medical Center";
 const DEFAULT_STATE_2 = "CA - California";
 const DEFAULT_HOSPITAL_2 = "Marian Regional Medical Center";
 
-
 export const CostCompare = () => {
   const [states, setStates] = useState<string[]>([]);
-  const [selectedState1, setSelectedState1] = useState("");
-  const [selectedState2, setSelectedState2] = useState("");
+  const [selectedState1, setSelectedState1] = useState(DEFAULT_STATE_1);
+  const [selectedState2, setSelectedState2] = useState(DEFAULT_STATE_2);
   const [hospitals1, setHospitals1] = useState<string[]>([]);
   const [hospitals2, setHospitals2] = useState<string[]>([]);
-  const [selectedHospital1, setSelectedHospital1] = useState("");
-  const [selectedHospital2, setSelectedHospital2] = useState("");
+  const [selectedHospital1, setSelectedHospital1] =
+    useState(DEFAULT_HOSPITAL_1);
+  const [selectedHospital2, setSelectedHospital2] =
+    useState(DEFAULT_HOSPITAL_2);
   const [priceType, setPriceType] = useState<"min" | "max">("min");
   const [loading, setLoading] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
 
   useEffect(() => {
     const loadStates = async () => {
       try {
         const statesData = await fetchStates();
         setStates(statesData);
-        setSelectedState1(DEFAULT_STATE_1);
-      setSelectedState2(DEFAULT_STATE_2);
       } catch (error) {
         console.error("Error loading states:", error);
       }
@@ -38,14 +38,28 @@ export const CostCompare = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedState1) {
+    const loadHospitals = async () => {
+      try {
+        const [hospitalsData1, hospitalsData2] = await Promise.all([
+          fetchHospitals(DEFAULT_STATE_1),
+          fetchHospitals(DEFAULT_STATE_2),
+        ]);
+        setHospitals1(hospitalsData1);
+        setHospitals2(hospitalsData2);
+      } catch (error) {
+        console.error("Error loading hospitals:", error);
+      }
+    };
+    loadHospitals();
+  }, []);
+
+  useEffect(() => {
+    if (selectedState1 && selectedState1 !== DEFAULT_STATE_1) {
       const loadHospitals = async () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState1);
           setHospitals1(hospitalsData);
-          if (selectedState1 === DEFAULT_STATE_1) {
-            setSelectedHospital1(DEFAULT_HOSPITAL_1);
-          }
+          setSelectedHospital1("");
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState1}:`,
@@ -58,14 +72,12 @@ export const CostCompare = () => {
   }, [selectedState1]);
 
   useEffect(() => {
-    if (selectedState2) {
+    if (selectedState2 && selectedState2 !== DEFAULT_STATE_2) {
       const loadHospitals = async () => {
         try {
           const hospitalsData = await fetchHospitals(selectedState2);
           setHospitals2(hospitalsData);
-          if (selectedState2 === DEFAULT_STATE_2) {
-            setSelectedHospital2(DEFAULT_HOSPITAL_2);
-          }
+          setSelectedHospital2("");
         } catch (error) {
           console.error(
             `Error loading hospitals for ${selectedState2}:`,
@@ -78,23 +90,16 @@ export const CostCompare = () => {
   }, [selectedState2]);
 
   useEffect(() => {
-    if (selectedHospital1 && selectedHospital2) {
-      handleCompare("min");
+    if (iframeLoaded && selectedHospital1 && selectedHospital2) {
+      const timer = setTimeout(() => {
+        handleCompare("min");
+      }, 300);
+      return () => clearTimeout(timer);
     }
-  }, [selectedHospital1, selectedHospital2]);
+  }, [iframeLoaded, selectedHospital1, selectedHospital2]);
 
   const handleCompare = async (type: "min" | "max") => {
-    if (
-      !selectedState1 ||
-      !selectedState2 ||
-      !selectedHospital1 ||
-      !selectedHospital2
-    ) {
-      alert(
-        "Please select both states and hospitals before choosing a price type."
-      );
-      return;
-    }
+    if (!selectedHospital1 || !selectedHospital2) return;
 
     setPriceType(type);
     setLoading(true);
@@ -112,18 +117,7 @@ export const CostCompare = () => {
         return acc;
       }, {} as Record<string, Record<string, { min: number; max: number }>>);
 
-      const iframe = document.getElementById("chartFrame") as HTMLIFrameElement;
-      if (iframe?.contentWindow) {
-        iframe.contentWindow.postMessage(
-          {
-            type: "compareHospitals",
-            hospitals: [selectedHospital1, selectedHospital2],
-            data: chartData,
-            priceType: type,
-          },
-          "*"
-        );
-      }
+      sendDataToIframe(chartData, type);
     } catch (error) {
       console.error("Comparison error:", error);
     } finally {
@@ -131,9 +125,29 @@ export const CostCompare = () => {
     }
   };
 
-  return (
+  const sendDataToIframe = (chartData: any, type: "min" | "max") => {
+    const iframe = document.getElementById("chartFrame") as HTMLIFrameElement;
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage(
+        {
+          type: "compareHospitals",
+          hospitals: [selectedHospital1, selectedHospital2],
+          data: chartData,
+          priceType: type,
+        },
+        "*"
+      );
+    } else {
+      // Retry after a short delay if iframe isn't ready
+      setTimeout(() => sendDataToIframe(chartData, type), 300);
+    }
+  };
 
-    <section id="HospitalPrices" className="container pt-4 lg:pb-12 pb-8 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
+  return (
+    <section
+      id="HospitalPrices"
+      className="container pt-4 lg:pb-12 pb-8 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16"
+    >
       <div className="grid gap-4">
         <h2 className="text-xl font-bold text-left">
           <span className="bg-gradient-to-b text-transparent bg-clip-text text-purple">
@@ -142,9 +156,7 @@ export const CostCompare = () => {
           Across Medical Services
         </h2>
 
-        {/* State & Hospital Selectors */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 lg:py-5">
-          {/* Left Side: State 1 & Hospital 1 */}
           <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-1/2 lg:pr-8">
             <div className="relative w-full">
               <select
@@ -187,10 +199,8 @@ export const CostCompare = () => {
             </div>
           </div>
 
-          {/* VS Separator */}
           <div className="text-2xl font-bold text-purple md:block">VS</div>
 
-          {/* Right Side: State 2 & Hospital 2 */}
           <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-1/2 lg:pl-8">
             <div className="relative w-full">
               <select
@@ -225,40 +235,25 @@ export const CostCompare = () => {
             </div>
           </div>
         </div>
-        {/* Dropdown & CostMap (Appears only after selections) */}
-        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative">
 
+        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative">
           <div className="flex flex-col sm:flex-row justify-between items-center py-5">
-            {/* Left Side Text Updating Based on Selection */}
             <div className="text-lg font-bold text-black pb-4">
               {priceType === "min"
                 ? "Comparing Minimum Price"
                 : "Comparing Maximum Price"}
             </div>
 
-            {/* Dropdown Selection With Custom White Arrow */}
             <div className="relative">
               <select
                 value={priceType}
                 onChange={(e) => handleCompare(e.target.value as "min" | "max")}
                 className="px-4 py-2 rounded bg-purple text-white cursor-pointer pr-8 appearance-none"
-                onClick={() => {
-                  if (
-                    !selectedState1 ||
-                    !selectedState2 ||
-                    !selectedHospital1 ||
-                    !selectedHospital2
-                  ) {
-                    alert(
-                      "Please select both states and hospitals before choosing a price type."
-                    );
-                  }
-                }}
                 style={{
                   color: "#FFFFFF",
                   backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>')`,
                   backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 0.5rem center", // Moved arrow slightly more to the right
+                  backgroundPosition: "right 0.5rem center",
                   backgroundSize: "1em",
                   transition: "var(--transition)",
                 }}
@@ -270,12 +265,13 @@ export const CostCompare = () => {
           </div>
 
           {selectedHospital1 && selectedHospital2 ? (
-    <CostMap />
-  ) : (
-    <div className="absolute inset-0 flex items-center justify-center text-center text-gray-600 text-base px-4">
-    Choose hospitals from the dropdowns above to view pricing comparison
-  </div>
-  )}
+            <CostMap onLoad={() => setIframeLoaded(true)} />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-center text-gray-600 text-base px-4">
+              Choose hospitals from the dropdowns above to view pricing
+              comparison
+            </div>
+          )}
         </div>
       </div>
     </section>
