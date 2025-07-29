@@ -19,7 +19,7 @@ export const UploadBill = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [recentUploads, setRecentUploads] = useState<RecentUpload[]>([]);
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(true); // NEW
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const loadUploads = async () => {
