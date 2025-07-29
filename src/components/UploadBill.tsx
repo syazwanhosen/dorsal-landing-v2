@@ -1,4 +1,4 @@
-import { Upload, Users, Clock, TrendingUp, X } from "lucide-react";
+import { Upload, Users,  X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -10,13 +10,28 @@ import {
   FileUploadItemPreview,
   FileUploadList,
 } from "@/components/ui/file-upload";
+import { fetchRecentUploads, RecentUpload } from '@/api/get_recent_uploads';
 
 export const UploadBill = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [recentUploads, setRecentUploads] = useState<RecentUpload[]>([]);
   const location = useLocation();
+
+  useEffect(() => {
+    const loadUploads = async () => {
+      try {
+        const uploads = await fetchRecentUploads();
+        setRecentUploads(uploads);
+      } catch (error) {
+        console.error('Failed to fetch recent uploads:', error);
+      }
+    };
+    loadUploads();
+  }, []);
+  
 
   useEffect(() => {
     if (location.hash === "#UploadBill") {
@@ -65,11 +80,25 @@ export const UploadBill = () => {
     }, 300);
   };
 
+  // Format date to display in a more readable format
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Format currency
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  };
+
   return (
     <section className="container bg-white upload-bill mx-auto lg:pt-10 px-8 sm:px-6 md:px-4 lg:px-8 xl:px-16" id="UploadBill">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-16 bg-white">
         {/* Share Your Bill Card */}
-        <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
+        <div className="bg-[#F5F1FF] p-4 lg:pt-10 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Upload className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
@@ -197,7 +226,7 @@ export const UploadBill = () => {
         </div>
 
         {/* Recent Community Upload Card */}
-        <div className="bg-[#F5F1FF] p-6 lg:pt-10 lg:px-12 lg:pb-1 pb-4 rounded-xl border border-gray-200">
+        <div className="bg-[#F5F1FF] p-4 lg:pt-10 lg:px-12 lg:pb-1 pb-4 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
             <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 lg:mr-4 mr-2 rounded-full bg-gradient-to-r from-[#9F70FD] to-[#E770C1]">
               <Users className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
@@ -211,57 +240,27 @@ export const UploadBill = () => {
           </p>
 
           <div className="space-y-3 max-h-96 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#8770BC] scrollbar-track-gray-100">
-            {[
-              {
-                title: "MRI Brain",
-                location: "Austin, TX",
-                time: "2 min ago",
-                price: "$2,400",
-                saved: "$800",
-              },
-              {
-                title: "Ultrasound",
-                location: "Dallas, TX",
-                time: "5 min ago",
-                price: "$450",
-                saved: "$200",
-              },
-              {
-                title: "MRI Brain",
-                location: "Austin, TX",
-                time: "2 min ago",
-                price: "$2,400",
-                saved: "$800",
-              },
-              {
-                title: "Ultrasound",
-                location: "Dallas, TX",
-                time: "5 min ago",
-                price: "$450",
-                saved: "$200",
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg px-4 py-4 lg:py-6 flex justify-between items-center border border-gray-200"
-              >
-                <div>
-                  <p className="font-medium text-gray-800">{item.title}</p>
-                  <p className="text-xs text-gray-500">{item.location}</p>
-                  <div className="flex items-center text-xs text-gray-400 mt-2">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {item.time}
+            {recentUploads.length > 0 ? (
+              recentUploads.map((upload, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white rounded-lg px-4 py-4 lg:py-8 lg:flex justify-between items-baseline border border-gray-200"
+                >
+                  <div>
+                    <p className="lg:font-bold font-semibold text-gray-800">{upload.hospital_name}</p>
+                    <p className="text-sm text-gray-500">Invoice Date - {formatDate(upload.invoice_date)}</p>
+                  </div>
+                  <div className="text-right ml-4">
+                    <p className="lg:font-bold font-semibold text-gray-800">{formatCurrency(upload.total_amount)}</p>
+                  
                   </div>
                 </div>
-                <div className="text-right ml-4">
-                  <p className="font-semibold text-gray-800">{item.price}</p>
-                  <div className="flex items-center justify-end text-xs text-green-600 mt-1">
-                    <TrendingUp className="w-3 h-3 mr-1" />
-                    <span>Saved {item.saved}</span>
-                  </div>
-                </div>
+              ))
+            ) : (
+              <div className="bg-white rounded-lg px-4 py-6 text-center border border-gray-200">
+                <p className="text-gray-500">No recent uploads found</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
