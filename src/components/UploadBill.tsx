@@ -273,7 +273,7 @@ export const UploadBill = () => {
                     </p>
                   </div>
                   <div className="text-right ml-4">
-                    <p className="lg:font-bold font-semibold text-gray-800">
+                    <p className="lg:font-bold font-semibold text-purple">
                       {formatCurrency(upload.total_amount)}
                     </p>
                   </div>
