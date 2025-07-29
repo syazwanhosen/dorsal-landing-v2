@@ -47,27 +47,11 @@ const products = [
   },
 ];
 
-const getSpeedByWidth = (width: number): number => {
-  if (width >= 1280) return 3000;
-  if (width >= 1024) return 4000;
-  if (width >= 640) return 7000;
-  return 1000;
-};
 
 export const ProductFamily = () => {
-  const [speed, setSpeed] = useState(getSpeedByWidth(window.innerWidth));
   const splideRef = useRef<SplideClass | null>(null);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSpeed(getSpeedByWidth(window.innerWidth));
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const updateArrows = () => {
     const splide = splideRef.current?.splide;
@@ -133,7 +117,7 @@ export const ProductFamily = () => {
               768: { perPage: 2 },
               639: { perPage: 1 },
             },
-            speed,
+            speed: 3000,
             easing: "ease-in-out",
             omitEnd: false,
           }}
