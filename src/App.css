@@ -130,7 +130,8 @@ select {
 
 @media (max-width: 1535px) {
   .upload-bill,
-  .footer {
+  .footer,
+  .navbar-container {
     padding: 1rem;
   }
 }
