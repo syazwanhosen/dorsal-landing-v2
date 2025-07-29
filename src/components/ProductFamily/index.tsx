@@ -117,7 +117,7 @@ export const ProductFamily = () => {
               768: { perPage: 2 },
               639: { perPage: 1 },
             },
-            speed: 3000,
+            speed: 6000,
             easing: "ease-in-out",
             omitEnd: false,
           }}
