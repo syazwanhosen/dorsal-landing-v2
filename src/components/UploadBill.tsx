@@ -25,9 +25,12 @@ export const UploadBill = () => {
     const loadUploads = async () => {
       try {
         const uploads = await fetchRecentUploads();
-        setRecentUploads(uploads);
+        const sortedUploads = uploads
+          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .slice(0, 10);
+        setRecentUploads(sortedUploads);
       } catch (error) {
-        console.error("Failed to fetch recent uploads:", error);
+        console.error('Failed to fetch recent uploads:', error);
       } finally {
         setIsLoading(false);
       }
