@@ -38,7 +38,7 @@ const Testimonials = () => {
 
   return (
     <section className='Testimonial bg-white'>
-    <div className="lg:pt-20 py-16 container px-0 max-w">
+    <div className="lg:pt-20 py-16 container">
       <div className="mx-auto text-center px-4">
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-4">

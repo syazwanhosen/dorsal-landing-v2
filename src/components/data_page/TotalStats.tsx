@@ -30,7 +30,7 @@ export const TotalStats = () => {
   ];
 
   return (
-    <section id="TotalStats" className="container py-6 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
+    <section id="TotalStats" className="container py-6">
       <h2 className="text-xl font-bold pb-4 text-left">Overview</h2>
 
       <div className="border rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

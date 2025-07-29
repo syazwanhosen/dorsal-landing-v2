@@ -32,7 +32,7 @@ export const Banner = () => {
   }, []);
 
   return (
-    <section className="banner bg-white">
+    <section className="container banner bg-white">
  
 {/* Mobile Content (shown on mobile only) */}
 <div className="lg:hidden relative w-full sm:h-[600px] h-[600px] overflow-hidden">
@@ -90,7 +90,7 @@ export const Banner = () => {
 
 
       {/* Desktop Content (shown on desktop only) */}
-      <div className="hidden lg:block relative container text-center px-0">
+      <div className="hidden lg:block relative text-center">
         <img
           src={desktopBanner}
           alt="Healthcare background"

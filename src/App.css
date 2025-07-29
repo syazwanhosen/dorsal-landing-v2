@@ -128,6 +128,11 @@ select {
   }
 }
 
+@media (max-width: 1536px) {
+  .banner {
+    padding: 0;
+  }
+}
 /* Responsive Shadow Tweaks */
 @media (max-width: 1024px) {
   .shadow {

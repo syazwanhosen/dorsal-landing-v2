@@ -104,7 +104,7 @@ export const StatewisePricing = () => {
   
   
   return (
-    <section id="StatewisePricing" className="container px-4 md:px-6 py-4">
+    <section id="StatewisePricing" className="container py-4">
   <div className="grid gap-6">
     <h2 className="text-xl font-bold text-left">
       Statewide{" "}
