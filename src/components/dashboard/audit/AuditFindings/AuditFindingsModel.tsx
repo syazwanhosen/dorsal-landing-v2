@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, FC, MouseEvent } from "react";
 import { X } from "lucide-react";
 
 interface AuditFindingsModalProps {
@@ -9,12 +9,12 @@ interface AuditFindingsModalProps {
 const levels = ["Simple", "Standard", "Technical"];
 const positions = [0, 47, 98]; // Predefined handle positions
 
-const AuditFindingsModal: React.FC<AuditFindingsModalProps> = ({ isOpen, onClose }) => {
+const AuditFindingsModal: FC<AuditFindingsModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const [currentLevel, setCurrentLevel] = useState(0); // 0 = Simple, 1 = Standard, 2 = Technical
 
-  const handleBarClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleBarClick = (event: MouseEvent<HTMLDivElement>) => {
     const barRect = event.currentTarget.getBoundingClientRect();
     const clickPosition = event.clientX - barRect.left;
     const barWidth = barRect.width;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FC, FormEvent } from 'react';
 import { DateRange } from 'react-day-picker';
 import { Label } from '@radix-ui/react-label';
 
@@ -26,7 +26,7 @@ const initialState: UpdateDataFormState = {
     },
 };
 
-export const UpdateDataForm: React.FC = () => {
+export const UpdateDataForm: FC = () => {
     const [formState, setFormState] = useState<UpdateDataFormState>(initialState);
     const [autoHideFields, setAutoHideFields] = useState(true);
     const [selectedDate, setSelectedDate] = useState<Date | Date[] | DateRange | undefined>(undefined);
@@ -45,7 +45,7 @@ export const UpdateDataForm: React.FC = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         alert(JSON.stringify(formState));
     };

@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode, FC } from "react";
 import { Circle } from "lucide-react";
 
 interface RadioGroupProps {
@@ -6,10 +6,10 @@ interface RadioGroupProps {
   selectedValue: string;
   onChange: (value: string) => void;
   className?: string;
-  children?: React.ReactNode; // ✅ Explicitly support nested children
+  children?: ReactNode; // ✅ Explicitly support nested children
 }
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({ options, selectedValue, onChange, className }) => {
+export const RadioGroup: FC<RadioGroupProps> = ({ options, selectedValue, onChange, className }) => {
   return (
     <div className={`grid gap-2 ${className}`}>
       {options.map((option, index) => (
@@ -36,7 +36,7 @@ interface RadioGroupItemProps {
   onChange: (value: string) => void;
 }
 
-export const RadioGroupItem: React.FC<RadioGroupItemProps> = ({ value, id, selectedValue, onChange }) => {
+export const RadioGroupItem: FC<RadioGroupItemProps> = ({ value, id, selectedValue, onChange }) => {
     return (
       <label htmlFor={id} className="flex items-center cursor-pointer space-x-2">
         <input

@@ -1,8 +1,16 @@
-import React from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import clsx from "clsx";
-import * as Collapsible from "@radix-ui/react-collapsible";
-import * as Avatar from "@radix-ui/react-avatar";
+import {
+  Root as CollapsibleRoot,
+  Trigger as CollapsibleTrigger,
+  Content as CollapsibleContent,
+} from "@radix-ui/react-collapsible";
+import {
+  Root as AvatarRoot,
+  Image as AvatarImage,
+  Fallback as AvatarFallback,
+} from "@radix-ui/react-avatar";
 import {
   ChevronDown,
   ChevronUp,
@@ -62,8 +70,9 @@ export const Sidebar = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isCollapsed = !open;
 
-  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const toggleSection = (label: string) => {
     setOpenSections((prev) => {
@@ -84,8 +93,6 @@ export const Sidebar = ({
     setMobileSidebarOpen(false);
   };
 
-  const isCollapsed = !open;
-
   return (
     <>
       <aside
@@ -103,9 +110,20 @@ export const Sidebar = ({
       >
         <div>
           {/* Header with Logo */}
-          <div className={clsx("flex flex-col items-center space-y-2 py-4", isCollapsed ? "justify-center" : "justify-between")}>
-            <img src={logo} alt="Logo" className={clsx(isCollapsed ? "w-5 h-5" : "w-16 h-16")} />
-            {!isCollapsed && <h1 className="text-[#8770BC] text-lg font-semibold">dorsal.fyi</h1>}
+          <div
+            className={clsx(
+              "flex flex-col items-center space-y-2 py-4",
+              isCollapsed ? "justify-center" : "justify-between"
+            )}
+          >
+            <img
+              src={logo}
+              alt="Logo"
+              className={clsx(isCollapsed ? "w-5 h-5" : "w-16 h-16")}
+            />
+            {!isCollapsed && (
+              <h1 className="text-[#8770BC] text-lg font-semibold">dorsal.fyi</h1>
+            )}
           </div>
 
           {/* Menu */}
@@ -116,12 +134,12 @@ export const Sidebar = ({
                 item.submenus.some((submenu) => location.pathname === submenu.path);
 
               return (
-                <Collapsible.Root
+                <CollapsibleRoot
                   key={index}
                   open={openSections[item.label]}
                   onOpenChange={() => toggleSection(item.label)}
                 >
-                  <Collapsible.Trigger
+                  <CollapsibleTrigger
                     onClick={() => handleNavigate(item.defaultPath)}
                     className={clsx(
                       "flex items-center w-full rounded-md cursor-pointer mt-2",
@@ -149,10 +167,10 @@ export const Sidebar = ({
                       ) : (
                         <ChevronDown className="h-4 w-4 text-gray-800" />
                       ))}
-                  </Collapsible.Trigger>
+                  </CollapsibleTrigger>
 
                   {!isCollapsed && item.submenus.length > 0 && (
-                    <Collapsible.Content className="pl-10 mt-2">
+                    <CollapsibleContent className="pl-10 mt-2">
                       <ul>
                         {item.submenus.map((submenu, subIndex) => {
                           const isActive = location.pathname === submenu.path;
@@ -163,7 +181,9 @@ export const Sidebar = ({
                                 onClick={() => setMobileSidebarOpen(false)}
                                 className={clsx(
                                   "block text-sm cursor-pointer hover:text-[#8770BC] py-2",
-                                  isActive ? "text-[#8770BC]" : "text-gray-800 hover:text-[#8770BC]"
+                                  isActive
+                                    ? "text-[#8770BC]"
+                                    : "text-gray-800 hover:text-[#8770BC]"
                                 )}
                               >
                                 {submenu.name}
@@ -172,9 +192,9 @@ export const Sidebar = ({
                           );
                         })}
                       </ul>
-                    </Collapsible.Content>
+                    </CollapsibleContent>
                   )}
-                </Collapsible.Root>
+                </CollapsibleRoot>
               );
             })}
           </div>
@@ -187,10 +207,10 @@ export const Sidebar = ({
             isCollapsed ? "justify-center py-1" : "px-4 py-3"
           )}
         >
-          <Avatar.Root className="w-8 h-8 rounded-full overflow-hidden bg-white">
-            <Avatar.Image src={user} alt="Abrar Rahman" className="w-full h-full object-cover" />
-            <Avatar.Fallback delayMs={600}>Abrar Rahman</Avatar.Fallback>
-          </Avatar.Root>
+          <AvatarRoot className="w-8 h-8 rounded-full overflow-hidden bg-white">
+            <AvatarImage src={user} alt="Abrar Rahman" className="w-full h-full object-cover" />
+            <AvatarFallback delayMs={600}>Abrar Rahman</AvatarFallback>
+          </AvatarRoot>
 
           {!isCollapsed && (
             <div className="flex flex-col text-sm">

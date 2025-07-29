@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { cn } from "@/lib/utils";
 
 interface SeparatorProps {
@@ -6,7 +6,7 @@ interface SeparatorProps {
   className?: string;
 }
 
-const Separator: React.FC<SeparatorProps> = ({ orientation = "horizontal", className }) => {
+const Separator: FC<SeparatorProps> = ({ orientation = "horizontal", className }) => {
   return (
     <div
       className={cn(

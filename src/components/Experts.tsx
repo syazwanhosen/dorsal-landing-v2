@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { useEffect } from 'react';
 
 const logos = [
@@ -43,7 +43,7 @@ const logosPerRow = Math.ceil(logos.length / 2);
 
 const rows = createRows(logos, logosPerRow);
 
-export const Experts: React.FC = () => {
+export const Experts: FC = () => {
 
   useEffect(() => {
   logos.forEach((src) => {

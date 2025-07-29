@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import logo from '../../assets/login/login-logo.png';
 import image from '../../assets/login/image.png';
 import './signup.css'; 
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importing eye icons
 
-const Signup: React.FC = () => {
+const Signup: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false); // State for toggling password visibility
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);

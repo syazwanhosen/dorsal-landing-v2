@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, FC } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -29,7 +29,7 @@ interface ProcedureChartProps {
   hospitalNames?: string[];
 }
 
-const PriceChart: React.FC<ProcedureChartProps> = ({
+const PriceChart: FC<ProcedureChartProps> = ({
   prices = [],
   hospitalNames = [],
 }) => {
