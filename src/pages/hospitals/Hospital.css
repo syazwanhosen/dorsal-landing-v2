@@ -1,0 +1,9 @@
+@media (max-width: 1535px) {
+  .header,
+  .search-section,
+  #SearchHospital,
+  #ProcedureCard,
+  #MapResult {
+    padding: 1rem;
+  }
+}

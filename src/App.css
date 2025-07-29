@@ -128,9 +128,10 @@ select {
   }
 }
 
-@media (max-width: 1536px) {
-  .banner {
-    padding: 0;
+@media (max-width: 1535px) {
+  .upload-bill,
+  .footer {
+    padding: 1rem;
   }
 }
 /* Responsive Shadow Tweaks */
@@ -139,6 +140,13 @@ select {
     top: 70px;
   }
 }
+
+@media (max-width: 767px) {
+  .roadmap-button {
+    margin: auto;
+  }
+}
+
 
 @media (max-width: 768px) {
   .shadow {

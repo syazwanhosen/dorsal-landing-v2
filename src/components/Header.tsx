@@ -14,7 +14,7 @@ export const Header = ({ title }: HeaderProps) => {
 
 
   return (
-    <div className="bg-purple w-full relative flex items-center justify-center">
+    <div className="header bg-purple w-full relative flex items-center justify-center !py-0">
       <div className="text-white py-4 items-center space-x-1 container w-screen flex justify-between">
         <h1 className="text-2xl font-bold">{title}</h1>
 

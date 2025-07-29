@@ -3,8 +3,8 @@ import logo from "@/assets/Footer-logo.png";
 
 const Footer = () => {
   return (
-    <section className="bg-white footer">
-    <footer className="container  bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
+    <section className="bg-white">
+    <footer className="container footer bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
         <div>

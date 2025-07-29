@@ -5,11 +5,13 @@ import { Navbar } from "../../components/Navbar";
 
 import { ScrollToTop } from "../../components/ScrollToTop";
 
+import "./legal.css"
+
 export default function security() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto py-12">
+      <div className="container mx-auto py-12 security-container">
         <h1 className="text-3xl font-bold text-[#D247BF] mb-2">Security</h1>
         <p className="mb-4">
           <strong>Last Updated:</strong> July 14th, 2025
