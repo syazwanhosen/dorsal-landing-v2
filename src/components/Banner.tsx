@@ -32,7 +32,7 @@ export const Banner = () => {
   }, []);
 
   return (
-    <section className="container banner bg-white">
+    <section className="container banner bg-white px-0">
  
 {/* Mobile Content (shown on mobile only) */}
 <div className="lg:hidden relative w-full sm:h-[600px] h-[600px] overflow-hidden">
