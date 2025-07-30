@@ -375,7 +375,7 @@ export const Navbar = () => {
             */}
             <a href="https://cal.com/abrar/15min"
                target="_blank" 
-               className="text-sm text-center px-4 md:px-2 py-2 bg-purple font-medium text-white rounded-md hover:bg-purple-700">
+               className="text-sm text-center px-4 md:px-2 py-2 bg-purple font-medium text-white rounded-md hover:bg-purple-700 book-now-button">
               Book a Demo
             </a>
           </div>

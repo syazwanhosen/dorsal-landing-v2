@@ -266,3 +266,9 @@ select {
 .scrollbar-thin::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
+
+@media (max-width: 769px) {
+  .book-now-button {
+    font-size: 13px !important;
+  }
+}
