@@ -41,13 +41,3 @@
 .bg-red-legend {
     background-color: #CE3C29;
 }
-
-@media (max-width: 1535px) {
-  .header,
-  #TotalStats,
-  #StatewisePricing,
-  #HospitalPrices,
-  #HospitalPrices {
-    padding: 0 1rem;
-  }
-}
