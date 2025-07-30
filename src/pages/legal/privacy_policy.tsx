@@ -4,12 +4,13 @@ import Footer from "@/components/Footer";
 import { Navbar } from "../../components/Navbar";
 
 import { ScrollToTop } from "../../components/ScrollToTop";
+import "./legal.css"
 
 export default function privacy_policy() {
   return (
     <>
     <Navbar />
-    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-16">
+    <div className="container privacy-policy-container mx-auto py-12">
       <h1 className="text-3xl font-bold mb-2">
         <span className="text-gray-900">Privacy</span>{" "}
         <span className="text-[#D247BF]">Policy</span>

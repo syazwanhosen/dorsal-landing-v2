@@ -100,7 +100,7 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb' }}>
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16 w-screen flex justify-between">
+        <NavigationMenuList className="container h-14 w-screen flex justify-between navbar-container">
           <NavigationMenuItem className="font-bold flex">
             <a href="/" className="ml-2 font-bold text-xl flex" style={{ fontFamily: 'the-seasons, sans-serif' }}>
               <LogoIcon />

@@ -197,9 +197,9 @@ useEffect(() => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 p-6 pt-0">
-        <main className="container mx-auto px-4 py-8">
-          <div className="mx-auto px-4 sm:px-6 md:px-4 lg:px-8 xl:px-8 xl:px-16">
+      <div className="min-h-screen bg-gray-50 p-4 pt-0">
+        <main className="container mx-auto py-8">
+          <div className="mx-auto">
             {/* Hero Section */}
             <div className="mb-12 bg-gradient-to-r from-[#864196] to-[#F33594] rounded-xl p-8 border border-purple-100">
               <div className="flex flex-col lg:flex-row items-center gap-8">

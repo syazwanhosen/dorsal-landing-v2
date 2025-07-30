@@ -50,7 +50,7 @@ export const DetailsCard = () => {
 
 
   return (
-    <section className="container mx-auto p-4 relative px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
+    <section className="container py-4 relative">
       <h2 className="lg:text-3xl text-2xl font-semibold mb-4 flex flex-wrap items-center gap-4">
         {hospitalData.name || decodeURIComponent(params.get("name") || "")}
         <span

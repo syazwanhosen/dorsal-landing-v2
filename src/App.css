@@ -128,12 +128,26 @@ select {
   }
 }
 
+@media (max-width: 1535px) {
+  .upload-bill,
+  .footer,
+  .navbar-container {
+    padding: 1rem;
+  }
+}
 /* Responsive Shadow Tweaks */
 @media (max-width: 1024px) {
   .shadow {
     top: 70px;
   }
 }
+
+@media (max-width: 767px) {
+  .roadmap-button {
+    margin: auto;
+  }
+}
+
 
 @media (max-width: 768px) {
   .shadow {

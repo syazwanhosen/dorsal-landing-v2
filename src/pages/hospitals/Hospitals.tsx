@@ -8,6 +8,7 @@ import { SearchSection } from "@/components/hospitals/SearchSection";
 import Footer from "@/components/Footer";
 import { HospitalMap } from "@/components/hospitals/HospitalMap";
 import Spinner from "@/components/Spinner";
+import'./Hospital.css'
 
 export default function Hospitals() {
   const { searchResults, isHydratingFromURL, loading } =

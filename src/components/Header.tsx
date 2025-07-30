@@ -14,8 +14,8 @@ export const Header = ({ title }: HeaderProps) => {
 
 
   return (
-    <div className="bg-purple w-full relative flex items-center justify-center">
-      <div className="text-white py-4 items-center space-x-1 container w-screen flex justify-between px-4 sm:px-6 md:px-4 lg:px-8 xl:px-16">
+    <div className="header bg-purple w-full relative flex items-center justify-center !py-0">
+      <div className="text-white py-4 items-center space-x-1 container w-screen flex justify-between">
         <h1 className="text-2xl font-bold">{title}</h1>
 
         {shouldPointToHospitals && (

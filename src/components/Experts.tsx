@@ -53,8 +53,8 @@ export const Experts: FC = () => {
   }, []);
 
   return (
-    <div className="bg-white pt-16 pb-24">
-      <div className="container px-0 items-center justify-center mx-auto">
+    <div className="container bg-white pt-16 pb-24 px-0">
+      <div className="items-center justify-center mx-auto">
         <div className="text-center mb-4">
           <span className="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#9F70FD1A] text-purple-700">
             <span className="bg-gradient-to-r from-[#E770C1] to-[#9F70FD] bg-clip-text text-transparent">
