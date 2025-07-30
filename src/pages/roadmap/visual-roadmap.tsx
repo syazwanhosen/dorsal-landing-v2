@@ -100,31 +100,47 @@ export function VisualRoadmap({ features }: VisualRoadmapProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <div className="border-b border-gray-200 p-4">
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap gap-2 sm:space-x-4 sm:gap-0">
           <Button
             variant="ghost"
-            className={activeQuarter === "current" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+            className={`${
+              activeQuarter === "current"
+                ? "bg-purple text-white"
+                : "bg-white text-gray-700 border border-gray-300"
+            }`}
             onClick={() => setActiveQuarter("current")}
           >
             Current Quarter
           </Button>
           <Button
             variant="ghost"
-            className={activeQuarter === "next" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+            className={`${
+              activeQuarter === "next"
+                ? "bg-purple text-white"
+                : "bg-white text-gray-700 border border-gray-300"
+            }`}
             onClick={() => setActiveQuarter("next")}
           >
             Next Quarter
           </Button>
           <Button
             variant="ghost"
-            className={activeQuarter === "future" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+            className={`${
+              activeQuarter === "future"
+                ? "bg-purple text-white"
+                : "bg-white text-gray-700 border border-gray-300"
+            }`}
             onClick={() => setActiveQuarter("future")}
           >
             Future
           </Button>
           <Button
             variant="ghost"
-            className={activeQuarter === "release" ? "bg-purple text-white" : "bg-white text-gray-700 border border-gray-300"}
+            className={`${
+              activeQuarter === "release"
+                ? "bg-purple text-white"
+                : "bg-white text-gray-700 border border-gray-300"
+            }`}
             onClick={() => setActiveQuarter("release")}
           >
             Released

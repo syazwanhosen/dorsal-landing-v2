@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <section className="bg-white">
     <footer className="container footer bg-gradient-to-r from-[#864196] to-[#F33594] text-white lg:pt-14 lg:pb-8 pt-8 pb-6">
-      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
-        <div>
+        <div className="ml-2">
           <div className="flex items-center mb-2">
             <Link to="/">
               <img
@@ -47,14 +47,14 @@ const Footer = () => {
         </div>
 
         {/* Product */}
-        <div>
+        <div className="ml-2">
           <h3 className="text-base text-white font-bold mb-3">Product</h3>
           <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
               <Link to="/hospitals">Search Bills</Link>
             </li>
             <li>
-              <a href="/#UploadBill">Upload Bills</a>
+              <a href="/upload-bill">Upload Bills</a>
             </li>
             <li>
               <a href="/coming-soon">Negotiate </a>
@@ -63,7 +63,7 @@ const Footer = () => {
         </div>
 
         {/* Company */}
-        <div>
+        <div className="ml-2">
           <h3 className="text-base text-white font-bold mb-3">Company</h3>
           <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
@@ -91,7 +91,7 @@ const Footer = () => {
         </div>
 
         {/* Support */}
-        <div>
+        <div className="ml-2">
           <h3 className="text-base text-white font-bold mb-3">Support</h3>
           <ul className="[&>li]:mb-[0.6rem] text-sm text-white">
             <li>
@@ -120,7 +120,7 @@ const Footer = () => {
       </div>
 
       {/* Divider Line */}
-      <div className="max-w-7xl mx-auto px-6 mt-10">
+      <div className="max-w-7xl mx-auto mt-10">
         <div className="border-t border-white/70" />
       </div>
 
