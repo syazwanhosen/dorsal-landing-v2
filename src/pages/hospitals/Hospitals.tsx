@@ -22,7 +22,7 @@ export default function Hospitals() {
       <div className="min-h-screen flex flex-col hospital_page">
         <div className="flex-grow">
           <Navbar />
-          <Header title="Search Hospitals" />
+          <Header title="Search Hospitals" link="/hospitals" />
           <SearchHospital />
 
           {isLoading ? (

@@ -13,6 +13,7 @@ import {
 } from "@/features/hospitalMapSlice";
 import hospital from "@/assets/hospital.png";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
+import { toast } from "sonner";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
 
@@ -192,6 +193,12 @@ export const HospitalMap = () => {
   const handleCompare = (hospital: any) => {
     if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
       dispatch(setSelectedHospitals([...selectedHospitals, hospital]));
+    // Show toast only on first hospital add
+    if (selectedHospitals.length === 0) {
+      toast.info("Hospital added to comparison. Scroll down to view table.", {
+        position: "top-center",       
+      });
+    }
     } else {
       alert("You can only compare up to 2 hospitals at a time.");
     }
