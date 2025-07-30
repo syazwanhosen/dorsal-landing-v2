@@ -7,7 +7,6 @@ import "leaflet/dist/leaflet.css";
 import {
   setHospitals,
   setSelectedHospitals,
-  setSortOption,
   setSidebarOpen,
   setSelectedLocation,
 } from "@/features/hospitalMapSlice";
@@ -303,7 +302,7 @@ export const HospitalMap = () => {
                     </span>
                   )}
                 </h2>
-                <select
+              {/*  <select
                   value={sortOption}
                   onChange={(e) =>
                     dispatch(
@@ -315,8 +314,8 @@ export const HospitalMap = () => {
                   className="border border-gray-300 lg:px-8 px-6 py-1 rounded-md text-sm"
                 >
                   <option value="lowestPrice">Lowest Price</option>
-                  {/* <option value="shortestDistance">Shortest Distance</option> */}
-                </select>
+                   <option value="shortestDistance">Shortest Distance</option> 
+                </select>*/}
               </div>
             </div>
 
