@@ -7,12 +7,12 @@ import "leaflet/dist/leaflet.css";
 import {
   setHospitals,
   setSelectedHospitals,
-  setSortOption,
   setSidebarOpen,
   setSelectedLocation,
 } from "@/features/hospitalMapSlice";
 import hospital from "@/assets/hospital.png";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
+import { toast } from "sonner";
 
 const accessToken = import.meta.env.VITE_MAP_ACCESS_TOKEN;
 
@@ -192,6 +192,12 @@ export const HospitalMap = () => {
   const handleCompare = (hospital: any) => {
     if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
       dispatch(setSelectedHospitals([...selectedHospitals, hospital]));
+    // Show toast only on first hospital add
+    if (selectedHospitals.length === 0) {
+      toast.info("Hospital added to comparison. Scroll down to view table.", {
+        position: "top-center",       
+      });
+    }
     } else {
       alert("You can only compare up to 2 hospitals at a time.");
     }
@@ -296,7 +302,7 @@ export const HospitalMap = () => {
                     </span>
                   )}
                 </h2>
-                <select
+              {/*  <select
                   value={sortOption}
                   onChange={(e) =>
                     dispatch(
@@ -308,8 +314,8 @@ export const HospitalMap = () => {
                   className="border border-gray-300 lg:px-8 px-6 py-1 rounded-md text-sm"
                 >
                   <option value="lowestPrice">Lowest Price</option>
-                  {/* <option value="shortestDistance">Shortest Distance</option> */}
-                </select>
+                   <option value="shortestDistance">Shortest Distance</option> 
+                </select>*/}
               </div>
             </div>
 

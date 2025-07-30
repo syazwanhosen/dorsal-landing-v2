@@ -5,12 +5,10 @@ import { Icon, LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { HospitalComparison } from "../hospitals/HospitalComparison";
 import "leaflet/dist/leaflet.css";
 // Update the imports in HospitalServiceSearchMap.tsx
-// Update the imports in HospitalServiceSearchMap.tsx
 import {
   setHospitals,
   setSelectedHospitals,
   setSidebarOpen,
-  setSortOption,
   setSelectedLocation
 } from "@/features/hospitalServiceSearchSlice";
 
@@ -19,6 +17,7 @@ import hospital from "@/assets/hospital.png";
 import location from "@/assets/location-pin.svg";
 import { fetchHospitalMetadata } from "@/api/Hospital/api";
 import { setSelectedHospital } from "@/features/hospitalMapSlice";
+import { toast } from "sonner";
 
 
 
@@ -136,6 +135,12 @@ const {
   const handleCompare = (hospital: any) => {
     if (selectedHospitals.length < 2 && !selectedHospitals.includes(hospital)) {
       dispatch(setSelectedHospitals([...selectedHospitals, hospital]));
+      // Show toast only on first hospital add
+    if (selectedHospitals.length === 0) {
+      toast.info("Hospital added to comparison. Scroll down to view table.", {
+        position: "top-center",       
+      });
+    }
     } else {
       alert("You can only compare up to 2 hospitals at a time.");
     }
@@ -231,20 +236,18 @@ const {
             <h2 className="text-xl font-semibold">
               {hospitals.length} Results
             </h2>
-            <select
+          {/*   <select
               value={sortOption}
               onChange={(e) =>
                 dispatch(
                   setSortOption(
                     e.target.value as "lowestPrice" | "shortestDistance"
-                  )
-                )
-              }
-              className="border border-gray-300 lg:px-8 px-6 py-1 rounded-md text-sm"
-            >
+                  ) ) }
+              className="border border-gray-300 lg:px-8 px-6 py-1 rounded-md text-sm">
               <option value="lowestPrice">Lowest Price</option>
               <option value="shortestDistance">Shortest Distance</option>
             </select>
+            */}
           </div>
         </div>
         
