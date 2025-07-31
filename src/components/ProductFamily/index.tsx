@@ -96,7 +96,7 @@ export const ProductFamily = () => {
       className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
              lg:bg-[url('@/assets/Union.png')]
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
-             lg:bg-gradient-none lg:h-[500px]"
+             lg:bg-gradient-none lg:h-[800px]"
     >
       <div className="md:py-16 pb-16 lg:pb-10 px-6 sm:px-12 text-white text-center z-10 relative mt-16 md:mt-0">
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white">
