@@ -15,3 +15,6 @@
   @apply w-5 h-5;
 }
 
+.splide__track {
+  will-change: transform;
+}
