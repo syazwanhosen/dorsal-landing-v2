@@ -50,6 +50,8 @@ export const Newsletter = () => {
 
   return (
     <section id="waitlist" className="bg-white">
+      <hr className="w-11/12 mx-auto mt-0 mb-2 md:mb-0 lg:mb-0" />
+
       <div className="container pt-4 pb-6 md:pb-20 md:pt-12 text-center">
         {/* Badge */}
         <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#9F70FD1A] mb-2 lg:mb-4">
@@ -83,7 +85,6 @@ export const Newsletter = () => {
         </form>
       </div>
 
-      <hr className="w-11/12 mx-auto" />
     </section>
   );
 };

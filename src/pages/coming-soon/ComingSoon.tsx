@@ -1,13 +1,15 @@
 import Footer from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { Newsletter } from "@/components/Newsletter";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { Calendar } from "lucide-react";
 
 const ComingSoon = () => {
   return (
-    <div className="justify-center h-screen bg-white">
+    <div className="min-h-screen flex flex-col bg-white">
+      <div className="flex-grow">
       <Navbar />
-      <div className="container text-center lg:pt-16 pt-4 pb-4 bg-white">
+      <div className="container text-center lg:pt-16 pt-4 pb-4 md:pb-8 lg:pb-6 xl:pb-8 2xl:pb-12 bg-white">
         <h1 className="md:text-7xl text-2xl font-bold">
           Coming <span className="text-pink">Soon!</span>
         </h1>
@@ -25,6 +27,7 @@ const ComingSoon = () => {
         </a>
       </div>
       <Newsletter />
+      </div>
       <Footer />
     </div>
   );
