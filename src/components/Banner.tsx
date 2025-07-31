@@ -141,7 +141,7 @@ export const Banner = () => {
           </div>
 
           {/* Bottom Text Content */}
-          <div className="absolute bottom-12 text-center w-full px-4">
+          <div className="absolute bottom-5 xl:bottom-12 text-center w-full px-4">
             <h2 className="text-3xl lg:text-4xl font-semibold text-white text-center mb-6">
               Know what you'll pay for{" "}
               <span className="inline-block relative min-w-[180px] h-[40px] text-black">
