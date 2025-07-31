@@ -236,7 +236,7 @@ export const CostCompare = () => {
           </div>
         </div>
 
-        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative">
+        <div className="w-full h-48 sm:h-64 md:h-80 min-h-[600px] bg-white border items-center justify-center rounded px-4 relative overflow-hidden">
           <div className="flex flex-col sm:flex-row justify-between items-center py-5">
             <div className="text-lg font-bold text-black pb-4">
               {priceType === "min"
