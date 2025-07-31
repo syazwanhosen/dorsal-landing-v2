@@ -291,7 +291,7 @@ export const UploadBill = () => {
 
   return (
     <section className="container bg-white upload-bill" id="UploadBill">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-16 bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-6 py-10 lg:py-16 bg-white">
         {/* Share Your Bill Card */}
         <div className="bg-[#F5F1FF] p-6 lg:pb-6 lg:px-12 rounded-xl border border-gray-200">
           <div className="flex items-center mb-4">
