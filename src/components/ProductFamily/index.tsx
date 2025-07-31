@@ -78,6 +78,19 @@ export const ProductFamily = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const splide = splideRef.current?.splide;
+
+    if (splide) {
+      splide.on('move', () => {
+        const list = document.querySelector('.splide__list') as HTMLElement;
+        if (list) {
+          list.style.transition = 'transform 1s ease-in-out';
+        }
+      });
+    }
+  }, []);
+
   return (
     <section
       className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
@@ -117,7 +130,7 @@ export const ProductFamily = () => {
               768: { perPage: 2 },
               639: { perPage: 1 },
             },
-            speed: 10000,
+            speed: 600,
             easing: "ease-in-out",
             omitEnd: false,
           }}
