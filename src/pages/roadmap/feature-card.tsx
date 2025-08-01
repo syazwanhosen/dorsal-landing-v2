@@ -192,7 +192,7 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
     if (!feature?.id) return;
 
     axios
-      .get(`${baseUrl}/api/votes/${feature.id}`)
+      .get(`${baseUrl}/api/get-vote-by-id/${feature.id}`)
       .then(async (res) => {
         const stored = await getVote(feature.id);
         const voted = stored?.voted ?? null;
