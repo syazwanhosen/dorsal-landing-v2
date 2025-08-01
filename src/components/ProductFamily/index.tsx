@@ -94,7 +94,7 @@ export const ProductFamily = () => {
   return (
     <section
       className="container relative lg:min-h-fit md:min-h-full w-full overflow-hidden lg:mt-16 mt-6 bg-gradient-to-br from-[#864196] to-[#EB3897]
-             lg:bg-[url('@/assets/Union.png')]
+             lg:bg-[url('@/assets/union.png')]
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
              lg:bg-gradient-none lg:h-[800px]"
     >
