@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import desktopBanner from "@/assets/rectangle-1.webp";
+import desktopBanner from "@/assets/Rectangle-1.webp";
 
 const phrases = [
   "an MRI 🩻",
