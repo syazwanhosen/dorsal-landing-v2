@@ -15,7 +15,7 @@ app.use(express.json());
 // Routes
 app.get('/api/votes', (req, res) => votesHandler(req, res));
 app.post('/api/vote', (req, res) => voteHandler(req, res));
-app.get('/api/votes/:id', voteByIdHandler);
+app.get('/api/votes/:id', (req, res) =>  voteByIdHandler(req, res));
 
 // Start server
 const PORT = 5001;
