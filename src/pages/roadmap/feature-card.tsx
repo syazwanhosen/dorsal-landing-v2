@@ -188,23 +188,23 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
   }
 
 
-  useEffect(() => {
-    if (!feature?.id) return;
+  // useEffect(() => {
+  //   if (!feature?.id) return;
 
-    axios
-      .get(`${baseUrl}/api/votes/${feature.id}`)
-      .then(async (res) => {
-        const stored = await getVote(feature.id);
-        const voted = stored?.voted ?? null;
+  //   axios
+  //     .get(`${baseUrl}/api/votes/${feature.id}`)
+  //     .then(async (res) => {
+  //       const stored = await getVote(feature.id);
+  //       const voted = stored?.voted ?? null;
 
-        setVotes(res.data.upvotes);
-        setHasVoted(Boolean(voted));
-        await setVote(feature.id, { count: res.data.upvotes, voted: res.data.upvotes ? voted : null });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch vote:", error);
-      });
-  }, [feature.id]);
+  //       setVotes(res.data.upvotes);
+  //       setHasVoted(Boolean(voted));
+  //       await setVote(feature.id, { count: res.data.upvotes, voted: res.data.upvotes ? voted : null });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to fetch vote:", error);
+  //     });
+  // }, [feature.id]);
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
