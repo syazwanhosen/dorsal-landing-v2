@@ -56,7 +56,7 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
    if (stored?.voted) return null;
 
    try {
-      const res = await axios.post(`${baseUrl}/vote`, {
+      const res = await axios.post(`${baseUrl}/api/vote`, {
         id: feature.id,
         type: 'upvote',
       });
@@ -192,7 +192,7 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
     if (!feature?.id) return;
 
     axios
-      .get(`${baseUrl}/votes/${feature.id}`)
+      .get(`${baseUrl}/api/votes/${feature.id}`)
       .then(async (res) => {
         const stored = await getVote(feature.id);
         const voted = stored?.voted ?? null;
