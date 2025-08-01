@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import axios from "axios"
 
 import { Badge } from "@/components/ui/badge"
@@ -188,7 +188,7 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
   }
 
 
-  // useEffect(() => {
+  /(() => {
   //   if (!feature?.id) return;
 
   //   axios
