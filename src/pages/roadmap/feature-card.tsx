@@ -1,7 +1,7 @@
-import { useState } from "react"
-import axios from "axios"
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
   Clock,
@@ -23,8 +23,8 @@ import {
   Package,
   Building,
   Handshake,
-  Upload, 
-  ClipboardList, 
+  Upload,
+  ClipboardList,
   CheckCheck,
   LineChart,
   Route,
@@ -34,41 +34,76 @@ import {
   ShoppingCart,
   Languages,
   BookOpen,
-  ChevronUp 
-} from "lucide-react"
-import type { FeatureType } from "@/lib/data"
-import { getVote, setVote } from "@/lib/voteStorage"
+  ChevronUp,
+} from "lucide-react";
+import type { FeatureType } from "@/lib/data";
+import { getVote, setVote } from "@/lib/voteStorage";
+
+// ✅ fallback to '' so relative fetch works in local/prod
+const baseUrl = import.meta.env.VITE_LANDING_BASE_URL || '';
+
+const api = axios.create({
+  baseURL: baseUrl,
+});
 
 interface FeatureCardProps {
-  feature: FeatureType,
-  featureMapping: Function
+  feature: FeatureType;
+  featureMapping: Function;
 }
 
-const baseUrl = import.meta.env.VITE_LANDING_BASE_URL;
-
 export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
-  const [votes, setVotes] = useState(0)
+  const [votes, setVotes] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
 
   const handleVote = async () => {
-   const stored = await getVote(feature.id);
-   
-   if (stored?.voted) return null;
+    const stored = await getVote(feature.id);
+    if (stored?.voted) return null;
 
-   try {
-      const res = await axios.post(`${baseUrl}/api/vote`, {
+    try {
+      const res = await api.post(`/api/vote`, {
         id: feature.id,
-        type: 'upvote',
+        type: "upvote",
       });
 
       setVotes(res.data.upvotes);
       setHasVoted(true);
-      await featureMapping()
-      await setVote(feature.id, { count: res.data.upvotes, voted: 'upvote' });
+      await featureMapping();
+      await setVote(feature.id, {
+        count: res.data.upvotes,
+        voted: "upvote",
+      });
     } catch (error) {
-      console.error("Voting failed", error);
+      console.error("Voting failed", {
+        error,
+        featureId: feature.id,
+      });
     }
   };
+
+  useEffect(() => {
+    if (!feature?.id) return;
+
+    api
+      .get(`/api/votes/${feature.id}`)
+      .then(async (res) => {
+        const stored = await getVote(feature.id);
+        const voted = stored?.voted ?? null;
+
+        setVotes(res.data.upvotes);
+        setHasVoted(Boolean(voted));
+        await setVote(feature.id, {
+          count: res.data.upvotes,
+          voted: res.data.upvotes ? voted : null,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to fetch vote:", {
+          url: `/api/votes/${feature.id}`,
+          message: error.message,
+          response: error.response?.data,
+        });
+      });
+  }, [feature.id]);
 
   const getFeatureIcon = (iconName: string) => {
     const icons = {
@@ -96,122 +131,71 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
       shoppingcart: <ShoppingCart className="h-6 w-6 text-purple" />,
       languages: <Languages className="h-6 w-6 text-purple" />,
       bookopen: <BookOpen className="h-6 w-6 text-purple" />,
-    }
+    };
 
-    return icons[iconName as keyof typeof icons] || <FileText className="h-5 w-5 text-purple-600" />
-  }
+    return icons[iconName as keyof typeof icons] || (
+      <FileText className="h-5 w-5 text-purple-600" />
+    );
+  };
 
   const getStatusIcon = (status: string) => {
-  switch (status.toLowerCase()) {
-    case "live":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <CheckCircle2 className="h-4 w-4 text-white" />
-        </span>
-      );
-    case "in progress":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <Clock className="h-4 w-4 text-white" />
-        </span>
-      );
-    case "coming soon":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <AlertCircle className="h-4 w-4 text-white" />
-        </span>
-      );
-    case "proposal":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <Lightbulb className="h-4 w-4 text-white" />
-        </span>
-      );
-    case "mothballed":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <PauseCircle className="h-4 w-4 text-white" />
-        </span>
-      );
-    case "mvp":
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <Award className="h-4 w-4 text-white" />
-        </span>
-      );
-    default:
-      // fallback
-      return (
-        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
-          <AlertCircle className="h-4 w-4 text-white" />
-        </span>
-      );
-  }
+    switch (status.toLowerCase()) {
+      case "live":
+        return <CheckCircle2 className="h-4 w-4 text-white" />;
+      case "in progress":
+        return <Clock className="h-4 w-4 text-white" />;
+      case "coming soon":
+        return <AlertCircle className="h-4 w-4 text-white" />;
+      case "proposal":
+        return <Lightbulb className="h-4 w-4 text-white" />;
+      case "mothballed":
+        return <PauseCircle className="h-4 w-4 text-white" />;
+      case "mvp":
+        return <Award className="h-4 w-4 text-white" />;
+      default:
+        return <AlertCircle className="h-4 w-4 text-white" />;
+    }
   };
 
   const getStatusText = (status: string) => {
-  switch (status) {
-    case "Live":
-      return "Live";
-    case "In Progress":
-      return "In Progress";
-    case "Coming Soon":
-      return "Coming Soon";
-    case "Proposal":
-      return "Proposal";
-    case "Mothballed":
-      return "Mothballed";
-    case "MVP":
-      return "MVP";
-    default:
-      return status;
-  }
- };
+    switch (status) {
+      case "Live":
+      case "In Progress":
+      case "Coming Soon":
+      case "Proposal":
+      case "Mothballed":
+      case "MVP":
+        return status;
+      default:
+        return status;
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "live":
-        return "bg-green-500 text-white"
+        return "bg-green-500 text-white";
       case "in progress":
-        return "bg-blue-500 text-white"
+        return "bg-blue-500 text-white";
       case "coming soon":
-        return "bg-yellow-500 text-white"
+        return "bg-yellow-500 text-white";
       case "proposal":
-        return "bg-teal-500 text-white"
+        return "bg-teal-500 text-white";
       case "mothballed":
-        return "bg-gray-500 text-white"
+        return "bg-gray-500 text-white";
       case "mvp":
-        return "bg-pink text-white"
+        return "bg-pink text-white";
       default:
-        return "bg-gray-400 text-white"
+        return "bg-gray-400 text-white";
     }
-  }
-
-
-  // useEffect(() => {
-  //   if (!feature?.id) return;
-
-  //   axios
-  //     .get(`${baseUrl}/api/votes/${feature.id}`)
-  //     .then(async (res) => {
-  //       const stored = await getVote(feature.id);
-  //       const voted = stored?.voted ?? null;
-
-  //       setVotes(res.data.upvotes);
-  //       setHasVoted(Boolean(voted));
-  //       await setVote(feature.id, { count: res.data.upvotes, voted: res.data.upvotes ? voted : null });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Failed to fetch vote:", error);
-  //     });
-  // }, [feature.id]);
+  };
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-sm transition-shadow">
       <div className="flex p-4">
         {/* Voting column */}
         <div className="flex flex-col items-center mr-4 w-16">
-          <button 
+          <button
             className={`h-8 w-8 rounded-full flex items-center justify-center group ${
               hasVoted ? "bg-purple text-white" : "bg-gray-200 hover:bg-purple-700"
             }`}
@@ -230,12 +214,16 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-purple-50 p-2 rounded-md">{getFeatureIcon(feature.icon)}</div>
+              <div className="bg-purple-50 p-2 rounded-md">
+                {getFeatureIcon(feature.icon)}
+              </div>
               <div>
                 <h3 className="font-semibold text-gray-900">{feature.title}</h3>
                 <div className="flex flex-wrap items-center gap-2 mt-1 text-sm">
                   <Badge className={getStatusColor(feature.status)}>
-                    {getStatusIcon(feature.status)}
+                    <span className="inline-flex items-center justify-center h-5 w-5 rounded-full">
+                      {getStatusIcon(feature.status)}
+                    </span>
                     <span className="ml-1">{getStatusText(feature.status)}</span>
                   </Badge>
                   {feature.category.map((cat, index) => (
@@ -253,13 +241,11 @@ export function FeatureCard({ feature, featureMapping }: FeatureCardProps) {
                 </div>
               </div>
             </div>
-
           </div>
 
           <div className="mt-2 text-gray-600">{feature.description}</div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }
