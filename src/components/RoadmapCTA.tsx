@@ -13,7 +13,7 @@ const RoadmapCTA = () => {
       className="container relative flex items-center lg:bg-white overflow-hidden text-white 
              pt-16 pb-20 lg:py-12
              bg-gradient-to-br from-[#864196] to-[#EB3897]
-             lg:bg-[url('@/assets/Roadmap-bg.webp')]
+             lg:bg-[url('@/assets/roadmap-bg.webp')]
              lg:bg-center lg:bg-no-repeat lg:bg-[length:100%_100%]
              lg:bg-gradient-none lg:h-[500px]"
     >
