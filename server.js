@@ -16,7 +16,7 @@ app.use(express.json());
 // Routes
 app.get('/api/votes', (req, res) => votesHandler(req, res));
 app.post('/api/vote', (req, res) => voteHandler(req, res));
-app.get('/api/votes/:id', (req, res) =>  voteByIdHandler(req, res));
+app.get('/api/votes/:id', voteByIdHandler);
 app.get('/api/get-vote-by-id/:id', (req, res) =>  voteByIdHandle(req, res));
 
 // Start server
