@@ -1,8 +1,9 @@
 import { getFeatures } from '../../lib/googleSheets.js';
 
 export default async function handler(req, res) {
-  const { id } = req.params;
-
+ const {
+    query: { id },
+  } = req;
   try {
     const features = await getFeatures();
     const feature = features.find((f) => f.id === id);
